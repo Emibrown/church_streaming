@@ -191,8 +191,8 @@ router.post('/add_category', ensureAuthenticated,  multers.upload.single('file')
     }
     req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
     await sharp(req.file.path)
-    .resize({ width: 400 })
-    .webp({quality: 60})
+    .resize({ width: 900 })
+    .webp({quality: 90})
     .toFile(
         path.resolve('./public','small_images',req.body.image)
     )
