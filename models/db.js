@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const URL = 'mongodb://localhost:27017/churchDB';
+const URL = 'mongodb://localhost:27017/streamDB';
 
 mongoose.connect(URL, {
     useNewUrlParser: true, 

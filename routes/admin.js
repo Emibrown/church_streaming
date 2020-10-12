@@ -194,7 +194,7 @@ router.post('/add_category', ensureAuthenticated,  multers.upload.single('file')
     .resize({ width: 900 })
     .webp({quality: 90})
     .toFile(
-        path.resolve('./public','small_images',req.body.image)
+        path.resolve('./public','large_images',req.body.image)
     )
     fs.unlinkSync(req.file.path)
     const category = new Category(req.body);
