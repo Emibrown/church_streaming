@@ -12,6 +12,7 @@ router.get('/', async (req, res, next) => {
       doneStreaming:  {$lt: '2'},
     }
   )
+  .sort({scheduledOn:-1}) 
   console.log(categories)
   console.log(streams)
   res.render('users/pages/index', { title: 'Home',categories,streams });
