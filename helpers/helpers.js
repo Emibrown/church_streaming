@@ -32,10 +32,15 @@ const youtube = (fileName,stream_key) =>  [
 
 
 const startStreaming = (live_stream) => {
-    spawn(cmd, local(live_stream.video,live_stream.streamKey), {
-        detached: true,
-        stdio: 'ignore'
-    }).unref();
+    const ffmpeg_process = spawn(cmd, local(live_stream.video,live_stream.streamKey));
+
+    ffmpeg_process.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+    });
+    
+    ffmpeg_process.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    });
 };
 
 module.exports = {
