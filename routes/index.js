@@ -8,8 +8,8 @@ router.get('/', async (req, res, next) => {
   const categories = await Category.find({})
   const streams = await Video.find(
     { 
-      type: {$gte: '0'},
-      doneStreaming:  {$lte: '2'},
+      type: {$gt: '0'},
+      doneStreaming:  {$lt: '2'},
     }
   )
   console.log(categories)
