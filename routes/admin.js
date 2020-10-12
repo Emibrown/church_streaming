@@ -90,7 +90,7 @@ router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
 
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
-    { $or: [ { type: '0' }, { doneStreaming: '1' } ] }
+    { $or: [ { type: '0' }, { doneStreaming: '2' } ] }
   )
   .populate('category')
   console.log(videos)

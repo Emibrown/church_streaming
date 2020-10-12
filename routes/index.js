@@ -1,9 +1,19 @@
 const express = require('express');
+const Category = require('../models/category');
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('users/pages/index', { title: 'Home' });
+router.get('/', async (req, res, next) => {
+  const categories = await Category.find({})
+  const streams = await Video.find(
+    { 
+      type: {$gte: '0'},
+      doneStreaming:  {$lte: '2'},
+    }
+  )
+  console.log(categories)
+  console.log(streams)
+  res.render('users/pages/index', { title: 'Home',categories,streams });
 });
 
 router.get('/categories', (req, res, next) => {
