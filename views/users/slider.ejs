@@ -1,8 +1,8 @@
 <!-- Header End -->
       <!-- Slider Start -->
       <section id="home" class="iq-main-slider p-0">
-         <%for (var stream in streams){%> 
         <div id="home-slider" class="slider m-0 p-0">
+         <%for (var stream in streams){%> 
            <div class="slide slick-bg " style="background-image: url(/large_images/<%= streams[stream].image %>);">
               <div class="container-fluid position-relative h-100">
                  <div class="slider-inner h-100">
@@ -33,9 +33,10 @@
                  </div>
               </div>
            </div>
+           <%}%>
+
 
         </div>
-        <%}%>
 
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
            <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44px" height="44px" id="circle"
