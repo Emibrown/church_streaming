@@ -1,5 +1,6 @@
 const express = require('express');
 const Category = require('../models/category');
+const Video = require('../models/video');
 const router = express.Router();
 
 /* GET home page. */
