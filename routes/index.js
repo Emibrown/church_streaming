@@ -31,7 +31,7 @@ router.get('/categories', (req, res, next) => {
   res.render('users/pages/cats', { title: 'Categories' });
 });
 
-router.get('/video-details/:id', (req, res, next) => {
+router.get('/video-details/:id', async(req, res, next) => {
   const video = await Video.findOne(
     { 
       _id: req.params.id,
