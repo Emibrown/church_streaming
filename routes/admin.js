@@ -121,12 +121,13 @@ router.get('/ready', async(req, res, next) => {
       { 
         type: '2',
         doneStreaming:'0',
-        scheduledOn: {$gte: new Date(new Date().setHours(00, 00, 00))},
+        scheduledOn: {$gte: new Date()},
       }
     );
-
-    await Object.assign(live_stream, {doneStreaming:'1'});
-    await live_stream.save()
+    if(live_stream){
+      await Object.assign(live_stream, {doneStreaming:'1'});
+      await live_stream.save()
+    }
     sendJSONresponse(res, 200, {live_stream});
   }catch{
     sendJSONresponse(res, 400, {error});
