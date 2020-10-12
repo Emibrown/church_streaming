@@ -3,12 +3,14 @@ const spawn = require('child_process').spawn,
 
 
 const local = (fileName,stream_key) =>  [
-    '-re', '-I',
-    'http://127.0.0.1:3000/uploads/'+fileName, 
-    '-vcodec', 'copy', '-loop', '-1', '-c:a', 'aac', 
-    '-b:a', '160k', '-ar', '44100', 
-    '-strict', '-2', '-f', 'flv', 'rtmp://159.65.236.148/show/'+stream_key
+    '-re', '-i', 'http://127.0.0.1:3000/uploads/'+fileName, 
+    '-c:v', 'libx264', '-preset', 
+    'veryfast','-tune', 'zerolatency', '-c:a', 'aac',
+     '-ar', '44100', 
+     '-f', 'flv', 'rtmp://159.65.236.148/show/'+stream_key
+
 ]
+
 
 const facebook = (fileName,stream_key) =>  [
     '-re',
