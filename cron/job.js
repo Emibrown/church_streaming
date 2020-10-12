@@ -7,6 +7,7 @@ const job = new CronJob('*/5 * * * * *', function () {
     .get('http://127.0.0.1:3000/admin/ready', function (error, response, body) {
         let live_stream = JSON.parse(body).live_stream;
         if(live_stream){
+            console.log(live_stream)
             helpers.startStreaming(live_stream)
         }
     });
