@@ -1,7 +1,16 @@
 const express = require('express');
 const Category = require('../models/category');
 const Video = require('../models/video');
+
+const moment = require('moment');
+
 const router = express.Router();
+
+
+router.use((req, res, next) => {
+  res.locals.moment = moment;
+  next();
+});
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
