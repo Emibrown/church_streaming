@@ -121,7 +121,7 @@ router.get('/ready', async(req, res, next) => {
       { 
         type: '2',
         doneStreaming:'0',
-        scheduledOn: {$gte: new Date()},
+        scheduledOn: {$lte: new Date()},
       }
     );
     if(live_stream){
