@@ -135,6 +135,26 @@ router.get('/ready', async(req, res, next) => {
  
 });
 
+router.get('/done/:id', async(req, res, next) => {
+  try{
+    const live_stream = await Video.findOne(
+      { 
+        _id: req.params.id,
+      }
+    );
+    if(live_stream){
+      await Object.assign(live_stream, {doneStreaming:'2'});
+      await live_stream.save()
+    }
+    sendJSONresponse(res, 200, {live_stream});
+  }catch{
+    sendJSONresponse(res, 400, {error});
+  }
+ 
+});
+
+
+
 
 router.get('/add_category', ensureAuthenticated, (req, res, next) => {
   res.render('admin/pages/addCat', { title: 'Add category' });
