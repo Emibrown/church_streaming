@@ -63,7 +63,7 @@
                               </div>
                            </div>
                            <div class="col-12 form-group ">
-                              <button type="submit" class="btn btn-primary">Submit</button>
+                              <input type="submit" id="btn" value="Submit" class="btn btn-primary">
                               <a  href="/admin/pre_recorded" class="btn btn-danger">cancel</a>
                            </div>
                         </form>
@@ -96,12 +96,17 @@
         data.append("file", image.files[0]);
         data.append("file", videofile.files[0]);
 
+        const config = {
+            onUploadProgress: function(progressEvent) {
+               const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+               console.log(percentCompleted)
+               $('#btn').val(percentCompleted);
+            }
+         }
 
-        axios({
-            method: 'post',
-            url: '/admin/add_pre_recorded',
-            data: data,
-        }) .then(function (response) {
+
+        axios.post('/admin/add_pre_recorded',data, config)
+        .then(function (response) {
             // handle success
             console.log(response)
             const url = "/admin/pre_recorded";    
