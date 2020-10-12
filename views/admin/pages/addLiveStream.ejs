@@ -1,0 +1,99 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+<%- include('../navbar'); -%>
+
+  <!-- Page Content  -->
+       <!-- Page Content  -->
+       <div id="content-page" class="content-page">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-sm-12">
+                  <div class="iq-card">
+                     <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                           <h4 class="card-title">Add Live Stream</h4>
+                        </div>
+                     </div>
+                     <div class="iq-card-body">
+                        <form id="videoForm">
+                           <div class="row">
+                              <div class="col-lg-7">
+                                 <div class="row">
+                                    <div class="col-12 form-group">
+                                       <input type="text" required id="title"  class="form-control" placeholder="Title">
+                                    </div>
+                                    <div class="col-12 form_gallery form-group">
+                                       <label id="gallery2" for="form_gallery-upload">Upload Image</label>
+                                       <input  data-name="#gallery2" required id="form_gallery-upload" class="form_gallery-upload"
+                                          type="file" accept=".png, .jpg, .jpeg">
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                       <select  class="form-control" required id="exampleFormControlSelect1">
+                                          <option selected disabled="">Select Category</option>
+                                          <%for (var cat in categories){%>
+                                             <option value="<%= categories[cat]._id %>" ><%= categories[cat].title %></option>
+                                          <%}%>
+                                       </select>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                       <textarea  id="description" required name="text" rows="5" class="form-control"
+                                          placeholder="Description"></textarea>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                       <label for="inputDatetime">Scheduled Time</label>
+                                       <input type="text" required class="form-control date-input basicFlatpickr flatpickr-input active" id="inputDatetime" value="" readonly="readonly">
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                         
+                           <div class="col-12 form-group ">
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                              <a  href="/admin/live_stream" class="btn btn-danger">cancel</a>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+ <!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+   $( "#videoForm" ).submit(function( event ) {
+         event.preventDefault();
+
+        const image = document.querySelector('#form_gallery-upload');
+        const data = new FormData();
+        data.append("title", $("#title").val());
+        data.append("description", $("#description").val());
+        data.append("scheduledOn", $("#inputDatetime").val());
+        data.append("category", $("#exampleFormControlSelect1").val());
+        data.append("file", image.files[0]);
+
+        axios({
+            method: 'post',
+            url: '/admin/add_live_stream',
+            data: data,
+        }) .then(function (response) {
+            // handle success
+            console.log(response)
+            const url = "/admin/live_stream";    
+            $(location).attr('href',url);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+    })
+
+  
+
+</script>
+<%- include('../../end'); -%></div>

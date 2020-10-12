@@ -1,17 +1,25 @@
-var createError = require('http-errors');
-var express = require('express');
-var minifyHTML = require('express-minify-html-2');
-var compression = require('compression');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var uglifyJs = require("uglify-js");
-var fs = require('fs');
+const createError = require('http-errors');
+const express = require('express');
+const minifyHTML = require('express-minify-html-2');
+const compression = require('compression');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const passport = require('passport');
+const session = require('express-session');
+const uglifyJs = require("uglify-js");
+const fs = require('fs');
 
-var indexRouter = require('./routes/index');
-var adminRouter = require('./routes/admin');
+const indexRouter = require('./routes/index');
+const adminRouter = require('./routes/admin');
+const jobs = require('./cron/job');
 
-var app = express();
+const setuppassport = require('./setuppassport');
+const app = express();
+setuppassport();
+
+require('./models/db');
+
 
 // view engine setup
 app.use(minifyHTML({
@@ -31,7 +39,7 @@ app.use(compression());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-var appPluginFiles = [
+const appPluginFiles = [
   fs.readFileSync('public/js/jquery-3.4.1.min.js', "utf8"),
   fs.readFileSync('public/js/bootstrap.min.js', "utf8"),
   fs.readFileSync('public/js/slick.min.js', "utf8"),
@@ -39,7 +47,7 @@ var appPluginFiles = [
   fs.readFileSync('public/js/slick-animation.min.js', "utf8"),
   fs.readFileSync('public/js/jquery.magnific-popup.min.js', "utf8"),  
 ];
-var uglified = uglifyJs.minify(appPluginFiles, { compress : false });
+const uglified = uglifyJs.minify(appPluginFiles, { compress : false });
 fs.writeFile('public/main/churchStreaming.min.js', uglified.code, function (err){
   if(err) {
   console.log(err);
@@ -53,7 +61,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/',session({
+  name: 'user_sid',
+  secret: "JHGF>,./?;;LJ8#$?,KL:>>>,,KJJJDHE",
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+  }
+}));
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 
@@ -72,5 +90,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+jobs.start()
 
 module.exports = app;
