@@ -39,6 +39,7 @@ router.get('/', async (req, res, next) => {
             type: 1,
             doneStreaming: 1,
             streamKey: 1,
+            scheduledOn: 1,
             difference : {
                 $abs : {
                     $subtract : [new Date(), "$scheduledOn"]
