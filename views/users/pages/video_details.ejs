@@ -1,9 +1,12 @@
 <%- include('../header'); -%>
 <!-- Banner Start -->
 <div class="video-container iq-main-slider">
-   <video class="video d-block" controls="" loop="">
+   <video id="my_video_1" class="video-js vjs-default-skin vjs-16-9 vjs-big-play-centered" style="width: 100%; height: 650;"   controls  preload="auto"  poster="/large_images/<%= video.image %>" data-setup='{"fluid": true}'>
+      <source src="/uploads/<%= video.video %>" type="application/x-mpegURL">
+    </video>
+   <!-- <video class="video d-block" controls="" loop="">
       <source src="/uploads/<%= video.video %>" type="video/mp4">
-   </video>
+   </video> -->
 </div>
  <!-- Banner End -->
   <!-- MainContent -->
