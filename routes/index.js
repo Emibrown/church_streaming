@@ -29,7 +29,7 @@ router.get('/', async (req, res, next) => {
       { 
         type: { $gt: '0' } ,
         doneStreaming:  {$lte: '2'},
-        scheduledOn: {$lte: new Date(new Date().setHours(00, 00, 00))}
+        scheduledOn: {$gte: new Date(new Date().setHours(00, 00, 00))}
       } 
     },
     {
