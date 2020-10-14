@@ -15,15 +15,15 @@ router.use((req, res, next) => {
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   const categories = await Category.find({})
-  const streams = await Video.find(
-    { 
-      type: {$gt: '0'},
-      doneStreaming:  {$lt: '2'},
-    }
-  )
-  .sort({scheduledOn:1}) 
+  // const test = await Video.find(
+  //   { 
+  //     type: {$gt: '0'},
+  //     doneStreaming:  {$lt: '2'},
+  //   }
+  // )
+  // .sort({scheduledOn:1}) 
 
-  const test = await Video.aggregate([
+  const streams = await Video.aggregate([
     { 
       $match: 
       { 
@@ -42,7 +42,7 @@ router.get('/', async (req, res, next) => {
             scheduledOn: 1,
             difference : {
                 $abs : {
-                    $subtract : [new Date(), "$scheduledOn"]
+                    $subtract : [new Date(new Date().setHours(00, 00, 00)), "$scheduledOn"]
                 }
             }
         }
@@ -54,7 +54,7 @@ router.get('/', async (req, res, next) => {
         $limit : 1
     }
     ])
-  console.log(test)
+  console.log(streams)
   res.render('users/pages/index', { title: 'Home',categories,streams });
 });
 
