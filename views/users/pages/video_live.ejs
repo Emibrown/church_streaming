@@ -1,10 +1,10 @@
 <%- include('../header'); -%>
-<!-- Banner Start -->
-<div class="video-container iq-main-slider">
-   <video class="video d-block" controls="" loop="">
-      <source src="/uploads/<%= video.video %>" type="video/mp4">
+ <!-- Banner Start -->
+ <div class="video-container iq-main-slider">
+   <video id="my_video_1" class="video-js vjs-default-skin vjs-16-9 vjs-big-play-centered" style="width: 100%; height: 650;"   controls  preload="auto"  poster="/large_images/<%= video.image %>" data-setup='{"fluid": true}'>
+     <source src="http://159.65.236.148/hls/<%= video.streamKey %>.m3u8" type="application/x-mpegURL">
    </video>
-</div>
+ </div>
  <!-- Banner End -->
   <!-- MainContent -->
   <div class="main-content movi mt-0">
