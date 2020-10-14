@@ -22,8 +22,38 @@ router.get('/', async (req, res, next) => {
     }
   )
   .sort({scheduledOn:1}) 
-  console.log(categories)
-  console.log(streams)
+
+  const test = await Videoaggregate([
+    { 
+      $match: 
+      { 
+        type: { $gt: '0' } ,
+        doneStreaming:  {$lt: '2'},
+      } 
+    },
+    {
+        $project : {
+            title : 1,
+            description : 1,
+            image: 1,
+            type: 1,
+            doneStreaming: 1,
+            streamKey: 1,
+            difference : {
+                $abs : {
+                    $subtract : [new Date(), "$scheduledOn"]
+                }
+            }
+        }
+    },
+    {
+        $sort : {difference : 1}
+    },
+    {
+        $limit : 1
+    }
+    ])
+  console.log(test)
   res.render('users/pages/index', { title: 'Home',categories,streams });
 });
 
