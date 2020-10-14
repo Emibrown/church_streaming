@@ -191,7 +191,7 @@ router.post('/add_category', ensureAuthenticated,  multers.upload.single('file')
     }
     req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
     await sharp(req.file.path)
-    .resize({ width: 900 })
+    .resize({ width: 640, height: 360 })
     .webp({quality: 90})
     .toFile(
         path.resolve('./public','large_images',req.body.image)
@@ -211,14 +211,14 @@ router.post('/add_video', ensureAuthenticated,  multers.upload.array('file',6), 
     req.body.video = req.files[1].filename
 
     await sharp(req.files[0].path)
-    .resize({ width: 400 })
+    .resize({ width: 384, height: 216 })
     .webp({quality: 60})
     .toFile(
         path.resolve('./public','small_images',req.body.image)
     )
 
     await sharp(req.files[0].path)
-    .resize({ width: 900 })
+    .resize({ width: 640, height: 360 })
     .webp({quality: 90})
     .toFile(
         path.resolve('./public','large_images',req.body.image)
@@ -242,14 +242,14 @@ router.post('/add_live_stream', ensureAuthenticated,  multers.upload.single('fil
     req.body.streamKey = shortid.generate()
 
     await sharp(req.file.path)
-    .resize({ width: 400 })
+    .resize({ width: 384, height: 216 })
     .webp({quality: 60})
     .toFile(
         path.resolve('./public','small_images',req.body.image)
     )
 
     await sharp(req.file.path)
-    .resize({ width: 900 })
+    .resize({ width: 640, height: 360 })
     .webp({quality: 90})
     .toFile(
         path.resolve('./public','large_images',req.body.image)
@@ -274,14 +274,14 @@ router.post('/add_pre_recorded', ensureAuthenticated,  multers.upload.array('fil
     req.body.streamKey = shortid.generate()
 
     await sharp(req.files[0].path)
-    .resize({ width: 400 })
+    .resize({ width: 384, height: 216 })
     .webp({quality: 60})
     .toFile(
         path.resolve('./public','small_images',req.body.image)
     )
 
     await sharp(req.files[0].path)
-    .resize({ width: 900 })
+    .resize({ width: 640, height: 360 })
     .webp({quality: 90})
     .toFile(
         path.resolve('./public','large_images',req.body.image)
