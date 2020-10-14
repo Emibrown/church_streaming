@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
   )
   .sort({scheduledOn:1}) 
 
-  const test = await Videoaggregate([
+  const test = await Video.aggregate([
     { 
       $match: 
       { 
