@@ -28,7 +28,7 @@ router.get('/', async (req, res, next) => {
       $match: 
       { 
         type: { $gt: '0' } ,
-        doneStreaming:  {$lt: '2'},
+        doneStreaming:  {$lt: '1'},
       } 
     },
     {
