@@ -46,12 +46,12 @@ router.get('/cat/:id', async(req, res, next) => {
       _id: req.params.id,
     }
   )
-  const video = await Video.find(
+  const videos = await Video.find(
     { 
       category: req.params.id,
     }
   )
-  res.render('users/pages/cats', { title: 'Category details',category,video });
+  res.render('users/pages/cats', { title: 'Category details',category,videos });
 });
 
 router.get('/video/:id', async(req, res, next) => {

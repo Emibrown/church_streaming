@@ -4,9 +4,9 @@
     <div id="tvshows-slider">
        <div>
             <div class="shows-img">
-                <img src="images/movie-banner/1.jpg" class="w-100" alt="">
+                <img src="/large_images/<%= category.image %>" class="w-100" alt="">
                 <div class="shows-content">
-                    <h4 class="text-white mb-1">The Illusion</h4>
+                    <h4 class="text-white mb-1"><%= category.title %></h4>
                 </div>
             </div>
        </div>
@@ -21,10 +21,9 @@
           <div class="col-lg-12">
              <div class="trending-info g-border">
               
-                <p class="trending-dec w-100 mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting
-                   industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                   unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                   survived not only five centuries.</p>
+                <p class="trending-dec w-100 mb-0">
+                  <%= category.description %>
+                </p>
                 <ul class="list-inline p-0 mt-4 share-icons music-play-lists">
                    <li class="share">
                       <span><i class="ri-share-fill"></i></span>
@@ -46,15 +45,15 @@
         <div class="container-fluid">
            <div class="block-space">
               <div class="row">
-
+               <%for (var video in videos){%> 
                  <div class="col-1-5 col-md-6 iq-mb-30">
                     <div class="epi-box">
                        <div class="epi-img position-relative">
-                          <img src="images/episodes/01.jpg" class="img-fluid img-zoom" alt="">
+                          <img src="/large_image/<%= videos[video].image %>" class="img-fluid img-zoom" alt="">
                           <div class="episode-number">1</div>
                           <div class="episode-play-info">
                              <div class="episode-play">
-                                <a href="/video-details">
+                                <a href="">
                                    <i class="ri-play-fill"></i>
                                 </a>
                              </div>
@@ -62,17 +61,18 @@
                        </div>
                        <div class="epi-desc p-3">
                           <div class="d-flex align-items-center justify-content-between">
-                             <span class="text-white">11 Aug 20</span>
-                             <span class="text-primary">30m</span>
+                             <span class="text-white"><%= moment(videos[video].addedOn).calendar() %></span>
+                             <span class="text-primary"><%= videos[video].duration %>m</span>
                           </div>
-                          <a href="show-details.html">
-                             <h6 class="epi-name text-white mb-0">Lorem Ipsum is simply dummy text
+                          <a href="">
+                             <h6 class="epi-name text-white mb-0">
+                              <%= videos[video].title %>
                              </h6>
                           </a>
                        </div>
                     </div>
                  </div>
-                 
+                 <%}%> 
               </div>
            </div>
         </div>
