@@ -31,7 +31,30 @@ router.get('/categories', (req, res, next) => {
   res.render('users/pages/cats', { title: 'Categories' });
 });
 
-router.get('/video-details/:id', async(req, res, next) => {
+router.get('/live/:id', async(req, res, next) => {
+  const video = await Video.findOne(
+    { 
+      _id: req.params.id,
+    }
+  )
+  res.render('users/pages/video_live', { title: 'Streaming details',video });
+});
+
+router.get('/cat/:id', async(req, res, next) => {
+  const category = await Category.findOne(
+    { 
+      _id: req.params.id,
+    }
+  )
+  const video = await Video.find(
+    { 
+      category: req.params.id,
+    }
+  )
+  res.render('users/pages/cats', { title: 'Category details',category,video });
+});
+
+router.get('/video/:id', async(req, res, next) => {
   const video = await Video.findOne(
     { 
       _id: req.params.id,
