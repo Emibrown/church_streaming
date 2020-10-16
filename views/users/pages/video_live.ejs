@@ -58,7 +58,8 @@
       });
 
       player.on('error', function() {
-         alert('video has error!');
+         player.load();
+         // alert('video has error!');
       });
    });
 </script>
