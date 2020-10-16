@@ -55,13 +55,17 @@
 
    var video = videojs('my_video_1').ready(function(){
       var player = this;
+      player.play();
 
       player.on('ended', function() {
          alert('video is done!');
       });
 
       player.on('error', function() {
-         // setTimeout(function(){ player.load(); }, 10000);
+         setTimeout(function(){ 
+            player.load(); 
+            player.play();
+         }, 10000);
       });
    });
 </script>
