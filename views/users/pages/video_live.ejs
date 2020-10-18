@@ -80,21 +80,26 @@
       setInterval(function(){ 
          var errData = player.error();
          var readyState = player.readyState();
+         var networkState = player.networkState();
          console.log('errData')
          console.log(errData)
+         console.log('readyState')
          console.log(readyState)
+         console.log('networkState')
+         console.log(networkState)
+
 
       }, 5000);
 
-      setInterval(function(){ 
-         var readyState = player.readyState();
-         if(readyState == 2){
-            player.reset() 
-            player.src({ type: "application/x-mpegURL", src: link  })
-            player.load(); 
-            player.play();
-         }
-      }, 1000);
+      // setInterval(function(){ 
+      //    var readyState = player.readyState();
+      //    if(readyState == 2){
+      //       player.reset() 
+      //       player.src({ type: "application/x-mpegURL", src: link  })
+      //       player.load(); 
+      //       player.play();
+      //    }
+      // }, 1000);
 
    
      
