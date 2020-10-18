@@ -41,7 +41,7 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script src="https://unpkg.com/video.js/dist/video.js"></script>
-<script src="/js/videojs-http-streaming.min.js"></script>
+<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
 <script>
   var link = "http://159.65.236.148/hls/<%= video.streamKey %>.m3u8"
   var poster = "/large_images/<%= video.image %>"
