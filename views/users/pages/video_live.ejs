@@ -79,5 +79,11 @@
          // }
       });
    });
+
+   setTimeout(function(){ 
+      var errData = player.error().code;
+      console.log('errData '+errData)
+   }, 5000);
+
 </script>
 <%- include('../../end'); -%>
