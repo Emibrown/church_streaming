@@ -79,8 +79,11 @@
       });
       setInterval(function(){ 
          var errData = player.error();
+         var readyState = player.readyState();
          console.log('errData')
          console.log(errData)
+         console.log(readyState)
+
       }, 5000);
 
       setInterval(function(){ 
@@ -91,8 +94,6 @@
             player.load(); 
             player.play();
          }
-         console.log('readyState')
-         console.log(readyState)
       }, 1000);
 
    
