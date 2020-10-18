@@ -81,9 +81,16 @@
          console.log(errData)
       }, 5000);
 
+      player.tech().on('usage', (e) => {
+         console.log('usage');
+         console.log(e.name);
+      });
+
       player.tech().on('retryplaylist', () => {
         console.log('retryplaylist');
       });
+
+     
 
    });
 
