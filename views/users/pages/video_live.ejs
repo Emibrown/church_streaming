@@ -67,7 +67,8 @@
       player.on('error', function() {
          
          setTimeout(function(){ 
-            player.reset().src({ type: "application/x-mpegURL", src: link  });
+            player.reset() 
+            player.src({ type: "application/x-mpegURL", src: link  })
             player.load(); 
             player.play();
          }, 10000);
