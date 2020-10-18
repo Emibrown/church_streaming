@@ -81,12 +81,12 @@
          console.log(errData)
       }, 5000);
 
-      player.tech().on('usage', (e) => {
+      player.tech().on('usage', function() {
          console.log('usage');
          console.log(e.name);
       });
 
-      player.tech().on('retryplaylist', () => {
+      player.tech().on('retryplaylist', function() {
         console.log('retryplaylist');
       });
 
