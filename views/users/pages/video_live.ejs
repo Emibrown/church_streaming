@@ -44,6 +44,7 @@
 <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
 <script>
   var link = "http://159.65.236.148/hls/<%= video.streamKey %>.m3u8"
+  var poster = "/large_images/<%= video.image %>"
   var video = videojs('my_video_1', {
       plugins: {
          reloadSourceOnError: {}
@@ -68,10 +69,11 @@
          
          setTimeout(function(){ 
             player.reset() 
+            player.poster(poster);
             player.src({ type: "application/x-mpegURL", src: link  })
             player.load(); 
             player.play();
-         }, 10000);
+         }, 5000);
          // if(this.error().code === 2) {
          //    player.load(); 
          //    player.play();
