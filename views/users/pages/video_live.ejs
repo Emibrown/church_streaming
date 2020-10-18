@@ -83,6 +83,20 @@
          console.log('errData')
          console.log(errData)
       }, 5000);
+
+      player.tech().hls.on('hls-unknown-waiting', function() {
+         console.log('hls-unknown-waiting');
+      });
+      player.tech().hls.on('hls-live-resync', function() {
+         console.log('hls-live-resync');
+      });
+      player.on('hls-error-reload-initialized', function() {
+         console.log('hls-error-reload-initialized');
+      });
+      player.on('hls-error-reload', function() {
+         console.log('hls-error-reload');
+      });
+      
    });
 
    
