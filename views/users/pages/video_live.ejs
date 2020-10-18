@@ -81,32 +81,21 @@
          var errData = player.error();
          console.log('errData')
          console.log(errData)
-         console.log( player.readyState())
-        
       }, 5000);
 
-      player.tech().on('usage', function() {
-         console.log('usage');
-         console.log(e.name);
-      });
+      setInterval(function(){ 
+         var readyState = player.readyState();
+         if(readyState == 2){
+            player.reset() 
+            player.src({ type: "application/x-mpegURL", src: link  })
+            player.load(); 
+            player.play();
+         }
+         console.log('readyState')
+         console.log(readyState)
+      }, 1000);
 
-      player.tech().on('retryplaylist', function() {
-        console.log('retryplaylist');
-      });
-
-      player.tech().hls.on('hls-unknown-waiting', function() {
-         console.log('hls-unknown-waiting');
-      });
-      player.tech().hls.on('hls-live-resync', function() {
-         console.log('hls-live-resync');
-      });
-      player.on('hls-error-reload-initialized', function() {
-         console.log('hls-error-reload-initialized');
-      });
-      player.on('hls-error-reload', function() {
-         console.log('hls-error-reload');
-      });
-
+   
      
 
    });
