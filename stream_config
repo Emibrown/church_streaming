@@ -1,0 +1,128 @@
+worker_processes  auto;
+events {
+    # Allows up to 1024 connections, can be adjusted
+    worker_connections  1024;
+}
+
+# RTMP configuration
+rtmp {
+    server {
+        listen 1935; # Listen on standard RTMP port
+        chunk_size 4000; 
+        
+        # This application is to accept incoming stream
+        application live {
+            live on; # Allows live input
+            
+            # Once receive stream, transcode for adaptive streaming
+            # This single ffmpeg command takes the input and transforms
+            # the source into 4 different streams with different bitrate
+            # and quality. P.S. The scaling done here respects the aspect
+            # ratio of the input.
+            exec ffmpeg -i rtmp://localhost/$app/$name -async 1 -vsync -1
+                        -c:v libx264 -c:a libvo_aacenc -b:v 768k -b:a 96k -vf "scale=720:trunc(ow/a/2)*2" -tune zerolatency -preset veryfast -crf 23 -f flv rtmp://localhost/show/$name_mid
+                        -c copy -f flv rtmp://localhost/show/$name_src;
+        }
+        
+        # This application is for splitting the stream into HLS fragments
+        application show {
+            live on; # Allows live input from above
+            hls on; # Enable HTTP Live Streaming
+            
+            # Pointing this to an SSD is better as this involves lots of IO
+            hls_path /mnt/hls/;
+            
+            # Instruct clients to adjust resolution according to bandwidth
+            hls_variant _mid BANDWIDTH=448000; # Medium bitrate, SD resolution
+            hls_variant _src BANDWIDTH=4096000; # Source bitrate, source resolution
+        }
+    }
+}
+
+http {
+    # See http://licson.net/post/optimizing-nginx-for-large-file-delivery/ for more detail
+    # This optimizes the server for HLS fragment delivery
+    sendfile off;
+    tcp_nopush on;
+    aio on;
+    directio 512;
+    
+    # HTTP server required to serve the player and HLS fragments
+    server {
+        listen 80;
+        
+        location / {
+            root /path/to/web_player/;
+        }
+        
+        location /show {
+            types {
+                application/vnd.apple.mpegurl m3u8;
+            }
+            
+            root /mnt/;
+            add_header Cache-Control no-cache; # Prevent caching of HLS fragments
+            add_header Access-Control-Allow-Origin *; # Allow web player to access our playlist
+        }
+    }
+}
+
+
+# old
+
+worker_processes  auto;
+events {
+    worker_connections  1024;
+}
+
+# RTMP configuration
+rtmp {
+    server {
+        listen 1935; # Listen on standard RTMP port
+
+
+        application show {
+            live on;
+            interleave on;
+            # Turn on HLS
+            hls on;
+            hls_path /mnt/hls/;
+            hls_fragment 15s;
+
+            deny play all;
+        }
+    }
+}
+
+http {
+    default_type application/octet-stream;
+
+    server {
+        listen 80;
+
+        location / {
+            # Disable cache
+            add_header 'Cache-Control' 'no-cache';
+
+            # CORS setup
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Expose-Headers' 'Content-Length';
+
+             if ($request_method = 'OPTIONS') {
+                add_header 'Access-Control-Allow-Origin' '*';
+                add_header 'Access-Control-Max-Age' 1728000;
+                add_header 'Content-Type' 'text/plain charset=UTF-8';
+                add_header 'Content-Length' 0;
+                return 204;
+            }
+
+            types {
+                application/dash+xml mpd;
+                application/vnd.apple.mpegurl m3u8;
+                video/mp2t ts;
+            }
+
+            root /mnt/;
+        }
+    }
+}
