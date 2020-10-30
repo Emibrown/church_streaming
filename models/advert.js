@@ -84,7 +84,6 @@ var advertSchema = mongoose.Schema(
                 }
             }
         }, 
-
         mediaDownloadLink: {
             type: String,
             required: true,
@@ -93,6 +92,10 @@ var advertSchema = mongoose.Schema(
                     throw new Error({error: 'Invalid media download link'})
                 }
             }
+        },
+        date: {
+            type: Date, 
+            default: Date.now
         }
     }
 )

@@ -27,6 +27,10 @@ var invoiceSchema = mongoose.Schema(
         termsOfServiceAgreement: {
             type: String, 
             required: true,
+        },
+        date: {
+            type: Date, 
+            default: Date.now
         }
     }
 )
