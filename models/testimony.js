@@ -1,15 +1,24 @@
 var mongoose = require('mongoose');
 const validator = require('validator')
 
-var invoiceSchema = mongoose.Schema(
+var testimonySchema = mongoose.Schema(
     {
-        recipientName: {
+        firstName: {
             type: String, 
             required: true, 
         },
-        address: {
+        lastName: {
             type: String, 
             required: true, 
+        },
+        email: {
+            type: String, 
+            required: true, 
+            validate: value => {
+                if (!validator.isEmail(value)) {
+                    throw new Error({error: 'Invalid Email Address'})
+                }
+            }
         },
         phoneNumber: {
             type: String,
@@ -20,13 +29,9 @@ var invoiceSchema = mongoose.Schema(
                 }
             }
         },
-        VATnumber: {
+        location: {
             type: String, 
             required: false
-        },
-        termsOfServiceAgreement: {
-            type: String, 
-            required: true,
         },
         date: {
             type: Date, 
@@ -35,6 +40,6 @@ var invoiceSchema = mongoose.Schema(
     }
 )
 
-var Invoice= mongoose.model('Invoice', invoiceSchema);
+var Testimony= mongoose.model('Testimony', testimonySchema);
 
-module.exports = Invoice;
+module.exports = Testimony;
