@@ -19,9 +19,8 @@ rtmp {
             # the source into 4 different streams with different bitrate
             # and quality. P.S. The scaling done here respects the aspect
             # ratio of the input.
-            exec ffmpeg -i rtmp://localhost/$app/$name -async 1 -vsync -1
-                        -c:v libx264 -c:a libvo_aacenc -b:v 768k -b:a 96k -vf "scale=720:trunc(ow/a/2)*2" -tune zerolatency -preset veryfast -crf 23 -f flv rtmp://localhost/show/$name_mid
-                        -c copy -f flv rtmp://localhost/show/$name_src;
+            exec ffmpeg -i rtmp://localhost/live/$name -async 1 -vsync -1
+                        -c:v libx264 -c:a libvo_aacenc -b:v 768k -b:a 96k -vf "scale=720:trunc(ow/a/2)*2" -tune zerolatency -preset veryfast -crf 23 -f flv rtmp://localhost/show/$name
         }
         
         # This application is for splitting the stream into HLS fragments
