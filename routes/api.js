@@ -5,8 +5,8 @@ const PrayerRequest = require('../models/prayerRequest');
 const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
 const SalvationPrayer = require('../models/salvationPrayer');
+const Testimony = require('../models/testimony');
 const router = express.Router();
-
 
 const sendJSONresponse = (res, status, content) => {
     res.status(status);
@@ -338,6 +338,60 @@ router.delete('/salvationprayer/:id', async (req, res, next) => {
     try {
         await SalvationPrayer.findOneAndDelete({_id:req.params.id});
         sendJSONresponse(res, 200, {message: 'Salvation prayer deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+//testimonies routes
+router.get('/testimony', async (req, res, next) => {
+    // Get all testimonies 
+  try {
+        const testimonies = Testimony.find({}).sort({ addedOn : 1 })
+        sendJSONresponse(res, 200, {testimony});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.post('/testimoney', async (req, res, next) => {
+    // create a testimony
+    try {
+        const testimony = new Testimony(req.body)
+        await testimony.save()
+        sendJSONresponse(res, 200, {message: 'testimony'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.get('/testimony/:id', async (req, res, next) => {
+    // get a testimoney
+    try {
+        const testimony = await Testimony.findOne({_id:req.params.id})
+        sendJSONresponse(res, 200, {testimony});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.put('/testimony/:id', async (req, res, next) => {
+    // update a testimony
+    try {
+        const testimony = await Testimony.findOne({_id:req.params.id})
+        await Object.assign(testimony, req.body);
+        await testimony.save()
+        sendJSONresponse(res, 200, {message: 'Testimony updated successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.delete('/testiomy/:id', async (req, res, next) => {
+    // delete a testimony
+    try {
+        await Testimony.findOneAndDelete({_id:req.params.id});
+        sendJSONresponse(res, 200, {message: 'Testimony deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
