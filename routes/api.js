@@ -1,6 +1,5 @@
 const express = require('express');
 const Advert = require('../models/advert');
-const Invoice = require('../models/invoice');
 const PrayerRequest = require('../models/prayerRequest');
 const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
@@ -13,66 +12,11 @@ const sendJSONresponse = (res, status, content) => {
     res.json(content);
 };
 
-//Invoice routes
-
-router.get('/invoice', async (req, res, next) => {
-    // Get  all invoices 
-  try {
-        const invoice = await Advert.find({}).sort({ date : 1 })
-        sendJSONresponse(res, 200, {invoice});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.post('/invoice', async (req, res, next) => {
-    // create an invoice
-    try {
-        const invoice = new Advert(req.body)
-        await invoice.save()
-        sendJSONresponse(res, 200, {message: 'invoice created'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.get('/invoice/:id', async (req, res, next) => {
-    // get a single invoice
-    try {
-        const invoice = await Advert.findOne({_id:req.params.id})
-        sendJSONresponse(res, 200, {invoice});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.put('/invoice/:id', async (req, res, next) => {
-    // update an invoice
-    try {
-        const invoice = await Advert.findOne({_id:req.params.id})
-        await Object.assign(invoice, req.body);
-        await invoice.save()
-        sendJSONresponse(res, 200, {message: 'invoice details updated successfully'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.delete('/invoice/:id', async (req, res, next) => {
-    // delete an invoice
-    try {
-        await Advert.findOneAndDelete({_id:req.params.id});
-        sendJSONresponse(res, 200, {message: 'Invoice deleted successfully'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
 //advert
 
-router.get('/advert', async (req, res, next) => {
+router.get('/adverts', async (req, res, next) => {
     // Get  all adverts 
-  try {
+    try {
         const advert = await Advert.find({}).sort({ date : 1 })
         sendJSONresponse(res, 200, {advert});
     } catch (error) {
@@ -127,7 +71,7 @@ router.delete('/advert/:id', async (req, res, next) => {
 
 router.get('/prayerrequests', async (req, res, next) => {
     // Get  all prayer requests 
-  try {
+    try {
         const prayerRequest = await PrayerRequest.find({}).sort({ date : 1 })
         sendJSONresponse(res, 200, {prayerRequest});
     } catch (error) {
@@ -180,9 +124,9 @@ router.delete('/prayerrequest/:id', async (req, res, next) => {
 
 //programmer routes
 
-router.get('/programmer', auth, (req, res, next) => {
-    // Get all programmers 
-  try {
+router.get('/programmer', async (req, res, next) => {
+    // Get all programmer requests
+    try {
         const programmer = await Programmer.find({}).sort({ lastName : 1 })
         sendJSONresponse(res, 200, {programmer});
     } catch (error) {
@@ -190,8 +134,8 @@ router.get('/programmer', auth, (req, res, next) => {
     }
 });
 
-router.post('/programmer', auth, (req, res, next) => {
-    // create an invoice
+router.post('/programmer', async (req, res, next) => {
+    //  submit a programmer request
     try {
         const programmer = new Programmer(req.body)
         await programmer.save()
@@ -202,7 +146,7 @@ router.post('/programmer', auth, (req, res, next) => {
 });
 
 router.get('/programmer/:id', async (req, res, next) => {
-    // get a single invoice
+    // get a single programmer
     try {
         const programmer = await Programmer.findOne({_id:req.params.id})
         sendJSONresponse(res, 200, {programmer});
@@ -212,7 +156,7 @@ router.get('/programmer/:id', async (req, res, next) => {
 });
 
 router.put('/programmer/:id', async (req, res, next) => {
-    // update a programmer details
+    // update a programmer request
     try {
         const programmer = await Programmer.findOne({_id:req.params.id})
         await Object.assign(programmer, req.body);
@@ -224,7 +168,7 @@ router.put('/programmer/:id', async (req, res, next) => {
 });
 
 router.delete('/programmer/:id', async (req, res, next) => {
-    // delete a programmer
+    // delete a programmer request
     try {
         await Programmer.findOneAndDelete({_id:req.params.id});
         sendJSONresponse(res, 200, {message: 'programmer deleted successfully'});
@@ -237,7 +181,7 @@ router.delete('/programmer/:id', async (req, res, next) => {
 
 router.get('/proposals', async (req, res, next) => {
     // Get  all proposals 
-  try {
+    try {
         const proposal = await Proposal.find({}).sort({ date : 1 })
         sendJSONresponse(res, 200, {proposal});
     } catch (error) {
@@ -290,7 +234,7 @@ router.delete('/proposal/:id', async (req, res, next) => {
 
 //salvation prayers routes
 
-router.get('/salvationprayer', async (req, res, next) => {
+router.get('/salvationprayers', async (req, res, next) => {
     // Get  all salvation prayers 
   try {
         const salvationPrayer = await SalvationPrayer.find({}).sort({ addedOn : 1 })
@@ -344,29 +288,29 @@ router.delete('/salvationprayer/:id', async (req, res, next) => {
 });
 
 //testimonies routes
-router.get('/testimony', async (req, res, next) => {
+router.get('/testimonies', async (req, res, next) => {
     // Get all testimonies 
   try {
-        const testimonies = Testimony.find({}).sort({ addedOn : 1 })
-        sendJSONresponse(res, 200, {testimony});
+        const testimonies = await Testimony.find({}).sort({ date : 1 })
+        sendJSONresponse(res, 200, {testimonies});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
 });
 
-router.post('/testimoney', async (req, res, next) => {
+router.post('/testimony', async (req, res, next) => {
     // create a testimony
     try {
         const testimony = new Testimony(req.body)
         await testimony.save()
-        sendJSONresponse(res, 200, {message: 'testimony'});
+        sendJSONresponse(res, 200, {message: 'testimony submitted'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
 });
 
 router.get('/testimony/:id', async (req, res, next) => {
-    // get a testimoney
+    // get a testimony
     try {
         const testimony = await Testimony.findOne({_id:req.params.id})
         sendJSONresponse(res, 200, {testimony});
@@ -387,7 +331,7 @@ router.put('/testimony/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/testiomy/:id', async (req, res, next) => {
+router.delete('/testimony/:id', async (req, res, next) => {
     // delete a testimony
     try {
         await Testimony.findOneAndDelete({_id:req.params.id});
