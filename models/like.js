@@ -21,9 +21,6 @@ const likeSchema = mongoose.Schema(
     }
 )
 
-
-likeSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
-
 const Like = mongoose.model('Like', likeSchema);
 
 module.exports = Like;
