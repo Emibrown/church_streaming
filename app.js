@@ -13,6 +13,7 @@ const fs = require('fs');
 const indexRouter = require('./routes/index');
 const adminRouter = require('./routes/admin');
 const apiRouter = require('./routes/api');
+const aboutRouter = require('./routes/about');
 const jobs = require('./cron/job');
 
 
@@ -77,6 +78,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/api', apiRouter);
+app.use('/about', aboutRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

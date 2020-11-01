@@ -5,7 +5,7 @@ const path = require('path')
 const fileName1 = async  (req, file, callback) => {
     // generates random string as filename
     crypto.pseudoRandomBytes(16, (err, raw) => {
-        if (err) return callback(err);  
+        if (err) return callback(err); 
         callback(null, raw.toString('hex') + path.extname(file.originalname));
     });
 }
