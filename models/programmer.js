@@ -41,7 +41,6 @@ var programmerSchema = mongoose.Schema(
         },
         webURL: {
             type: String,
-            required: true,
             validate: value => {
                 if (!validator.isURL(value)) {
                     throw new Error({error: 'Invalid web URL'})
@@ -50,19 +49,9 @@ var programmerSchema = mongoose.Schema(
         },
         fbPage: {
             type: String,
-            required: true,
             validate: value => {
                 if (!validator.isURL(value)) {
                     throw new Error({error: 'Invalid facebook URL'})
-                }
-            }
-        },
-        ministryUrl: {
-            type: String,
-            required: true,
-            validate: value => {
-                if (!validator.isURL(value)) {
-                    throw new Error({error: 'Invalid ministry URL'})
                 }
             }
         },
@@ -75,7 +64,7 @@ var programmerSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        videoUrl: {
+        videoURL: {
             type: String,
             required: true,
             validate: value => {
@@ -84,19 +73,17 @@ var programmerSchema = mongoose.Schema(
                 }
             }
         }, 
-        declarations: {
-            firstTimeproduction: {
-                type: String,
-                required: true,
-            },
-            personalRelationships: {
-                type: String,
-                required: true,
-            },
-            termsOfServiceAgreement: {
-                type: String, 
-                required: true,
-            }
+        firstTimeProduction: {
+            type: String,
+            required: true,
+        },
+        personalRelationships: {
+            type: String,
+            required: true,
+        },
+        termsOfServiceAgreement: {
+            type: String, 
+            required: true,
         },
         date: {
             type: Date, 

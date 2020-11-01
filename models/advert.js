@@ -55,15 +55,6 @@ var advertSchema = mongoose.Schema(
                 }
             }
         },
-        ministryUrl: {
-            type: String,
-            required: true,
-            validate: value => {
-                if (!validator.isURL(value)) {
-                    throw new Error({error: 'Invalid ministry URL'})
-                }
-            }
-        },
 
         title: {
             type: String,
@@ -93,40 +84,34 @@ var advertSchema = mongoose.Schema(
                 }
             }
         },
+        recipientName: {
+            type: String, 
+            required: true, 
+        },
+        recipientAddress: {
+            type: String, 
+            required: true, 
+        },
+        recipientContact: {
+            type: String,
+            required: false,
+            validate: value => {
+                if (!validator.isMobilePhone(value, 'en-NG')) {
+                    throw new Error({error: 'Invalid phone number'})
+                }
+            }
+        },
+        VATnumber: {
+            type: String, 
+            required: false
+        },
+        termsOfServiceAgreement: {
+            type: String, 
+            required: true,
+        },
         date: {
             type: Date, 
             default: Date.now
-        },
-        invoice: {
-            recipientName: {
-                type: String, 
-                required: true, 
-            },
-            address: {
-                type: String, 
-                required: true, 
-            },
-            phoneNumber: {
-                type: String,
-                required: false,
-                validate: value => {
-                    if (!validator.isMobilePhone(value, 'en-NG')) {
-                        throw new Error({error: 'Invalid phone number'})
-                    }
-                }
-            },
-            VATnumber: {
-                type: String, 
-                required: false
-            },
-            termsOfServiceAgreement: {
-                type: String, 
-                required: true,
-            },
-            date: {
-                type: Date, 
-                default: Date.now
-            }
         }
     }
 )
