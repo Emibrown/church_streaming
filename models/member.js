@@ -1,18 +1,14 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const uniqueValidator = require('mongoose-unique-validator');
 mongoose.Promise = require('bluebird');
 
-var userSchema = mongoose.Schema(
+const memberSchema = mongoose.Schema(
     {
         firstname: {type: String, required: true},
         lastname: {type: String, required: true},
         title: {type: String, required: true},
-        type: {
-            type: String,
-            default: "0"
-        },
         email: {
             type: String, 
             required: true, 
@@ -30,18 +26,18 @@ var userSchema = mongoose.Schema(
     }
 )
 
-userSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
+memberSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
-userSchema.pre('save', async function (next) {
+memberSchema.pre('save', async function (next) {
     // Hash the password before saving the user model
-    const user = this
-    if (user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 8)
+    const member = this
+    if (member.isModified('password')) {
+        member.password = await bcrypt.hash(member.password, 8)
     }
     next()
 })
 
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
+memberSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) return cb(err);
         cb(null, isMatch);
@@ -49,6 +45,6 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 };
 
 
-var User = mongoose.model('User', userSchema);
+const Member = mongoose.model('Member', memberSchema);
 
-module.exports = User;
+module.exports = Member;

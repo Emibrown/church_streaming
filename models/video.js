@@ -1,32 +1,27 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const uniqueValidator = require('mongoose-unique-validator');
 mongoose.Promise = require('bluebird');
 
-var videoSchema = mongoose.Schema(
+const videoSchema = mongoose.Schema(
     {
         title: {type: String, required: true, unique: true},
+        code: {type: String, required: true},
         description: {type: String, required: true},
         image: {type: String, required: true},
         video: {type: String},
         duration: {type: String},
-        category : {
+        programme : {
             type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Category'
+            ref: 'Programme'
         },
         type: {
             type: String,
-            default: '0'
         },
-        streamKey: {type: String},
-        doneStreaming: {
-            type: String,
-            default: '0'
-        },
-        facebookStreamKey: {type: String},
-        scheduledOn: {
-            type: Date, 
+        season : {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Season'
         },
         addedOn: {
             type: Date, 
@@ -37,8 +32,12 @@ var videoSchema = mongoose.Schema(
 
 videoSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
+videoSchema.pre('save', async (next) => {
+    const video = this
+    video.code = video.title.split(" ").join("-")
+    next()
+})
 
-
-var Video = mongoose.model('Video', videoSchema);
+const Video = mongoose.model('Video', videoSchema);
 
 module.exports = Video;
