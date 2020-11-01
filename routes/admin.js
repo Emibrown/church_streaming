@@ -16,6 +16,7 @@ const sendJSONresponse = (res, status, content) => {
   res.json(content);
 };
 
+
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
        res.redirect('/admin/dashboard');
@@ -54,6 +55,7 @@ User.find({}, (err, users) => {
 
 router.use((req, res, next) => {
   res.locals.moment = moment;
+  res.locals.currentUser = req.user;
   next();
 });
 
