@@ -39,6 +39,7 @@ User.find({}, (err, users) => {
       var newUser = new User({
         firstname: "Church",
         lastname: "stream",
+        title:'Mr',
         email: "bossworker@gmail.com",
         password: "11223344E"
       });

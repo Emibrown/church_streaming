@@ -45,8 +45,8 @@ router.post('/', multers.upload.single('file'), async (req, res, next) => {
         fs.unlinkSync(req.file.path)
         
         const about = new About(req.body);
-
         await about.save();
+
 
         sendJSONresponse(res, 200, {"message": "About added successfully"});
         
