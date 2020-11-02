@@ -300,5 +300,101 @@ router.post('/add_pre_recorded', ensureAuthenticated,  multers.upload.array('fil
   }
 });
 
+//add programme
+router.post('/add_programme', multers.upload.single('file'), async (req, res, next) => {
+  try {
+    if(!req.file){
+      sendJSONresponse(res, 400, {"message": "Image required"});
+    }
+    req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
+    await sharp(req.file.path)
+    .resize({ width: 640, height: 360 })
+    .webp({quality: 90})
+    .toFile(
+        path.resolve('./public','large_images',req.body.image)
+    )
+    fs.unlinkSync(req.file.path)
+    const programme = new Programme(req.body);
+    await programme.save();
+    sendJSONresponse(res, 200, {"message": "Programme added successfully"});
+  } catch (error) {
+    sendJSONresponse(res, 400, {error});
+  }
+});
+router.get('/prrogramme/:id', async (req, res, next) => {
+  // get a single programmme
+  try {
+      const programme = await Programme.findOne({_id:req.params.id})
+      sendJSONresponse(res, 200, {programme});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.put('/programme/:id', async (req, res, next) => {
+  // update a programme
+  try {
+      const programme = await Programme.findOne({_id:req.params.id})
+      await Object.assign(programme, req.body);
+      await programme.save()
+      sendJSONresponse(res, 200, {message: 'programme updated successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.delete('/programme/:id', async (req, res, next) => {
+  // delete a programme
+  try {
+      await Programme.findOneAndDelete({_id:req.params.id});
+      sendJSONresponse(res, 200, {message: 'Programme deleted successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+
+// add season
+router.post('/season', async (req, res, next) => {
+  try{
+    const season = new Season(req.body);
+    await season.save();
+    sendJSONresponse(res, 200, {"message": "Season added successfully"});
+  } catch (error) {
+    sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.get('/season/:id', async (req, res, next) => {
+  // get a single proposal
+  try {
+      const season = await Season.findOne({_id:req.params.id})
+      sendJSONresponse(res, 200, {proposal});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.put('/proposal/:id', async (req, res, next) => {
+  // update a show proposal
+  try {
+      const proposal = await Proposal.findOne({_id:req.params.id})
+      await Object.assign(proposal, req.body);
+      await proposal.save()
+      sendJSONresponse(res, 200, {message: 'proposal details updated successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.delete('/proposal/:id', async (req, res, next) => {
+  // delete a show proposal
+  try {
+      await Proposal.findOneAndDelete({_id:req.params.id});
+      sendJSONresponse(res, 200, {message: 'Proposal deleted successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
 
 module.exports = router;

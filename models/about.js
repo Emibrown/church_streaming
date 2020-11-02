@@ -1,4 +1,8 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const validator = require('validator')
+const bcrypt = require('bcryptjs')
+const uniqueValidator = require('mongoose-unique-validator');
+mongoose.Promise = require('bluebird');
 
 var aboutSchema = mongoose.Schema(
     {
@@ -8,6 +12,9 @@ var aboutSchema = mongoose.Schema(
         title: {
             type: String,
             required: true
+        },
+        code: {
+            type: String, 
         },
         description: {
             type: String,
@@ -19,6 +26,14 @@ var aboutSchema = mongoose.Schema(
         }
     }
 )
+aboutSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
+
+aboutSchema.pre('save', async (next) => {
+    console.log(this)
+    const about = this
+    about.code = about.title.split(" ").join("-")
+    next()
+})
 
 var About= mongoose.model('About', aboutSchema);
 
