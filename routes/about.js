@@ -67,25 +67,25 @@ router.get('/:id', async (req, res, next) => {
 
 router.put('/:id', multers.upload.single('file'), async (req, res, next) => {
     // update an about
-    if(req.file){
-        const about = await About.findOne({_id:req.params.id})
-        fs.unlinkSync(path.resolve('./public','small_images', about.image))
-        fs.unlinkSync(path.resolve('./public','large_images', about.image))
-
-        req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
-        await sharp(req.file.path)
-        .resize({ width: 384, height: 216 })
-        .webp({quality: 60})
-        .toFile(path.resolve('./public','small_images',req.body.image))
-
-        await sharp(req.file.path)
-        .resize({ width: 640, height: 360 })
-        .webp({quality: 90})
-        .toFile(path.resolve('./public','large_images',req.body.image))
-
-        fs.unlinkSync(req.file.path)
-    }
     try {
+        if(req.file){
+            const about = await About.findOne({_id:req.params.id})
+            fs.unlinkSync(path.resolve('./public','small_images', about.image))
+            fs.unlinkSync(path.resolve('./public','large_images', about.image))
+    
+            req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
+            await sharp(req.file.path)
+            .resize({ width: 384, height: 216 })
+            .webp({quality: 60})
+            .toFile(path.resolve('./public','small_images',req.body.image))
+    
+            await sharp(req.file.path)
+            .resize({ width: 640, height: 360 })
+            .webp({quality: 90})
+            .toFile(path.resolve('./public','large_images',req.body.image))
+    
+            fs.unlinkSync(req.file.path)
+        }
         const about = await About.findOne({_id:req.params.id})
         await Object.assign(about, req.body);
         await about.save()
