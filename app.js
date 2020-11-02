@@ -14,7 +14,7 @@ const indexRouter = require('./routes/index');
 const adminRouter = require('./routes/admin');
 const apiRouter = require('./routes/api');
 const aboutRouter = require('./routes/about');
-const jobs = require('./cron/job');
+// const jobs = require('./cron/job');
 
 
 const setuppassport = require('./setuppassport');

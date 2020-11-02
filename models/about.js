@@ -28,8 +28,7 @@ var aboutSchema = mongoose.Schema(
 )
 aboutSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
-aboutSchema.pre('save', async (next) => {
-    console.log(this)
+aboutSchema.pre('save', async function (next){
     const about = this
     about.code = about.title.split(" ").join("-")
     next()
