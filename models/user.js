@@ -8,6 +8,7 @@ var userSchema = mongoose.Schema(
     {
         firstname: {type: String, required: true},
         lastname: {type: String, required: true},
+        middlename: {type: String, required: true},
         title: {type: String, required: true},
         type: {
             type: String,
@@ -23,9 +24,37 @@ var userSchema = mongoose.Schema(
                 }
             }
         },
-        password: {
+        address: {
             type: String, 
             required: true,
+        },
+        location: {
+            type: String, 
+            required: true,
+        },
+        stateOfOrigin: {
+            type: String, 
+            required: true,
+        },
+        LGA: {
+            type: String, 
+            required: true,
+        },
+        residentPastor: {
+            type: String, 
+            required: true
+        },
+        chapterLocation: {
+            type: String, 
+            required: true
+        },
+        organisationName: {
+            type: String, 
+            required: true
+        },
+        password: {
+            type: String, 
+            required: true
         },
     }
 )

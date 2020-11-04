@@ -98,7 +98,10 @@ router.put('/:id', multers.upload.single('file'), async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
     // delete an about
     try {
-        await About.findOneAndDelete({_id:req.params.id});
+        const about = await About.findOne({_id:req.params.id});
+        fs.unlinkSync(path.resolve('./public','small_images', about.image))
+        fs.unlinkSync(path.resolve('./public','large_images', about.image))
+        await About.deleteOne(about);
         sendJSONresponse(res, 200, {message: 'About deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});

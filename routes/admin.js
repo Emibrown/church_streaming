@@ -91,6 +91,7 @@ router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/index', { title: 'Dashboard', categories });
 });
 
+
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
     { $or: [ { type: '0' }, { doneStreaming: '2' } ] }
@@ -187,6 +188,7 @@ router.get('/add_pre_recorded', ensureAuthenticated, async (req, res, next) => {
   res.render('admin/pages/addPreRecorded', { title: 'Add Pre Recorded',categories });
 });
 
+//category handlers
 router.post('/add_category', ensureAuthenticated, async (req, res, next) => {
   try {
     const category = new Category(req.body);
@@ -196,6 +198,29 @@ router.post('/add_category', ensureAuthenticated, async (req, res, next) => {
     sendJSONresponse(res, 400, {error});
   }
 });
+
+router.put('/category/:id', async (req, res, next) => {
+  // update category
+  try {
+      const category = await Category.findOne({_id:req.params.id})
+      await Object.assign(category, req.body);
+      await category.save()
+      sendJSONresponse(res, 200, {message: 'category details updated successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.delete('/category/:id', async (req, res, next) => {
+  // delete a category
+  try {
+      await Category.findOneAndDelete({_id:req.params.id});
+      sendJSONresponse(res, 200, {message: 'Category deleted successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
 
 router.post('/add_video', ensureAuthenticated,  multers.upload.array('file',6), async (req, res, next) => {
   try {
@@ -291,32 +316,60 @@ router.post('/add_pre_recorded', ensureAuthenticated, multers.upload.array('file
   }
 });
 
-router.put('/pre-recorded/:id', multers.upload.array('file',6),  async (req, res, next) => {
-  // update a video
+//update videoschema
+router.put('/video/:id', multers.upload.array('file',6),  async (req, res, next) => {
+  // update a pre recorded video
   try {
-    const video = await Video.findOne({_id:req.params.id})
-      if(req.file[0]){
+      const video = await Video.findOne({_id:req.params.id})
+
+      //if multiple files are updated
+      if(req.files.length > 0){
         fs.unlinkSync(path.resolve('./public','small_images', video.image))
         fs.unlinkSync(path.resolve('./public','large_images', video.image))
+        fs.unlinkSync(path.resolve('./public','uploads', video.video))
 
-        req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
+        req.body.video = req.files[1].filename
+        req.body.image = path.basename(req.file.filename, path.extname(req.files[0].filename))+'.webp'
 
-        await sharp(req.file.path)
+        await sharp(req.files[0].path)
         .resize({ width: 384, height: 216 })
         .webp({quality: 60})
         .toFile(path.resolve('./public','small_images',req.body.image))
 
-        await sharp(req.file.path)
+        await sharp(req.file[0].path)
         .resize({ width: 640, height: 360 })
         .webp({quality: 90})
         .toFile(path.resolve('./public','large_images',req.body.image))
 
-        fs.unlinkSync(req.file.path)
+        fs.unlinkSync(req.files[0].path)
       }
-      if(req.file[1]){
-        fs.unlinkSync(path.resolve('./public','uploads', video.video))
-        req.body.video = req.files[1].filename
+
+      // if the video file is updated
+      else if(path.extname(req.files[0].filename) = 'mp4'){
+          fs.unlinkSync(path.resolve('./public','uploads', video.video))
+          req.body.video = req.files[0].filename
+        }
+
+        //if the image file is updated
+      else{
+          fs.unlinkSync(path.resolve('./public','small_images', video.image))
+          fs.unlinkSync(path.resolve('./public','large_images', video.image))
+
+          req.body.image = path.basename(req.file.filename, path.extname(req.files[0].filename))+'.webp'
+
+          await sharp(req.files[0].path)
+          .resize({ width: 384, height: 216 })
+          .webp({quality: 60})
+          .toFile(path.resolve('./public','small_images',req.body.image))
+
+          await sharp(req.files[0].path)
+          .resize({ width: 640, height: 360 })
+          .webp({quality: 90})
+          .toFile(path.resolve('./public','large_images',req.body.image))
+
+          fs.unlinkSync(req.files[0].path)
       }
+
       await Object.assign(video, req.body);
       await video.save()
       sendJSONresponse(res, 200, {message: 'Video updated successfully'});
@@ -325,10 +378,15 @@ router.put('/pre-recorded/:id', multers.upload.array('file',6),  async (req, res
   }
 });
 
-router.delete('/pre-recorded/:id', async (req, res, next) => {
+//delete from a video schema
+router.delete('/pre_recorded/:id', async (req, res, next) => {
   // delete a video
   try {
-      await Video.findOneAndDelete({_id:req.params.id});
+      const video = Video.findOne({_id:req.params.id})
+      fs.unlinkSync(path.resolve('./public','small_images', video.image))
+      fs.unlinkSync(path.resolve('./public','large_images', video.image))
+      fs.unlinkSync(path.resolve('./public','uploads', video.video))
+      await Video.deleteOne(video);
       sendJSONresponse(res, 200, {message: 'Video deleted successfully'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
@@ -411,13 +469,15 @@ router.put('/programme/:id', multers.upload.single('file'), async (req, res, nex
 router.delete('/programme/:id', async (req, res, next) => {
   // delete a programme
   try {
-      await Programme.findOneAndDelete({_id:req.params.id});
+      const programme =  await Programme.findOne({_id:req.params.id});
+      fs.unlinkSync(path.resolve('./public','small_images', programme.image))
+      fs.unlinkSync(path.resolve('./public','large_images', programme.image))
+      await Programme.deleteOne(programme);
       sendJSONresponse(res, 200, {message: 'Programme deleted successfully'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }
 });
-
 
 // season routes
 router.post('/season', async (req, res, next) => {
@@ -449,7 +509,6 @@ router.get('/season/:id', async (req, res, next) => {
       sendJSONresponse(res, 400, {error});
   }
 });
-
 
 router.put('/season/:id', multers.upload.single('file'),  async (req, res, next) => {
   // update a season
