@@ -8,6 +8,7 @@ const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
 const Patnership = require('../models/patnership');
 const Static = require('../models/static');
+const Settings = require('../models/settings');
 const multers = require('../middleware/multers');
 const path = require('path')
 const fs = require('fs')
@@ -427,6 +428,61 @@ router.delete('/static_files/:id', async (req, res, next) => {
         fs.unlinkSync(path.resolve('./public','static', static.image))
         await Static.deleteOne(static);
         sendJSONresponse(res, 200, {message: 'file deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+//settings routes
+router.post('/settings', async (req, res, next) => {
+    // add settings
+    try {
+        const settings = new Settings(req.body);
+        await settings.save();    
+        sendJSONresponse(res, 200, {message: "Settings added successfully"});
+        
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.get('/settings', async (req, res, next) => {
+    // get all settings
+    try {
+        const settings = await Settings.find({})
+        sendJSONresponse(res, 200, {settings});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.get('/settings/:id', async (req, res, next) => {
+    // get a setting
+    try {
+        const settings = await Settings.findOne({_id:req.params.id})
+        sendJSONresponse(res, 200, {settings});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.put('/settings/:id', async (req, res, next) => {
+    // update a setting
+    try {
+        const settings = await Settings.findOne({_id:req.params.id})
+        await Object.assign(settings, req.body);
+        await settings.save()
+        sendJSONresponse(res, 200, {message: 'settings updated successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.delete('/settings/:id', async (req, res, next) => {
+    // delete a setting
+    try {
+        await Settings.findOneAndDelete({_id:req.params.id});
+        sendJSONresponse(res, 200, {message: 'settings deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
