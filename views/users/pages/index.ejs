@@ -1,44 +1,1083 @@
 <%- include('../header'); -%>
-<%- include('../slider'); -%>
-  <!-- MainContent -->
-  <div class="main-content">
-   <section id="iq-favorites">
-      <div class="container-fluid">
-         <div class="block-space">
-            <div class="row">
-               <div class="col-sm-12 overflow-hidden">
-                  <div class="iq-main-header d-flex align-items-center justify-content-between">
-                     <h4 class="main-title">Latest Categories</h4>
-                     <a href="" class="text-primary">View all</a>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               
-               <%for (var cat in categories){%> 
-                  <div class="col-1-5 col-md-6 iq-mb-30">
-                     <div class="epi-box">
-                        <div class="epi-img position-relative">
-                           <img src="/large_images/<%= categories[cat].image %>" class="img-fluid img-zoom" alt="">
-                        </div>
-                        <div class="epi-desc p-3">
-                           <a href="/cat/<%= categories[cat]._id %>">
-                              <h6 class="epi-name text-white mb-0">
-                                 <%= categories[cat].title %>
-                              </h6>
-                           </a>
-                        </div>
-                     </div>
-                  </div>
-               <%}%>
-               
-              
-            </div>
-         </div>
-      </div>
-   </section>
-
- </div>
+   <!-- MainContent -->
+   
+   <div class="content">
+      <div class="container">
+      
+ 
+       <!-- // TODAYS HIGHLIGHTS // -->
+       <div class="block">
+         <div class="row">
+            <div class="col-xs-12 col-md-9">
+                 <video style = "padding-bottom:20px;" width="100%" height="100%" controls>
+                     <source src="movie.mp4" type="video/mp4">
+                     <source src="movie.ogg" type="video/ogg">
+                     Your browser does not support the video tag.
+               </video>
+           </div> <!-- /.col -->
+            
+            <div class="col-xs-12 col-md-3">
+ 
+              <div class="schedule">
+                <h3>
+                     <em id="schedule-prev" class="fa fa-caret-left"></em>
+                     <span>Now Showing</span>
+                     <em id="schedule-next" class="fa fa-caret-right"></em>
+                     <div class="clearfix"></div>
+                  </h3>
+               <div class="scroller-wrap">
+                 <ul id="scroller">
+                   <li class="item alt">
+                     <span class="time">00:00</span>
+                     <span class="program">
+                       TBN PLAY
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">00:30</span>
+                     <span class="program">
+                       The Art Of Loving Well
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">01:00</span>
+                     <span class="program">
+                       (Un)Qualified with Steven Furtick
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">01:30</span>
+                     <span class="program">
+                       TBN Meets
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">02:00</span>
+                     <span class="program">
+                       Drive Thru History: Ends of the Earth
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">02:30</span>
+                     <span class="program">
+                       The Recovery Course
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">03:00</span>
+                     <span class="program">
+                       Praise 
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">04:00</span>
+                     <span class="program">
+                       Live with Passion
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">04:30</span>
+                     <span class="program">
+                       Joseph Prince
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">05:00</span>
+                     <span class="program">
+                       Way of the Master
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">05:30</span>
+                     <span class="program">
+                       Grassroots
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">06:00</span>
+                     <span class="program">
+                       Staying Power
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">06:30</span>
+                     <span class="program">
+                       TBN Presents: Alan Scotland
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">07:00</span>
+                     <span class="program">
+                       Turning Point
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">07:30</span>
+                     <span class="program">
+                       Winning Walk
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">08:00</span>
+                     <span class="program">
+                       Joseph Prince
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">08:30</span>
+                     <span class="program">
+                       The Spirit Contemporary Life
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">09:00</span>
+                     <span class="program">
+                       Hour Of Power
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">10:00</span>
+                     <span class="program">
+                       Word For Today
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">10:05</span>
+                     <span class="program">
+                       Power Point
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">10:30</span>
+                     <span class="program">
+                       Building Champions
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">11:00</span>
+                     <span class="program">
+                       Leading Lights
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt now">
+                     <span class="time">11:30</span>
+                     <span class="program">
+                       <a href="https://watch.tbnuk.tv/videos/live" class="tbnuk-live-stream">Watch Now</a> -
+                       Worship with The Binions &amp; Friends
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">12:00</span>
+                     <span class="program">
+                       Daniel Kolenda
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">12:30</span>
+                     <span class="program">
+                       Cornerstone – John Hagee
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">13:00</span>
+                     <span class="program">
+                       TBN Presents: David Peterson
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">13:30</span>
+                     <span class="program">
+                       Destiny
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">14:00</span>
+                     <span class="program">
+                       Life Church
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">14:30</span>
+                     <span class="program">
+                       Bethel presents Heaven To Earth
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">15:00</span>
+                     <span class="program">
+                       The Potter's Touch
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">15:30</span>
+                     <span class="program">
+                       Enjoying Everyday Life
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">16:00</span>
+                     <span class="program">
+                       Leading The Way
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">16:30</span>
+                     <span class="program">
+                       Robert Morris
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">17:00</span>
+                     <span class="program">
+                       Joel Osteen
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">17:30</span>
+                     <span class="program">
+                       Word and Spirit
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">18:00</span>
+                     <span class="program">
+                       TBN Presents: Dr Dipo Oluyomi
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">18:30</span>
+                     <span class="program">
+                       Hillsong Church UK
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">19:30</span>
+                     <span class="program">
+                       Partner Time
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">20:00</span>
+                     <span class="program">
+                       Thriving in 2020
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">21:00</span>
+                     <span class="program">
+                       Walking Like Jesus
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">21:30</span>
+                     <span class="program">
+                       (Un)Qualified with Steven Furtick
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">22:00</span>
+                     <span class="program">
+                       Vox Collective
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">23:00</span>
+                     <span class="program">
+                       Winning Ways
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">00:00</span>
+                     <span class="program">
+                       Praise 
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">01:00</span>
+                     <span class="program">
+                       TBN PLAY
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">01:30</span>
+                     <span class="program">
+                       The Sessions
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">02:00</span>
+                     <span class="program">
+                       TBN Meets
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">02:30</span>
+                     <span class="program">
+                       The Art Of Loving Well
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">03:00</span>
+                     <span class="program">
+                       Enjoying Everyday Life
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">03:30</span>
+                     <span class="program">
+                       The 700 Club
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">04:00</span>
+                     <span class="program">
+                       Interactive 700 Club
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">04:30</span>
+                     <span class="program">
+                       Word and Spirit
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">05:00</span>
+                     <span class="program">
+                       TBN PLAY
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">05:30</span>
+                     <span class="program">
+                       Enjoying Everyday Life
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">06:00</span>
+                     <span class="program">
+                       The Potter's Touch
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">06:30</span>
+                     <span class="program">
+                       Word For Today
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">06:35</span>
+                     <span class="program">
+                       John Hagee
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">07:00</span>
+                     <span class="program">
+                       Joel Osteen
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">07:30</span>
+                     <span class="program">
+                       Joseph Prince
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">08:00</span>
+                     <span class="program">
+                       Start Your Day with TBN UK
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">08:30</span>
+                     <span class="program">
+                       Hour Of Power
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">09:30</span>
+                     <span class="program">
+                       Enjoying Everyday Life
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">10:00</span>
+                     <span class="program">
+                       Word For Today
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">10:05</span>
+                     <span class="program">
+                       TBN Presents: David Peterson
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">10:30</span>
+                     <span class="program">
+                       Better Together
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">11:00</span>
+                     <span class="program">
+                       Life Today
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">11:30</span>
+                     <span class="program">
+                       Jewish Voice
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">12:00</span>
+                     <span class="program">
+                       Joseph Prince
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">12:30</span>
+                     <span class="program">
+                       TBN PLAY
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">13:00</span>
+                     <span class="program">
+                       John Hagee
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">13:30</span>
+                     <span class="program">
+                       The 700 Club
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">14:00</span>
+                     <span class="program">
+                       Interactive 700 Club
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">14:30</span>
+                     <span class="program">
+                       Way of the Master
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">15:00</span>
+                     <span class="program">
+                       Word For Today
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">15:05</span>
+                     <span class="program">
+                       New Season with Samuel Rodriguez
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">15:30</span>
+                     <span class="program">
+                       Christine Caine
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">16:00</span>
+                     <span class="program">
+                       Monster Truck Adventures
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">16:30</span>
+                     <span class="program">
+                       Hillsong Kids Junior: Cubbyhouse
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">17:00</span>
+                     <span class="program">
+                       Fearless TV
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">17:30</span>
+                     <span class="program">
+                       (Un)Qualified with Steven Furtick
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">18:00</span>
+                     <span class="program">
+                       Leading Lights
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">18:30</span>
+                     <span class="program">
+                       Conversations with Christy Wimber
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">19:00</span>
+                     <span class="program">
+                       Partner Time
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">19:30</span>
+                     <span class="program">
+                       TBN Meets
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">20:00</span>
+                     <span class="program">
+                       Praise 
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">21:00</span>
+                     <span class="program">
+                       Enjoying Everyday Life
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">21:30</span>
+                     <span class="program">
+                       Manna-Fest
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">22:00</span>
+                     <span class="program">
+                       TBN Presents: Ewen Robertson
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">22:30</span>
+                     <span class="program">
+                       The Potter's Touch
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item">
+                     <span class="time">23:00</span>
+                     <span class="program">
+                       Unshakeable Hope
+                     </span> <!-- /.program -->
+                   </li>
+                   <li class="item alt">
+                     <span class="time">23:30</span>
+                     <span class="program">
+                       Transforming Life
+                     </span> <!-- /.program -->
+                   </li>
+                 </ul>
+                 <div class="overlay"><a href="" class="tbnuk-live-stream"></a></div>
+               </div> <!-- /.scroller-wrap -->
+               <div class="download"><a href="/schedule" id="ToggleSchedulePDF"><em class="fa fa-fw fa-download"></em> Schedule Download</a></div>
+             </div> <!-- /.schedule -->
+ 
+             <script>
+          $(function() {
+ 
+            var _moves = 0;
+            var _nt = $('.schedule #scroller').newsTicker({
+               row_height: 30,
+               max_rows: 7,
+               autostart: 1,
+               speed: 5,
+               duration: 10,
+               prevButton: $('#schedule-prev'),
+               nextButton: $('#schedule-next'),
+               hasMoved: function() {
+                  _moves++;
+                  if (_moves >= 21) {
+                     _nt.newsTicker('stop');
+                     _nt.newsTicker('updateOption', 'autostart', 0);
+                     _nt.newsTicker('updateOption', 'speed', 400);
+                     _nt.newsTicker('updateOption', 'duration', 2500);
+                  }
+               }			  });
+ 
+            });
+          </script>
+ 
+             <div class="donate-now">
+                <a href="/giving">
+                     <h3>Partners</h3>
+                     <p style="text-transform: uppercase; font-size: 12px;">Click here to partner with us</p>
+                 </a>
+             </div> <!-- /.donate-now -->
+ 
+           </div> <!-- /.col -->
+         </div> <!-- /.row -->
+       </div> <!-- /.block -->
+ 
+       <hr>
+ 
+ 
+ <hr>
+ 
+       <div class="block">
+         <h2 class="block-title"><span>TV</span> Highlights</h2>
+         <div class="row">
+             <div class="col-xs-12 col-md-6">
+                 <div class="program">
+                   <div class="has-overlay">
+                     <img src="/front/image/Daniel-Kolendac3a8.jpg" class="img-responsive" alt="Daniel Kolenda">
+                   <span class="overlay">
+                         <span class="caption">Sunday</span>
+                       <span class="time">12PM</span>
+                   </span> <!-- /.overlay -->
+                 </div> <!-- /.has-overlay -->
+                 <div class="info">
+                     <div class="equal-height">
+                     <h3>Daniel Kolenda</h3>
+                     <p>Christ For All Nations with Daniel Kolenda</p>
+                     <div class="overlay"></div>
+                   </div> <!-- /.equal-height -->
+                 </div> <!-- /.info -->
+               </div> <!-- /.program -->
+             </div> <!-- /.col -->
+            <div class="col-xs-12 col-md-6">
+              <div class="program">
+                <div class="has-overlay">
+                  <img src="/front/image/Daniel-Kolendac3a8.jpg" class="img-responsive" alt="Daniel Kolenda">
+                 <span class="overlay">
+                      <span class="caption">Sunday</span>
+                    <span class="time">12PM</span>
+                 </span> <!-- /.overlay -->
+               </div> <!-- /.has-overlay -->
+               <div class="info">
+                  <div class="equal-height">
+                   <h3>Daniel Kolenda</h3>
+                   <p>Christ For All Nations with Daniel Kolenda</p>
+                   <div class="overlay"></div>
+                 </div> <!-- /.equal-height -->
+               </div> <!-- /.info -->
+             </div> <!-- /.program -->
+           </div> <!-- /.col -->
+            
+         </div> <!-- /.row -->
+       </div> <!-- /.block -->
+ 
+ <hr>
+ 
+ 
+ <hr>
+ 
+ 
+       <!-- // TBN PLAY // -->
+       <div class="block">
+          <h2 class="block-title">LATEST <span>VIDEO</span></h2>
+         <div class="row">
+           <div class="col-xs-12 col-sm-6 col-md-3">
+             <div class="item video">
+               <div class="cover">
+                 <a href="" class="tbn-play-lucy-grimble-still-i-will-praise">
+                   <img src="/front/image/tbnplay-cover-1584380091f16d.png" class="img-responsive" alt="Lucy Grimble - Still I Will Praise ft Bianca Rose ">
+                   <span class="overlay play"></span>
+                 </a>
+               </div> <!-- /.cover -->
+               <div class="info">
+                 <div class="equal-height">
+                   <h3><a href="">Weekly Playlist</a></h3>
+                   <h4>Lucy Grimble - Still I Will Praise ft Bianca Rose </h4>
+                   <p>Lucy Grimble sings Still I Will Praise with Bianca Rose from the album, Live at Burgess Barn.</p>
+                 </div> <!-- /.equal-height -->
+                 <div class="overlay"></div>
+               </div> <!-- /.info -->
+             </div> <!-- /.video -->
+           </div> <!-- /.col -->
+           <div class="col-xs-12 col-sm-6 col-md-3">
+             <div class="item video">
+               <div class="cover">
+                 <a href="" class="tbn-play-st-aldates-raised-with-christ">
+                   <img src="/front/image/tbnplay-cover-1584379838ec31.png" class="img-responsive" alt="St Aldates - Raised with Christ ">
+                   <span class="overlay play"></span>
+                 </a>
+               </div> <!-- /.cover -->
+               <div class="info">
+                 <div class="equal-height">
+                   <h3><a href="">Weekly Playlist</a></h3>
+                   <h4>St Aldates - Raised with Christ </h4>
+                   <p>Raised With Christ is the The 2nd single from St Aldates Worship album &quot;Until You Do (Live)&quot;.
+ 
+ </p>
+                 </div> <!-- /.equal-height -->
+                 <div class="overlay"></div>
+               </div> <!-- /.info -->
+             </div> <!-- /.video -->
+           </div> <!-- /.col -->
+           <div class="col-xs-12 col-sm-6 col-md-3">
+             <div class="item video">
+               <div class="cover">
+                 <a href="" class="tbn-play-william-wixley-fall-me-never">
+                   <img src="front/image/tbnplay-cover-1584379084d12d.png" class="img-responsive" alt="William Wixley - Fall Me Never ">
+                   <span class="overlay play"></span>
+                 </a>
+               </div> <!-- /.cover -->
+               <div class="info">
+                 <div class="equal-height">
+                   <h3><a href="">Weekly Playlist</a></h3>
+                   <h4>William Wixley - Fall Me Never </h4>
+                   <p>The official music video for William Wixley&#039;s new single &quot;Fail Me Never&quot; from his EP - Not About Me</p>
+                 </div> <!-- /.equal-height -->
+                 <div class="overlay"></div>
+               </div> <!-- /.info -->
+             </div> <!-- /.video -->
+           </div> <!-- /.col -->
+           <div class="col-xs-12 col-sm-6 col-md-3">
+             <div class="item video">
+               <div class="cover">
+                 <a href="" class="tbn-play-tim-williams-the-earth-ft-watoto">
+                   <img src="/front/image/tbnplay-cover-158437722936d6.png" class="img-responsive" alt="Tim Williams - The Earth ft Watoto">
+                   <span class="overlay play"></span>
+                 </a>
+               </div> <!-- /.cover -->
+               <div class="info">
+                 <div class="equal-height">
+                   <h3><a href="">Weekly Playlist</a></h3>
+                   <h4>Tim Williams - The Earth ft Watoto</h4>
+                   <p>Official acoustic version of The Earth by Tim Williams. Filmed live at Watoto Church in Kampala, Uganda.
+ </p>
+                 </div> <!-- /.equal-height -->
+                 <div class="overlay"></div>
+               </div> <!-- /.info -->
+             </div> <!-- /.video -->
+           </div> <!-- /.col -->
+         </div> <!-- /.row -->
+       </div> <!-- /.block -->
+ 
+       <div class="modal video-modal fade" id="tbn-play-lucy-grimble-still-i-will-praise" tabindex="-1" role="dialog" aria-labelledby="tbn-play-lucy-grimble-still-i-will-praise-Label" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">
+                 <span aria-hidden="true">&times;</span>
+                 <span class="sr-only">Close</span>
+               </button>
+               <h4 class="modal-title" id="tbn-play-lucy-grimble-still-i-will-praise-Label">Lucy Grimble - Still I Will Praise ft Bianca Rose </h4>
+             </div> <!-- /.modal-header -->
+             <div class="modal-body">
+             
+                <div class="video-container">
+                  <iframe width="1280" height="720" src="https://www.youtube.com/embed/PWu-iRaen6s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              </div>
+             
+             </div> <!-- /.modal-body -->
+             <div class="modal-footer">
+                <p>
+                 <span>Share This</span>
+                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.tbnuk.org/tbn-play/lucy-grimble-still-i-will-praise">
+                   <em class="fa fa-2x fa-facebook-square"></em>
+                 </a>
+                 <a href="http://twitter.com/home?status=Watch+this+TBN+Play+Music+Video+-+Lucy+Grimble+-+Still+I+Will+Praise+ft+Bianca+Rose+%20https://www.tbnuk.org/tbn-play/lucy-grimble-still-i-will-praise">
+                   <em class="fa fa-2x fa-twitter-square"></em>
+                 </a>
+                 <a href="tbn-play/lucy-grimble-still-i-will-praise.html" rel="permalink">Permalink</a>
+               </p>
+             </div> <!-- /.modal-footer -->
+           </div> <!-- /.modal-content -->
+         </div> <!-- /.modal-dialog -->
+       </div> <!-- /.modal -->
+ 
+ <script>
+ $(function(){
+     
+     var _1_src = $('#tbn-play-lucy-grimble-still-i-will-praise iframe').attr('src');
+     $('#tbn-play-lucy-grimble-still-i-will-praise iframe').removeAttr('src');
+       
+     $('a.tbn-play-lucy-grimble-still-i-will-praise').click(function () {
+         $('#tbn-play-lucy-grimble-still-i-will-praise').modal('show');
+         $('#tbn-play-lucy-grimble-still-i-will-praise iframe').attr('src', _1_src);
+             
+        return false;
+     });
+ 
+     $('#tbn-play-lucy-grimble-still-i-will-praise').on('hidden.bs.modal', function (e) {
+         $('#tbn-play-lucy-grimble-still-i-will-praise iframe').removeAttr('src');
+     });
+       
+ });
+ </script>
+       <div class="modal video-modal fade" id="tbn-play-st-aldates-raised-with-christ" tabindex="-1" role="dialog" aria-labelledby="tbn-play-st-aldates-raised-with-christ-Label" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">
+                 <span aria-hidden="true">&times;</span>
+                 <span class="sr-only">Close</span>
+               </button>
+               <h4 class="modal-title" id="tbn-play-st-aldates-raised-with-christ-Label">St Aldates - Raised with Christ </h4>
+             </div> <!-- /.modal-header -->
+             <div class="modal-body">
+             
+                <div class="video-container">
+                  <iframe width="1280" height="720" src="https://www.youtube.com/embed/ciFrOVR7mFw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              </div>
+             
+             </div> <!-- /.modal-body -->
+             <div class="modal-footer">
+                <p>
+                 <span>Share This</span>
+                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.tbnuk.org/tbn-play/st-aldates-raised-with-christ">
+                   <em class="fa fa-2x fa-facebook-square"></em>
+                 </a>
+                 <a href="http://twitter.com/home?status=Watch+this+TBN+Play+Music+Video+-+St+Aldates+-+Raised+with+Christ+%20https://www.tbnuk.org/tbn-play/st-aldates-raised-with-christ">
+                   <em class="fa fa-2x fa-twitter-square"></em>
+                 </a>
+                 <a href="tbn-play/st-aldates-raised-with-christ.html" rel="permalink">Permalink</a>
+               </p>
+             </div> <!-- /.modal-footer -->
+           </div> <!-- /.modal-content -->
+         </div> <!-- /.modal-dialog -->
+       </div> <!-- /.modal -->
+ 
+ <script>
+ $(function(){
+     
+     var _2_src = $('#tbn-play-st-aldates-raised-with-christ iframe').attr('src');
+     $('#tbn-play-st-aldates-raised-with-christ iframe').removeAttr('src');
+       
+     $('a.tbn-play-st-aldates-raised-with-christ').click(function () {
+         $('#tbn-play-st-aldates-raised-with-christ').modal('show');
+         $('#tbn-play-st-aldates-raised-with-christ iframe').attr('src', _2_src);
+             
+        return false;
+     });
+ 
+     $('#tbn-play-st-aldates-raised-with-christ').on('hidden.bs.modal', function (e) {
+         $('#tbn-play-st-aldates-raised-with-christ iframe').removeAttr('src');
+     });
+       
+ });
+ </script>
+       <div class="modal video-modal fade" id="tbn-play-william-wixley-fall-me-never" tabindex="-1" role="dialog" aria-labelledby="tbn-play-william-wixley-fall-me-never-Label" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">
+                 <span aria-hidden="true">&times;</span>
+                 <span class="sr-only">Close</span>
+               </button>
+               <h4 class="modal-title" id="tbn-play-william-wixley-fall-me-never-Label">William Wixley - Fall Me Never </h4>
+             </div> <!-- /.modal-header -->
+             <div class="modal-body">
+             
+                <div class="video-container">
+                  <iframe width="1280" height="720" src="https://www.youtube.com/embed/rD6uTsMty5Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              </div>
+             
+             </div> <!-- /.modal-body -->
+             <div class="modal-footer">
+                <p>
+                 <span>Share This</span>
+                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.tbnuk.org/tbn-play/william-wixley-fall-me-never">
+                   <em class="fa fa-2x fa-facebook-square"></em>
+                 </a>
+                 <a href="http://twitter.com/home?status=Watch+this+TBN+Play+Music+Video+-+William+Wixley+-+Fall+Me+Never+%20https://www.tbnuk.org/tbn-play/william-wixley-fall-me-never">
+                   <em class="fa fa-2x fa-twitter-square"></em>
+                 </a>
+                 <a href="tbn-play/william-wixley-fall-me-never.html" rel="permalink">Permalink</a>
+               </p>
+             </div> <!-- /.modal-footer -->
+           </div> <!-- /.modal-content -->
+         </div> <!-- /.modal-dialog -->
+       </div> <!-- /.modal -->
+ 
+ <script>
+ $(function(){
+     
+     var _3_src = $('#tbn-play-william-wixley-fall-me-never iframe').attr('src');
+     $('#tbn-play-william-wixley-fall-me-never iframe').removeAttr('src');
+       
+     $('a.tbn-play-william-wixley-fall-me-never').click(function () {
+         $('#tbn-play-william-wixley-fall-me-never').modal('show');
+         $('#tbn-play-william-wixley-fall-me-never iframe').attr('src', _3_src);
+             
+        return false;
+     });
+ 
+     $('#tbn-play-william-wixley-fall-me-never').on('hidden.bs.modal', function (e) {
+         $('#tbn-play-william-wixley-fall-me-never iframe').removeAttr('src');
+     });
+       
+ });
+ </script>
+       <div class="modal video-modal fade" id="tbn-play-tim-williams-the-earth-ft-watoto" tabindex="-1" role="dialog" aria-labelledby="tbn-play-tim-williams-the-earth-ft-watoto-Label" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">
+                 <span aria-hidden="true">&times;</span>
+                 <span class="sr-only">Close</span>
+               </button>
+               <h4 class="modal-title" id="tbn-play-tim-williams-the-earth-ft-watoto-Label">Tim Williams - The Earth ft Watoto</h4>
+             </div> <!-- /.modal-header -->
+             <div class="modal-body">
+             
+                <div class="video-container">
+                  <iframe width="1280" height="720" src="https://www.youtube.com/embed/XWm802kOORs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              </div>
+             
+             </div> <!-- /.modal-body -->
+             <div class="modal-footer">
+                <p>
+                 <span>Share This</span>
+                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.tbnuk.org/tbn-play/tim-williams-the-earth-ft-watoto">
+                   <em class="fa fa-2x fa-facebook-square"></em>
+                 </a>
+                 <a href="http://twitter.com/home?status=Watch+this+TBN+Play+Music+Video+-+Tim+Williams+-+The+Earth+ft+Watoto%20https://www.tbnuk.org/tbn-play/tim-williams-the-earth-ft-watoto">
+                   <em class="fa fa-2x fa-twitter-square"></em>
+                 </a>
+                 <a href="tbn-play/tim-williams-the-earth-ft-watoto.html" rel="permalink">Permalink</a>
+               </p>
+             </div> <!-- /.modal-footer -->
+           </div> <!-- /.modal-content -->
+         </div> <!-- /.modal-dialog -->
+       </div> <!-- /.modal -->
+ 
+ <script>
+ $(function(){
+     
+     var _4_src = $('#tbn-play-tim-williams-the-earth-ft-watoto iframe').attr('src');
+     $('#tbn-play-tim-williams-the-earth-ft-watoto iframe').removeAttr('src');
+       
+     $('a.tbn-play-tim-williams-the-earth-ft-watoto').click(function () {
+         $('#tbn-play-tim-williams-the-earth-ft-watoto').modal('show');
+         $('#tbn-play-tim-williams-the-earth-ft-watoto iframe').attr('src', _4_src);
+             
+        return false;
+     });
+ 
+     $('#tbn-play-tim-williams-the-earth-ft-watoto').on('hidden.bs.modal', function (e) {
+         $('#tbn-play-tim-williams-the-earth-ft-watoto iframe').removeAttr('src');
+     });
+       
+ });
+ </script>
+    
+ 
+ <hr>
+ 
+ 
+ <hr>
+ 
+ 
+     <!-- // ON DEMAND // -->
+     <div class="block on-demand now-trending">
+         <h2 class="block-title">Now <span>Trending</span> On-Demand</h2>
+         
+             
+             <div class="carousel-a">
+                <div class="container-full">
+                    <div class="clearfix">
+                        <div class="carousel-block">
+                            <div class="equal-height">
+                                 <div class="slider-wrap">
+                                     <div class="slider variable">
+                                         <div>
+                                             <a href="">
+                                                 <img src="/front/image/ondemand-title-cover-1561389982afa6.jpg" alt="">
+                                                 <span>#110 with Trevor Subramoney - TBN Meets</span>
+                                                 <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <a href="">
+                                                 <img src="/front/image/ondemand-title-cover-158378852982dd.jpg" alt="">
+                                                 <span>#131 with Jessica Dalla Torre - TBN Meets</span>
+                                                 <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <a href="">
+                                                <img src="/front/image/ondemand-title-cover-15646040737af8.jpg?w=270&amp;h=152&amp;src=/images/static/ondemand-title-cover-1564604073.jpg" alt="">
+                                                <span>#1 with Nqubeko Mbatha - TBN Unplugged</span>
+                                                <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <a href=""> 
+                                                 <img src="/front/image/ondemand-title-cover-1512565894d568.jpg?w=270&amp;h=152&amp;src=/images/static/ondemand-title-cover-1512565894.jpg" alt="">
+                                                 <span>#69 with Verona Pillay - TBN Meets</span>
+                                                 <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <a href="">
+                                                 <img src="/front/image/ondemand-title-cover-15646040737af8.jpg?w=270&amp;h=152&amp;src=/images/static/ondemand-title-cover-1564604073.jpg" alt="">
+                                                 <span>#1 with Nqubeko Mbatha - TBN Unplugged</span>
+                                                 <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <a href="">
+                                                 <img src="/front/image/ondemand-title-cover-1509353135354e.jpg?w=270&amp;h=152&amp;src=/images/static/ondemand-title-cover-1509353135.jpg" alt="">
+                                                 <span>#63 with Bongi &amp; Collin - TBN Meets</span>
+                                                 <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <a href="">
+                                                 <img src="/front/image/ondemand-title-cover-15379472280517.png?w=270&amp;h=152&amp;src=/images/static/ondemand-title-cover-1537947228.png" alt="">
+                                                 <span>#91 with Ps Benjamin Adre&#039; - TBN Meets</span>
+                                                 <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <a href="">
+                                                 <img src="/front/image/ondemand-title-cover-148722704068e2.jpg?w=270&amp;h=152&amp;src=/images/static/ondemand-title-cover-1487227040.jpg" alt="">
+                                                 <span>#33 with Mahalia Buchanan - TBN Meets</span>
+                                                 <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <a href="">
+                                                 <img src="/front/image/ondemand-title-cover-157123552076da.jpg?w=270&amp;h=152&amp;src=/images/static/ondemand-title-cover-1571235520.jpg" alt="">
+                                                 <span>#11 with Hle Ntombela-Mthethwa - TBN Unplugged</span>
+                                                 <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <a href="">
+                                                 <img src="/front/image/ondemand-title-cover-14956979394a2e.jpg" alt="">
+                                                 <span>#43 with Matthews Ntlele - TBN Meets</span>
+                                                 <em class="fa fa-play fa-2x"></em>
+                                             </a>
+                                         </div>
+                                     </div> <!-- /.slider -->
+                                     <div class="slider-prev"></div>
+                                     <div class="slider-next"></div>
+                                 </div> <!-- /.slider-wrap -->
+                             </div> <!-- /.equal-height -->
+                         </div> <!-- /.col -->
+                     </div> <!-- /.row -->
+                 </div> <!-- /.container -->
+             </div> <!-- /.carousel-a -->
+       </div> <!-- /.block -->
+ 
+       <script>
+         $(document).on('ready', function() {
+             
+             $('.variable').slick({
+                 dots: false,
+                 infinite: true,
+                 variableWidth: true,
+                 slidesToShow: 6,
+                 slidesToScroll: 1
+             });
+             
+         });
+         </script>
+       
+ <hr>
+ 
+ 
+       <div class="sharethis-inline-share-buttons"></div>
+     
+     </div> <!-- /.container -->
+   </div> <!-- /.content -->
  <!-- MainContent End-->
 <%- include('../footer'); -%>
 <%- include('../js'); -%>

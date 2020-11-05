@@ -42,22 +42,22 @@ app.use(compression());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-const appPluginFiles = [
-  fs.readFileSync('public/js/jquery-3.4.1.min.js', "utf8"),
-  fs.readFileSync('public/js/bootstrap.min.js', "utf8"),
-  fs.readFileSync('public/js/slick.min.js', "utf8"),
-  fs.readFileSync('public/js/owl.carousel.min.js', "utf8"),
-  fs.readFileSync('public/js/slick-animation.min.js', "utf8"),
-  fs.readFileSync('public/js/jquery.magnific-popup.min.js', "utf8"),  
-];
-const uglified = uglifyJs.minify(appPluginFiles, { compress : false });
-fs.writeFile('public/main/churchStreaming.min.js', uglified.code, function (err){
-  if(err) {
-  console.log(err);
-} else {
-  console.log('Script generated and saved: churchStreaming.min.js');
-}
-});
+// const appPluginFiles = [
+//   fs.readFileSync('public/js/jquery-3.4.1.min.js', "utf8"),
+//   fs.readFileSync('public/js/bootstrap.min.js', "utf8"),
+//   fs.readFileSync('public/js/slick.min.js', "utf8"),
+//   fs.readFileSync('public/js/owl.carousel.min.js', "utf8"),
+//   fs.readFileSync('public/js/slick-animation.min.js', "utf8"),
+//   fs.readFileSync('public/js/jquery.magnific-popup.min.js', "utf8"),  
+// ];
+// const uglified = uglifyJs.minify(appPluginFiles, { compress : false });
+// fs.writeFile('public/main/churchStreaming.min.js', uglified.code, function (err){
+//   if(err) {
+//   console.log(err);
+// } else {
+//   console.log('Script generated and saved: churchStreaming.min.js');
+// }
+// });
 
 app.use(logger('dev'));
 app.use(express.json());
