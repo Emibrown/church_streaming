@@ -5,8 +5,8 @@ const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
 const SalvationPrayer = require('../models/salvationPrayer');
 const Testimony = require('../models/testimony');
-const musicVideo = require('../models/musicVideo');
-const Partnerhsip = require('../models/patnership');
+const MusicVideo = require('../models/musicVideo');
+const Patnership = require('../models/patnership');
 const Static = require('../models/static');
 const multers = require('../middleware/multers');
 const path = require('path')
@@ -294,7 +294,7 @@ router.get('/music_video', async (req, res, next) => {
 router.get('/music_video/:id', async (req, res, next) => {
     // get a single music video
     try {
-        const musicVideo = await MusicVideo.findOne({id:req.params.id})
+        const musicVideo = await MusicVideo.findOne({_id:req.params.id})
         sendJSONresponse(res, 200, {musicVideo});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
@@ -306,7 +306,8 @@ router.put('/music_video/:id', async (req, res, next) => {
     try {
         const musicVideo = await MusicVideo.findOne({_id:req.params.id})
         await Object.assign(musicVideo, req.body);
-        await MusicVideo.save()
+        await musicVideo.save()
+        console.log(musicVideo)
         sendJSONresponse(res, 200, {message: 'music video updated successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
@@ -325,9 +326,9 @@ router.delete('/music_video/:id', async (req, res, next) => {
 
 //patnership routes
 router.get('/patnership', async (req, res, next) => {
-    // Get all music videos
+    // Get patnerships
     try {
-        const patnership = await Partnerhsip.find({}).sort({ date : 1 })
+        const patnership = await Patnership.find({}).sort({ date : 1 })
         sendJSONresponse(res, 200, {patnership});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
@@ -337,7 +338,7 @@ router.get('/patnership', async (req, res, next) => {
 router.get('/patnership/:id', async (req, res, next) => {
     // get a patnership
     try {
-        const patnership = await Partnerhsip.findOne({_id:req.params.id})
+        const patnership = await Patnership.findOne({_id:req.params.id})
         sendJSONresponse(res, 200, {patnership});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
@@ -347,9 +348,9 @@ router.get('/patnership/:id', async (req, res, next) => {
 router.put('/patnership/:id', async (req, res, next) => {
     // update a patnership
     try {
-        const patnership = await Partnerhsip.findOne({_id:req.params.id})
+        const patnership = await Patnership.findOne({_id:req.params.id})
         await Object.assign(patnership, req.body);
-        await Partnerhsip.save()
+        await patnership.save()
         sendJSONresponse(res, 200, {message: 'patnership updated successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
@@ -359,7 +360,7 @@ router.put('/patnership/:id', async (req, res, next) => {
 router.delete('/patnership/:id', async (req, res, next) => {
     // delete a patnership
     try {
-        await Partnerhsip.findOneAndDelete({_id:req.params.id});
+        await Patnership.findOneAndDelete({_id:req.params.id});
         sendJSONresponse(res, 200, {message: 'patnership deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});

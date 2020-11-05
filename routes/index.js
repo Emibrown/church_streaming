@@ -7,16 +7,20 @@ const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
 const SalvationPrayer = require('../models/salvationPrayer');
 const Testimony = require('../models/testimony');
-const musicVideo = require('../models/musicVideo');
-const Partnerhsip = require('../models/patnership');
+const MusicVideo = require('../models/musicVideo');
+const Partnership = require('../models/patnership');
 const moment = require('moment');
 const router = express.Router();
-
 
 router.use((req, res, next) => {
   res.locals.moment = moment;
   next();
 });
+
+const sendJSONresponse = (res, status, content) => {
+  res.status(status);
+  res.json(content);
+};
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -114,7 +118,7 @@ router.post('/advert', async (req, res, next) => {
 });
 
 //prayerRequest routes
-router.post('/prayerrequest', async (req, res, next) => {
+router.post('/prayer_request', async (req, res, next) => {
     // submit a prayer request
     try {
         const prayerRequest = new PrayerRequest(req.body)
@@ -178,6 +182,7 @@ router.post('/music_video', async (req, res, next) => {
     // submit music video
     try {
         const musicVideo = new MusicVideo(req.body);
+        console.log(musicVideo)
         await musicVideo.save();
         sendJSONresponse(res, 200, {message: "Music video added successfully"});   
     } catch (error) {
@@ -187,9 +192,10 @@ router.post('/music_video', async (req, res, next) => {
 
 //patnership routes
 router.post('/patnership', async (req, res, next) => {
-  // submit a aptnership form
+  // submit a patnership form
   try {
-      const patnership = new Patnership(req.body);
+      const patnership = new Partnership(req.body);
+      console.log(patnership)
       await patnership.save();
       sendJSONresponse(res, 200, {message: "patnership form submitted"});   
   } catch (error) {
