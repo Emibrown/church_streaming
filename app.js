@@ -11,6 +11,7 @@ const uglifyJs = require("uglify-js");
 const fs = require('fs');
 
 const indexRouter = require('./routes/index');
+const vodRouter = require('./routes/vod');
 const adminRouter = require('./routes/admin');
 const apiRouter = require('./routes/api');
 const aboutRouter = require('./routes/about');
@@ -76,6 +77,7 @@ app.use('/',session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', indexRouter);
+app.use('/vod', vodRouter);
 app.use('/admin', adminRouter);
 app.use('/admin/api', apiRouter);
 app.use('/admin/about', aboutRouter);
