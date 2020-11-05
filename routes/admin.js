@@ -503,7 +503,7 @@ router.get('/season', async (req, res, next) => {
 router.get('/season/:id', async (req, res, next) => {
   // get a single season
   try {
-      const season = await Season.findOne({code: req.params.id})
+      const season = await Season.findOne({_id: req.params.id})
       sendJSONresponse(res, 200, {season});
   } catch (error) {
       sendJSONresponse(res, 400, {error});

@@ -7,6 +7,10 @@ const SalvationPrayer = require('../models/salvationPrayer');
 const Testimony = require('../models/testimony');
 const musicVideo = require('../models/musicVideo');
 const Partnerhsip = require('../models/patnership');
+const Static = require('../models/static');
+const multers = require('../middleware/multers');
+const path = require('path')
+const fs = require('fs')
 const router = express.Router();
 
 const sendJSONresponse = (res, status, content) => {
@@ -287,7 +291,7 @@ router.get('/music_video', async (req, res, next) => {
     }
 });
 
-router.get('music_video/:id', async (req, res, next) => {
+router.get('/music_video/:id', async (req, res, next) => {
     // get a single music video
     try {
         const musicVideo = await MusicVideo.findOne({id:req.params.id})
@@ -297,7 +301,7 @@ router.get('music_video/:id', async (req, res, next) => {
     }
 });
 
-router.put('music_video/:id', async (req, res, next) => {
+router.put('/music_video/:id', async (req, res, next) => {
     // update a music video
     try {
         const musicVideo = await MusicVideo.findOne({_id:req.params.id})
@@ -309,7 +313,7 @@ router.put('music_video/:id', async (req, res, next) => {
     }
 });
 
-router.delete('music_video/:id', async (req, res, next) => {
+router.delete('/music_video/:id', async (req, res, next) => {
     // delete a musicVideo
     try {
         await MusicVideo.findOneAndDelete({_id:req.params.id});
@@ -330,17 +334,17 @@ router.get('/patnership', async (req, res, next) => {
     }
 });
 
-router.get('patnership/:id', async (req, res, next) => {
+router.get('/patnership/:id', async (req, res, next) => {
     // get a patnership
     try {
-        const patnership = await Partnerhsip.findOne({id:req.params.id})
+        const patnership = await Partnerhsip.findOne({_id:req.params.id})
         sendJSONresponse(res, 200, {patnership});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
 });
 
-router.put('patnership/:id', async (req, res, next) => {
+router.put('/patnership/:id', async (req, res, next) => {
     // update a patnership
     try {
         const patnership = await Partnerhsip.findOne({_id:req.params.id})
@@ -352,7 +356,7 @@ router.put('patnership/:id', async (req, res, next) => {
     }
 });
 
-router.delete('patsnership/:id', async (req, res, next) => {
+router.delete('/patnership/:id', async (req, res, next) => {
     // delete a patnership
     try {
         await Partnerhsip.findOneAndDelete({_id:req.params.id});
@@ -361,5 +365,71 @@ router.delete('patsnership/:id', async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
 });
+
+//static file routes
+router.get('/static_files', async (req, res, next) => {
+    // Get  all static files
+    try {
+        const static = await Static.find({}).sort({ addedOn : 1 })
+        sendJSONresponse(res, 200, {static});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+router.post('/static_files', multers.static.single('file'), async (req, res, next) => {
+    // add static file
+    try {
+        if(!req.file){
+            sendJSONresponse(res, 400, {message: "file required"});
+        }
+        req.body.fileURL = req.file.filename
+        const static = new Static(req.body);
+        await static.save();    
+        sendJSONresponse(res, 200, {message: "Static file added successfully"});
+        
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.get('/static_files/:id', async (req, res, next) => {
+    // get a single static file
+    try {
+        const static = await Static.findOne({_id:req.params.id})
+        sendJSONresponse(res, 200, {static});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.put('/static_files/:id', multers.static.single('file'), async (req, res, next) => {
+    // update a static file
+    try {
+        const static = await Static.findOne({_id:req.params.id})
+        if(req.file){
+            console.log(path.resolve('./public','static_files', static.fileURL))
+            fs.unlinkSync(path.resolve('./public','static_files', static.fileURL))
+            req.body.fileURL = req.file.filename   
+        }
+        await Object.assign(static, req.body);
+        await static.save()
+        sendJSONresponse(res, 200, {message: 'file updated successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.delete('/static_files/:id', async (req, res, next) => {
+    // delete a static file
+    try {
+        const static = await Static.findOne({_id:req.params.id});
+        fs.unlinkSync(path.resolve('./public','static', static.image))
+        await Static.deleteOne(static);
+        sendJSONresponse(res, 200, {message: 'file deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
 
 module.exports = router;

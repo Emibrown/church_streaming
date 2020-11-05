@@ -20,8 +20,14 @@ const uploadStorage = multer.diskStorage({
     
 });
 
+const staticStorage = multer.diskStorage({
+    //sets destination and name of uploaded document files
+    destination: (req, file, callback) => {
+        callback(null, './public/static_files')
+    },
+    filename: fileName1  
+});
 
-    
 const fileFilter = (req, file, callback) => {
     //validates that uploaded files are image files
     if(
@@ -38,6 +44,7 @@ const fileFilter = (req, file, callback) => {
 
 const multers = {
     upload : multer({storage: uploadStorage, fileFilter : fileFilter}),
+    static : multer({storage: staticStorage})
 }
 
 
