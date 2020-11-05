@@ -5,6 +5,12 @@ const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
 const SalvationPrayer = require('../models/salvationPrayer');
 const Testimony = require('../models/testimony');
+const musicVideo = require('../models/musicVideo');
+const Partnerhsip = require('../models/patnership');
+const Static = require('../models/static');
+const multers = require('../middleware/multers');
+const path = require('path')
+const fs = require('fs')
 const router = express.Router();
 
 const sendJSONresponse = (res, status, content) => {
@@ -13,23 +19,11 @@ const sendJSONresponse = (res, status, content) => {
 };
 
 //advert
-
 router.get('/adverts', async (req, res, next) => {
     // Get  all adverts 
     try {
         const advert = await Advert.find({}).sort({ date : 1 })
         sendJSONresponse(res, 200, {advert});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.post('/advert', async (req, res, next) => {
-    // submit an advert
-    try {
-        const advert = new Advert(req.body)
-        await advert.save()
-        sendJSONresponse(res, 200, {message: 'advert submitted'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -69,7 +63,7 @@ router.delete('/advert/:id', async (req, res, next) => {
 
 //prayerRequest routes
 
-router.get('/prayerrequests', async (req, res, next) => {
+router.get('/prayer_requests', async (req, res, next) => {
     // Get  all prayer requests 
     try {
         const prayerRequest = await PrayerRequest.find({}).sort({ date : 1 })
@@ -79,18 +73,7 @@ router.get('/prayerrequests', async (req, res, next) => {
     }
 });
 
-router.post('/prayerrequest', async (req, res, next) => {
-    // submit a prayer request
-    try {
-        const prayerRequest = new PrayerRequest(req.body)
-        await prayerRequest.save()
-        sendJSONresponse(res, 200, {message: 'prayer request submitted'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.get('/prayerrequest/:id', async (req, res, next) => {
+router.get('/prayer_request/:id', async (req, res, next) => {
     // get a single prayer request
     try {
         const invoice = await Invoice.findOne({_id:req.params.id})
@@ -100,7 +83,7 @@ router.get('/prayerrequest/:id', async (req, res, next) => {
     }
 });
 
-router.put('/prayerrequest/:id', async (req, res, next) => {
+router.put('/prayer_request/:id', async (req, res, next) => {
     // update a prayer request
     try {
         const prayerRequest = await PrayerRequest.findOne({_id:req.params.id})
@@ -112,7 +95,7 @@ router.put('/prayerrequest/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/prayerrequest/:id', async (req, res, next) => {
+router.delete('/prayer_request/:id', async (req, res, next) => {
     // delete a prayer request
     try {
         await PrayerRequest.findOneAndDelete({_id:req.params.id});
@@ -129,17 +112,6 @@ router.get('/programmer', async (req, res, next) => {
     try {
         const programmer = await Programmer.find({}).sort({ lastName : 1 })
         sendJSONresponse(res, 200, {programmer});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.post('/programmer', async (req, res, next) => {
-    //  submit a programmer request
-    try {
-        const programmer = new Programmer(req.body)
-        await programmer.save()
-        sendJSONresponse(res, 200, {message: 'form submitted'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -189,17 +161,6 @@ router.get('/proposals', async (req, res, next) => {
     }
 });
 
-router.post('/proposal', async (req, res, next) => {
-    // create a proposal
-    try {
-        const proposal = new Proposal(req.body)
-        await proposal.save()
-        sendJSONresponse(res, 200, {message: 'Proposal submitted'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
 router.get('/proposal/:id', async (req, res, next) => {
     // get a single proposal
     try {
@@ -234,7 +195,7 @@ router.delete('/proposal/:id', async (req, res, next) => {
 
 //salvation prayers routes
 
-router.get('/salvationprayers', async (req, res, next) => {
+router.get('/salvation_prayers', async (req, res, next) => {
     // Get  all salvation prayers 
   try {
         const salvationPrayer = await SalvationPrayer.find({}).sort({ addedOn : 1 })
@@ -244,18 +205,7 @@ router.get('/salvationprayers', async (req, res, next) => {
     }
 });
 
-router.post('/salvationprayer', async (req, res, next) => {
-    // create a salvation prayer
-    try {
-        const salvationPrayer = new SalvationPrayer(req.body)
-        await salvationPrayer.save()
-        sendJSONresponse(res, 200, {message: 'salvation prayer created'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.get('/salvationprayer/:id', async (req, res, next) => {
+router.get('/salvation_prayer/:id', async (req, res, next) => {
     // get a salvation prayer
     try {
         const salvationPrayer = await SalvationPrayer.findOne({_id:req.params.id})
@@ -265,7 +215,7 @@ router.get('/salvationprayer/:id', async (req, res, next) => {
     }
 });
 
-router.put('/salvationprayer/:id', async (req, res, next) => {
+router.put('/salvation_prayer/:id', async (req, res, next) => {
     // update a salvation prayer
     try {
         const salvationPrayer = await SalvationPrayer.findOne({_id:req.params.id})
@@ -277,7 +227,7 @@ router.put('/salvationprayer/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/salvationprayer/:id', async (req, res, next) => {
+router.delete('/salvation_prayer/:id', async (req, res, next) => {
     // delete a salvation prayer
     try {
         await SalvationPrayer.findOneAndDelete({_id:req.params.id});
@@ -293,17 +243,6 @@ router.get('/testimonies', async (req, res, next) => {
   try {
         const testimonies = await Testimony.find({}).sort({ date : 1 })
         sendJSONresponse(res, 200, {testimonies});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.post('/testimony', async (req, res, next) => {
-    // create a testimony
-    try {
-        const testimony = new Testimony(req.body)
-        await testimony.save()
-        sendJSONresponse(res, 200, {message: 'testimony submitted'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -340,5 +279,157 @@ router.delete('/testimony/:id', async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
 });
+
+//music video routes
+router.get('/music_video', async (req, res, next) => {
+    // Get all music videos
+    try {
+        const musicVideo = await MusicVideo.find({}).sort({ date : 1 })
+        sendJSONresponse(res, 200, {musicVideo});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.get('/music_video/:id', async (req, res, next) => {
+    // get a single music video
+    try {
+        const musicVideo = await MusicVideo.findOne({id:req.params.id})
+        sendJSONresponse(res, 200, {musicVideo});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.put('/music_video/:id', async (req, res, next) => {
+    // update a music video
+    try {
+        const musicVideo = await MusicVideo.findOne({_id:req.params.id})
+        await Object.assign(musicVideo, req.body);
+        await MusicVideo.save()
+        sendJSONresponse(res, 200, {message: 'music video updated successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.delete('/music_video/:id', async (req, res, next) => {
+    // delete a musicVideo
+    try {
+        await MusicVideo.findOneAndDelete({_id:req.params.id});
+        sendJSONresponse(res, 200, {message: 'music video deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+//patnership routes
+router.get('/patnership', async (req, res, next) => {
+    // Get all music videos
+    try {
+        const patnership = await Partnerhsip.find({}).sort({ date : 1 })
+        sendJSONresponse(res, 200, {patnership});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.get('/patnership/:id', async (req, res, next) => {
+    // get a patnership
+    try {
+        const patnership = await Partnerhsip.findOne({_id:req.params.id})
+        sendJSONresponse(res, 200, {patnership});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.put('/patnership/:id', async (req, res, next) => {
+    // update a patnership
+    try {
+        const patnership = await Partnerhsip.findOne({_id:req.params.id})
+        await Object.assign(patnership, req.body);
+        await Partnerhsip.save()
+        sendJSONresponse(res, 200, {message: 'patnership updated successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.delete('/patnership/:id', async (req, res, next) => {
+    // delete a patnership
+    try {
+        await Partnerhsip.findOneAndDelete({_id:req.params.id});
+        sendJSONresponse(res, 200, {message: 'patnership deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+//static file routes
+router.get('/static_files', async (req, res, next) => {
+    // Get  all static files
+    try {
+        const static = await Static.find({}).sort({ addedOn : 1 })
+        sendJSONresponse(res, 200, {static});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+router.post('/static_files', multers.static.single('file'), async (req, res, next) => {
+    // add static file
+    try {
+        if(!req.file){
+            sendJSONresponse(res, 400, {message: "file required"});
+        }
+        req.body.fileURL = req.file.filename
+        const static = new Static(req.body);
+        await static.save();    
+        sendJSONresponse(res, 200, {message: "Static file added successfully"});
+        
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.get('/static_files/:id', async (req, res, next) => {
+    // get a single static file
+    try {
+        const static = await Static.findOne({_id:req.params.id})
+        sendJSONresponse(res, 200, {static});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.put('/static_files/:id', multers.static.single('file'), async (req, res, next) => {
+    // update a static file
+    try {
+        const static = await Static.findOne({_id:req.params.id})
+        if(req.file){
+            console.log(path.resolve('./public','static_files', static.fileURL))
+            fs.unlinkSync(path.resolve('./public','static_files', static.fileURL))
+            req.body.fileURL = req.file.filename   
+        }
+        await Object.assign(static, req.body);
+        await static.save()
+        sendJSONresponse(res, 200, {message: 'file updated successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.delete('/static_files/:id', async (req, res, next) => {
+    // delete a static file
+    try {
+        const static = await Static.findOne({_id:req.params.id});
+        fs.unlinkSync(path.resolve('./public','static', static.image))
+        await Static.deleteOne(static);
+        sendJSONresponse(res, 200, {message: 'file deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
 
 module.exports = router;

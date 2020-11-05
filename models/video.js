@@ -27,6 +27,10 @@ const videoSchema = mongoose.Schema(
             type: Date, 
             default: Date.now
         },
+        active: {
+            type: String,
+            default: 1
+        }
     }
 )
 

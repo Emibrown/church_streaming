@@ -11,10 +11,11 @@ var aboutSchema = mongoose.Schema(
         },
         title: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         code: {
-            type: String, 
+            type: String,
         },
         description: {
             type: String,
@@ -28,7 +29,8 @@ var aboutSchema = mongoose.Schema(
 )
 aboutSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
-aboutSchema.pre('save', async function (next){
+aboutSchema.pre('save', async function (next) {
+    console.log(this)
     const about = this
     about.code = about.title.split(" ").join("-")
     next()

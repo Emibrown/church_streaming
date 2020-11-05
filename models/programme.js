@@ -27,7 +27,7 @@ const programmeSchema = mongoose.Schema(
 
 programmeSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
-programmeSchema.pre('save', async (next) => {
+programmeSchema.pre('save', async function (next) {
     const programme = this
     programme.code = programme.title.split(" ").join("-")
     next()
