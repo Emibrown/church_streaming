@@ -2,6 +2,8 @@ const express = require('express');
 const User = require('../models/user');
 const Category = require('../models/category');
 const Video = require('../models/video');
+const Programme = require('../models/programme');
+const Season = require('../models/season');
 const passport = require('passport');
 const multers = require('../middleware/multers')
 const sharp = require('sharp')
@@ -484,7 +486,7 @@ router.post('/season', async (req, res, next) => {
   try{
     const season = new Season(req.body);
     await season.save();
-    sendJSONresponse(res, 200, {"message": "Season added successfully"});
+    sendJSONresponse(res, 200, {message: "Season added successfully"});
   } catch (error) {
     sendJSONresponse(res, 400, {error});
   }

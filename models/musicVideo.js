@@ -11,7 +11,7 @@ var musicVideoSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        SupplierName: {
+        supplierName: {
             type: String, 
             required: true, 
         },
@@ -36,6 +36,10 @@ var musicVideoSchema = mongoose.Schema(
                     throw new Error({error: 'Invalid phone number'})
                 }
             }
+        },
+        ownershipRights: {
+            type: String, 
+            required: true
         },
         location: {
             type: String, 
