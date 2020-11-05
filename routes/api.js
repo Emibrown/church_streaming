@@ -107,7 +107,7 @@ router.delete('/prayer_request/:id', async (req, res, next) => {
 
 //programmer routes
 
-router.get('/programmer', async (req, res, next) => {
+router.get('/become_programmer', async (req, res, next) => {
     // Get all programmer requests
     try {
         const programmer = await Programmer.find({}).sort({ lastName : 1 })
@@ -117,7 +117,7 @@ router.get('/programmer', async (req, res, next) => {
     }
 });
 
-router.get('/programmer/:id', async (req, res, next) => {
+router.get('/become_programmer/:id', async (req, res, next) => {
     // get a single programmer
     try {
         const programmer = await Programmer.findOne({_id:req.params.id})
@@ -127,7 +127,7 @@ router.get('/programmer/:id', async (req, res, next) => {
     }
 });
 
-router.put('/programmer/:id', async (req, res, next) => {
+router.put('/become_programmer/:id', async (req, res, next) => {
     // update a programmer request
     try {
         const programmer = await Programmer.findOne({_id:req.params.id})
@@ -139,7 +139,7 @@ router.put('/programmer/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/programmer/:id', async (req, res, next) => {
+router.delete('/become_programmer/:id', async (req, res, next) => {
     // delete a programmer request
     try {
         await Programmer.findOneAndDelete({_id:req.params.id});
@@ -151,7 +151,7 @@ router.delete('/programmer/:id', async (req, res, next) => {
 
 //show proposal routes
 
-router.get('/proposals', async (req, res, next) => {
+router.get('/show_proposals', async (req, res, next) => {
     // Get  all proposals 
     try {
         const proposal = await Proposal.find({}).sort({ date : 1 })
@@ -161,7 +161,7 @@ router.get('/proposals', async (req, res, next) => {
     }
 });
 
-router.get('/proposal/:id', async (req, res, next) => {
+router.get('/show_proposal/:id', async (req, res, next) => {
     // get a single proposal
     try {
         const proposal = await Proposal.findOne({_id:req.params.id})
@@ -171,7 +171,7 @@ router.get('/proposal/:id', async (req, res, next) => {
     }
 });
 
-router.put('/proposal/:id', async (req, res, next) => {
+router.put('/show_proposal/:id', async (req, res, next) => {
     // update a show proposal
     try {
         const proposal = await Proposal.findOne({_id:req.params.id})
@@ -183,7 +183,7 @@ router.put('/proposal/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/proposal/:id', async (req, res, next) => {
+router.delete('/show_proposal/:id', async (req, res, next) => {
     // delete a show proposal
     try {
         await Proposal.findOneAndDelete({_id:req.params.id});

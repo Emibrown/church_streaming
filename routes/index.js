@@ -130,7 +130,7 @@ router.post('/prayer_request', async (req, res, next) => {
 });
 
 //programmer routes
-router.post('/programmer', async (req, res, next) => {
+router.post('/become_programmer', async (req, res, next) => {
     //  submit a programmer request
     try {
         const programmer = new Programmer(req.body)
@@ -142,7 +142,7 @@ router.post('/programmer', async (req, res, next) => {
 });
 
 //show proposal routes
-router.post('/proposal', async (req, res, next) => {
+router.post('/show_proposal', async (req, res, next) => {
     // create a proposal
     try {
         const proposal = new Proposal(req.body)
