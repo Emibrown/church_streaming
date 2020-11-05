@@ -70,8 +70,65 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/categories', (req, res, next) => {
-  res.render('users/pages/cats', { title: 'Categories' });
+  res.render('users/pages/cats', { title: 'Faith TV | Categories' });
 });
+
+router.get('/about', (req, res, next) =>{
+  res.render('users/pages/about', { title: 'Faith TV | About' });
+});
+
+router.get('/dayview', (req, res, next) =>{
+  res.render('users/pages/dayview', { title: 'Day View' });
+});
+
+router.get('/schedule', (req, res, next) =>{
+  res.render('users/pages/schedule', { title: 'Faith TV | Schedule' });
+});
+
+router.get('/highlights', (req, res, next) =>{
+  res.render('users/pages/high', { title: 'Faith TV | Highlights' });
+});
+
+router.get('/show-proposal', (req, res, next) =>{
+  res.render('users/pages/show_proposal', { title: 'Faith TV | Submit Show Proposal' });
+});
+
+router.get('/music-video', (req, res, next) =>{
+  res.render('users/pages/music_video', { title: 'Faith TV | Submit Music Video' });
+});
+
+router.get('/become-programmer', (req, res, next) =>{
+  res.render('users/pages/become_programmer', { title: 'Faith TV | Become a Programmer' });
+});
+router.get('/advertise', (req, res, next) =>{
+  res.render('users/pages/advert', { title: 'Faith TV | Advertise' });
+});
+router.get('/salvation-prayer', (req, res, next) =>{
+  res.render('users/pages/salvation', { title: 'Faith TV | Salvation Prayer' });
+});
+router.get('/prayer-request', (req, res, next) =>{
+  res.render('users/pages/prayer_req', { title: 'Faith TV | Prayer Request' });
+});
+router.get('/testimony', (req, res, next) =>{
+  res.render('users/pages/testimony', { title: 'Faith TV | Share Your Testimony' });
+});
+router.get('/contact', (req, res, next) =>{
+  res.render('users/pages/contact', { title: 'Faith TV | Contact' });
+});
+router.get('/enquiries', (req, res, next) =>{
+  res.render('users/pages/enquiries', { title: 'Faith TV | Enquiries' });
+});
+router.get('/partnership', (req, res, next) =>{
+  res.render('users/pages/partnership', { title: 'Faith TV | Partnership' });
+});
+router.get('/register', (req, res, next) =>{
+  res.render('users/pages/register', { title: 'Faith TV | Register' });
+});
+router.get('/login', (req, res, next) =>{
+  res.render('users/pages/login', { title: 'Faith TV | Login' });
+});
+
+/** GET requests for pages ends here **/
 
 router.get('/live/:id', async(req, res, next) => {
   const video = await Video.findOne(

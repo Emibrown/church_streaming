@@ -35,26 +35,26 @@ const ensureAuthenticated = (req, res, next) => {
   }
 };
 
-User.find({}, (err, users) => {
-  if(err){ return;}
-  if(users.length == 0){
-      var newUser = new User({
-        firstname: "Church",
-        lastname: "stream",
-        title:'Mr',
-        email: "bossworker@gmail.com",
-        password: "11223344E"
-      });
-      newUser.save((err, user) => {
-        if (err) { 
-          console.log(err);
-          return; 
-        }else{
-            console.log(user);
-        }
-      });
-  }
-})
+// User.find({}, (err, users) => {
+//   if(err){ return;}
+//   if(users.length == 0){
+//       var newUser = new User({
+//         firstname: "Church",
+//         lastname: "stream",
+//         title:'Mr',
+//         email: "bossworker@gmail.com",
+//         password: "11223344E"
+//       });
+//       newUser.save((err, user) => {
+//         if (err) { 
+//           console.log(err);
+//           return; 
+//         }else{
+//             console.log(user);
+//         }
+//       });
+//   }
+// })
 
 router.use((req, res, next) => {
   res.locals.moment = moment;
