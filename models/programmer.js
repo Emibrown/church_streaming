@@ -18,7 +18,7 @@ var programmerSchema = mongoose.Schema(
                 }
             }
         },
-        phoneNumber: {
+        phone: {
             type: String,
             required: false,
             validate: value => {

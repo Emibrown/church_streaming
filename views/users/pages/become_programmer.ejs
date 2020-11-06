@@ -13,61 +13,60 @@
                         the message of faith and inspiring television like never before!</p>
                       <hr />
                       <p>&nbsp;</p>
+                        <div id = "message"></div>
                           <h4 class = "pb-2">CONTACT DETAILS</h4>
-                          <form accept-charset="UTF-8" action="" method="post" class="story-form" role="form">
-                              
-                          <input type="hidden" value="story" id="formStory" name="form">                  
+                          <form id = "become-programmer">
                           <div class="form-group">
                           <label for="fullname">*Your Full Name</label>
-                          <input value="" id="fullname" name="fullname" type="text" class="form-control" placeholder="Your Full Name (Required)">                  
+                          <input value="" id="fullname" name="fullname" type="text" class="form-control" placeholder="Your Full Name (Required)" required>                  
                         </div>
                         
                         <div class="form-group">
                           <label for="email">* Email address</label>
-                          <input value="" id="email" name="email" type="email" class="form-control" placeholder="Email Address (Required)">                  
+                          <input value="" id="email" name="email" type="email" class="form-control" placeholder="Email Address (Required)" required>                  
                         </div>
                         
                         <hr />
                         <div class="form-group">
                           <label for="phone">*Phone number</label>
-                          <input value="" id="phone" name="phone" type="text" class="form-control" placeholder="Phone Number (Required)">                 
+                          <input value="" id="phone" name="phone" type="text" class="form-control" placeholder="Phone Number (Required)" required>                 
                        </div>
                        <div class="form-group">
                         <label for="location">Location</label>
-                        <input value="" id="location" name="location" type="text" class="form-control" placeholder="Location">                 
+                        <input value="" id="location" name="location" type="text" class="form-control" placeholder="Location" required>                 
                      </div>
                        <div class="form-group">
                           <label for="ministry">Minstry Name</label>
-                          <input value="" id="ministry" name="ministry" type="text" class="form-control" placeholder="Ministry Name">                 
+                          <input value="" id="ministry" name="ministry" type="text" class="form-control" placeholder="Ministry Name" required>                 
                        </div> 
                        <div class="form-group">
                           <label for="url">Website URL or Facebook Page</label>
-                          <input value="" id="url" name="url" type="tel" class="form-control" placeholder="Website URL">                 
+                          <input value="" id="url" name="url" type="tel" class="form-control" placeholder="Website URL" required>                 
                        </div>
                        <div class="form-group">
                         <label for="web">Program or Ministry Website</label>
-                        <input value="" id="web" name="web" type="text" class="form-control" placeholder="Ministry Website">                 
+                        <input value="" id="web" name="web" type="text" class="form-control" placeholder="Ministry Website" required>                 
                      </div>
                        <br>
                        <h4 class = "pb-2">PROGRAMME DETAILS</h4>
                        <div class="form-group">
                           <label for="prog_title">*Programme Title</label>
-                          <input value="" id="prog_title" name="prog_title" type="text" class="form-control" placeholder="Enter programme title (Required)">                 
+                          <input value="" id="prog_title" name="prog_title" type="text" class="form-control" placeholder="Enter programme title (Required)" required>                 
                        </div>
                        <div class="form-group">
                           <label for="prog_desc">*Describe your programme</label>
-                          <textarea id="prog_desc" name="prog_desc" rows="5" class="form-control" placeholder="Enter your programme synopsis (Required)"></textarea>                  
+                          <textarea id="prog_desc" name="prog_desc" rows="5" class="form-control" placeholder="Enter your programme synopsis (Required)" required></textarea>                  
                       </div>
                       <div class = "form-group">
                           <label for="video">*Video url</label>
-                          <input placeholder = "Youtube/Vimeo url" type="text" name = "video" class = "form-control">
+                          <input placeholder = "Youtube/Vimeo url" id = "video" type="text" name = "video" class = "form-control" required>
                           <span class = "video-text">Most important of all, please enter a YouTube or Vimeo video link of your programme above.</span>
                       </div>
                       <h4 class = "pb-2">DECLARATIONS</h4>
                       <div class = "form-group">
                           <label for="first_time">1. * Have you submitted to this channel before? K
                               indly indicate if yes? (State video content and date of submission)</label>
-                          <select class ="form-control" name="first_time" id="">
+                          <select class ="form-control" name="declaration" id="declaration" required>
                               <option>CHOOSE AN OPTION</option>
                              <option value="1">YES</option>
                              <option value="0">NO</option>
@@ -77,16 +76,15 @@
                       <div class = "form-group">
                           <label for="relationship">2. * Do you have an existing personal relationship with anyone at this 
                               channel that needs to be declared? </label>
-                          <select class ="form-control" name="relationship" id="">
+                          <select class ="form-control" name="relationship" id="relationship" required>
                               <option>CHOOSE AN OPTION</option>
                              <option value="1">YES</option>
                              <option value="0">NO</option>
                           </select>
                       </div>
-                      
                         <p>
                             <label class="chkBox">
-                                <input type="checkbox" value="Y" id="agreePhone" name="agree_phone" class="inputCheckbox" /> 
+                                <input type="checkbox" value="Y" id="terms1" name="agree_phone" class="inputCheckbox" /> 
                                 <strong>By using this service i agree to FAITH TO FAITH TV's <a href = "">Terms of Service</a> and privacy policy</strong>
                               </label>
                         </p>
@@ -95,7 +93,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id = "terms2" class = "inputCheckbox">
                                       <span><strong>I consent to the processing of my personal data by FAITH TO FAITH TV with its registered office Port Harcourt,
                                          Rivers State, Nigeria, in order to provide services available on the site faithtofaithtv.org. I am informed about the right
                                           to the contents of my personal data and can make corrections to it when needed.
@@ -163,53 +161,38 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
-  $(document).on('submit', '#prayer-form', function(event) {
+  $(document).on('submit', '#become-programmer', function(event) {
       event.preventDefault();
-        let contactForm = $(this);
-        let fullname = jQuery("#fullname").val();
-        let email = jQuery("#email").val();
-        let phone = jQuery("#phone").val();
-        let location = jQuery("#email").val();
-        let ministry = jQuery("#minitsry").val();
-        let url = jQuery("#url").val();
-        let web = jQuery("#web").val();
-        let prog_title = jQuery("#prog_title").val();
-        let prog_desc = jQuery("#prog_desc").val();
-        let video = jQuery("#video").val();
-        let first_time = jQuery("#first_time").val();
-        let relationship = jQuery("#relationship").val();
-        if (!terms1.checked==true && !terms2.checked==true){
+      const data = {
+          "fullName": $("#fullname").val(),
+          "email":  $("#email").val(),
+          "phone": $("#phone").val(),
+          "location": $("#location").val(),
+          "ministryName": $("#ministry").val(),
+          "webUrl": $("#url").val(),
+          "programmeTitle" : $("#prog_title").val(),
+          "programmeDescription" : $("#prog_desc").val(),
+          "videoURL" : $("#video").val(),
+          "firstTimeProduction": $("#declaration").val(),
+          "personalRelationships" : $("#relationship").val(),
+        }        
+        if (!$('#terms1').prop('checked') || !$('#terms2').prop('checked')){
           $('#message').html(`
               <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <strong>Attention</strong> Please accept all terms and conditions.
               </div>`);
-
               window.scrollTo({
               top: 0,
               left: 0,
               behavior: 'smooth'
           });
         }else{
-
       jQuery.ajax({
-          url: '/programmer',
+          url: '/become_programmer',
           method: "POST",
           dataType : "json",
-          data: JSON.stringify({
-          "fullName": fullname,
-          "email": email,
-          "phoneNumber": phone,
-          "location": location,
-          "ministryName" : ministry,
-          "webURL": web,
-          "programmeTitle": prog_title,
-          "programmeDescription": prog_desc,
-          "video": video,
-          "firstTimeProduction": first_time,
-          "personalRelationships": relationship
-  
-      }),
+          data: JSON.stringify(data),
           "contentType": "application/json",
           success: function(response) { 
               console.log(response);
@@ -217,8 +200,14 @@
                   $('#message').html(`
                   <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <strong>Success</strong> Your prayer request has been sent successfully.
+                   <strong>${response.message}</strong>
                   </div>`);
+                  window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                  });
+                  $('#become-programmer')[0].reset();
               }
           },
           error:function(jqXhr){
