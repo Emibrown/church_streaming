@@ -212,8 +212,8 @@
                     left: 0,
                     behavior: 'smooth'
                     });
-                    $('#show-proposal').find('input').val(''); 
-                    $(".chk").prop("checked", false)
+                    $('#show-proposal')[0].reset();
+
                 }
             },
             error:function(jqXhr){

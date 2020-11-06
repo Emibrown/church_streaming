@@ -162,8 +162,8 @@
                     left: 0,
                     behavior: 'smooth'
                   });
-                  $('#feedback-form').find('input').val(''); 
-                  $(".chk").prop("checked", false)
+                  $('#feedback-form')[0].reset();
+
               }
           },
           error:function(jqXhr){

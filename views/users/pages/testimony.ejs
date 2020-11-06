@@ -166,8 +166,7 @@
                     left: 0,
                     behavior: 'smooth'
                   });
-                  $('#testimony-form').find('input').val(''); 
-                  $(".chk").prop("checked", false)
+                  $('#testimony-form')[0].reset();
               }
           },
           error:function(jqXhr){

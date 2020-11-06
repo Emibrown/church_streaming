@@ -10,6 +10,7 @@ const Static = require('../models/static');
 const Settings = require('../models/settings');
 const Show = require('../models/show');
 const Schedule = require('../models/schedule');
+const Enquiry = require('../models/enquiries');
 const multers = require('../middleware/multers');
 const sharp = require('sharp');
 const path = require('path')
@@ -585,6 +586,49 @@ router.post('/schedule', async (req, res, next) => {
     try {
         await Schedule.findOneAndDelete({_id:req.params.id});
         sendJSONresponse(res, 200, {message: 'schedule deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+  });
+
+  //feedback routes
+  router.get('/enquiries', async (req, res, next) => {
+    // get all feedbacks
+    try {
+        const enquiries = await Enquiry.find({})
+        sendJSONresponse(res, 200, {enquiries});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+  });
+  
+  router.get('/enquiries/:id', async (req, res, next) => {
+    // get a single feedback
+    try {
+        const enquiries = await Enquiry.findOne({_id: req.params.id})
+        sendJSONresponse(res, 200, {enquiries});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+  });
+  
+  router.put('/enquiries/:id', async (req, res, next) => {
+    // update a feedback
+    try {
+        const enquiries = await Enquiry.findOne({_id:req.params.id})
+        await Object.assign(enquiries,req.body);
+        await schedule.save()
+        sendJSONresponse(res, 200, {message: 'feedback updated successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+  });
+  
+  router.delete('/enquiries/:id', async (req, res, next) => {
+    // delete a feedback
+    try {
+        await Enquiry.findOneAndDelete({_id:req.params.id});
+        sendJSONresponse(res, 200, {message: 'feedback deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
