@@ -209,11 +209,12 @@ router.post('/become_programmer', async (req, res, next) => {
 router.post('/show_proposal', async (req, res, next) => {
     // create a proposal
     try {
-        const {fullName, email} = req.body;
+        const {supplierName, email} = req.body;
         const header = "show proposal";
         const message = "Request was processed successfully";
-        customEmail.customEmail(fullName, email, header, message);
+        customEmail.customEmail(supplierName, email, header, message);
         const proposal = new Proposal(req.body)
+        console.log(proposal)
         await proposal.save()
         res.send({status: 200, message: 'show proposal submitted'});
     } catch (error) {
@@ -226,12 +227,12 @@ router.post('/testimony', async (req, res, next) => {
     // create a testimony
     try {
         const {fullName, email} = req.body;
-        const header = "Prayer request";
+        const header = "Testimony";
         const message = "Request was processed successfully";
         customEmail.customEmail(fullName, email, header, message);
         const testimony = new Testimony(req.body)
         await testimony.save()
-        res.send({status: 200, message: 'testimony submitted'});
+        res.send({status: 200, message: 'Testimony submitted'});
     } catch (error) {
       res.send({error:400, message: 'Failed to process'});
     }
@@ -246,7 +247,6 @@ router.post('/music_video', async (req, res, next) => {
         const message = "Request was processed successfully";
         customEmail.customEmail(fullName, email, header, message);
         const musicVideo = new MusicVideo(req.body);
-        console.log(musicVideo)
         await musicVideo.save();
         res.send({status: 200, message: 'music video submitted'});
     } catch (error) {

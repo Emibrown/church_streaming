@@ -91,7 +91,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" id = "terms1" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id = "terms1" class = "inputCheckbox chk">
                                       <strong>By using this service i agree to FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                                   </span>
                               </label>
@@ -101,7 +101,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" id = "terms2" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id = "terms2" class = "inputCheckbox chk ">
                                       <span><strong>I consent to the processing of my personal data by FAITH TO FAITH TV with its registered 
                                         office in Port Harcourt, Rivers State, Nigeria, in order to provide services available on the site faithtofaithtv.org. I am informed about 
                                         the right to the contents of my personal data and can make corrections to it when needed.
@@ -166,17 +166,17 @@
         event.preventDefault();
           let contactForm = $(this);
           const data = {
-            "prop_title" : jQuery("#prop_title").val(),
+            "title" : jQuery("#prop_title").val(),
             "genre" : jQuery("#genre").val(),
-            "supplier" : jQuery("#supplier").val(),
+            "supplierName" : jQuery("#supplier").val(),
             "email" : jQuery("#email").val(),
-            "phone" : jQuery("#phone").val(),
-            "contact" : jQuery("#contact").val(),
+            "phoneNumber" : jQuery("#phone").val(),
+            "contactName" : jQuery("#contact").val(),
             "location" : jQuery("#email").val(),
-            "present_url" : jQuery("#present_url").val(),
-            "pilot" : jQuery("#pilot").val(),
-            "first_time" : jQuery("#first_time").val(),
-            "relationship" : jQuery("#relationship").val()
+            "presentationURL" : jQuery("#present_url").val(),
+            "showReel" : jQuery("#pilot").val(),
+            "firstTimeProduction" : jQuery("#first_time").val(),
+            "personalRelationships" : jQuery("#relationship").val()
           }
           
           if (terms1.checked==false || terms2.checked==false){
@@ -207,7 +207,13 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Success</strong> ${response.message}.
                     </div>`);
-                    $('#show-proposal').find('input').val('');    
+                    window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                    });
+                    $('#show-proposal').find('input').val(''); 
+                    $(".chk").prop("checked", false)
                 }
             },
             error:function(jqXhr){

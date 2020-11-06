@@ -11,7 +11,7 @@ var showProposalSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        SupplierName: {
+        supplierName: {
             type: String, 
             required: true, 
         },

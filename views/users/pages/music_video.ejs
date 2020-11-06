@@ -92,7 +92,7 @@
                       </div>
                         <p>
                             <label class="chkBox">
-                                <input type="checkbox" value="Y" id="terms1" name="terms1" class="inputCheckbox" /> 
+                                <input type="checkbox" value="Y" id="terms1" name="terms1" class="inputCheckbox chk" /> 
                                 <strong>By using this service, i agree to  FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                               </label>
                         </p>
@@ -101,7 +101,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "inputCheckbox" id="terms2" name="terms2">
+                                      <input type="checkbox" value = "Y" class = "inputCheckbox chk" id="terms2" name="terms2">
                                       <span><strong>I consent to the processing of my personal data by FAITH TO FAITH TV 
                                           with its registered office in Port Harcourt, Rivers State, Nigeria, in order to 
                                           provide services available on the site faithtofaithtv.org. I am informed about the
@@ -219,7 +219,8 @@
                   behavior: 'smooth'
                   });
 
-                  $('#music-video').find('input').val('');    
+                  $('#music-video').find('input').val(''); 
+                  $(".chk").prop("checked", false);   
 
               }
           },
