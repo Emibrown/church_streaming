@@ -183,7 +183,7 @@ router.post('/prayer_request', async (req, res, next) => {
         customEmail.customEmail(fullName, email, header, message);
         const prayerRequest = new PrayerRequest(req.body)
         await prayerRequest.save()
-        res.send({status: 200, message: 'prayer request submitted'});
+        res.send({status: 200, message: 'Prayer Request Submitted'});
     } catch (error) {
       res.send({error:400, message: 'Failed to process'});
     }
@@ -193,6 +193,7 @@ router.post('/prayer_request', async (req, res, next) => {
 router.post('/become_programmer', async (req, res, next) => {
     //  submit a programmer request
     try {
+        console.log(req.body);
         const {fullName, email} = req.body;
         const header = "Become a programmer";
         const message = "Request was processed successfully";
