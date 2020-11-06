@@ -17,7 +17,7 @@
                       <p>&nbsp;</p>
                           <h4 class = "pb-2">PRAYER DETAILS</h4>
 
-                          <div id = "error"></div>
+                          <div id = "message"></div>
                           <form id="prayer-form">
                           <div class = "form-group">
                               <label for="fullname">*Your Full Name</label>
@@ -152,7 +152,21 @@
               let email = jQuery("#email").val();
               let phone = jQuery("#phone").val();
               let prayerRequest = jQuery("#prayer_req").val();
-              
+
+              if (!terms1.checked==true && !terms2.checked==true){
+                $('#message').html(`
+                    <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Attention</strong> Please accept all terms and conditions.
+                    </div>`);
+
+                    window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+              }else{
+
             jQuery.ajax({
                 url: '/prayer_request',
                 method: "POST",
@@ -167,7 +181,11 @@
                 success: function(response) { 
                     console.log(response);
                     if(response.status==200){
-                        location.href = "/about";
+                        $('#message').html(`
+                        <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Success</strong> Your prayer request has been sent successfully.
+                        </div>`);
                     }
                 },
                 error:function(jqXhr){
@@ -177,57 +195,9 @@
                     }
                 }
             });
+           }
         });
-  
 
-
-
-
-    // $('#prayer-form').submit( function(e) {
-       
-    //     e.preventDefault();
-    //     const formdata = new FormData();
-    //     formdata.append("fullName", $("#fullname").val());
-    //     formdata.append("email", $("#email").val());
-    //     formdata.append("phone", $("#phone").val());
-    //     formdata.append("prayerRequest", $("#prayer_req").val());
-
-    //     let terms1 = document.getElementById('terms1');
-    //     let terms2 = document.getElementById('terms2');
-
-	// 	if (!terms1.checked==true && !terms2.checked==true){
-
-    //     window.scrollTo({
-    //     top: 0,
-    //     left: 0,
-    //     behavior: 'smooth'
-    //  });
-    //  $('#error').html(`
-    //     <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
-    //     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    //     <strong>Attention</strong> Please accept all terms and conditions.
-    //     </div>`);
-    //   }else{
-    //         axios({
-    //         method: 'post',
-    //         url: '/prayer_request',
-    //         data: formdata,
-    //     }) .then(function (response) {
-    //         // handle success
-    //         console.log("success sent");
-       
-    //         const url = "/success-page";    
-    //         $(location).attr('href',url);
-    //     })
-    //     .catch(function (error) {
-    //         // handle error
-    //         console.log(error);
-    //     })
-     
-
-    // }
-    
-    // })
 
 </script>
 
