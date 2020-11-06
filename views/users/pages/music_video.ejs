@@ -80,7 +80,7 @@
                       <div class = "form-group">
                           <label for="first_time">1. * Have you submitted to this channel before? K
                               indly indicate if yes? (State video content and date of submission)</label>
-                          <select class ="form-control" name="first_time" id="">
+                          <select class ="form-control" name="first_time" id="first_time">
                               <option>CHOOSE AN OPTION</option>
                              <option value="1">YES</option>
                              <option value="0">NO</option>
@@ -90,7 +90,7 @@
                       <div class = "form-group">
                           <label for="relationship">2. * Do you have an existing personal relationship with anyone at this 
                               channel that needs to be declared? </label>
-                          <select class ="form-control" name="relationship" id="">
+                          <select class ="form-control" name="relationship" id="relationship">
                               <option>CHOOSE AN OPTION</option>
                              <option value="1">YES</option>
                              <option value="0">NO</option>
@@ -98,7 +98,7 @@
                       </div>
                         <p>
                             <label class="chkBox">
-                                <input type="checkbox" value="Y" id="agreePhone" name="agree_phone" class="inputCheckbox" /> 
+                                <input type="checkbox" value="Y" id="terms" name="agree_phone" class="inputCheckbox" /> 
                                 <strong>By using this service i agree to  FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                               </label>
                         </p>
@@ -107,7 +107,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" class = "inputCheckbox" id="terms2">
                                       <span><strong>I consent to the processing of my personal data by FAITH TO FAITH TV 
                                           with its registered office in Port Harcourt, Rivers State, Nigeria, in order to 
                                           provide services available on the site faithtofaithtv.org. I am informed about the
@@ -178,19 +178,20 @@
 <script>
   $(document).on('submit', '#music-video', function(event) {
       event.preventDefault();
-        let contactForm = $(this);
-        let title = jQuery("#title").val();
-        let genre = jQuery("#genre").val();
-        let supplier = jQuery("#supplier").val();
-        let email = jQuery("#email").val();
-        let phone = jQuery("#phone").val();
-        let contact = jQuery("#contact").val();
-        let location = jQuery("#email").val();
-        let video = jQuery("#video").val();
-        let owner = jQuery("#owner").val();
-        let first_time = jQuery("#first_time").val();
-        let relationship = jQuery("#relationship").val();
-        if (!terms1.checked==true && !terms2.checked==true){
+      let contactForm = {
+          title : jQuery("#title").val(),
+          genre : jQuery("#genre").val(),
+          supplierName : jQuery("#supplier").val(),
+          email :jQuery("#email").val(),
+          phone : jQuery("#phone").val(),
+          contactName : jQuery("#contact").val(), 
+          location : jQuery("#email").val(),
+          video : jQuery("#video").val(),
+          ownershipRights : jQuery("#owner").val(),
+          firstTimePrduction : jQuery("#first_time").val(),
+          personalRelationships : jQuery("#relationship").val(),
+      }
+        if (terms1.checked==false || terms2.checked==false){
           $('#message').html(`
               <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -231,6 +232,11 @@
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   <strong>Success</strong> Your prayer request has been sent successfully.
                   </div>`);
+                  window.scrollTo({
+                  top: 0,
+                  left: 0,
+                  behavior: 'smooth'
+                  });
               }
           },
           error:function(jqXhr){
