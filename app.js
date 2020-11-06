@@ -20,6 +20,7 @@ const aboutRouter = require('./routes/about');
 
 const setuppassport = require('./setuppassport');
 const app = express();
+
 setuppassport();
 
 require('./models/db');

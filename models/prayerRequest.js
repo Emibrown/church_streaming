@@ -3,11 +3,7 @@ const validator = require('validator')
 
 var prayerRequestSchema = mongoose.Schema(
     {
-        firstName: {
-            type: String, 
-            required: true, 
-        },
-        lastName: {
+        fullName: {
             type: String, 
             required: true, 
         },
@@ -20,7 +16,7 @@ var prayerRequestSchema = mongoose.Schema(
                 }
             }
         },
-        phoneNumber: {
+        phone: {
             type: String,
             required: false,
             validate: value => {
@@ -34,8 +30,7 @@ var prayerRequestSchema = mongoose.Schema(
             required: true
         },
         termsOfServiceAgreement: {
-            type: String, 
-            required: true,
+            type: Number, default: 1
         },
         date: {
             type: Date, 
