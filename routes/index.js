@@ -9,6 +9,7 @@ const SalvationPrayer = require('../models/salvationPrayer');
 const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
 const Partnership = require('../models/patnership');
+const customEmail = require('../services/email');
 const moment = require('moment');
 const router = express.Router();
 
@@ -176,13 +177,16 @@ router.post('/advert', async (req, res, next) => {
 
 //prayerRequest routes
 router.post('/prayer_request', async (req, res, next) => {
-    // submit a prayer request
     try {
+        const {fullName, email} = req.body;
+        const header = "Prayer request";
+        const message = "Request was processed successfully";
+        customEmail.customEmail(fullName, email, header, message);
         const prayerRequest = new PrayerRequest(req.body)
         await prayerRequest.save()
-        sendJSONresponse(res, 200, {message: 'prayer request submitted'});
+        res.send({status: 200, message: 'prayer request submitted'});
     } catch (error) {
-        sendJSONresponse(res, 400, {error});
+      res.send({error:400, message: 'Failed to process'});
     }
 });
 
