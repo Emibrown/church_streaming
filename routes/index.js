@@ -5,7 +5,6 @@ const Advert = require('../models/advert');
 const PrayerRequest = require('../models/prayerRequest');
 const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
-const SalvationPrayer = require('../models/salvationPrayer');
 const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
 const Partnership = require('../models/patnership');
@@ -194,11 +193,15 @@ router.post('/prayer_request', async (req, res, next) => {
 router.post('/become_programmer', async (req, res, next) => {
     //  submit a programmer request
     try {
+        const {fullName, email} = req.body;
+        const header = "Become a programmer";
+        const message = "Request was processed successfully";
+        customEmail.customEmail(fullName, email, header, message);
         const programmer = new Programmer(req.body)
         await programmer.save()
         sendJSONresponse(res, 200, {message: 'form submitted'});
     } catch (error) {
-        sendJSONresponse(res, 400, {error});
+      res.send({error:400, message: 'Failed to process'});
     }
 });
 
@@ -206,23 +209,15 @@ router.post('/become_programmer', async (req, res, next) => {
 router.post('/show_proposal', async (req, res, next) => {
     // create a proposal
     try {
+        const {fullName, email} = req.body;
+        const header = "show proposal";
+        const message = "Request was processed successfully";
+        customEmail.customEmail(fullName, email, header, message);
         const proposal = new Proposal(req.body)
         await proposal.save()
         sendJSONresponse(res, 200, {message: 'Proposal submitted'});
     } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-//salvation prayers routes
-router.post('/salvation_prayer', async (req, res, next) => {
-    // create a salvation prayer
-    try {
-        const salvationPrayer = new SalvationPrayer(req.body)
-        await salvationPrayer.save()
-        sendJSONresponse(res, 200, {message: 'salvation prayer created'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
+      res.send({error:400, message: 'Failed to process'});
     }
 });
 
@@ -230,11 +225,15 @@ router.post('/salvation_prayer', async (req, res, next) => {
 router.post('/testimony', async (req, res, next) => {
     // create a testimony
     try {
+        const {fullName, email} = req.body;
+        const header = "Prayer request";
+        const message = "Request was processed successfully";
+        customEmail.customEmail(fullName, email, header, message);
         const testimony = new Testimony(req.body)
         await testimony.save()
         sendJSONresponse(res, 200, {message: 'testimony submitted'});
     } catch (error) {
-        sendJSONresponse(res, 400, {error});
+      res.send({error:400, message: 'Failed to process'});
     }
 });
 
@@ -242,12 +241,16 @@ router.post('/testimony', async (req, res, next) => {
 router.post('/music_video', async (req, res, next) => {
     // submit music video
     try {
+        const {fullName, email} = req.body;
+        const header = "Music video";
+        const message = "Request was processed successfully";
+        customEmail.customEmail(fullName, email, header, message);
         const musicVideo = new MusicVideo(req.body);
         console.log(musicVideo)
         await musicVideo.save();
         sendJSONresponse(res, 200, {message: "Music video added successfully"});   
     } catch (error) {
-        sendJSONresponse(res, 400, {error});
+      res.send({error:400, message: 'Failed to process'});
     }
 });
 

@@ -49,7 +49,7 @@ var settingsSchema = mongoose.Schema(
             type: String,
             required: false
         },
-        memberStreamHandle:{
+        memberStreamKey:{
             type: String,
             required: false
         },

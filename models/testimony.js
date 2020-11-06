@@ -3,11 +3,7 @@ const validator = require('validator')
 
 var testimonySchema = mongoose.Schema(
     {
-        firstName: {
-            type: String, 
-            required: true, 
-        },
-        lastName: {
+        fullName: {
             type: String, 
             required: true, 
         },
@@ -34,10 +30,6 @@ var testimonySchema = mongoose.Schema(
             required: true
         },
         testimony: {
-            type: String, 
-            required: true
-        },
-        termsOfServiceAgreement: {
             type: String, 
             required: true
         },

@@ -47,7 +47,7 @@ var patnershipSchema = mongoose.Schema(
         patnershipLevel: {
             type: String, 
             required: true
-        },
+        }
     }
 )
 

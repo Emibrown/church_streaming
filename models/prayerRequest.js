@@ -29,9 +29,6 @@ var prayerRequestSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        termsOfServiceAgreement: {
-            type: Number, default: 1
-        },
         date: {
             type: Date, 
             default: Date.now
