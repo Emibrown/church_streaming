@@ -7,9 +7,11 @@ const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
 const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
+const Enquiry = require('../models/enquiries');
 const Partnership = require('../models/patnership');
 const customEmail = require('../services/email');
 const moment = require('moment');
+const Feedback = require('../models/enquiries');
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -252,6 +254,22 @@ router.post('/music_video', async (req, res, next) => {
     } catch (error) {
       res.send({error:400, message: 'Failed to process'});
     }
+});
+
+//feedback routes
+router.post('/enquiries', async (req, res, next) => {
+  // submit feedback
+  try {
+      const {fullName, email} = req.body;
+      const header = "feeback / enquiry";
+      const message = "Request was processed successfully";
+      customEmail.customEmail(fullName, email, header, message);
+      const enquiry = new Enquiry(req.body);
+      await enquiry.save();
+      res.send({status: 200, message: 'feedback submitted'});
+  } catch (error) {
+    res.send({error:400, message: 'Failed to process'});
+  }
 });
 
 //patnership routes
