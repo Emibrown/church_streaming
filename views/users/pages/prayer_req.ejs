@@ -40,7 +40,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" id ="terms1" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id ="terms1" required class = "inputCheckbox">
                                       <strong>By using this service i agree to FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                                   </span>
                               </label>
@@ -50,7 +50,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y"  id = "terms2" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y"  id = "terms2" required class = "inputCheckbox">
                                       <span><strong>By using this online service I agree to FAITH TO FAITH TV's Terms of Service and Privacy Policy.
                                           I consent to the processing of my personal data by FAITH TO FAITH TV with its registered office in Port Harcourt, Rivers State, Nigeria, in order to provide services available on the site faithtofaithtv.org. I am informed about the 
                                           right to the contents of my personal data and can make corrections to it when needed. </span>
@@ -153,18 +153,17 @@
               let phone = jQuery("#phone").val();
               let prayerRequest = jQuery("#prayer_req").val();
 
-              if (!terms1.checked==true && !terms2.checked==true){
-                $('#message').html(`
+              if (terms1.checked != true && terms2.checked != true){
+                    $('#message').html(`
                     <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Attention</strong> Please accept all terms and conditions.
                     </div>`);
-
                     window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'smooth'
-                });
+                        top: 0,
+                        left: 0,
+                        behavior: 'smooth'
+                    });
               }else{
 
             jQuery.ajax({
@@ -186,6 +185,11 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong>Success</strong> Your prayer request has been sent successfully.
                         </div>`);
+                        window.scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: 'smooth'
+                        });
                     }
                 },
                 error:function(jqXhr){

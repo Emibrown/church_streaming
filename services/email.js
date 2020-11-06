@@ -40,7 +40,7 @@ const welcomeEmail = (name,email) =>{
 
 const customEmail = (name,email,header,message) =>{
     return new Promise(async (resolve, reject) => {
-        ejs.renderFile(__dirname + "/template/welcome.ejs", { name,header,message }, function (err, data) {
+        ejs.renderFile(__dirname + "/template/custom.ejs", { name,header,message }, function (err, data) {
             if (err) {
                 console.log(err);
                 reject(err)
