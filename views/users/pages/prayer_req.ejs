@@ -171,11 +171,8 @@
                 },
                 error:function(jqXhr){
                     if(jqXhr.status ==400){
-                        $('#success').empty();
-                        var responseText = jQuery.parseJSON(jqXhr.responseText);
+                        let responseText = jQuery.parseJSON(jqXhr.responseText);
                          console.log(responseText);
-                        
-                    
                     }
                 }
             });
