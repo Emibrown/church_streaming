@@ -63,6 +63,27 @@
                           <input placeholder = "Youtube/Vimeo url" type="text" name = "video" class = "form-control">
                           <span class = "video-text">Most important of all, please enter a YouTube or Vimeo video link of your programme above.</span>
                       </div>
+                      <h4 class = "pb-2">DECLARATIONS</h4>
+                      <div class = "form-group">
+                          <label for="first_time">1. * Have you submitted to this channel before? K
+                              indly indicate if yes? (State video content and date of submission)</label>
+                          <select class ="form-control" name="first_time" id="">
+                              <option>CHOOSE AN OPTION</option>
+                             <option value="1">YES</option>
+                             <option value="0">NO</option>
+                          </select>
+                      </div>
+                      <hr>
+                      <div class = "form-group">
+                          <label for="relationship">2. * Do you have an existing personal relationship with anyone at this 
+                              channel that needs to be declared? </label>
+                          <select class ="form-control" name="relationship" id="">
+                              <option>CHOOSE AN OPTION</option>
+                             <option value="1">YES</option>
+                             <option value="0">NO</option>
+                          </select>
+                      </div>
+                      
                         <p>
                             <label class="chkBox">
                                 <input type="checkbox" value="Y" id="agreePhone" name="agree_phone" class="inputCheckbox" /> 
@@ -127,40 +148,7 @@
               </style>
                 </div> 
               </div>
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                <address>
-                    <h5>FAITH STATEMENT</h5>
-                  <div class="lrg"></div>
-                  <div class="lrg nowrap" id="e2"></div>
-                  <p>
-                      TBN Africa is based on Christian morals and principles and its content cannot 
-                      contradict what we stand for and bring our faith into disrepute. It is therefore imperative
-                       that all our content be in line with TBN's Faith Statement and should adhere to our Broadcasting code of conduct as follows:
-                   </p>
-                   <div class = "prog-form-items">
-                      <ul>
-                       <li>We believe that the Holy Bible is the inspired, infallible, 
-                          and authoritative source of Christian doctrine and precept.
-                      </li>
-                      <li>
-                          We believe that there is one God, eternally existent in three persons: Father, Son and Holy Spirit.
-                      </li>
-                      <li>
-                          We believe that the only hope for man is to believe in Jesus Christ, the virgin-born Son of God, 
-                          who died to take upon Himself the punishment for the sin of mankind, 
-                          and Who rose from the dead, so that by receiving Him as Saviour and Lord, man is redeemed by His Blood.
-                      </li>
-                      <li>
-                          We believe that Jesus Christ in person will return to earth in power and glory.
-                      </li>
-                      <li>
-                          We believe that the Holy Spirit indwells those who have received Christ for the purpose of 
-                          enabling them to live righteous and godly lives.
-                      </li>
-                      </ul>
-                   </div>
-                </address>
-              </div> <!-- /.col -->
+              <%- include('../faith'); -%>  
             </div> <!-- /.row -->
           </div> <!-- /.contact -->
         </div> <!-- /.block -->
@@ -174,4 +162,75 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script>
+  $(document).on('submit', '#prayer-form', function(event) {
+      event.preventDefault();
+        let contactForm = $(this);
+        let fullname = jQuery("#fullname").val();
+        let email = jQuery("#email").val();
+        let phone = jQuery("#phone").val();
+        let location = jQuery("#email").val();
+        let ministry = jQuery("#minitsry").val();
+        let url = jQuery("#url").val();
+        let web = jQuery("#web").val();
+        let prog_title = jQuery("#prog_title").val();
+        let prog_desc = jQuery("#prog_desc").val();
+        let video = jQuery("#video").val();
+        let first_time = jQuery("#first_time").val();
+        let relationship = jQuery("#relationship").val();
+        if (!terms1.checked==true && !terms2.checked==true){
+          $('#message').html(`
+              <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Attention</strong> Please accept all terms and conditions.
+              </div>`);
+
+              window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: 'smooth'
+          });
+        }else{
+
+      jQuery.ajax({
+          url: '/programmer',
+          method: "POST",
+          dataType : "json",
+          data: JSON.stringify({
+          "fullName": fullname,
+          "email": email,
+          "phoneNumber": phone,
+          "location": location,
+          "ministryName" : ministry,
+          "webURL": web,
+          "programmeTitle": prog_title,
+          "programmeDescription": prog_desc,
+          "video": video,
+          "firstTimeProduction": first_time,
+          "personalRelationships": relationship
+  
+      }),
+          "contentType": "application/json",
+          success: function(response) { 
+              console.log(response);
+              if(response.status==200){
+                  $('#message').html(`
+                  <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <strong>Success</strong> Your prayer request has been sent successfully.
+                  </div>`);
+              }
+          },
+          error:function(jqXhr){
+              if(jqXhr.status ==400){
+                  let responseText = jQuery.parseJSON(jqXhr.responseText);
+                   console.log(responseText);
+              }
+          }
+      });
+     }
+  });
+
+
+</script>
 <%- include('../../end'); -%>

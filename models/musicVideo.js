@@ -62,10 +62,6 @@ var musicVideoSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        termsOfServiceAgreement: {
-            type: String, 
-            required: true,
-        },
         date: {
             type: Date, 
             default: Date.now

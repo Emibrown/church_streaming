@@ -3,7 +3,6 @@ const Advert = require('../models/advert');
 const PrayerRequest = require('../models/prayerRequest');
 const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
-const SalvationPrayer = require('../models/salvationPrayer');
 const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
 const Patnership = require('../models/patnership');
@@ -192,50 +191,6 @@ router.delete('/show_proposal/:id', async (req, res, next) => {
     try {
         await Proposal.findOneAndDelete({_id:req.params.id});
         sendJSONresponse(res, 200, {message: 'Proposal deleted successfully'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-//salvation prayers routes
-
-router.get('/salvation_prayers', async (req, res, next) => {
-    // Get  all salvation prayers 
-  try {
-        const salvationPrayer = await SalvationPrayer.find({}).sort({ addedOn : 1 })
-        sendJSONresponse(res, 200, {salvationPrayer});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.get('/salvation_prayer/:id', async (req, res, next) => {
-    // get a salvation prayer
-    try {
-        const salvationPrayer = await SalvationPrayer.findOne({_id:req.params.id})
-        sendJSONresponse(res, 200, {salvationPrayer});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.put('/salvation_prayer/:id', async (req, res, next) => {
-    // update a salvation prayer
-    try {
-        const salvationPrayer = await SalvationPrayer.findOne({_id:req.params.id})
-        await Object.assign(salvationPrayer, req.body);
-        await salvationPrayer.save()
-        sendJSONresponse(res, 200, {message: 'Salvation prayer updated successfully'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
-router.delete('/salvation_prayer/:id', async (req, res, next) => {
-    // delete a salvation prayer
-    try {
-        await SalvationPrayer.findOneAndDelete({_id:req.params.id});
-        sendJSONresponse(res, 200, {message: 'Salvation prayer deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }

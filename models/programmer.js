@@ -5,11 +5,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 var programmerSchema = mongoose.Schema(
     {
-        firstName: {
-            type: String, 
-            required: true, 
-        },
-        lastName: {
+        fullName: {
             type: String, 
             required: true, 
         },
@@ -47,20 +43,12 @@ var programmerSchema = mongoose.Schema(
                 }
             }
         },
-        fbPage: {
-            type: String,
-            validate: value => {
-                if (!validator.isURL(value)) {
-                    throw new Error({error: 'Invalid facebook URL'})
-                }
-            }
-        },
-        title: {
+        programmeTitle: {
             type: String,
             required: true
         },
 
-        description: {
+        programmeDescription: {
             type: String,
             required: true
         },
@@ -79,10 +67,6 @@ var programmerSchema = mongoose.Schema(
         },
         personalRelationships: {
             type: String,
-            required: true,
-        },
-        termsOfServiceAgreement: {
-            type: String, 
             required: true,
         },
         date: {

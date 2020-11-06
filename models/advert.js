@@ -3,11 +3,7 @@ const validator = require('validator')
 
 var advertSchema = mongoose.Schema(
     {
-        firstName: {
-            type: String, 
-            required: true, 
-        },
-        lastName: {
+        fullName: {
             type: String, 
             required: true, 
         },
@@ -46,16 +42,6 @@ var advertSchema = mongoose.Schema(
                 }
             }
         },
-        fbPage: {
-            type: String,
-            required: true,
-            validate: value => {
-                if (!validator.isURL(value)) {
-                    throw new Error({error: 'Invalid facebook URL'})
-                }
-            }
-        },
-
         title: {
             type: String,
             required: true
@@ -66,7 +52,7 @@ var advertSchema = mongoose.Schema(
             required: true
         },
 
-        videoUrl: {
+        videoURL: {
             type: String,
             required: true,
             validate: value => {
@@ -104,10 +90,6 @@ var advertSchema = mongoose.Schema(
         VATnumber: {
             type: String, 
             required: false
-        },
-        termsOfServiceAgreement: {
-            type: String, 
-            required: true,
         },
         date: {
             type: Date, 

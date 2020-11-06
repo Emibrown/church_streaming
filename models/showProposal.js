@@ -59,6 +59,14 @@ var showProposalSchema = mongoose.Schema(
                 }
             }
         },
+        firstTimeProduction: {
+            type: String,
+            required: true,
+        },
+        personalRelationships: {
+            type: String,
+            required: true,
+        },
         date: {
             type: Date, 
             default: Date.now
