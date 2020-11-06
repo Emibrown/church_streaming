@@ -168,7 +168,7 @@ router.post('/advert', async (req, res, next) => {
     try {
         const advert = new Advert(req.body)
         await advert.save()
-        sendJSONresponse(res, 200, {message: 'advert submitted'});
+        res.send({status: 200, message: 'advert submitted'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -199,7 +199,7 @@ router.post('/become_programmer', async (req, res, next) => {
         customEmail.customEmail(fullName, email, header, message);
         const programmer = new Programmer(req.body)
         await programmer.save()
-        sendJSONresponse(res, 200, {message: 'form submitted'});
+        res.send({status: 200, message: 'programmer request submitted'});
     } catch (error) {
       res.send({error:400, message: 'Failed to process'});
     }
@@ -215,7 +215,7 @@ router.post('/show_proposal', async (req, res, next) => {
         customEmail.customEmail(fullName, email, header, message);
         const proposal = new Proposal(req.body)
         await proposal.save()
-        sendJSONresponse(res, 200, {message: 'Proposal submitted'});
+        res.send({status: 200, message: 'show proposal submitted'});
     } catch (error) {
       res.send({error:400, message: 'Failed to process'});
     }
@@ -231,7 +231,7 @@ router.post('/testimony', async (req, res, next) => {
         customEmail.customEmail(fullName, email, header, message);
         const testimony = new Testimony(req.body)
         await testimony.save()
-        sendJSONresponse(res, 200, {message: 'testimony submitted'});
+        res.send({status: 200, message: 'testimony submitted'});
     } catch (error) {
       res.send({error:400, message: 'Failed to process'});
     }
@@ -248,7 +248,7 @@ router.post('/music_video', async (req, res, next) => {
         const musicVideo = new MusicVideo(req.body);
         console.log(musicVideo)
         await musicVideo.save();
-        sendJSONresponse(res, 200, {message: "Music video added successfully"});   
+        res.send({status: 200, message: 'music video submitted'});
     } catch (error) {
       res.send({error:400, message: 'Failed to process'});
     }

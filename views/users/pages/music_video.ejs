@@ -17,14 +17,13 @@
                           <h4 class = "pb-2">INFORMATION</h4>
                           <div id = "message"></div>
                           <form id = "music-video">
-                          <input type="hidden" value="story" id="formStory" name="form">  
                           <div class="form-group">
                           <label for="title">*Video Title</label>
-                          <input value="" id="title" name="title" type="text" class="form-control" placeholder="Video Title (Required)">                  
+                          <input value="" id="title" name="title" type="text" class="form-control" placeholder="Video Title (Required)" required>                  
                         </div>
                         <div class = "form-group">
                           <label for="genre">* Genre</label>
-                          <select class ="form-control" name="genre" id="">
+                          <select class ="form-control" name="genre" id="genre" required>
                             <option>Choose an option</option>
                            <option value="documentary">Documentary</option>
                            <option value="comedy">Comedy</option>
@@ -33,48 +32,43 @@
                         
                         <div class="form-group">
                           <label for="supplier">* Supplier / Individual Name</label>
-                          <input value="" id="supplier" name="supplier" type="text" class="form-control" placeholder="Supplier / Individual Name (Required)">                  
+                          <input value="" id="supplier" name="supplier" type="text" class="form-control" placeholder="Supplier / Individual Name (Required)" required>                  
                         </div>
                         
                         <hr />
                         <div class="form-group">
                           <label for="phone">*Phone number</label>
-                          <input value="" id="phone" name="phone" type="text" class="form-control" placeholder="Phone Number (Required)">                 
+                          <input value="" id="phone" name="phone" type="text" class="form-control" placeholder="Phone Number (Required)" required>                 
                        </div>
                        <div class="form-group">
                           <label for="contact">* Contact Person</label>
-                          <input value="" id="contact" name="contact" type="text" class="form-control" placeholder="* Contact Person (Required)">                 
+                          <input value="" id="contact" name="contact" type="text" class="form-control" placeholder="* Contact Person (Required)" required>                 
                        </div> 
                        <div class="form-group">
                           <label for="email">* Email Address</label>
-                          <input value="" id="email" name="email" type="email" class="form-control" placeholder="">                 
+                          <input value="" id="email" name="email" type="email" class="form-control" placeholder="Email address" required>                 
                        </div>
                        <br>
                        <div class="form-group">
                           <label for="phone">Phone number</label>
-                          <input value="" id="phone" name="phone" type="text" class="form-control" placeholder="Phone Number">                 
+                          <input value="" id="phone" name="phone" type="text" class="form-control" placeholder="Phone Number" required>                 
                        </div>
                        <div class="form-group">
                           <label for="location">Location</label>
-                          <input value="" id="location" name="location" type="text" class="form-control" placeholder="Location">                 
-                      </div>
-                      <div class = "form-group">
-                          <label for="video">*Video url</label>
-                          <input placeholder = "Youtube/Vimeo url" type="text" name = "video" class = "form-control">
-                          <span class = "video-text">Most important of all, please enter a YouTube or Vimeo video link of your programme above.</span>
+                          <input value="" id="location" name="location" type="text" class="form-control" placeholder="Location" required>                 
                       </div>
                       <div class = "form-group">
                         <label for="owner">* Do you own the rights to this video?</label>
-                          <select class ="form-control" name="owner" id="">
+                          <select class ="form-control" name="owner" id="owner" required>
                             <option>Choose an option</option>
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                           </select>
                       </div>                      <h4 class = "pb-2">ASSETS</h4>
                       <div class = "form-group">
-                          <label for="video">Video url</label>
-                          <input placeholder = "Youtube/Vimeo url" type="text" name = "video" class = "form-control">
-                          <span class = "video-text">Please provide a YouTube or Vimeo video link to your video or proposed show, if you have.</span>
+                        <label for="video">*Video url</label>
+                        <input placeholder = "Youtube/Vimeo url" type="text" name = "video" id = "video" class = "form-control" required>
+                        <span class = "video-text">Most important of all, please enter a YouTube or Vimeo video link of your programme above.</span>
                       </div>
                       <h4 class = "pb-2">DECLARATIONS</h4>
                       <div class = "form-group">
@@ -98,8 +92,8 @@
                       </div>
                         <p>
                             <label class="chkBox">
-                                <input type="checkbox" value="Y" id="terms" name="agree_phone" class="inputCheckbox" /> 
-                                <strong>By using this service i agree to  FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
+                                <input type="checkbox" value="Y" id="terms1" name="terms1" class="inputCheckbox" /> 
+                                <strong>By using this service, i agree to  FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                               </label>
                         </p>
                         <hr />
@@ -107,7 +101,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "inputCheckbox" id="terms2">
+                                      <input type="checkbox" value = "Y" class = "inputCheckbox" id="terms2" name="terms2">
                                       <span><strong>I consent to the processing of my personal data by FAITH TO FAITH TV 
                                           with its registered office in Port Harcourt, Rivers State, Nigeria, in order to 
                                           provide services available on the site faithtofaithtv.org. I am informed about the
@@ -178,18 +172,19 @@
 <script>
   $(document).on('submit', '#music-video', function(event) {
       event.preventDefault();
-      let contactForm = {
+      let contactForm = $(this)
+      const data = {
           title : jQuery("#title").val(),
           genre : jQuery("#genre").val(),
           supplierName : jQuery("#supplier").val(),
           email :jQuery("#email").val(),
-          phone : jQuery("#phone").val(),
+          phoneNumber : jQuery("#phone").val(),
           contactName : jQuery("#contact").val(), 
-          location : jQuery("#email").val(),
-          video : jQuery("#video").val(),
+          location : jQuery("#location").val(),
+          videoURL : jQuery("#video").val(),
           ownershipRights : jQuery("#owner").val(),
-          firstTimePrduction : jQuery("#first_time").val(),
-          personalRelationships : jQuery("#relationship").val(),
+          firstTimeProduction : jQuery("#first_time").val(),
+          personalRelationships : jQuery("#relationship").val()
       }
         if (terms1.checked==false || terms2.checked==false){
           $('#message').html(`
@@ -204,25 +199,11 @@
               behavior: 'smooth'
           });
         }else{
-
-      jQuery.ajax({
+          jQuery.ajax({
           url: '/music_video',
           method: "POST",
           dataType : "json",
-          data: JSON.stringify({
-          "supplierName": supplier,
-          "email": email,
-          "phoneNumber": phone,
-          "video": video,
-          "genre": genre,
-          "title" : title,
-          "contactName": contact,
-          "ownershipRights": owner,
-          "location": location,
-          "firstTimePrduction": first_time,
-          "personalRelationships": relationship,
-  
-      }),
+          data: JSON.stringify(data),
           "contentType": "application/json",
           success: function(response) { 
               console.log(response);
@@ -230,13 +211,16 @@
                   $('#message').html(`
                   <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <strong>Success</strong> Your prayer request has been sent successfully.
+                  <strong>Success</strong> ${response.message}
                   </div>`);
                   window.scrollTo({
                   top: 0,
                   left: 0,
                   behavior: 'smooth'
                   });
+
+                  $('#music-video').find('input').val('');    
+
               }
           },
           error:function(jqXhr){

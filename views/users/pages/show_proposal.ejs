@@ -19,15 +19,15 @@
 
                           <h4 class = "pb-2">INFORMATION</h4>
                           <div id = "message"></div>
-                          <form id = "showproposal-form">
+                          <form id = "show-proposal">
                           <input type="hidden" value="story" id="formStory" name="form">                  
                           <div class = "form-group">
                               <label for="prop_title">* Proposal Title</label>
-                              <input placeholder = "proposal title (Required)" type="text" name = "prop_title" class = "form-control">
+                              <input placeholder = "proposal title (Required)" type="text" name = "prop_title" class = "form-control" id = "prop_title" required>
                           </div>
                           <div class = "form-group">
                               <label for="genre">* Genre</label>
-                              <select class ="form-control" name="genre" id="">
+                              <select class ="form-control" name="genre" id="genre">
                                 <option>Choose an option</option>
                                <option value="documentary">Documentary</option>
                                <option value="comedy">Comedy</option>
@@ -35,29 +35,29 @@
                           </div>
                           <div class = "form-group">
                               <label for="supplier">* Supplier / Individual Name</label>
-                              <input type="text" placeholder = "Supplier / Individual name" name = "supplier" class = "form-control">
+                              <input type="text" placeholder = "Supplier / Individual name" name = "supplier" class = "form-control" id = "supplier" required>
                           </div>
                           <div class = "form-group">
                               <label for="contact">* Contact Person</label>
-                              <input type="text" placeholder ="Contact person" name = "contact" class = "form-control">
+                              <input type="text" placeholder ="Contact person" name = "contact" class = "form-control" id = "contact" required>
                           </div>
                           <div class = "form-group">
                               <label for="email">* Email Address</label>
-                              <input type="text" placeholder ="Email Address (Required)" name = "email" class = "form-control">
+                              <input type="text" placeholder ="Email Address (Required)" name = "email" class = "form-control" id = "email" required>
                           </div>
                           <div class = "form-group">
                               <label for="phone">Phone Number</label>
-                              <input type="text" placeholder ="Phone Number" name = "phone" class = "form-control">
+                              <input type="text" placeholder ="Phone Number" name = "phone" class = "form-control" id ="phone" required>
                           </div>
                           <div class = "form-group">
                             <label for="location">Location</label>
-                            <input type="text" placeholder ="Location" name = "location" class = "form-control">
+                            <input type="text" placeholder ="Location" name = "location" class = "form-control" id = "location">
                         </div>
                           <br>
                           <h4 style = "font-weight: bold;" class = "pb-2 pt-5">ASSETS</h4>
                           <div class = "form-group">
                               <label for="present_url">* Presentation URL</label>
-                              <input placeholder = "Presentation url(Required)" type="text" name = "present_url" class = "form-control">
+                              <input placeholder = "Presentation url(Required)" type="text" name = "present_url" class = "form-control" id = "present_url" required>
                               <span class = "video-text">Importantly: Please enter a SlideShare or Google Slides presentation
                                  link of your proposed show
                                  .</span>
@@ -65,14 +65,14 @@
                               </div>
                            <div class = "form-group">
                               <label for="pilot">Show Reel / Pilot</label>
-                              <input placeholder = "e.g https://youtube.com/watch?v=we3455" type="text" name = "pilot" class = "form-control">
+                              <input placeholder = "e.g https://youtube.com/watch?v=we3455" type="text" name = "pilot" class = "form-control" id ="pilot" required> 
                               <span class = "video-text">Please provide a YouTube or Vimeo video link to your showreel or proposed show, if you have.</span>
                            </div>
                            <br>
                            <h4 style = "font-weight: bold;" class = "pb-2 pt-4">DECLARATIONS</h4>
                            <div class = "form-group">
                                <label for="first_time">1. * Have you produced for this channel before?</label>
-                               <select class ="form-control" name="first_time" id="">
+                               <select class ="form-control" name="first_time" id="first_time" required>
                                    <option>CHOOSE AN OPTION</option>
                                   <option value="1">YES</option>
                                   <option value="0">NO</option>
@@ -81,7 +81,7 @@
                            <div class = "form-group">
                               <label for="relationship">2. * Do you have an existing personal relationship 
                                   with anyone at this channel that needs to be declared?</label>
-                              <select class ="form-control" name="relationship" id="">
+                              <select class ="form-control" name="relationship" id="relationship" required>
                                   <option>CHOOSE AN OPTION</option>
                                  <option value="1">YES</option>
                                  <option value="0">NO</option>
@@ -91,7 +91,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id = "terms1" class = "inputCheckbox">
                                       <strong>By using this service i agree to FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                                   </span>
                               </label>
@@ -101,7 +101,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id = "terms2" class = "inputCheckbox">
                                       <span><strong>I consent to the processing of my personal data by FAITH TO FAITH TV with its registered 
                                         office in Port Harcourt, Rivers State, Nigeria, in order to provide services available on the site faithtofaithtv.org. I am informed about 
                                         the right to the contents of my personal data and can make corrections to it when needed.
@@ -162,21 +162,24 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
-    $(document).on('submit', '#showproposal-form', function(event) {
+    $(document).on('submit', '#show-proposal', function(event) {
         event.preventDefault();
           let contactForm = $(this);
-          let prop_title = jQuery("#prop_title").val();
-          let genre = jQuery("#genre").val();
-          let supplier = jQuery("#supplier").val();
-          let email = jQuery("#email").val();
-          let phone = jQuery("#phone").val();
-          let contact = jQuery("#contact").val();
-          let location = jQuery("#email").val();
-          let present_url = jQuery("#present_url").val();
-          let pilot = jQuery("#pilot").val();
-          let first_time = jQuery("#first_time").val();
-          let relationship = jQuery("#relationship").val();
-          if (!terms1.checked==true && !terms2.checked==true){
+          const data = {
+            "prop_title" : jQuery("#prop_title").val(),
+            "genre" : jQuery("#genre").val(),
+            "supplier" : jQuery("#supplier").val(),
+            "email" : jQuery("#email").val(),
+            "phone" : jQuery("#phone").val(),
+            "contact" : jQuery("#contact").val(),
+            "location" : jQuery("#email").val(),
+            "present_url" : jQuery("#present_url").val(),
+            "pilot" : jQuery("#pilot").val(),
+            "first_time" : jQuery("#first_time").val(),
+            "relationship" : jQuery("#relationship").val()
+          }
+          
+          if (terms1.checked==false || terms2.checked==false){
             $('#message').html(`
                 <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -194,20 +197,7 @@
             url: '/show_proposal',
             method: "POST",
             dataType : "json",
-            data: JSON.stringify({
-            "title" : title,
-            "genre": genre,
-            "supplierName": supplier,
-            "contactName": contact,
-            "email": email,
-            "phoneNumber": phone,
-            "location": location,
-            "presentationURL": present_url,
-            "showReel": pilot,
-            "firstTimePrduction": first_time,
-            "personalRelationships": relationship,
-    
-        }),
+            data: JSON.stringify(data),
             "contentType": "application/json",
             success: function(response) { 
                 console.log(response);
@@ -215,8 +205,9 @@
                     $('#message').html(`
                     <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Success</strong> Your prayer request has been sent successfully.
+                    <strong>Success</strong> ${response.message}.
                     </div>`);
+                    $('#show-proposal').find('input').val('');    
                 }
             },
             error:function(jqXhr){
