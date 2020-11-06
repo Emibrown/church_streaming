@@ -117,10 +117,10 @@
             event.preventDefault();
             let contactForm = $(this);
               const data = {
-                    "fullName": jQuery("#fullname").val(),
-                    "email":  jQuery("#email").val(),
-                    "phone": jQuery("#phone").val(),
-                    "prayerRequest": jQuery("#prayer_req").val(),
+                    "fullName": $("#fullname").val(),
+                    "email":  $("#email").val(),
+                    "phone": $("#phone").val(),
+                    "prayerRequest": $("#prayer_req").val(),
                 }
               if( !$('#terms1').prop('checked') || !$('#terms2').prop('checked') ) {
                     $('#message').html(`
