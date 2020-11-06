@@ -1,7 +1,6 @@
 <%- include('../header'); -%>
 <div class="content">
     <div class="container">
-    
       <div class="block">
           <div class="contact-page" id="prayerForm">
               <div class="row">
@@ -16,32 +15,32 @@
                           <p>We would love to stand in faith with you and believe with you for what you are trusting God for. So please email or phone us with your prayer request.</p>
                         <hr />
                       <p>&nbsp;</p>
-
                           <h4 class = "pb-2">PRAYER DETAILS</h4>
-                          <form accept-charset="UTF-8" action="" method="post" class="story-form" role="form">
-                          <input type="hidden" value="story" id="formStory" name="form">                  
+
+                          <div id = "message"></div>
+                          <form id="prayer-form">
                           <div class = "form-group">
                               <label for="fullname">*Your Full Name</label>
-                              <input placeholder = "Your Name (Required)" type="text" name = "fullname" class = "form-control">
+                              <input placeholder = "Your Name (Required)" type="text" id = "fullname" name = "fullname" class = "form-control" required>
                           </div>
                           <div class = "form-group">
                               <label for="email">* Email Address</label>
-                              <input type="text" placeholder ="Email Address (Required)" name = "email" class = "form-control">
+                              <input type="text" placeholder ="Email Address (Required)" id = "email" name = "email" class = "form-control" required>
                           </div>
                           <div class = "form-group">
                               <label for="phone">Phone Number</label>
-                              <input type="text" placeholder ="Phone Number" name = "phone" class = "form-control">
+                              <input type="text" placeholder ="Phone Number" id = "phone" name = "phone" class = "form-control" required>
                           </div>
                           <div class="form-group">
                             <label for="prayer_req">* Prayer request</label>
-                            <textarea id="prog_desc" name="prayer_req" rows="5" class="form-control" placeholder="Enter Prayer Request  (Required)"></textarea>                  
+                            <textarea id="prayer_req" name="prayer_req" rows="5" class="form-control" placeholder="Enter Prayer Request  (Required)" required></textarea>                  
                         </div>
                           <br>
                           <hr>
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id ="terms1" class = "inputCheckbox">
                                       <strong>By using this service i agree to FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                                   </span>
                               </label>
@@ -51,7 +50,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y"  id = "terms2" class = "inputCheckbox">
                                       <span><strong>By using this online service I agree to FAITH TO FAITH TV's Terms of Service and Privacy Policy.
                                           I consent to the processing of my personal data by FAITH TO FAITH TV with its registered office in Port Harcourt, Rivers State, Nigeria, in order to provide services available on the site faithtofaithtv.org. I am informed about the 
                                           right to the contents of my personal data and can make corrections to it when needed. </span>
@@ -144,4 +143,62 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+
+<script>
+        $(document).on('submit', '#prayer-form', function(event) {
+            event.preventDefault();
+              let contactForm = $(this);
+              let fullname = jQuery("#fullname").val();
+              let email = jQuery("#email").val();
+              let phone = jQuery("#phone").val();
+              let prayerRequest = jQuery("#prayer_req").val();
+
+              if (!terms1.checked==true && !terms2.checked==true){
+                $('#message').html(`
+                    <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Attention</strong> Please accept all terms and conditions.
+                    </div>`);
+
+                    window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+              }else{
+
+            jQuery.ajax({
+                url: '/prayer_request',
+                method: "POST",
+                dataType : "json",
+                data: JSON.stringify({
+                "fullName": fullname,
+                "email": email,
+                "phone": phone,
+                "prayerRequest": prayerRequest,
+            }),
+                "contentType": "application/json",
+                success: function(response) { 
+                    console.log(response);
+                    if(response.status==200){
+                        $('#message').html(`
+                        <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Success</strong> Your prayer request has been sent successfully.
+                        </div>`);
+                    }
+                },
+                error:function(jqXhr){
+                    if(jqXhr.status ==400){
+                        let responseText = jQuery.parseJSON(jqXhr.responseText);
+                         console.log(responseText);
+                    }
+                }
+            });
+           }
+        });
+
+
+</script>
+
 <%- include('../../end'); -%>

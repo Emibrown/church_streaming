@@ -3,9 +3,11 @@ const ejs = require("ejs");
 
 const transport = {
     host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
-        user: 'emekaekene@gmail.com',
-        pass: 'xxxxxxxxxx'
+        user: 'officialkamchezreal@gmail.com',
+        pass: 'eneche123?'
     }
 }
 const transporter = nodemailer.createTransport(transport)
@@ -44,17 +46,17 @@ const customEmail = (name,email,header,message) =>{
                 reject(err)
             } else {
                 var mainOptions = {
-                    from: 'emekaekene@gmail.com',
+                    from: 'kamchezreal@gmail.com',
                     to: email,
-                    subject: 'Account Created',
+                    subject: 'Faith TV | Response',
                     html: data
                 };
                 transporter.sendMail(mainOptions, function (err, info) {
-                if (err) {
-                   reject(info)
-                } else {
-                   resolve(info)
-                }
+                    if (err) {
+                     console.log(err)
+                    } else {
+                     console.log(info);
+                    }
             });
             }
         });
