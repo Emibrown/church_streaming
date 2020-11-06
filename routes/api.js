@@ -9,7 +9,10 @@ const MusicVideo = require('../models/musicVideo');
 const Patnership = require('../models/patnership');
 const Static = require('../models/static');
 const Settings = require('../models/settings');
+const Show = require('../models/show');
+const Schedule = require('../models/schedule');
 const multers = require('../middleware/multers');
+const sharp = require('sharp');
 const path = require('path')
 const fs = require('fs')
 const router = express.Router();
@@ -488,5 +491,148 @@ router.delete('/settings/:id', async (req, res, next) => {
     }
 });
 
+//show routes
+router.get('/show', async (req, res, next) => {
+    // Get  all shows
+    try {
+        const show = await Show.find({}).sort({ addedOn : 1 })
+        sendJSONresponse(res, 200, {show});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+router.post('/show', multers.upload.single('file'), async (req, res, next) => {
+    // submit a show
+    try {
+        if(!req.file){
+            sendJSONresponse(res, 400, {"message": "Image required"});
+        }
+
+        req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
+        await sharp(req.file.path)
+        .resize({ width: 384, height: 216 })
+        .webp({quality: 60})
+        .toFile(path.resolve('./public','small_images',req.body.image))
+
+        await sharp(req.file.path)
+        .resize({ width: 640, height: 360 })
+        .webp({quality: 90})
+        .toFile(path.resolve('./public','large_images',req.body.image))
+
+        fs.unlinkSync(req.file.path)
+        
+        const show = new Show(req.body);
+        await show.save();
+        sendJSONresponse(res, 200, {message: "show added successfully"});
+        
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.get('/show/:id', async (req, res, next) => {
+    // get a single a show
+    try {
+        const show = await Show.findOne({code:req.params.id})
+        sendJSONresponse(res, 200, {show});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.put('/show/:id', multers.upload.single('file'), async (req, res, next) => {
+    // update a show
+    try {
+        const show = await Show.findOne({_id:req.params.id})
+        if(req.file){
+            fs.unlinkSync(path.resolve('./public','small_images', show.image))
+            fs.unlinkSync(path.resolve('./public','large_images', show.image))
+    
+            req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
+            await sharp(req.file.path)
+            .resize({ width: 384, height: 216 })
+            .webp({quality: 60})
+            .toFile(path.resolve('./public','small_images',req.body.image))
+    
+            await sharp(req.file.path)
+            .resize({ width: 640, height: 360 })
+            .webp({quality: 90})
+            .toFile(path.resolve('./public','large_images',req.body.image))
+    
+            fs.unlinkSync(req.file.path)
+        }
+        await Object.assign(show, req.body);
+        await show.save()
+        sendJSONresponse(res, 200, {message: 'show updated successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.delete('/show/:id', async (req, res, next) => {
+    // delete a show
+    try {
+        const show = await Show.findOne({_id:req.params.id});
+        fs.unlinkSync(path.resolve('./public','small_images', show.image))
+        fs.unlinkSync(path.resolve('./public','large_images', show.image))
+        await Show.deleteOne(show);
+        sendJSONresponse(res, 200, {message: 'show deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+//schedule routes
+router.post('/schedule', async (req, res, next) => {
+    try{
+      const schedule = new Schedule(req.body);
+      await schedule.save();
+      sendJSONresponse(res, 200, {message: "schedule added successfully"});
+    } catch (error) {
+      sendJSONresponse(res, 400, {error});
+    }
+  });
+  
+  router.get('/schedule', async (req, res, next) => {
+    // get all schedules
+    try {
+        const schedule = await Schedule.find({})
+        sendJSONresponse(res, 200, {schedule});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+  });
+  
+  router.get('/schedule/:id', async (req, res, next) => {
+    // get a single schedule
+    try {
+        const schedule = await Schedule.findOne({_id: req.params.id})
+        sendJSONresponse(res, 200, {schedule});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+  });
+  
+  router.put('/schedule/:id', async (req, res, next) => {
+    // update a schedule
+    try {
+        const schedule = await Schedule.findOne({_id:req.params.id})
+        await Object.assign(schedule,req.body);
+        await schedule.save()
+        sendJSONresponse(res, 200, {message: 'schedule updated successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+  });
+  
+  router.delete('/schedule/:id', async (req, res, next) => {
+    // delete a schedule
+    try {
+        await Schedule.findOneAndDelete({_id:req.params.id});
+        sendJSONresponse(res, 200, {message: 'schedule deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+  });
 
 module.exports = router;

@@ -400,7 +400,7 @@ router.delete('/pre_recorded/:id', async (req, res, next) => {
 router.post('/add_programme', multers.upload.single('file'), async (req, res, next) => {
   try {
     if(!req.file){
-      sendJSONresponse(res, 400, {"message": "Image required"});
+      sendJSONresponse(res, 400, {message: "Image required"});
     }
     req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
     await sharp(req.file.path)
@@ -441,10 +441,10 @@ router.get('/programme/:id', async (req, res, next) => {
 router.put('/programme/:id', multers.upload.single('file'), async (req, res, next) => {
   // update a programme
   try {
+      const programme = await Programme.findOne({_id:req.params.id})
       if(req.file){
-        const about = await About.findOne({_id:req.params.id})
-        fs.unlinkSync(path.resolve('./public','small_images', about.image))
-        fs.unlinkSync(path.resolve('./public','large_images', about.image))
+        fs.unlinkSync(path.resolve('./public','small_images', programme.image))
+        fs.unlinkSync(path.resolve('./public','large_images', programme.image))
 
         req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
         await sharp(req.file.path)
@@ -459,7 +459,6 @@ router.put('/programme/:id', multers.upload.single('file'), async (req, res, nex
 
         fs.unlinkSync(req.file.path)
       }
-      const programme = await Programme.findOne({_id:req.params.id})
       await Object.assign(programme, req.body);
       await programme.save()
       sendJSONresponse(res, 200, {message: 'programme updated successfully'});
@@ -512,7 +511,7 @@ router.get('/season/:id', async (req, res, next) => {
   }
 });
 
-router.put('/season/:id', multers.upload.single('file'),  async (req, res, next) => {
+router.put('/season/:id', async (req, res, next) => {
   // update a season
   try {
       const season = await Season.findOne({_id:req.params.id})

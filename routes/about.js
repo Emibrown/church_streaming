@@ -48,7 +48,7 @@ router.post('/', multers.upload.single('file'), async (req, res, next) => {
         await about.save();
 
 
-        sendJSONresponse(res, 200, {"message": "About added successfully"});
+        sendJSONresponse(res, 200, {message: "About added successfully"});
         
     } catch (error) {
         sendJSONresponse(res, 400, {error});
@@ -68,8 +68,8 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', multers.upload.single('file'), async (req, res, next) => {
     // update an about
     try {
+        const about = await About.findOne({_id:req.params.id})
         if(req.file){
-            const about = await About.findOne({_id:req.params.id})
             fs.unlinkSync(path.resolve('./public','small_images', about.image))
             fs.unlinkSync(path.resolve('./public','large_images', about.image))
     
@@ -86,7 +86,6 @@ router.put('/:id', multers.upload.single('file'), async (req, res, next) => {
     
             fs.unlinkSync(req.file.path)
         }
-        const about = await About.findOne({_id:req.params.id})
         await Object.assign(about, req.body);
         await about.save()
         sendJSONresponse(res, 200, {message: 'about updated successfully'});
