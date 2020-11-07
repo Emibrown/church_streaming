@@ -277,12 +277,16 @@ router.post('/enquiries', async (req, res, next) => {
 router.post('/patnership', async (req, res, next) => {
   // submit a patnership form
   try {
-      const patnership = new Partnership(req.body);
-      console.log(patnership)
-      await patnership.save();
-      sendJSONresponse(res, 200, {message: "patnership form submitted"});   
+    const {firstName, email} = req.body;
+    const header = "Patnership";
+    const message = "Request was processed successfully";
+    customEmail.customEmail(firstName, email, header, message);
+    const patnership = new Partnership(req.body);
+    const saved = await patnership.save();
+    console.log(saved)
+    res.send({status: 200, message: 'patnership form submitted'});
   } catch (error) {
-      sendJSONresponse(res, 400, {error});
-  }
+  res.send({error:400, message: 'Failed to process'});
+}
 });
 module.exports = router;

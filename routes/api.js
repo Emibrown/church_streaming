@@ -617,7 +617,7 @@ router.post('/schedule', async (req, res, next) => {
     try {
         const enquiries = await Enquiry.findOne({_id:req.params.id})
         await Object.assign(enquiries,req.body);
-        await schedule.save()
+        await enquiries.save()
         sendJSONresponse(res, 200, {message: 'feedback updated successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});

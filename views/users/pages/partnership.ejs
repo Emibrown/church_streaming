@@ -15,7 +15,8 @@
                       <hr />
                       <p>&nbsp;</p>
                           <h4 class = "pb-2">PERSONAL INFORMATION</h4>
-                          <form accept-charset="UTF-8" action="" method="post" class="story-form" role="form"> 
+                          <div id="message"></div>
+                          <form id = "patnership-form"> 
                           <input type="hidden" value="story" id="formStory" name="form">                  
                           <div class="form-group">
                               <label for="title">Title</label>
@@ -53,8 +54,8 @@
                               <label for="membership">1. * Are you a member of Renaissance?</label>
                               <select class ="form-control" name="membership" id="membership">
                                   <option value="">CHOOSE AN OPTION</option>
-                                 <option value="">YES</option>
-                                 <option value="">NO</option>
+                                 <option value="1">YES</option>
+                                 <option value="0">NO</option>
                               </select>
                           </div>
                           <br>
@@ -62,49 +63,49 @@
                               <hr>
                               <p>
                               <label class="chkBox">
-                                  <input type="checkbox" value="Y" id="mem_school" name="mem_school" class="inputCheckbox" /> 
+                                  <input type="checkbox" name="cat" value="Membership school" id="mem_school" name="mem_school" class="inputCheckbox" /> 
                                   <strong>Faith to Faith TV one membership school</strong>
                                 </label>
                           </p>
                           <p>
                               <label class="chkBox">
-                                  <input type="checkbox" value="Y" id="teenage_min" name="teenage_min" class="inputCheckbox" /> 
+                                  <input type="checkbox" name="cat" value="Teenage ministry" id="teenage_min" name="teenage_min" class="inputCheckbox cat" /> 
                                   <strong>Children & Teenagers' Ministry</strong>
                                 </label>
                           </p>
                           <p>
                               <label class="chkBox">
-                                  <input type="checkbox" value="Y" id="radio_outreach" name="radio_outreach" class="inputCheckbox" /> 
+                                  <input type="checkbox" name="cat" value="Radio outreach" id="radio_outreach" name="radio_outreach" class="inputCheckbox cat" /> 
                                   <strong>Faith to Faith Radio Online Outreaches</strong>
                                 </label>
                           </p>
                           <p>
                               <label class="chkBox">
-                                  <input type="checkbox" value="Y" id="bible_acad" name="bible_acad" class="inputCheckbox" /> 
+                                  <input type="checkbox" name="cat" value="Bible academy" id="bible_acad" name="bible_acad" class="inputCheckbox cat" /> 
                                   <strong>Faith to Faith Bible Academy</strong>
                                 </label>
                           </p>
                           <p>
                               <label class="chkBox">
-                                  <input type="checkbox" value="Y" id="church_plant" name="church_plant" class="inputCheckbox" /> 
+                                  <input type="checkbox" name="cat" value="Church plant" id="church_plant" name="church_plant" class="inputCheckbox cat" /> 
                                   <strong>Faith to Faith Devotionals Church planting</strong>
                                 </label>
                           </p>
                           <p>
                               <label class="chkBox">
-                                  <input type="checkbox" value="Y" id="bus_com" name="bus_com" class="inputCheckbox" /> 
+                                  <input type="checkbox" name="cat" value="Bussiness community" id="bus_com" name="bus_com" class="inputCheckbox cat" /> 
                                   <strong>Renaissance Business Community</strong>
                                 </label>
                           </p>
                           <p>
                               <label class="chkBox">
-                                  <input type="checkbox" value="Y" id="rythms" name="rythms" class="inputCheckbox" /> 
+                                  <input type="checkbox" name="cat" value="Rythms" id="rythms" name="rythms" class="inputCheckbox cat" /> 
                                   <strong>Rythms of Renaissance</strong>
                                 </label>
                           </p>
                           <p>
                               <label class="chkBox">
-                                  <input type="checkbox" value="Y" id="pub" name="pub" class="inputCheckbox" /> 
+                                  <input type="checkbox" name="cat" value = "Publications & Books" id="pub" name="pub" class="inputCheckbox cat" /> 
                                   <strong>Faith to Faith Publications & Books</strong>
                                 </label>
                           </p>
@@ -120,7 +121,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Bronze1" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -135,7 +136,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Bronze2" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -150,7 +151,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Bronze3" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -165,7 +166,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Bronze4" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -180,7 +181,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Silver1" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -195,7 +196,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Silver2" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -210,7 +211,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox"  name="level" value = "silver3" class = "inputCheckbox">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -225,7 +226,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Gold1" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -240,7 +241,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Gold2" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -255,7 +256,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Diamond1" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -270,7 +271,7 @@
                                                   <td>
                                                       <label style ="width:30px"class="chkBox">
                                                           <span>
-                                                              <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                                              <input type="checkbox" name="level" value = "Diamond2" class = "inputCheckbox level">
                                                               <span><strong>
                                                               </span>
                                                           </span>
@@ -308,7 +309,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id= "terms" class = "inputCheckbox">
                                       <span><strong>I consent to the processing of my personal data by FAITH TO FAITH TV with its registered office Port Harcourt,
                                          Rivers State, Nigeria, in order to provide services available on the site faithtofaithtv.org. I am informed about the right
                                           to the contents of my personal data and can make corrections to it when needed.
@@ -361,40 +362,7 @@
               </style>
                 </div> 
               </div>
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                <address>
-                    <h5>FAITH STATEMENT</h5>
-                  <div class="lrg"></div>
-                  <div class="lrg nowrap" id="e2"></div>
-                  <p>
-                      TBN Africa is based on Christian morals and principles and its content cannot 
-                      contradict what we stand for and bring our faith into disrepute. It is therefore imperative
-                       that all our content be in line with TBN's Faith Statement and should adhere to our Broadcasting code of conduct as follows:
-                   </p>
-                   <div class = "prog-form-items">
-                      <ul>
-                       <li>We believe that the Holy Bible is the inspired, infallible, 
-                          and authoritative source of Christian doctrine and precept.
-                      </li>
-                      <li>
-                          We believe that there is one God, eternally existent in three persons: Father, Son and Holy Spirit.
-                      </li>
-                      <li>
-                          We believe that the only hope for man is to believe in Jesus Christ, the virgin-born Son of God, 
-                          who died to take upon Himself the punishment for the sin of mankind, 
-                          and Who rose from the dead, so that by receiving Him as Saviour and Lord, man is redeemed by His Blood.
-                      </li>
-                      <li>
-                          We believe that Jesus Christ in person will return to earth in power and glory.
-                      </li>
-                      <li>
-                          We believe that the Holy Spirit indwells those who have received Christ for the purpose of 
-                          enabling them to live righteous and godly lives.
-                      </li>
-                      </ul>
-                   </div>
-                </address>
-              </div> <!-- /.col -->
+              <%- include('../faith'); -%>
             </div> <!-- /.row -->
           </div> <!-- /.contact -->
         </div> <!-- /.block -->
@@ -406,4 +374,81 @@
     </div>
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script>
+    
+    $(document).on('submit', '#patnership-form', function(event) {
+        const level = [];
+        const cat = []
+        $("input:checkbox[name=level]:checked").each(function(){
+        level.push($(this).val());
+        });
+        $("input:checkbox[name=cat]:checked").each(function(){
+        cat.push($(this).val());
+        });
+        event.preventDefault();
+          let contactForm = $(this);
+          const data = {
+            "title": jQuery("#title").val(),
+            "firstName": jQuery("#firstname").val(),
+            "surName": jQuery("#surname").val(),
+            "email": jQuery("#email").val(),
+            "phoneNumber": jQuery("#phone").val(),
+            "whatsappNumber": jQuery("#whatsapp").val(),
+            "address": jQuery("#address").val(),
+            "membership": jQuery("#membership").val(),
+            "categories": cat,
+            "levels": level,
+            "prayerPoint1": jQuery("#prayer1").val(),
+            "prayerPoint2": jQuery("#prayer2").val(),
+          }
+          console.log(data)
+          if (terms.checked==false){
+            $('#message').html(`
+                <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Attention</strong> Please accept all terms and conditions.
+                </div>`);
+  
+                window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+          }else{
+  
+        jQuery.ajax({
+            url: '/patnership',
+            method: "POST",
+            dataType : "json",
+            data: JSON.stringify(data),
+            "contentType": "application/json",
+            success: function(response) { 
+                console.log(response);
+                if(response.status==200){
+                    $('#message').html(`
+                    <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success</strong> ${response.message}.
+                    </div>`);
+                  
+                    window.scrollTo({
+                      top: 0,
+                      left: 0,
+                      behavior: 'smooth'
+                    });
+                    $('#patnership-form')[0].reset();
+                }
+            },
+            error:function(jqXhr){
+                if(jqXhr.status ==400){
+                    let responseText = jQuery.parseJSON(jqXhr.responseText);
+                     console.log(responseText);
+                }
+            }
+        });
+       }
+    });
+  
+  
+  </script>
 <%- include('../../end'); -%>

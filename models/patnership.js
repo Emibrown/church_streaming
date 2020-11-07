@@ -10,11 +10,7 @@ var patnershipSchema = mongoose.Schema(
             type: String, 
             required: true
         },
-        lastName: {
-            type: String, 
-            required: true
-        },
-        middleName: {
+        surName: {
             type: String, 
             required: true
         },
@@ -36,17 +32,51 @@ var patnershipSchema = mongoose.Schema(
                 }
             }
         },
+        phoneNumber: {
+            type: String,
+            required: false,
+            validate: value => {
+                if (!validator.isMobilePhone(value, 'en-NG')) {
+                    throw new Error({error: 'Invalid phone number'})
+                }
+            }
+        },
+        whatsappNumber: {
+            type: String,
+            required: false,
+            validate: value => {
+                if (!validator.isMobilePhone(value, 'en-NG')) {
+                    throw new Error({error: 'Invalid phone number'})
+                }
+            }
+        },
         address: {
             type: String, 
             required: true,
         },
-        category: {
+        categories: [
+            {
+                type: String, 
+                required: false
+            },
+        ],
+        levels: [
+            {
+                type: String, 
+                required: false
+            },
+        ],
+        prayerPoint1: {
             type: String, 
-            required: true
+            required: false,
         },
-        patnershipLevel: {
+        prayerPoint2: {
             type: String, 
-            required: true
+            required: false,
+        },
+        addedOn: {
+            type:Date,
+            default: Date.now
         }
     }
 )
