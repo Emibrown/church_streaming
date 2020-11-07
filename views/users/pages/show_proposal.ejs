@@ -180,52 +180,41 @@
           }
           
           if (terms1.checked==false || terms2.checked==false){
-            $('#message').html(`
-                <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Attention</strong> Please accept all terms and conditions.
-                </div>`);
-  
-                window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
-          }else{
-  
-        jQuery.ajax({
-            url: '/show_proposal',
-            method: "POST",
-            dataType : "json",
-            data: JSON.stringify(data),
-            "contentType": "application/json",
-            success: function(response) { 
-                console.log(response);
-                if(response.status==200){
-                    $('#message').html(`
-                    <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Success</strong> ${response.message}.
-                    </div>`);
-                    window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'smooth'
-                    });
-                    $('#show-proposal')[0].reset();
+            displaymsg(text = "Please accept all terms and conditions")
+      }else{
 
+      jQuery.ajax({
+          url: '/show_proposal',
+          method: "POST",
+          dataType : "json",
+          data: JSON.stringify(data),
+          "contentType": "application/json",
+          success: function(response) { 
+              console.log(response);
+              if(response.status==200){
+                displaymsg(response.message, "alert-success")
+                $('#feedback-form')[0].reset();
+              }
+          },
+          error:function(jqXhr){
+              if(jqXhr.status ==400){
+                let responseText = jQuery.parseJSON(jqXhr.responseText);
+                if(responseText.indexOf('phoneNumber') !== -1){
+                    responseText[responseText.indexOf('phoneNumber')] = "Phone no";
                 }
-            },
-            error:function(jqXhr){
-                if(jqXhr.status ==400){
-                    let responseText = jQuery.parseJSON(jqXhr.responseText);
-                     console.log(responseText);
+                if(responseText.indexOf('presentationURL') !== -1){
+                    responseText[responseText.indexOf('presentationURL')] = "Presentation url";
                 }
-            }
-        });
-       }
-    });
-  
-  
+                if(responseText.indexOf('showReel') !== -1){
+                    responseText[responseText.indexOf('showReel')] = "Pilot url";
+                }
+                console.log(responseText)
+                let txt = `Invalid inputs : ${responseText.join(', ')}`
+                  displaymsg(txt)
+              }
+          }
+      });
+     }
+  });
   </script>
 <%- include('../../end'); -%>

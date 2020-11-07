@@ -1,1 +1,15 @@
 <!-- back-to-top End -->
+<script>
+    function displaymsg(text, alertmsg= " alert-danger "){
+        $('#message').html(`
+                <div style ="color:white" class="alert ${alertmsg} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Attention ${text}</strong>.
+                </div>`);
+                window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+                })
+    }
+</script>

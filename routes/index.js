@@ -179,7 +179,7 @@ router.post('/create_advert', async (req, res, next) => {
       }
       res.send({status: 200, message: 'Advert was created successfully'});
   } catch (error) {
-    res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+    sendJSONresponse(res, 400, Object.keys(error.errors));
   }
 });
 
@@ -194,7 +194,7 @@ router.post('/prayer_request', async (req, res, next) => {
         const prayerRequest = new PrayerRequest(req.body)
         res.send({status: 200, message: 'Prayer Request Submitted'});
     } catch (error) {
-      res.send({status:400, message: 'Failed to process'});
+      sendJSONresponse(res, 400, Object.keys(error.errors));
     }
 });
 
@@ -211,7 +211,7 @@ router.post('/become_programmer', async (req, res, next) => {
         await programmer.save()
         res.send({status: 200, message: 'programmer request submitted'});
     } catch (error) {
-      res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+      sendJSONresponse(res, 400, Object.keys(error.errors));
     }
 });
 
@@ -228,7 +228,7 @@ router.post('/show_proposal', async (req, res, next) => {
         await proposal.save()
         res.send({status: 200, message: 'show proposal submitted'});
     } catch (error) {
-      res.send({status:400, message: 'Failed to process'});
+      sendJSONresponse(res, 400, Object.keys(error.errors));
     }
 });
 
@@ -244,7 +244,7 @@ router.post('/testimony', async (req, res, next) => {
         await testimony.save()
         res.send({status: 200, message: 'Testimony submitted'});
     } catch (error) {
-      res.send({error:400, message: 'Failed to process'});
+      sendJSONresponse(res, 400, Object.keys(error.errors));
     }
 });
 
@@ -260,7 +260,7 @@ router.post('/music_video', async (req, res, next) => {
         await musicVideo.save();
         res.send({status: 200, message: 'music video submitted'});
     } catch (error) {
-      res.send({error:400, message: 'Failed to process'});
+      sendJSONresponse(res, 400, Object.keys(error.errors));
     }
 });
 
@@ -276,7 +276,7 @@ router.post('/enquiries', async (req, res, next) => {
       await enquiry.save();
       res.send({status: 200, message: 'feedback submitted'});
   } catch (error) {
-    res.send({error:400, message: 'Failed to process'});
+    sendJSONresponse(res, 400, Object.keys(error.errors));
   }
 });
 
@@ -293,6 +293,7 @@ router.post('/patnership', async (req, res, next) => {
     console.log(saved)
     res.send({status: 200, message: 'patnership form submitted'});
   } catch (error) {
-    sendJSONresponse(res, 400, {error});}
+    sendJSONresponse(res, 400, Object.keys(error.errors));
+  }
 });
 module.exports = router;

@@ -50,10 +50,6 @@
                        </div>
                        <br>
                        <div class="form-group">
-                          <label for="phone">Phone number</label>
-                          <input value="" id="phone" name="phone" type="text" class="form-control" placeholder="Phone Number" required>                 
-                       </div>
-                       <div class="form-group">
                           <label for="location">Location</label>
                           <input value="" id="location" name="location" type="text" class="form-control" placeholder="Location" required>                 
                       </div>
@@ -186,20 +182,11 @@
           firstTimeProduction : jQuery("#first_time").val(),
           personalRelationships : jQuery("#relationship").val()
       }
-        if (terms1.checked==false || terms2.checked==false){
-          $('#message').html(`
-              <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <strong>Attention</strong> Please accept all terms and conditions.
-              </div>`);
+      if (terms1.checked==false || terms2.checked==false){
+            displaymsg(text = "Please accept all terms and conditions")
+      }else{
 
-              window.scrollTo({
-              top: 0,
-              left: 0,
-              behavior: 'smooth'
-          });
-        }else{
-          jQuery.ajax({
+      jQuery.ajax({
           url: '/music_video',
           method: "POST",
           dataType : "json",
@@ -208,26 +195,22 @@
           success: function(response) { 
               console.log(response);
               if(response.status==200){
-                  $('#message').html(`
-                  <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <strong>Success</strong> ${response.message}
-                  </div>`);
-                  window.scrollTo({
-                  top: 0,
-                  left: 0,
-                  behavior: 'smooth'
-                  });
-
-                  $('#music-video')[0].reset();
-;      
-
+                displaymsg(response.message, "alert-success")
+                $('#feedback-form')[0].reset();
               }
           },
           error:function(jqXhr){
               if(jqXhr.status ==400){
-                  let responseText = jQuery.parseJSON(jqXhr.responseText);
-                   console.log(responseText);
+                let responseText = jQuery.parseJSON(jqXhr.responseText);
+                if(responseText.indexOf('phoneNumber') !== -1){
+                    responseText[responseText.indexOf('phoneNumber')] = "Phone no";
+                }
+                if(responseText.indexOf('videoURL') !== -1){
+                    responseText[responseText.indexOf('videoURL')] = "Video Url";
+                }
+                console.log(responseText)
+                let txt = `Invalid inputs : ${responseText.join(', ')}`
+                  displaymsg(txt)
               }
           }
       });

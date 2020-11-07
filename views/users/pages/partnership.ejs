@@ -375,7 +375,6 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
-    
     $(document).on('submit', '#patnership-form', function(event) {
         const level = [];
         const cat = []
@@ -403,27 +402,16 @@
           }
           console.log(data)
           if (terms.checked==false){
-            var txterror = "Please accept all terms and conditions"
+            var text = "Please accept all terms and conditions"
           }
           if(level.length<1){
-            var txterror = "You have to select atleast one patnership level"
+            var text = "You have to select atleast one patnership level"
           }
           if(cat.length<1){
-            var txterror = "You have to select atleast one patnership category"
+            var text = "You have to select atleast one patnership category"
           }
-
-          if (txterror){
-            $('#message').html(`
-                <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Attention</strong> ${txterror}.
-                </div>`);
-  
-                window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
+          if (text){
+            displaymsg(text)
           }else{
   
         jQuery.ajax({
@@ -435,24 +423,23 @@
             success: function(response) { 
                 console.log(response);
                 if(response.status==200){
-                    $('#message').html(`
-                    <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Success</strong> ${response.message}.
-                    </div>`);
-                  
-                    window.scrollTo({
-                      top: 0,
-                      left: 0,
-                      behavior: 'smooth'
-                    });
+                    displaymsg(response.message, "alert-success")
                     $('#patnership-form')[0].reset();
                 }
             },
             error:function(jqXhr){
                 if(jqXhr.status ==400){
                     let responseText = jQuery.parseJSON(jqXhr.responseText);
-                     console.log(responseText);
+
+                    if(responseText.indexOf('phoneNumber') !== -1){
+                    responseText[responseText.indexOf('phoneNumber')] = "Phone no";
+                    }
+                    if(responseText.indexOf('whatsappNumber') !== -1){
+                        responseText[responseText.indexOf('whatsappNumber')] = "whatsapp phone no";
+                    }
+                    console.log(responseText)
+                    let txt = `Invalid inputs : ${responseText.join(', ')}`
+                     displaymsg(txt)
                 }
             }
         });
