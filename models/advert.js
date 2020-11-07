@@ -70,15 +70,15 @@ var advertSchema = mongoose.Schema(
                 }
             }
         },
-        recipientName: {
+        invoiceMade: {
             type: String, 
             required: true, 
         },
-        recipientAddress: {
+        invoiceAddress: {
             type: String, 
             required: true, 
         },
-        recipientContact: {
+        contactNumber: {
             type: String,
             required: false,
             validate: value => {

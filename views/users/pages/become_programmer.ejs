@@ -213,6 +213,11 @@
           error:function(jqXhr){
               if(jqXhr.status ==400){
                   let responseText = jQuery.parseJSON(jqXhr.responseText);
+                  $('#message').html(`
+                        <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>${responseText}</strong>
+                     </div>`)
                    console.log(responseText);
               }
           }

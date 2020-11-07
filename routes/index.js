@@ -165,15 +165,22 @@ router.get('/video/:id', async(req, res, next) => {
 });
 
 //advert routes
-router.post('/advert', async (req, res, next) => {
-    // submit an advert
-    try {
-        const advert = new Advert(req.body)
-        await advert.save()
-        res.send({status: 200, message: 'advert submitted'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
+router.post('/create_advert', async (req, res, next) => {
+  //  submit a programmer request
+  try {
+      console.log(req.body);
+      const {fullName, email} = req.body;
+      const header = "Newly Created Advert";
+      const message = "Advert created successfully";
+      const advert = new Advert(req.body)
+      await advert.save()
+      if(advert){
+        customEmail.customEmail(fullName, email, header, message);
+      }
+      res.send({status: 200, message: 'Advert was created successfully'});
+  } catch (error) {
+    res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+  }
 });
 
 //prayerRequest routes
@@ -183,11 +190,11 @@ router.post('/prayer_request', async (req, res, next) => {
         const header = "Prayer request";
         const message = "Request was processed successfully";
         customEmail.customEmail(fullName, email, header, message);
+        await prayerRequest.save();
         const prayerRequest = new PrayerRequest(req.body)
-        await prayerRequest.save()
         res.send({status: 200, message: 'Prayer Request Submitted'});
     } catch (error) {
-      res.send({error:400, message: 'Failed to process'});
+      res.send({status:400, message: 'Failed to process'});
     }
 });
 
@@ -199,12 +206,12 @@ router.post('/become_programmer', async (req, res, next) => {
         const {fullName, email} = req.body;
         const header = "Become a programmer";
         const message = "Request was processed successfully";
+        const programmer = new Programmer(req.body);
         customEmail.customEmail(fullName, email, header, message);
-        const programmer = new Programmer(req.body)
         await programmer.save()
         res.send({status: 200, message: 'programmer request submitted'});
     } catch (error) {
-      res.send({error:400, message: 'Failed to process'});
+      res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
     }
 });
 
@@ -221,7 +228,7 @@ router.post('/show_proposal', async (req, res, next) => {
         await proposal.save()
         res.send({status: 200, message: 'show proposal submitted'});
     } catch (error) {
-      res.send({error:400, message: 'Failed to process'});
+      res.send({status:400, message: 'Failed to process'});
     }
 });
 
