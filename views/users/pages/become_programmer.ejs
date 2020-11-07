@@ -189,6 +189,7 @@
           success: function(response) { 
               console.log(response);
               if(response.status==200){
+<<<<<<< HEAD
                 displaymsg(response.message, "alert-success")
                 $('#feedback-form')[0].reset();
               }
@@ -209,6 +210,34 @@
                 let txt = `Invalid inputs : ${responseText.join(', ')}`
                   displaymsg(txt)
               }
+=======
+                  $('#message').html(`
+                  <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <strong>${response.message}</strong>
+                  </div>`);
+                  window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                  });
+                  $('#become-programmer')[0].reset();
+              }else{
+                $('#message').html(`
+                  <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>${response.message}</strong>
+              </div>`)
+              window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                  });
+              }
+          },
+          error:function(jqXhr){
+              console.log(jqXhr)
+>>>>>>> 3b20d2818774f4dda52bf6f7b33a5a36519412f3
           }
       });
      }
