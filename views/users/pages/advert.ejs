@@ -18,80 +18,80 @@
                       <p>&nbsp;</p>
 
                           <h4 class = "pb-2">CONTACT DETAILS</h4>
-                          <form accept-charset="UTF-8" action="" method="post" class="story-form" role="form">
-                          <input type="hidden" value="story" id="formStory" name="form">                  
+                          <div id = "message"></div>
+                          <form id = "advert-form">
                           <div class = "form-group">
                               <label for="fullname">*Your Full Name</label>
-                              <input placeholder = "Your Name (Required)" type="text" name = "fullname" class = "form-control">
+                              <input placeholder = "Your Name (Required)" type="text" id = "fullname" name = "fullname" class = "form-control" required>
                           </div>
                           <div class = "form-group">
                               <label for="email">* Email Address</label>
-                              <input type="text" placeholder ="Email Address (Required)" name = "email" class = "form-control">
+                              <input type="text" id = "email"placeholder ="Email Address (Required)" name = "email" class = "form-control" required>
                           </div>
                           <div class = "form-group">
                               <label for="phone">Phone Number</label>
-                              <input type="text" placeholder ="Phone Number" name = "phone" class = "form-control">
+                              <input type="text" placeholder ="Phone Number" name = "phone" class = "form-control" id = "phone">
                           </div>
                           <div class = "form-group">
                             <label for="location">Location</label>
-                            <input type="text" placeholder ="Location" name = "location" class = "form-control">
+                            <input type="text" placeholder ="Location" id = "location" name = "location" class = "form-control" >
                         </div>
                         <div class = "form-group">
                           <label for="ministry">Ministry Name</label>
-                          <input type="text" placeholder ="Ministry" name = "ministry" class = "form-control">
+                          <input type="text" placeholder ="Ministry" id = "ministry" name = "ministry" class = "form-control">
                       </div>
                       <div class = "form-group">
                           <label for="web">Website URL or Facebook Page</label>
-                          <input type="text" placeholder ="Website URL" name = "web" class = "form-control">
+                          <input type="text" placeholder ="Website URL" id = "web" name = "web" class = "form-control">
                       </div>
                       <div class = "form-group">
                           <label for="url">Programme or Ministry Website</label>
-                          <input type="text" placeholder ="Website URL" name = "url" class = "form-control">
+                          <input type="text" placeholder ="Website URL" id = "url" name = "url" class = "form-control">
                       </div>
                           <br>
                           <h4 style = "font-weight: bold;" class = "pb-2 pt-5">ADVERTISING DETAILS</h4>
                           <div class = "form-group">
                               <label for="advert_title">* Ad/Event Title</label>
-                              <input placeholder = "Advert Title (Required)" type="text" name = "advert_title" class = "form-control">
+                              <input placeholder = "Advert Title (Required)" type="text" id = "advert_title" name = "advert_title" class = "form-control" required>
                               </div>
 
                            <div class = "form-group">
                               <label for="describe">*Describe Your Ad/Event</label>
-                              <input placeholder = "Enter your Ad/Event Description (Required)" type="text" name = "describe" class = "form-control">
+                              <input placeholder = "Enter your Ad/Event Description (Required)" id = "describe" type="text" name = "describe" class = "form-control" required>
                            </div>
                            <div class = "form-group">
                               <label for="video">Video URL</label>
-                              <input placeholder = "YouTube / Vimeo URL" type="text" name = "video" class = "form-control">
+                              <input placeholder = "YouTube / Vimeo URL" type="text" id ="video" name = "video" class = "form-control">
                               <span class = "video-text">If available, please enter a YouTube or Vimeo video link of your ad/event above..</span>
                            </div>
                            <div class = "form-group">
                               <label for="download">* Media Download Link</label>
-                              <input placeholder = "Media Download Link URL (Required)" type="text" name = "download" class = "form-control">
+                              <input placeholder = "Media Download Link URL (Required)" type="text" id = "download" name = "download" class = "form-control" required>
                               <span class = "video-text">Please supply a download link of your ad/event assets.</span>
                            </div>
                            <br>
                            <h4 style = "font-weight: bold;" class = "pb-2 pt-4">INVOICING DETAILS</h4>
                            <div class = "form-group">
                               <label for="invoice_made">* Invoice Made Out To</label>
-                              <input placeholder = "Company/Entity Name to be Invoiced (Required)" type="text" name = "invoice_made" class = "form-control">
+                              <input placeholder = "Company/Entity Name to be Invoiced (Required)" type="text" id ="invoice_made" name = "invoice_made" class = "form-control" required>
                            </div>
                            <div class = "form-group">
                               <label for="invoice_address">* Invoice Address</label>
-                              <input placeholder = "Address (Required)" type="text" name = "invoice_address" class = "form-control">
+                              <input placeholder = "Address (Required)" type="text" id = "invoice_address" name = "invoice_address" class = "form-control">
                            </div>
                            <div class = "form-group">
                               <label for="contact_no">* Contact Number</label>
-                              <input placeholder = "Contact Number (Required)" type="text" name = "contact_no" class = "form-control">
+                              <input placeholder = "Contact Number (Required)" id ="contact_no" type="text" name = "contact_no" class = "form-control" required>
                            </div>
                            <div class = "form-group">
                               <label for="vat">VAT Number (If Applicable)</label>
-                              <input placeholder = "VAT Registration Number" type="text" name = "vat" class = "form-control">
+                              <input placeholder = "VAT Registration Number" id = "vat" type="text" name = "vat" class = "form-control">
                            </div>
                           <hr class = "my-4">
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id = "terms1" class = "" class = "inputCheckbox">
                                       <strong>By using this service i agree to FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                                   </span>
                               </label>
@@ -101,7 +101,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" id = "terms2" class = "inputCheckbox">
                                       <span><strong>By using this online service I agree to FAITH TO FAITH TV's Terms of Service and Privacy Policy.
                                           I consent to the processing of my personal data by FAITH TO FAITH TV with its registered office in Port Harcourt, Rivers State, Nigeria, in order to provide services available on the site faithtofaithtv.org. I am informed about the 
                                           right to the contents of my personal data and can make corrections to it when needed. </span>
@@ -161,79 +161,75 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
-    $(document).on('submit', '#prayer-form', function(event) {
+    $(document).on('submit', '#advert-form', event => {
         event.preventDefault();
-          let contactForm = $(this);
-          let fullname = jQuery("#fullname").val();
-          let email = jQuery("#email").val();
-          let phone = jQuery("#phone").val();
-          let location = jQuery("#email").val();
-          let ministry = jQuery("#minitsry").val();
-          let url = jQuery("#url").val();
-          let web = jQuery("#web").val();
-          let advert_title = jQuery("#advert_title").val();
-          let describe = jQuery("#describe").val();
-          let video = jQuery("#video").val();
-          let download = jQuery("#download").val();
-          let invoice_made = jQuery("#invoice_made").val();
-          let invoice_address = jQuery("#invoice_address").val();
-          let contact_no = jQuery("#contact_no").val();
-          let vat = jQuery("#vat").val();
-          if (!terms1.checked==true && !terms2.checked==true){
-            $('#message').html(`
+        const data = {
+            "fullName": $("#fullname").val(),
+            "email":  $("#email").val(),
+            "phoneNumber": $("#phone").val(),
+            "ministryName": $("#ministry").val(),
+            "location": $("#location").val(),
+            "webURL": $("#url").val(),
+            "title": $("#advert_title").val(),
+            "description": $("#describe").val(),
+            "videoURL": $("#video").val(),
+            "mediaDownloadLink": $("#download").val(),
+            "invoiceMade": $("#invoice_made").val(),
+            "invoiceAddress": $("#invoice_address").val(),
+            "contactNumber": $("#contact_no").val(),
+            "VATnumber": $("#vat").val()
+         }
+         if( !$('#terms1').prop('checked') || !$('#terms2').prop('checked') ) {
+                $('#message').html(`
                 <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Attention</strong> Please accept all terms and conditions.
                 </div>`);
-  
                 window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
-          }else{
-  
-        jQuery.ajax({
-            url: '/advert',
-            method: "POST",
-            dataType : "json",
-            data: JSON.stringify({
-            "fullName": fullname,
-            "email": email,
-            "phoneNumber": phone,
-            "location": location,
-            "ministryName" : ministry,
-            "webURL": web,
-            "title": advert_title,
-            "description": describe,
-            "videoURL": video,
-            "mediaDownloadLink": download,
-            "recipientName": invoice_made,
-            "recipientAddress": invoice_address,
-            "recipientContact": contact_no,
-            "VATnumber": vat
-        }),
-            "contentType": "application/json",
-            success: function(response) { 
-                console.log(response);
-                if(response.status==200){
-                    $('#message').html(`
-                    <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Success</strong> Your prayer request has been sent successfully.
-                    </div>`);
-                }
-            },
-            error:function(jqXhr){
-                if(jqXhr.status ==400){
-                    let responseText = jQuery.parseJSON(jqXhr.responseText);
-                     console.log(responseText);
-                }
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+         }else{
+            axios({
+            method: 'post',
+            url: '/create_advert',
+            data
+        }) .then( response => {
+            // handle success
+            console.log(response);
+                    if(response.data.status==200){
+                        $('#message').html(`
+                        <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>${response.data.message}</strong>
+                        </div>`);
+                        $('#advert-form')[0].reset();
+                        window.scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: 'smooth'
+                        });
+                    }else{
+                        $('#message').html(`
+                        <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>${response.data.message}</strong>
+                        </div>`)
+                        window.scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: 'smooth'
+                        });
+                    }
+           
+                })
+                .catch(error => {
+                    // handle error
+                    console.log(error);
+                })
+                    
             }
-        });
-       }
-    });
-  
-  
+       });
   </script>
 <%- include('../../end'); -%>
