@@ -6,7 +6,7 @@ mongoose.Promise = require('bluebird');
 
 var patnershipSchema = mongoose.Schema(
     {
-        firstName: {
+        title: {
             type: String, 
             required: true
         },
@@ -14,13 +14,30 @@ var patnershipSchema = mongoose.Schema(
             type: String, 
             required: true
         },
-        title: {
+        firstName: {
             type: String, 
             required: true
         },
-        membership: {
+        address: {
+            type: String, 
+            required: true
+        },
+        phone:{
+            type: String,
+            required:true,
+        },
+        whatsAppNo:{
+            type:String,
+            required:true,
+        },
+    
+        fellowship: {
             type: String,
             required: true
+        },
+        membership:{
+            type: String,
+            required: true,
         },
         email: {
             type: String, 
@@ -32,15 +49,6 @@ var patnershipSchema = mongoose.Schema(
             }
         },
         phoneNumber: {
-            type: String,
-            required: false,
-            validate: value => {
-                if (!validator.isMobilePhone(value, 'en-NG')) {
-                    throw new Error({error: 'Invalid phone number'})
-                }
-            }
-        },
-        whatsappNumber: {
             type: String,
             required: false,
             validate: value => {

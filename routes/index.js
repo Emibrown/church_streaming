@@ -130,6 +130,21 @@ router.get('/login', (req, res, next) =>{
   res.render('users/pages/login', { title: 'Faith TV | Login' });
 });
 
+router.get('/change-password', (req, res, next) =>{
+  res.render('users/pages/change_password', { title: 'Faith TV | Change password' });
+});
+router.get('/edit-profile', (req, res, next) =>{
+  res.render('users/pages/edit_profile', { title: 'Faith TV | Edit Profile' });
+});
+router.get('/my-profile', (req, res, next) =>{
+  res.render('users/pages/my_profile', { title: 'Faith TV | User Dashboard' });
+});
+
+router.get('/forgot', (req, res, next) =>{
+  res.render('users/pages/forgot', { title: 'Faith TV | Forgot Password' });
+});
+
+
 /** GET requests for pages ends here **/
 
 router.get('/live/:id', async(req, res, next) => {
@@ -189,12 +204,14 @@ router.post('/prayer_request', async (req, res, next) => {
         const {fullName, email} = req.body;
         const header = "Prayer request";
         const message = "Request was processed successfully";
-        customEmail.customEmail(fullName, email, header, message);
-        await prayerRequest.save();
         const prayerRequest = new PrayerRequest(req.body)
-        res.send({status: 200, message: 'Prayer Request Submitted'});
+        const savePrayer = await prayerRequest.save();
+        if(savePrayer){
+           customEmail.customEmail(fullName, email, header, message);
+           res.send({status: 200, message: 'Prayer Request Submitted'});
+         }
     } catch (error) {
-      res.send({status:400, message: 'Failed to process'});
+      res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
     }
 });
 
@@ -207,9 +224,11 @@ router.post('/become_programmer', async (req, res, next) => {
         const header = "Become a programmer";
         const message = "Request was processed successfully";
         const programmer = new Programmer(req.body);
-        customEmail.customEmail(fullName, email, header, message);
-        await programmer.save()
-        res.send({status: 200, message: 'programmer request submitted'});
+        const saveProgrammer = await programmer.save()
+        if(saveProgrammer){
+          customEmail.customEmail(fullName, email, header, message);
+          res.send({status: 200, message: 'programmer request submitted successfully'});
+        }
     } catch (error) {
       res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
     }
