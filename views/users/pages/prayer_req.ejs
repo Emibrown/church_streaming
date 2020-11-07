@@ -121,64 +121,9 @@
                     "phone": $("#phone").val(),
                     "prayerRequest": $("#prayer_req").val(),
                 }
-<<<<<<< HEAD
-                if (terms1.checked==false || terms2.checked==false){
+        if (terms1.checked==false || terms2.checked==false){
             displaymsg(text = "Please accept all terms and conditions")
-      }else{
-=======
-              if( !$('#terms1').prop('checked') || !$('#terms2').prop('checked') ) {
-                    $('#message').html(`
-                    <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Attention</strong> Please accept all terms and conditions.
-                    </div>`);
-                    window.scrollTo({
-                        top: 0,
-                        left: 0,
-                        behavior: 'smooth'
-                    });
-                }else{
-            jQuery.ajax({
-                url: '/prayer_request',
-                method: "POST",
-                dataType : "json",
-                data: JSON.stringify(data),
-                "contentType": "application/json",
-                success: function(response) { 
-                    console.log(response);
-                    if(response.status==200){
-                        $('#message').html(`
-                        <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>${response.message}</strong>
-                        </div>`);
-                        window.scrollTo({
-                            top: 0,
-                            left: 0,
-                            behavior: 'smooth'
-                        });
-                        $('#prayer-form')[0].reset();
-                    }else{
-                        $('#message').html(`
-                        <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>${response.message}</strong>
-                    </div>`) 
-                    window.scrollTo({
-                            top: 0,
-                            left: 0,
-                            behavior: 'smooth'
-                        });
-                    }
-                },
-                error:function(jqXhr){
-                  console.log(jqXhr);
-                }
-            });
-           }
-        });
-
->>>>>>> 3b20d2818774f4dda52bf6f7b33a5a36519412f3
+        }else{
 
       jQuery.ajax({
           url: '/prayer_request',

@@ -211,11 +211,7 @@ router.post('/prayer_request', async (req, res, next) => {
            res.send({status: 200, message: 'Prayer Request Submitted'});
          }
     } catch (error) {
-<<<<<<< HEAD
       sendJSONresponse(res, 400, Object.keys(error.errors));
-=======
-      res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
->>>>>>> 3b20d2818774f4dda52bf6f7b33a5a36519412f3
     }
 });
 
