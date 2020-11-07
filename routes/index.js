@@ -293,7 +293,6 @@ router.post('/patnership', async (req, res, next) => {
     console.log(saved)
     res.send({status: 200, message: 'patnership form submitted'});
   } catch (error) {
-  res.send({error:400, message: 'Failed to process'});
-}
+    sendJSONresponse(res, 400, {error});}
 });
 module.exports = router;

@@ -403,10 +403,20 @@
           }
           console.log(data)
           if (terms.checked==false){
+            var txterror = "Please accept all terms and conditions"
+          }
+          if(level.length<1){
+            var txterror = "You have to select atleast one patnership level"
+          }
+          if(cat.length<1){
+            var txterror = "You have to select atleast one patnership category"
+          }
+
+          if (txterror){
             $('#message').html(`
                 <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Attention</strong> Please accept all terms and conditions.
+                <strong>Attention</strong> ${txterror}.
                 </div>`);
   
                 window.scrollTo({
