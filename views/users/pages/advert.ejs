@@ -18,7 +18,7 @@
 
                           <h4 class = "pb-2">CONTACT DETAILS</h4>
                           <div id = "message"></div>
-                          <form id = "advert-form">
+                          <form class = "advert-form">
                           <div class = "form-group">
                               <label for="fullname">*Your Full Name</label>
                               <input placeholder = "Your Name (Required)" type="text" id = "fullname" name = "fullname" class = "form-control">
@@ -110,7 +110,7 @@
                             <p><small><i>* Required fields</i></small></p>
                         </div>
                         <div style="text-align: right; margin-top: 10px;">
-                          <button class="g-recaptcha btn btn-primary"><em class="fa fa-send"></em> Submit</button>
+                          <button class="g-recaptcha btn btn-primary submit"><em class="fa fa-send"></em> Submit</button>
                         </div>
                         
                         <div class="clearfix"></div>
@@ -160,10 +160,8 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
-    $(document).ready(function() {
-    $('#advert-form').submit(event => {
-        event.preventDefault();
-        $('form[id="advert-form"]').validate({
+
+        $('.advert-form').validate({
         rules: {
             fullname: 'required',
             advert_title: 'required',
@@ -199,13 +197,10 @@
             contact_no: 'This field is required',
             'terms1': {
                 required: "Please accept this condition",
-                
             },
             'terms2':{
                 required: "Please accept this condition",
-
             }
-            
         },
         submitHandler: () => {
             const data = {
@@ -256,18 +251,20 @@
                             behavior: 'smooth'
                         });
                     }
-           
                 })
                 .catch(error => {
                     // handle error
                     console.log(error);
                 })
 
-            return false;
-        }
+           }
         });
+        $(document).on('submit', '.advert-form', (event) => {
+        $(document).ready(function (){
+        event.preventDefault();
 
-       });
-       });
+    });
+});
+
   </script>
 <%- include('../../end'); -%>
