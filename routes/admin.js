@@ -57,18 +57,18 @@ const ensureAuthenticated = (req, res, next) => {
 //   }
 // })
 
-Settings.find({}, (err, users) => {
+Settings.find({}, (err, settings) => {
   if(err){ return;}
-  if(users.length == 0){
+  if(settings.length == 0){
       var newSettings = new Settings({
         settingsId: "site_settings",
       });
-      newSettings.save((err, user) => {
+      newSettings.save((err, settings) => {
         if (err) { 
           console.log(err);
           return; 
         }else{
-            console.log(user);
+            console.log(settings);
         }
       });
   }
