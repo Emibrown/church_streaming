@@ -37,26 +37,35 @@ const ensureAuthenticated = (req, res, next) => {
   }
 };
 
-// User.find({}, (err, users) => {
-//   if(err){ return;}
-//   if(users.length == 0){
-//       var newUser = new User({
-//         firstname: "Church",
-//         lastname: "stream",
-//         title:'Mr',
-//         email: "bossworker@gmail.com",
-//         password: "11223344E"
-//       });
-//       newUser.save((err, user) => {
-//         if (err) { 
-//           console.log(err);
-//           return; 
-//         }else{
-//             console.log(user);
-//         }
-//       });
-//   }
-// })
+User.find({}, (err, users) => {
+  if(err){ return;}
+  if(users.length == 0){
+      var newUser = new User({
+        firstname: "Emmanuel",
+        lastname: "Eneche",
+        middlename: "Samson",
+        title:'Mr',
+        email: "emmaeneche@gmail.com",
+        password: "11223344E",
+        address:"Port Harcourt",
+        location: "Port",
+        stateOfOrigin: 'Ph',
+        LGA: "ph",
+        residentPastor: "Pastor John",
+        chapterLocation: "Rumuibekwe",
+        organisationName: "Coders",
+
+      });
+      newUser.save((err, user) => {
+        if (err) { 
+          console.log(err);
+          return; 
+        }else{
+            console.log(user);
+        }
+      });
+  }
+})
 
 Settings.find({}, (err, settings) => {
   if(err){ return;}
@@ -115,12 +124,18 @@ router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/site_details', { title: 'Site Details', settings });
 });
 
+<<<<<<< HEAD
 router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/add_about', { title: 'Add About' });
 });
 router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
   const about = await About.findOne({_id:req.query.id})
   res.render('admin/pages/edit_about', { title: 'Edit About', about });
+=======
+router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
+  const settings = await Settings.findOne({settingsId:"site_settings"})
+  res.render('admin/pages/social_media', { title: 'Social Media', settings });
+>>>>>>> ea51ffa (social media fix)
 });
 
 //update sit settings from admin page
@@ -135,7 +150,6 @@ router.put('/settings', ensureAuthenticated, async (req, res, next) => {
       sendJSONresponse(res, 400, {error});
   }
 });
-
 
 
 router.get('/categories', ensureAuthenticated, async(req, res, next) => {
