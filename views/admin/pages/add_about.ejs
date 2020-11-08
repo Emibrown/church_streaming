@@ -33,13 +33,13 @@
                              </div>
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="About title">                 
+                                <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="About title" required>                 
                             </div>
                             <div class="form-group">
                                 <label for="desc">Description</label>
-                                <input type = "text" id="desc" name="desc" rows="5" class="form-control" placeholder="About description">                  
+                                <textarea id="desc" name="desc" rows="5" class="form-control" placeholder="About description" required></textarea>>                 
                             </div>
-                            <button class="mt-1 btn btn-primary">Submit</button>
+                            <button class="mt-1 btn btn-primary" id = "btn">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -58,33 +58,35 @@
     $(document).on('submit', '#add_about', event => {
         event.preventDefault();
         const file = document.querySelector('#image')
-        const data = {
-            "file": file.files[0],
-            "description": $("#desc").val(),
-            "title":  $("#title").val(),
-         }
-        console.log(data)
-        jQuery.ajax({
-        url: '/admin/about',
-        method: "POST",
-        dataType : "json",
-        data: JSON.stringify(data),
-        "contentType": "application/json",
-        success: function(response) { 
-            console.log(response);
-            if(response.status==200){
-            displaymsg(response.message, "alert-secondary")
-            $('#add_about')[0].reset();
+        const data = new FormData()
+        data.append("description", $("#desc").val());
+        data.append("title", $("#title").val());
+        data.append("file", file.files[0]);
+        if(file.files.length < 1 ){
+            displayerr("Please add an image");
+        }else{
+            const config = {
+                onUploadProgress: function(progressEvent) {
+                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                console.log(percentCompleted)
+                $('#btn').val(percentCompleted);
+                }
             }
-          },
-          error:function(jqXhr){
-              if(jqXhr.status ==400){
-                let txt = jQuery.parseJSON(jqXhr.responseText);
-                console.log(txt)
-                  displaymsg(txt)
-              }
-          }
-      });
+
+            axios.post('/admin/about',data, config)
+            .then(function (response) {
+                // handle success
+                console.log(response)
+                const url = "/admin/about";    
+                $(location).attr('href',url);
+                displaymsg(response.data.message);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+                displayerr(error.message)
+            })
+        }
      })
 </script>
 <%- include('../../end'); -%>
