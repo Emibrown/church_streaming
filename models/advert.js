@@ -18,7 +18,6 @@ var advertSchema = mongoose.Schema(
         },
         phoneNumber: {
             type: String,
-            required: false,
             validate: value => {
                 if (!validator.isMobilePhone(value, 'en-NG')) {
                     throw new Error({error: 'Invalid phone number'})
@@ -27,24 +26,18 @@ var advertSchema = mongoose.Schema(
         },
         location: {
             type: String, 
-            required: true
+            defualt:null,
         },
         ministryName: {
             type: String, 
-            required: true,
+            default:null,
         },
         webURL: {
             type: String,
-            required: true,
-            validate: value => {
-                if (!validator.isURL(value)) {
-                    throw new Error({error: 'Invalid web URL'})
-                }
-            }
         },
         title: {
             type: String,
-            required: true
+            default:null,
         },
 
         description: {
@@ -54,12 +47,7 @@ var advertSchema = mongoose.Schema(
 
         videoURL: {
             type: String,
-            required: true,
-            validate: value => {
-                if (!validator.isURL(value)) {
-                    throw new Error({error: 'Invalid video URL'})
-                }
-            }
+            default: null,
         }, 
         mediaDownloadLink: {
             type: String,
@@ -89,7 +77,7 @@ var advertSchema = mongoose.Schema(
         },
         VATnumber: {
             type: String, 
-            required: false
+            default:null,
         },
         date: {
             type: Date, 

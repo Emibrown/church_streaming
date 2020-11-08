@@ -1,5 +1,4 @@
 <%- include('../header'); -%>
-
 <div class="content">
     <div class="container">
     
@@ -22,11 +21,11 @@
                           <form id = "advert-form">
                           <div class = "form-group">
                               <label for="fullname">*Your Full Name</label>
-                              <input placeholder = "Your Name (Required)" type="text" id = "fullname" name = "fullname" class = "form-control" required>
+                              <input placeholder = "Your Name (Required)" type="text" id = "fullname" name = "fullname" class = "form-control">
                           </div>
                           <div class = "form-group">
                               <label for="email">* Email Address</label>
-                              <input type="text" id = "email"placeholder ="Email Address (Required)" name = "email" class = "form-control" required>
+                              <input type="text" id = "email"placeholder ="Email Address (Required)" name = "email" class = "form-control">
                           </div>
                           <div class = "form-group">
                               <label for="phone">Phone Number</label>
@@ -52,12 +51,12 @@
                           <h4 style = "font-weight: bold;" class = "pb-2 pt-5">ADVERTISING DETAILS</h4>
                           <div class = "form-group">
                               <label for="advert_title">* Ad/Event Title</label>
-                              <input placeholder = "Advert Title (Required)" type="text" id = "advert_title" name = "advert_title" class = "form-control" required>
+                              <input placeholder = "Advert Title (Required)" type="text" id = "advert_title" name = "advert_title" class = "form-control">
                               </div>
 
                            <div class = "form-group">
                               <label for="describe">*Describe Your Ad/Event</label>
-                              <input placeholder = "Enter your Ad/Event Description (Required)" id = "describe" type="text" name = "describe" class = "form-control" required>
+                              <textarea placeholder = "Enter your Ad/Event Description (Required)" id = "describe" name="describe" id="describe" rows="5" class="form-control"></textarea>
                            </div>
                            <div class = "form-group">
                               <label for="video">Video URL</label>
@@ -66,14 +65,14 @@
                            </div>
                            <div class = "form-group">
                               <label for="download">* Media Download Link</label>
-                              <input placeholder = "Media Download Link URL (Required)" type="text" id = "download" name = "download" class = "form-control" required>
+                              <input placeholder = "Media Download Link URL (Required)" type="text" id = "download" name = "download" class = "form-control">
                               <span class = "video-text">Please supply a download link of your ad/event assets.</span>
                            </div>
                            <br>
                            <h4 style = "font-weight: bold;" class = "pb-2 pt-4">INVOICING DETAILS</h4>
                            <div class = "form-group">
                               <label for="invoice_made">* Invoice Made Out To</label>
-                              <input placeholder = "Company/Entity Name to be Invoiced (Required)" type="text" id ="invoice_made" name = "invoice_made" class = "form-control" required>
+                              <input placeholder = "Company/Entity Name to be Invoiced (Required)" type="text" id ="invoice_made" name = "invoice_made" class = "form-control">
                            </div>
                            <div class = "form-group">
                               <label for="invoice_address">* Invoice Address</label>
@@ -81,7 +80,7 @@
                            </div>
                            <div class = "form-group">
                               <label for="contact_no">* Contact Number</label>
-                              <input placeholder = "Contact Number (Required)" id ="contact_no" type="text" name = "contact_no" class = "form-control" required>
+                              <input placeholder = "Contact Number (Required)" id ="contact_no" type="text" name = "contact_no" class = "form-control">
                            </div>
                            <div class = "form-group">
                               <label for="vat">VAT Number (If Applicable)</label>
@@ -91,7 +90,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" id = "terms1" class = "" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" name = "terms1" class = "inputCheckbox">
                                       <strong>By using this service i agree to FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                                   </span>
                               </label>
@@ -101,7 +100,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" id = "terms2" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" name = "terms2" class = "inputCheckbox">
                                       <span><strong>By using this online service I agree to FAITH TO FAITH TV's Terms of Service and Privacy Policy.
                                           I consent to the processing of my personal data by FAITH TO FAITH TV with its registered office in Port Harcourt, Rivers State, Nigeria, in order to provide services available on the site faithtofaithtv.org. I am informed about the 
                                           right to the contents of my personal data and can make corrections to it when needed. </span>
@@ -161,9 +160,55 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
-    $(document).on('submit', '#advert-form', event => {
+    $(document).ready(function() {
+    $('#advert-form').submit(event => {
         event.preventDefault();
-        const data = {
+        $('form[id="advert-form"]').validate({
+        rules: {
+            fullname: 'required',
+            advert_title: 'required',
+            describe: 'required',
+            invoice_made: 'required',
+            invoice_address: 'required',
+            contact_no: 'required',
+            email: {
+            required: true,
+            email: true,
+            },
+            download: {
+                required: true,
+                url: true
+            },
+            'terms1': {
+                required: true,
+                
+            },
+            'terms2': {
+                required: true,
+                
+            }
+        },
+        messages: {
+            fullname: 'Please provide your full names',
+            email: 'Please provide a valid email',
+            advert_title: 'An advert title is required',
+            describe: 'Provide description for advert',
+            download: 'This field is required. (And must be valid URL)',
+            invoice_made: 'This field is required',
+            invoice_address: 'This field is required',
+            contact_no: 'This field is required',
+            'terms1': {
+                required: "Please accept this condition",
+                
+            },
+            'terms2':{
+                required: "Please accept this condition",
+
+            }
+            
+        },
+        submitHandler: () => {
+            const data = {
             "fullName": $("#fullname").val(),
             "email":  $("#email").val(),
             "phoneNumber": $("#phone").val(),
@@ -179,19 +224,7 @@
             "contactNumber": $("#contact_no").val(),
             "VATnumber": $("#vat").val()
          }
-         if( !$('#terms1').prop('checked') || !$('#terms2').prop('checked') ) {
-                $('#message').html(`
-                <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Attention</strong> Please accept all terms and conditions.
-                </div>`);
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'smooth'
-                });
-         }else{
-            axios({
+         axios({
             method: 'post',
             url: '/create_advert',
             data
@@ -229,8 +262,12 @@
                     // handle error
                     console.log(error);
                 })
-                    
-            }
+
+            return false;
+        }
+        });
+
+       });
        });
   </script>
 <%- include('../../end'); -%>
