@@ -118,6 +118,10 @@ router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
 router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/add_about', { title: 'Add About' });
 });
+router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
+  const about = await About.findOne({_id:req.query.id})
+  res.render('admin/pages/edit_about', { title: 'Edit About', about });
+});
 
 //update sit settings from admin page
 router.put('/settings', ensureAuthenticated, async (req, res, next) => {
