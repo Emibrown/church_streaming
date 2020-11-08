@@ -52,6 +52,13 @@ var userSchema = mongoose.Schema(
             type: String, 
             required: true
         },
+        type: {
+            type: Number,
+            default: 0,
+        },
+        isBlocked:{
+            type: Boolean, default: false,
+        },
         password: {
             type: String, 
             required: true
