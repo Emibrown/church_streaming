@@ -28,23 +28,23 @@
                         <form id="social_media">
                             <div class = "form-group">
                                 <label for="facebook_handle">Facebook Handle</label>
-                                <input placeholder = "Facebook Handle" type="text" id = "facebook_handle" name = "facebook_handle" class = "form-control">
+                                <input value = "<% if(settings.facebookHandle) { %> <%= settings.facebookHandle %><% } %>" placeholder = "Facebook Handle" type="text" id = "facebook_handle" name = "facebook_handle" class = "form-control">
                             </div>
                             <div class="form-group">
                                 <label for="instagram_handle">Instagram Handle</label>
-                                <input placeholder = "Instagram Handle" type="text" id = "instagram_handle" name = "instagram_handle" class = "form-control">
+                                <input value = "<% if(settings.googleplusHandle) { %> <%= settings.googleplusHandle %><% } %>" placeholder = "Instagram Handle" type="text" id = "instagram_handle" name = "instagram_handle" class = "form-control">
                             </div>
                             <div class = "form-group">
                                 <label for="twitter_handle">Twitter Handle</label>
-                                <input placeholder = "Twitter Handle" type="text" id = "twitter_handle" name = "twitter_handle" class = "form-control">
+                                <input value = "<% if(settings.instagramHandle) { %> <%= settings.instagramHandle %><% } %>" placeholder = "Twitter Handle" type="text" id = "twitter_handle" name = "twitter_handle" class = "form-control">
                             </div>
                             <div class = "form-group">
                                 <label for="vimeo_handle">Vimeo Handle</label>
-                                <input placeholder = "Vimeo Handle" type="text" id = "vimeo_handle" name = "vimeo_handle" class = "form-control">
+                                <input value = "<% if(settings.vimeoHandle) { %> <%= settings.vimeoHandle %><% } %>" placeholder = "Vimeo Handle" type="text" id = "vimeo_handle" name = "vimeo_handle" class = "form-control">
                             </div>
                             <div class = "form-group">
                                 <label for="google_handle">Google Handle</label>
-                                <input placeholder = "Google Handle" type="text" id = "google_handle" name = "google_handle" class = "form-control">
+                                <input value = "<% if(settings.googleplusHandle) { %> <%= settings.googleplusHandle %><% } %>" placeholder = "Google Handle" type="text" id = "google_handle" name = "google_handle" class = "form-control">
                             </div>
                             <button class="mt-1 btn btn-primary">Submit</button>
                         </form>
