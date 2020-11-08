@@ -21,29 +21,43 @@ const sendJSONresponse = (res, status, content) => {
     res.status(status);
     res.json(content);
 };
-
+const authenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+         res.redirect('/admin/dashboard');
+    }else {
+       next();
+    }
+  };
+  
+  const ensureAuthenticated = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      res.redirect("/admin");
+    } else {
+      next();
+    }
+  };
 //advert
-router.get('/adverts', async (req, res, next) => {
+router.get('/adverts', ensureAuthenticated, async (req, res, next) => {
     // Get  all adverts 
     try {
         const advert = await Advert.find({}).sort({ date : 1 })
-        sendJSONresponse(res, 200, {advert});
+        res.render('admin/pages/adverts', { title: 'Adverts', advert });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
 });
 
-router.get('/advert/:id', async (req, res, next) => {
+router.get('/advert/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single advert
     try {
         const advert = await Advert.findOne({_id:req.params.id})
-        sendJSONresponse(res, 200, {advert});
+        res.render('admin/pages/adverts', { title: 'Advert', advert });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
 });
 
-router.put('/advert/:id', async (req, res, next) => {
+router.put('/advert/:id', ensureAuthenticated, async (req, res, next) => {
     // update an advert
     try {
         const advert = await Advert.findOne({_id:req.params.id})
@@ -55,7 +69,7 @@ router.put('/advert/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/advert/:id', async (req, res, next) => {
+router.delete('/advert/:id', ensureAuthenticated, async (req, res, next) => {
     // delete an advert
     try {
         await Advert.findOneAndDelete({_id:req.params.id});
@@ -67,7 +81,7 @@ router.delete('/advert/:id', async (req, res, next) => {
 
 //prayerRequest routes
 
-router.get('/prayer_requests', async (req, res, next) => {
+router.get('/prayer_requests', ensureAuthenticated, async (req, res, next) => {
     // Get  all prayer requests 
     try {
         const prayerRequest = await PrayerRequest.find({}).sort({ date : 1 })
@@ -77,7 +91,7 @@ router.get('/prayer_requests', async (req, res, next) => {
     }
 });
 
-router.get('/prayer_request/:id', async (req, res, next) => {
+router.get('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single prayer request
     try {
         const invoice = await Invoice.findOne({_id:req.params.id})
@@ -87,7 +101,7 @@ router.get('/prayer_request/:id', async (req, res, next) => {
     }
 });
 
-router.put('/prayer_request/:id', async (req, res, next) => {
+router.put('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
     // update a prayer request
     try {
         const prayerRequest = await PrayerRequest.findOne({_id:req.params.id})
@@ -99,7 +113,7 @@ router.put('/prayer_request/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/prayer_request/:id', async (req, res, next) => {
+router.delete('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a prayer request
     try {
         await PrayerRequest.findOneAndDelete({_id:req.params.id});
@@ -111,7 +125,7 @@ router.delete('/prayer_request/:id', async (req, res, next) => {
 
 //programmer routes
 
-router.get('/become_programmer', async (req, res, next) => {
+router.get('/become_programmer', ensureAuthenticated, async (req, res, next) => {
     // Get all programmer requests
     try {
         const programmer = await Programmer.find({}).sort({ lastName : 1 })
@@ -121,7 +135,7 @@ router.get('/become_programmer', async (req, res, next) => {
     }
 });
 
-router.get('/become_programmer/:id', async (req, res, next) => {
+router.get('/become_programmer/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single programmer
     try {
         const programmer = await Programmer.findOne({_id:req.params.id})
@@ -131,8 +145,8 @@ router.get('/become_programmer/:id', async (req, res, next) => {
     }
 });
 
-router.put('/become_programmer/:id', async (req, res, next) => {
-    // update a programmer request
+router.put('/become_programmer/:id', ensureAuthenticated, async (req, res, next) => {
+    // update a programmer request 
     try {
         const programmer = await Programmer.findOne({_id:req.params.id})
         await Object.assign(programmer, req.body);
@@ -143,7 +157,7 @@ router.put('/become_programmer/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/become_programmer/:id', async (req, res, next) => {
+router.delete('/become_programmer/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a programmer request
     try {
         await Programmer.findOneAndDelete({_id:req.params.id});
@@ -155,7 +169,7 @@ router.delete('/become_programmer/:id', async (req, res, next) => {
 
 //show proposal routes
 
-router.get('/show_proposals', async (req, res, next) => {
+router.get('/show_proposals', ensureAuthenticated, async (req, res, next) => {
     // Get  all proposals 
     try {
         const proposal = await Proposal.find({}).sort({ date : 1 })
@@ -165,7 +179,7 @@ router.get('/show_proposals', async (req, res, next) => {
     }
 });
 
-router.get('/show_proposal/:id', async (req, res, next) => {
+router.get('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single proposal
     try {
         const proposal = await Proposal.findOne({_id:req.params.id})
@@ -175,7 +189,7 @@ router.get('/show_proposal/:id', async (req, res, next) => {
     }
 });
 
-router.put('/show_proposal/:id', async (req, res, next) => {
+router.put('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {
     // update a show proposal
     try {
         const proposal = await Proposal.findOne({_id:req.params.id})
@@ -187,7 +201,7 @@ router.put('/show_proposal/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/show_proposal/:id', async (req, res, next) => {
+router.delete('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a show proposal
     try {
         await Proposal.findOneAndDelete({_id:req.params.id});
@@ -198,7 +212,7 @@ router.delete('/show_proposal/:id', async (req, res, next) => {
 });
 
 //testimonies routes
-router.get('/testimonies', async (req, res, next) => {
+router.get('/testimonies',  ensureAuthenticated, async (req, res, next) => {
     // Get all testimonies 
   try {
         const testimonies = await Testimony.find({}).sort({ date : 1 })
@@ -208,7 +222,7 @@ router.get('/testimonies', async (req, res, next) => {
     }
 });
 
-router.get('/testimony/:id', async (req, res, next) => {
+router.get('/testimony/:id', ensureAuthenticated, async (req, res, next) => {
     // get a testimony
     try {
         const testimony = await Testimony.findOne({_id:req.params.id})
@@ -218,7 +232,7 @@ router.get('/testimony/:id', async (req, res, next) => {
     }
 });
 
-router.put('/testimony/:id', async (req, res, next) => {
+router.put('/testimony/:id', ensureAuthenticated, async (req, res, next) => {
     // update a testimony
     try {
         const testimony = await Testimony.findOne({_id:req.params.id})
@@ -230,7 +244,7 @@ router.put('/testimony/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/testimony/:id', async (req, res, next) => {
+router.delete('/testimony/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a testimony
     try {
         await Testimony.findOneAndDelete({_id:req.params.id});
@@ -241,7 +255,7 @@ router.delete('/testimony/:id', async (req, res, next) => {
 });
 
 //music video routes
-router.get('/music_video', async (req, res, next) => {
+router.get('/music_video', ensureAuthenticated, async (req, res, next) => {
     // Get all music videos
     try {
         const musicVideo = await MusicVideo.find({}).sort({ date : 1 })
@@ -251,7 +265,7 @@ router.get('/music_video', async (req, res, next) => {
     }
 });
 
-router.get('/music_video/:id', async (req, res, next) => {
+router.get('/music_video/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single music video
     try {
         const musicVideo = await MusicVideo.findOne({_id:req.params.id})
@@ -261,7 +275,7 @@ router.get('/music_video/:id', async (req, res, next) => {
     }
 });
 
-router.put('/music_video/:id', async (req, res, next) => {
+router.put('/music_video/:id', ensureAuthenticated, async (req, res, next) => {
     // update a music video
     try {
         const musicVideo = await MusicVideo.findOne({_id:req.params.id})
@@ -274,7 +288,7 @@ router.put('/music_video/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/music_video/:id', async (req, res, next) => {
+router.delete('/music_video/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a musicVideo
     try {
         await MusicVideo.findOneAndDelete({_id:req.params.id});
@@ -285,7 +299,7 @@ router.delete('/music_video/:id', async (req, res, next) => {
 });
 
 //patnership routes
-router.get('/patnership', async (req, res, next) => {
+router.get('/patnership', ensureAuthenticated, async (req, res, next) => {
     // Get patnerships
     try {
         const patnership = await Patnership.find({}).sort({ date : 1 })
@@ -295,7 +309,7 @@ router.get('/patnership', async (req, res, next) => {
     }
 });
 
-router.get('/patnership/:id', async (req, res, next) => {
+router.get('/patnership/:id', ensureAuthenticated, async (req, res, next) => {
     // get a patnership
     try {
         const patnership = await Patnership.findOne({_id:req.params.id})
@@ -305,7 +319,7 @@ router.get('/patnership/:id', async (req, res, next) => {
     }
 });
 
-router.put('/patnership/:id', async (req, res, next) => {
+router.put('/patnership/:id', ensureAuthenticated, async (req, res, next) => {
     // update a patnership
     try {
         const patnership = await Patnership.findOne({_id:req.params.id})
@@ -317,7 +331,7 @@ router.put('/patnership/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/patnership/:id', async (req, res, next) => {
+router.delete('/patnership/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a patnership
     try {
         await Patnership.findOneAndDelete({_id:req.params.id});
@@ -328,7 +342,7 @@ router.delete('/patnership/:id', async (req, res, next) => {
 });
 
 //static file routes
-router.get('/static_files', async (req, res, next) => {
+router.get('/static_files', ensureAuthenticated, async (req, res, next) => {
     // Get  all static files
     try {
         const static = await Static.find({}).sort({ addedOn : 1 })
@@ -337,7 +351,7 @@ router.get('/static_files', async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
 });
-router.post('/static_files', multers.static.single('file'), async (req, res, next) => {
+router.post('/static_files', ensureAuthenticated, multers.static.single('file'), async (req, res, next) => {
     // add static file
     try {
         if(!req.file){
@@ -353,7 +367,7 @@ router.post('/static_files', multers.static.single('file'), async (req, res, nex
     }
 });
 
-router.get('/static_files/:id', async (req, res, next) => {
+router.get('/static_files/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single static file
     try {
         const static = await Static.findOne({_id:req.params.id})
@@ -363,7 +377,7 @@ router.get('/static_files/:id', async (req, res, next) => {
     }
 });
 
-router.put('/static_files/:id', multers.static.single('file'), async (req, res, next) => {
+router.put('/static_files/:id', ensureAuthenticated, multers.static.single('file'), async (req, res, next) => {
     // update a static file
     try {
         const static = await Static.findOne({_id:req.params.id})
@@ -380,7 +394,7 @@ router.put('/static_files/:id', multers.static.single('file'), async (req, res, 
     }
 });
 
-router.delete('/static_files/:id', async (req, res, next) => {
+router.delete('/static_files/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a static file
     try {
         const static = await Static.findOne({_id:req.params.id});
@@ -393,7 +407,7 @@ router.delete('/static_files/:id', async (req, res, next) => {
 });
 
 //settings routes
-router.post('/settings', async (req, res, next) => {
+router.post('/settings', ensureAuthenticated, async (req, res, next) => {
     // add settings
     try {
         const settings = new Settings(req.body);
@@ -405,7 +419,7 @@ router.post('/settings', async (req, res, next) => {
     }
 });
 
-router.get('/settings', async (req, res, next) => {
+router.get('/settings',ensureAuthenticated, async (req, res, next) => {
     // get all settings
     try {
         const settings = await Settings.find({})
@@ -437,7 +451,7 @@ router.delete('/settings/:id', async (req, res, next) => {
 });
 
 //show routes
-router.get('/show', async (req, res, next) => {
+router.get('/show', ensureAuthenticated, async (req, res, next) => {
     // Get  all shows
     try {
         const show = await Show.find({}).sort({ addedOn : 1 })
@@ -446,7 +460,7 @@ router.get('/show', async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
 });
-router.post('/show', multers.upload.single('file'), async (req, res, next) => {
+router.post('/show', ensureAuthenticated, multers.upload.single('file'), async (req, res, next) => {
     // submit a show
     try {
         if(!req.file){
@@ -475,7 +489,7 @@ router.post('/show', multers.upload.single('file'), async (req, res, next) => {
     }
 });
 
-router.get('/show/:id', async (req, res, next) => {
+router.get('/show/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single a show
     try {
         const show = await Show.findOne({code:req.params.id})
@@ -485,7 +499,7 @@ router.get('/show/:id', async (req, res, next) => {
     }
 });
 
-router.put('/show/:id', multers.upload.single('file'), async (req, res, next) => {
+router.put('/show/:id', ensureAuthenticated, multers.upload.single('file'), async (req, res, next) => {
     // update a show
     try {
         const show = await Show.findOne({_id:req.params.id})
@@ -514,7 +528,7 @@ router.put('/show/:id', multers.upload.single('file'), async (req, res, next) =>
     }
 });
 
-router.delete('/show/:id', async (req, res, next) => {
+router.delete('/show/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a show
     try {
         const show = await Show.findOne({_id:req.params.id});
@@ -528,7 +542,7 @@ router.delete('/show/:id', async (req, res, next) => {
 });
 
 //schedule routes
-router.post('/schedule', async (req, res, next) => {
+router.post('/schedule', ensureAuthenticated, async (req, res, next) => {
     try{
       const schedule = new Schedule(req.body);
       await schedule.save();
@@ -538,7 +552,7 @@ router.post('/schedule', async (req, res, next) => {
     }
   });
   
-  router.get('/schedule', async (req, res, next) => {
+  router.get('/schedule', ensureAuthenticated, async (req, res, next) => {
     // get all schedules
     try {
         const schedule = await Schedule.find({})
@@ -548,7 +562,7 @@ router.post('/schedule', async (req, res, next) => {
     }
   });
   
-  router.get('/schedule/:id', async (req, res, next) => {
+  router.get('/schedule/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single schedule
     try {
         const schedule = await Schedule.findOne({_id: req.params.id})
@@ -558,7 +572,7 @@ router.post('/schedule', async (req, res, next) => {
     }
   });
   
-  router.put('/schedule/:id', async (req, res, next) => {
+  router.put('/schedule/:id', ensureAuthenticated, async (req, res, next) => {
     // update a schedule
     try {
         const schedule = await Schedule.findOne({_id:req.params.id})
@@ -570,7 +584,7 @@ router.post('/schedule', async (req, res, next) => {
     }
   });
   
-  router.delete('/schedule/:id', async (req, res, next) => {
+  router.delete('/schedule/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a schedule
     try {
         await Schedule.findOneAndDelete({_id:req.params.id});
@@ -581,7 +595,7 @@ router.post('/schedule', async (req, res, next) => {
   });
 
   //feedback routes
-  router.get('/enquiries', async (req, res, next) => {
+  router.get('/enquiries', ensureAuthenticated, async (req, res, next) => {
     // get all feedbacks
     try {
         const enquiries = await Enquiry.find({})
@@ -591,7 +605,7 @@ router.post('/schedule', async (req, res, next) => {
     }
   });
   
-  router.get('/enquiries/:id', async (req, res, next) => {
+  router.get('/enquiries/:id',ensureAuthenticated, async (req, res, next) => {
     // get a single feedback
     try {
         const enquiries = await Enquiry.findOne({_id: req.params.id})
@@ -601,7 +615,7 @@ router.post('/schedule', async (req, res, next) => {
     }
   });
   
-  router.put('/enquiries/:id', async (req, res, next) => {
+  router.put('/enquiries/:id', ensureAuthenticated, async (req, res, next) => {
     // update a feedback
     try {
         const enquiries = await Enquiry.findOne({_id:req.params.id})
@@ -613,7 +627,7 @@ router.post('/schedule', async (req, res, next) => {
     }
   });
   
-  router.delete('/enquiries/:id', async (req, res, next) => {
+  router.delete('/enquiries/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a feedback
     try {
         await Enquiry.findOneAndDelete({_id:req.params.id});

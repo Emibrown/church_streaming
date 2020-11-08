@@ -10,7 +10,7 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                  Show Proposals
+                  Adverts
                </div>
            </div> 
         </div>
@@ -24,22 +24,22 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th class="text-center">Genre</th>
-                                <th class="text-center">Supplier name</th>
-                                <th class="text-center">Supplier phone no</th>
+                                <th class="text-center">Full name</th>
+                                <th class="text-center">ministry name</th>
+                                <th class="text-center"> phone no</th>
                                 <th class="text-center">Date added</th>
                                 <th class="text-center">Options</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% proposal.forEach(function (proposal,index){ %>
+                            <% advert.forEach(function (advert,index){ %>
                                 <tr>
-                                    <td class="text-left"><%= proposal.title %></td>
-                                    <td class="text-center"><%= proposal.genre %></td>
-                                    <td class="text-center"><%= proposal.supplierName %></td>
-                                    <td class="text-center"><%= proposal.phoneNumber %></td>
-                                    <td class="text-center"><%= moment(proposal.date).format('LL') %></td><td class="text-center">
-                                        <a href= "/admin/api/show_proposal/<%=proposal._id%>" type="button" id="PopoverCustomT-1"
+                                    <td class="text-left"><%= advert.title %></td>
+                                    <td class="text-center"><%= advert.fullName %></td>
+                                    <td class="text-center"><%= advert.ministryName %></td>
+                                    <td class="text-center"><%= advert.phoneNumber %></td>
+                                    <td class="text-center"><%= moment(advert.date).format('LL') %></td><td class="text-center">
+                                        <a href= "/admin/api/show_proposal/<%=advert._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                     </td>
                                 </tr>
