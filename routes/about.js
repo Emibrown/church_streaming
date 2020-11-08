@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
     // Get  all abouts
     try {
         const about = await About.find({}).sort({ addedOn : 1 })
-        sendJSONresponse(res, 200, {about});
+        res.render('admin/pages/about', { title: 'About', about });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }

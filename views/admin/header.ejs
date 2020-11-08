@@ -1,29 +1,131 @@
 <!doctype html>
 <html lang="en">
 
-<!-- Mirrored from iqonic.design/themes/streamitnew/dashboard/html/theme/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Sep 2020 09:56:19 GMT -->
+
+<!-- Mirrored from demo.dashboardpack.com/architectui-html-pro/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Nov 2020 05:51:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-   <!-- Required meta tags -->
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <title>LiveTV - Admin</title>
-   <!-- Favicon -->   
-   <link rel="shortcut icon" href="https://iqonic.design/themes/streamitnew/dashboard/html/assets/images/favicon.ico" />
-   <!-- Bootstrap CSS -->
-   <link rel="stylesheet" href="https://iqonic.design/themes/streamitnew/dashboard/html/assets/css/bootstrap.min.css">
-   <!--datatable CSS -->
-   <link rel="stylesheet" href="https://iqonic.design/themes/streamitnew/dashboard/html/assets/css/dataTables.bootstrap4.min.css">
-   <!-- Typography CSS -->
-   <link rel="stylesheet" href="https://iqonic.design/themes/streamitnew/dashboard/html/assets/css/typography.css">
-   <!-- Style CSS -->
-   <link rel="stylesheet" href="https://iqonic.design/themes/streamitnew/dashboard/html/assets/css/style.css">
-   <!-- Responsive CSS -->
-   <link rel="stylesheet" href="https://iqonic.design/themes/streamitnew/dashboard/html/assets/css/responsive.css">
-</head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+<link href="/back/main.d810cf0ae7f39f28f336.css" rel="stylesheet"></head>
+<script type="text/javascript" src="/back/jquery-1.11.1.min.js"></script>
+
+<style>
+   .logo img {
+      width: 50px;
+      margin-bottom: 20px;
+      margin-top: 39px;
+   }
+
+ </style>
+
 <body>
-   <!-- loader Start -->
-   <div id="loading">
-      <div id="loading-center">
-      </div>
-   </div>
-   <!-- loader END -->
+    
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar">
+         <div class="app-header header-shadow">
+             <div class="app-header__logo">
+                 <!-- <div class="logo-src"></div> -->
+                 <div class="header__pane ml-auto">
+                     <div>
+                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                             <span class="hamburger-box">
+                                 <span class="hamburger-inner"></span>
+                             </span>
+                         </button>
+                     </div>
+                 </div>
+             </div>
+             <div class="app-header__mobile-menu">
+                 <div>
+                     <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                         <span class="hamburger-box">
+                             <span class="hamburger-inner"></span>
+                         </span>
+                     </button>
+                 </div>
+             </div>
+             <div class="app-header__menu">
+                 <span>
+                     <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                         <span class="btn-icon-wrapper">
+                             <i class="fa fa-ellipsis-v fa-w-6"></i>
+                         </span>
+                     </button>
+                 </span>
+             </div>    
+             <div class="app-header__content">
+                 <div class="app-header-left">
+                     <div class="search-wrapper">
+                         <div class="input-holder">
+                             <input type="text" class="search-input" placeholder="Type to search">
+                             <button class="search-icon"><span></span></button>
+                         </div>
+                         <button class="close"></button>
+                     </div>   
+                 </div>
+                 <div class="app-header-right">
+                    
+                     <div class="header-btn-lg pr-0">
+                         <div class="widget-content p-0">
+                             <div class="widget-content-wrapper">
+                                 <div class="widget-content-left">
+                                     <div class="btn-group">
+                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                             <img width="42" class="rounded-circle" src="/logo/logo-2.png" alt="">
+                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                         </a>
+                                         <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
+                                             <div class="dropdown-menu-header">
+                                                 <div class="dropdown-menu-header-inner bg-info">
+                                                     <div class="menu-header-image opacity-2" style="background-image: url('/back/assets/images/dropdown-header/city3.jpg');"></div>
+                                                     <div class="menu-header-content text-left">
+                                                         <div class="widget-content p-0">
+                                                             <div class="widget-content-wrapper">
+                                                                 <div class="widget-content-left mr-3">
+                                                                     <img width="42" class="rounded-circle" src="/logo/logo-2.png" alt="">
+                                                                 </div>
+                                                                 <div class="widget-content-left">
+                                                                     <div class="widget-heading">Alina Mcloughlin</div>
+                                                                     <div class="widget-subheading opacity-8">A short profile description</div>
+                                                                 </div>
+                                                                 <div class="widget-content-right mr-2">
+                                                                     <a href="/admin/logout" class="btn-pill btn-shadow btn-shine btn btn-focus">Logout</a>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div class="scroll-area-xs" style="height: 50px;">
+                                                 <div class="scrollbar-container ps">
+                                                     <ul class="nav flex-column">
+                                                         <li class="nav-item">
+                                                             <a href="javascript:void(0);" class="nav-link">Profile
+                                                             </a>
+                                                         </li>
+                                                     </ul>
+                                                 </div>
+                                             </div>
+                                         
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                    
+                 </div>
+             </div>
+         </div>          
+         <div class="app-main">
+

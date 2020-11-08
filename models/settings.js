@@ -5,7 +5,16 @@ mongoose.Promise = require('bluebird');
 
 var settingsSchema = mongoose.Schema(
     {
-        churchName: {
+        settingsId: {
+            type: String,
+            unique: true,
+            required: true,
+        },
+        siteName: {
+            type: String,
+            required: false,
+        },
+        siteDis: {
             type: String,
             required: false,
         },

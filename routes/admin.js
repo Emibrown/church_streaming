@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../models/user');
 const Category = require('../models/category');
 const Video = require('../models/video');
+const Settings = require('../models/settings');
 const Programme = require('../models/programme');
 const Season = require('../models/season');
 const passport = require('passport');
@@ -56,6 +57,23 @@ const ensureAuthenticated = (req, res, next) => {
 //   }
 // })
 
+Settings.find({}, (err, users) => {
+  if(err){ return;}
+  if(users.length == 0){
+      var newSettings = new Settings({
+        settingsId: "site_settings",
+      });
+      newSettings.save((err, user) => {
+        if (err) { 
+          console.log(err);
+          return; 
+        }else{
+            console.log(user);
+        }
+      });
+  }
+})
+
 router.use((req, res, next) => {
   res.locals.moment = moment;
   res.locals.currentUser = req.user;
@@ -87,8 +105,17 @@ router.get('/logout', (req, res) => {
   res.redirect('/admin');
 });
 
-
 router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
+  res.render('admin/pages/index', { title: 'Dashboard' });
+});
+
+router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
+  res.render('admin/pages/site_details', { title: 'Site Details' });
+});
+
+
+
+router.get('/categories', ensureAuthenticated, async(req, res, next) => {
   const categories = await Category.find({})
   res.render('admin/pages/index', { title: 'Dashboard', categories });
 });
