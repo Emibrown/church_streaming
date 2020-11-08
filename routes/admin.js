@@ -131,7 +131,12 @@ router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
 router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
   const about = await About.findOne({_id:req.query.id})
   res.render('admin/pages/edit_about', { title: 'Edit About', about });
+<<<<<<< HEAD
 })
+=======
+});
+ 
+>>>>>>> 73d06b3b7ea20c801373ebb8b8363c7f175d0604
 router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
   res.render('admin/pages/social_media', { title: 'Social Media', settings });
