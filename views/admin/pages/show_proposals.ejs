@@ -1,0 +1,110 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Show Proposals
+               </div>
+           </div> 
+           <div class="page-title-actions">
+            <div class="d-inline-block dropdown" id = "btn">
+                <button type="button" class="btn-shadow btn btn-info" onclick = "expand()">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                        <i class="fa fa-business-time fa-w-20"></i>
+                    </span>
+                    View more
+                </button>
+            </div>
+        </div> 
+        </div>
+   </div>        
+   <div class="tabs-animation">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="table-responsive">
+                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th class="text-center">Genre</th>
+                                <th class="text-center">Supplier name</th>
+                                <th class="text-center">Supplier phone no</th>
+                                <th class="text-center">Date added</th>
+                                <th class="text-center hide" style = "display:none;">Supplier email</th>
+                                <th class="text-center hide" style = "display:none;">Contact name</th>
+                                <th class="text-center hide" style = "display:none;">Location</th>
+                                <th class="text-center hide" style = "display:none;">Presentation Url</th>
+                                <th class="text-center hide" style = "display:none;">Show pilot url</th>
+                                <th class="text-center hide" style = "display:none;">First time production</th>
+                                <th class="text-center hide" style = "display:none;">personal relationships</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% proposal.forEach(function (proposal,index){ %>
+                                <tr>
+                                    <td class="text-left"><%= proposal.title %></td>
+                                    <td class="text-center"><%= proposal.genre %></td>
+                                    <td class="text-center"><%= proposal.supplierName %></td>
+                                    <td class="text-center"><%= proposal.phoneNumber %></td>
+                                    <td class="text-center"><%= moment(proposal.date).format('LL') %></td>
+                                    <td class="text-center hide" style = "display:none;"><%= proposal.email %></td>
+                                    <td class="text-center hide" style = "display:none;"><%= proposal.contactName %></td>
+                                    <td class="text-center hide" style = "display:none;"><%= proposal.location %></td>
+                                    <td class="text-center hide" style = "display:none;"><%= proposal.presentationURL %></td>
+                                    <td class="text-center hide" style = "display:none;"><%= proposal.showReel %></td>
+                                    <td class="text-center hide" style = "display:none;"><%= proposal.firstTimeProduction %></td>
+                                    <td class="text-right hide" style = "display:none;"><%= proposal.personalRelationships %></td>
+                                </tr>
+                            <% }) %>      
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  </div>
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+    function expand(){
+        const hidden = document.querySelectorAll('.hide')
+        hidden.forEach((item)=>{
+                item.style.display = "table-cell"
+        })
+        document.querySelector('#btn').innerHTML =
+        `<button type="button" class="btn-shadow btn btn-info"  onclick = "reduce()">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                        <i class="fa fa-business-time fa-w-20"></i>
+                    </span>
+                    View less
+        </button>`  
+    }
+    function reduce(){
+        const hidden = document.querySelectorAll('.hide')
+        hidden.forEach((item)=>{
+            item.style.display = "none"
+        }) 
+        document.querySelector('#btn').innerHTML =
+        `<button type="button" class="btn-shadow btn btn-info"  onclick = "expand()">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                        <i class="fa fa-business-time fa-w-20"></i>
+                    </span>
+                    View more
+        </button>`  
+    }
+</script>
+<%- include('../../end'); -%>

@@ -124,18 +124,17 @@ router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/site_details', { title: 'Site Details', settings });
 });
 
-<<<<<<< HEAD
 router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
-  res.render('admin/pages/add_about', { title: 'Add About' });
+  res.render('admin/pages/add_about', { title: 'Add About' }); 
 });
+
 router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
   const about = await About.findOne({_id:req.query.id})
   res.render('admin/pages/edit_about', { title: 'Edit About', about });
-=======
+})
 router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
   res.render('admin/pages/social_media', { title: 'Social Media', settings });
->>>>>>> ea51ffa (social media fix)
 });
 
 //update sit settings from admin page

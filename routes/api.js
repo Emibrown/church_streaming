@@ -159,7 +159,8 @@ router.get('/show_proposals', async (req, res, next) => {
     // Get  all proposals 
     try {
         const proposal = await Proposal.find({}).sort({ date : 1 })
-        sendJSONresponse(res, 200, {proposal});
+        res.render('admin/pages/show_proposals', { title: 'Show proposals', proposal });
+        console.log(proposal[0].date.getDate())
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
