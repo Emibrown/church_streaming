@@ -115,6 +115,7 @@ router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
 
 
 
+
 router.get('/categories', ensureAuthenticated, async(req, res, next) => {
   const categories = await Category.find({})
   res.render('admin/pages/index', { title: 'Dashboard', categories });
