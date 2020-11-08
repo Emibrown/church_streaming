@@ -1,0 +1,90 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Site Details
+               </div>
+           </div>
+         </div>
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <form id="site_details" class="">
+                            <div class="position-relative form-group">
+                                <label for="exampleEmail" class="">Email</label>
+                                <input name="email" id="exampleEmail" placeholder="with a placeholder" type="email" class="form-control">
+                            </div>
+                            <div class="position-relative form-group">
+                                <label for="examplePassword" class="">Password</label>
+                                <input name="password" id="examplePassword" placeholder="password placeholder" type="password" class="form-control">
+                            </div>
+                            <div class="position-relative form-group">
+                                <label for="exampleSelect" class="">Select</label>
+                                <select name="select" id="exampleSelect" class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div class="position-relative form-group">
+                                <label for="exampleSelectMulti" class="">Select Multiple</label>
+                                <select multiple="" name="selectMulti" id="exampleSelectMulti" class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div class="position-relative form-group">
+                                <label for="exampleText" class="">Text Area</label>
+                                <textarea name="text" id="exampleText" class="form-control"></textarea>
+                            </div>
+                            <div class="position-relative form-group">
+                                <label for="exampleFile" class="">File</label>
+                                <input name="file" id="exampleFile" type="file" class="form-control-file">
+                                <small class="form-text text-muted">This is some placeholder block-level help
+                                    text for the above input. It's a bit lighter and easily wraps to a new
+                                    line.
+                                </small>
+                            </div>
+                            <button class="mt-1 btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+    $(document).on('submit', '#site_details', function(event) {
+        event.preventDefault();
+
+    })
+
+</script>
+<%- include('../../end'); -%>

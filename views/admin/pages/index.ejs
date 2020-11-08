@@ -1,75 +1,63 @@
 <%- include('../header'); -%>
 <%- include('../sidebar'); -%>
-<%- include('../navbar'); -%>
 
-  <!-- Page Content  -->
-  <div id="content-page" class="content-page">
-   <div class="container-fluid">
-      <div class="row">
-         <div class="col-sm-12">
-            <div class="iq-card">
-               <div class="iq-card-header d-flex justify-content-between">
-                  <div class="iq-header-title">
-                     <h4 class="card-title">Category Lists</h4>
-                  </div>
-                  <div class="iq-card-header-toolbar d-flex align-items-center">
-                     <a href="/admin/add_category" class="btn btn-primary">Add category</a>
-                  </div>
+<!-- Page Content  -->
+<div class="app-main__inner">
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
-               <div class="iq-card-body">
-                  <div class="table-view">
-                     <table class="data-tables table movie_table " style="width:100%">
-                        <thead>
-                           <tr>
-                              <th>Title</th>
-                              <th style="width: 40%;">Description</th>
-                              <th>Action</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <%for (var cat in categories){%>
-                           <tr>
-                              <td>
-                                 <div class="media align-items-center">
-                                    <div class="iq-movie">
-                                       <a href="javascript:void(0);"><img
-                                             src="/large_images/<%= categories[cat].image %>"
-                                             class="img-border-radius avatar-40 img-fluid" alt=""></a>
-                                    </div>
-                                    <div class="media-body text-white text-left ml-3">
-                                       <p class="mb-0"><%= categories[cat].title %></p>
-                                    </div>
-                                 </div>
-                              </td>
-                              <td>
-                                 <p>
-                                    <%= categories[cat].description %>
-                                 </p>
-                              </td>
-                              <td>
-                                 <div class="flex align-items-center list-user-action">
-                                    <a class="iq-bg-warning" data-toggle="tooltip" data-placement="top" title=""
-                                       data-original-title="View" href="#"><i class="lar la-eye"></i></a>
-                                    <a class="iq-bg-success" data-toggle="tooltip" data-placement="top" title=""
-                                       data-original-title="Edit" href="#"><i class="ri-pencil-line"></i></a>
-                                    <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title=""
-                                       data-original-title="Delete" href="#"><i
-                                          class="ri-delete-bin-line"></i></a>
-                                 </div>
-                              </td>
-                           </tr>
-                         <%}%>
-                           
-                        </tbody>
-                     </table>
-                  </div>
+               <div>
+                  Dashboard
                </div>
-            </div>
+           </div>
          </div>
+   </div>        
+   <div class="tabs-animation">
+      <div class="row">
+          <div class="col-md-6 col-xl-4">
+              <div class="card mb-3 widget-content bg-night-fade">
+                  <div class="widget-content-wrapper text-white">
+                      <div class="widget-content-left">
+                          <div class="widget-heading">Members</div>
+                      </div>
+                      <div class="widget-content-right">
+                          <div class="widget-numbers text-white"><span>1896</span></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-xl-4">
+              <div class="card mb-3 widget-content bg-arielle-smile">
+                  <div class="widget-content-wrapper text-white">
+                      <div class="widget-content-left">
+                          <div class="widget-heading">Programmes</div>
+                      </div>
+                      <div class="widget-content-right">
+                          <div class="widget-numbers text-white"><span>568</span></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-xl-4">
+              <div class="card mb-3 widget-content bg-happy-green">
+                  <div class="widget-content-wrapper text-white">
+                      <div class="widget-content-left">
+                          <div class="widget-heading">Videos</div>
+                      </div>
+                      <div class="widget-content-right">
+                          <div class="widget-numbers text-white"><span>46</span></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-   </div>
+    
+  </div>
 </div>
- <!-- Page Content END -->
+<!-- Page Content END -->
 
 
 <%- include('../footer'); -%>
