@@ -54,6 +54,8 @@ User.find({}, (err, users) => {
         residentPastor: "Pastor John",
         chapterLocation: "Rumuibekwe",
         organisationName: "Coders",
+        type: 1,
+        isBlocked: false,
 
       });
       newUser.save((err, user) => {
@@ -132,10 +134,15 @@ router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
   const about = await About.findOne({_id:req.query.id})
   res.render('admin/pages/edit_about', { title: 'Edit About', about });
 });
- 
+
 router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
   res.render('admin/pages/social_media', { title: 'Social Media', settings });
+});
+
+router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
+  const users = await User.find({})
+  res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
 //update sit settings from admin page
@@ -276,6 +283,24 @@ router.put('/category/:id', async (req, res, next) => {
       sendJSONresponse(res, 400, {error});
   }
 });
+
+router.put('/blockUser/:id', async (req, res, next) => {
+  // block user
+  try {
+      await User.updateOne(
+        { _id: req.params.id },
+        { $set:
+           {
+             isBlocked: true,
+           }
+        }
+     )
+      res.status(200).send({message: 'User has been blocked successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
 
 router.delete('/category/:id', async (req, res, next) => {
   // delete a category
