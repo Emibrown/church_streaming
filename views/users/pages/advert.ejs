@@ -90,7 +90,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" name = "terms[]" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" name = "terms1" class = "inputCheckbox">
                                       <strong>By using this service i agree to FAITH TO FAITH TV's  <a href = "">Terms of Service</a> and privacy policy</strong>
                                   </span>
                               </label>
@@ -100,7 +100,7 @@
                           <div class = "form-group">
                               <label class="chkBox">
                                   <span>
-                                      <input type="checkbox" value = "Y" name = "terms[]" class = "inputCheckbox">
+                                      <input type="checkbox" value = "Y" name = "terms2" class = "inputCheckbox">
                                       <span><strong>By using this online service I agree to FAITH TO FAITH TV's Terms of Service and Privacy Policy.
                                           I consent to the processing of my personal data by FAITH TO FAITH TV with its registered office in Port Harcourt, Rivers State, Nigeria, in order to provide services available on the site faithtofaithtv.org. I am informed about the 
                                           right to the contents of my personal data and can make corrections to it when needed. </span>
@@ -179,9 +179,13 @@
                 required: true,
                 url: true
             },
-            'terms[]': {
+            'terms1': {
                 required: true,
-                maxlength: 3
+                
+            },
+            'terms2': {
+                required: true,
+                
             }
         },
         messages: {
@@ -193,9 +197,13 @@
             invoice_made: 'This field is required',
             invoice_address: 'This field is required',
             contact_no: 'This field is required',
-            'terms[]': {
-                required: "Please accept all terms and conditions",
-                maxlength: "Check no more than {2} boxes"
+            'terms1': {
+                required: "Please accept this condition",
+                
+            },
+            'terms2':{
+                required: "Please accept this condition",
+
             }
             
         },
