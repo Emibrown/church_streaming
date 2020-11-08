@@ -179,58 +179,44 @@
             "contactNumber": $("#contact_no").val(),
             "VATnumber": $("#vat").val()
          }
-         if( !$('#terms1').prop('checked') || !$('#terms2').prop('checked') ) {
-                $('#message').html(`
-                <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Attention</strong> Please accept all terms and conditions.
-                </div>`);
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'smooth'
-                });
+         if (terms1.checked==false || terms2.checked==false){
+            displaymsg(text = "Please accept all terms and conditions")
          }else{
-            axios({
-            method: 'post',
-            url: '/create_advert',
-            data
-        }) .then( response => {
-            // handle success
-            console.log(response);
-                    if(response.data.status==200){
-                        $('#message').html(`
-                        <div style ="color:white" class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>${response.data.message}</strong>
-                        </div>`);
-                        $('#advert-form')[0].reset();
-                        window.scrollTo({
-                            top: 0,
-                            left: 0,
-                            behavior: 'smooth'
-                        });
-                        $('#advert-form')[0].reset();
-                    }else{
-                        $('#message').html(`
-                        <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>${response.data.message}</strong>
-                        </div>`)
-                        window.scrollTo({
-                            top: 0,
-                            left: 0,
-                            behavior: 'smooth'
-                        });
-                    }
-           
-                })
-                .catch(error => {
-                    // handle error
-                    console.log(error);
-                })
-                    
-            }
-       });
+            jQuery.ajax({
+          url: '/create_advert',
+          method: "POST",
+          dataType : "json",
+          data: JSON.stringify(data),
+          "contentType": "application/json",
+          success: function(response) { 
+              console.log(response);
+              if(response.status==200){
+                displaymsg(response.message, "alert-success")
+                $('#feedback-form')[0].reset();
+              }
+          },
+          error:function(jqXhr){
+              if(jqXhr.status ==400){
+                let responseText = jQuery.parseJSON(jqXhr.responseText);
+                if(responseText.indexOf('phoneNumber') !== -1){
+                    responseText[responseText.indexOf('phoneNumber')] = "Phone no";
+                }
+                if(responseText.indexOf('videoURL') !== -1){
+                    responseText[responseText.indexOf('videoURL')] = "video url";
+                }
+                if(responseText.indexOf('mediaDownloadLink') !== -1){
+                    responseText[responseText.indexOf('mediaDownloadLink')] = "Media download link";
+                }
+                if(responseText.indexOf('contactNumber') !== -1){
+                    responseText[responseText.indexOf('contactNumber')] = "Contact number";
+                }
+                console.log(responseText)
+                let txt = `Invalid inputs : ${responseText.join(', ')}`
+                  displaymsg(txt)
+              }
+          }
+      });
+     }
+  });
   </script>
 <%- include('../../end'); -%>

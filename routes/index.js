@@ -192,7 +192,7 @@ router.post('/create_advert', async (req, res, next) => {
       if(advert){
         customEmail.customEmail(fullName, email, header, message);
       }
-      res.send({status: 200, message: 'Advert was created successfully'});
+      res.send({status: 200, message: 'Advert submitted successfully'});
   } catch (error) {
     sendJSONresponse(res, 400, Object.keys(error.errors));
   }
