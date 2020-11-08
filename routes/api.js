@@ -160,7 +160,6 @@ router.get('/show_proposals', async (req, res, next) => {
     try {
         const proposal = await Proposal.find({}).sort({ date : 1 })
         res.render('admin/pages/show_proposals', { title: 'Show proposals', proposal });
-        console.log(proposal[0].date.getDate())
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -170,7 +169,7 @@ router.get('/show_proposal/:id', async (req, res, next) => {
     // get a single proposal
     try {
         const proposal = await Proposal.findOne({_id:req.params.id})
-        sendJSONresponse(res, 200, {proposal});
+        res.render('admin/pages/show_proposal', { title: 'Show proposal', proposal });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }

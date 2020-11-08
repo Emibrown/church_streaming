@@ -38,14 +38,7 @@
                                 <th class="text-center">Supplier name</th>
                                 <th class="text-center">Supplier phone no</th>
                                 <th class="text-center">Date added</th>
-                                <th class="text-center hide" style = "display:none;">Supplier email</th>
-                                <th class="text-center hide" style = "display:none;">Contact name</th>
-                                <th class="text-center hide" style = "display:none;">Location</th>
-                                <th class="text-center hide" style = "display:none;">Presentation Url</th>
-                                <th class="text-center hide" style = "display:none;">Show pilot url</th>
-                                <th class="text-center hide" style = "display:none;">First time production</th>
-                                <th class="text-center hide" style = "display:none;">personal relationships</th>
-
+                                <th class="text-center">Options</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,14 +48,10 @@
                                     <td class="text-center"><%= proposal.genre %></td>
                                     <td class="text-center"><%= proposal.supplierName %></td>
                                     <td class="text-center"><%= proposal.phoneNumber %></td>
-                                    <td class="text-center"><%= moment(proposal.date).format('LL') %></td>
-                                    <td class="text-center hide" style = "display:none;"><%= proposal.email %></td>
-                                    <td class="text-center hide" style = "display:none;"><%= proposal.contactName %></td>
-                                    <td class="text-center hide" style = "display:none;"><%= proposal.location %></td>
-                                    <td class="text-center hide" style = "display:none;"><%= proposal.presentationURL %></td>
-                                    <td class="text-center hide" style = "display:none;"><%= proposal.showReel %></td>
-                                    <td class="text-center hide" style = "display:none;"><%= proposal.firstTimeProduction %></td>
-                                    <td class="text-right hide" style = "display:none;"><%= proposal.personalRelationships %></td>
+                                    <td class="text-center"><%= moment(proposal.date).format('LL') %></td><td class="text-center">
+                                        <a href= "/admin/api/show_proposal/<%=proposal._id%>" type="button" id="PopoverCustomT-1"
+                                            class="btn btn-primary btn-sm">View</a>
+                                    </td>
                                 </tr>
                             <% }) %>      
                         </tbody>
@@ -79,32 +68,4 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
-<script>
-    function expand(){
-        const hidden = document.querySelectorAll('.hide')
-        hidden.forEach((item)=>{
-                item.style.display = "table-cell"
-        })
-        document.querySelector('#btn').innerHTML =
-        `<button type="button" class="btn-shadow btn btn-info"  onclick = "reduce()">
-                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                        <i class="fa fa-business-time fa-w-20"></i>
-                    </span>
-                    View less
-        </button>`  
-    }
-    function reduce(){
-        const hidden = document.querySelectorAll('.hide')
-        hidden.forEach((item)=>{
-            item.style.display = "none"
-        }) 
-        document.querySelector('#btn').innerHTML =
-        `<button type="button" class="btn-shadow btn btn-info"  onclick = "expand()">
-                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                        <i class="fa fa-business-time fa-w-20"></i>
-                    </span>
-                    View more
-        </button>`  
-    }
-</script>
 <%- include('../../end'); -%>
