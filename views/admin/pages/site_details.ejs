@@ -36,27 +36,27 @@
                             </div>
                             <div class = "form-group">
                                 <label for="hq_address">Head quaters address</label>
-                                <input placeholder = "Head quaters address" type="text" id = "hq_address" name = "hq_address" class = "form-control">
+                                <input placeholder = "Head quaters address" value="<%= settings.HQaddress %>" type="text" id = "hq_address" name = "hq_address" class = "form-control">
                             </div>
                             <div class="position-relative form-group">
                                 <label for="email" class="">Email</label>
-                                <input name="email" id="email" placeholder="Church email address" type="email" class="form-control">
+                                <input name="email" id="email" placeholder="Church email address"value="<%= settings.email %>" type="email" class="form-control">
                             </div>
                             <div class="position-relative form-group">
                                 <label for="contact_no" class="">Contact number</label>
-                                <input name="contact_no" id="contact_no" placeholder="Church contact number" type="text" class="form-control">
+                                <input name="contact_no" id="contact_no" placeholder="Church contact number" value="<%= settings.contactNumber %>" type="text" class="form-control">
                             </div>
                             <div class = "form-group">
                                 <label for="prayer_no">Prayer number</label>
-                                <input placeholder = "Church prayer number" type="text" id = "prayer_no" name = "prayer_no" class = "form-control">
+                                <input placeholder = "Church prayer number" type="text" value="<%= settings.prayerNumber %>" id = "prayer_no" name = "prayer_no" class = "form-control">
                             </div>
                             <div class="form-group">
                                 <label for="faith_st">Faith statement</label>
-                                <textarea id="faith_st" name="faith_st" rows="5" class="form-control" placeholder="Faith statement"></textarea>                  
+                                <textarea id="faith_st" name="faith_st" rows="5" class="form-control" placeholder="Faith statement"><%= settings.HQaddress %></textarea>                  
                             </div>
                             <div class="form-group">
                                 <label for="salv_prayer">Salvation prayer</label>
-                                <textarea id="salv_prayer" name="salv_prayer" rows="5" class="form-control" placeholder="Salvation prayer"></textarea>                  
+                                <textarea id="salv_prayer" name="salv_prayer" rows="5" class="form-control" placeholder="Salvation prayer"><%= settings.HQaddress %></textarea>                  
                             </div> 
                             <button class="mt-1 btn btn-primary">Submit</button>
                         </form>
@@ -102,16 +102,16 @@
           },
           error:function(jqXhr){
               if(jqXhr.status ==400){
-                // let responseText = jQuery.parseJSON(jqXhr.responseText);
-                // if(responseText.indexOf('prayerNumber') !== -1){
-                //     responseText[responseText.indexOf('prayerNumber')] = "Prayer number";
-                // }
-                // if(responseText.indexOf('contactNumber') !== -1){
-                //     responseText[responseText.indexOf('contactNumber')] = "Contact number";
-                // }
-                // console.log(responseText)
-                // let txt = `Invalid inputs : ${responseText.join(', ')}`
-                //   displaymsg(txt)
+                let responseText = jQuery.parseJSON(jqXhr.responseText);
+                if(responseText.indexOf('prayerNumber') !== -1){
+                    responseText[responseText.indexOf('prayerNumber')] = "Prayer number";
+                }
+                if(responseText.indexOf('contactNumber') !== -1){
+                    responseText[responseText.indexOf('contactNumber')] = "Contact number";
+                }
+                console.log(responseText)
+                let txt = `Invalid inputs : ${responseText.join(', ')}`
+                  displaymsg(txt)
               }
           }
       });

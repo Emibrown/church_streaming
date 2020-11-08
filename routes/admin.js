@@ -3,6 +3,7 @@ const User = require('../models/user');
 const Category = require('../models/category');
 const Video = require('../models/video');
 const Settings = require('../models/settings');
+const About = require('../models/about');
 const Programme = require('../models/programme');
 const Season = require('../models/season');
 const passport = require('passport');
@@ -112,6 +113,10 @@ router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
 router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
   res.render('admin/pages/site_details', { title: 'Site Details', settings });
+});
+
+router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
+  res.render('admin/pages/add_about', { title: 'Add About' });
 });
 
 //update sit settings from admin page
