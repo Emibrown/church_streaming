@@ -18,7 +18,7 @@
 
                           <h4 class = "pb-2">CONTACT DETAILS</h4>
                           <div id = "message"></div>
-                          <form id = "advert-form">
+                          <form class = "advert-form">
                           <div class = "form-group">
                               <label for="fullname">*Your Full Name</label>
                               <input placeholder = "Your Name (Required)" type="text" id = "fullname" name = "fullname" class = "form-control">
@@ -110,7 +110,7 @@
                             <p><small><i>* Required fields</i></small></p>
                         </div>
                         <div style="text-align: right; margin-top: 10px;">
-                          <button class="g-recaptcha btn btn-primary"><em class="fa fa-send"></em> Submit</button>
+                          <button class="g-recaptcha btn btn-primary submit"><em class="fa fa-send"></em> Submit</button>
                         </div>
                         
                         <div class="clearfix"></div>
@@ -160,10 +160,8 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
-    $(document).ready(function() {
-    $('#advert-form').submit(event => {
-        event.preventDefault();
-        $('form[id="advert-form"]').validate({
+
+        $('.advert-form').validate({
         rules: {
             fullname: 'required',
             advert_title: 'required',
@@ -199,13 +197,10 @@
             contact_no: 'This field is required',
             'terms1': {
                 required: "Please accept this condition",
-                
             },
             'terms2':{
                 required: "Please accept this condition",
-
             }
-            
         },
         submitHandler: () => {
             const data = {
@@ -224,47 +219,6 @@
             "contactNumber": $("#contact_no").val(),
             "VATnumber": $("#vat").val()
          }
-<<<<<<< HEAD
-         if (terms1.checked==false || terms2.checked==false){
-            displaymsg(text = "Please accept all terms and conditions")
-         }else{
-            jQuery.ajax({
-          url: '/create_advert',
-          method: "POST",
-          dataType : "json",
-          data: JSON.stringify(data),
-          "contentType": "application/json",
-          success: function(response) { 
-              console.log(response);
-              if(response.status==200){
-                displaymsg(response.message, "alert-success")
-                $('#advert-form')[0].reset();
-              }
-          },
-          error:function(jqXhr){
-              if(jqXhr.status ==400){
-                let responseText = jQuery.parseJSON(jqXhr.responseText);
-                if(responseText.indexOf('phoneNumber') !== -1){
-                    responseText[responseText.indexOf('phoneNumber')] = "Phone no";
-                }
-                if(responseText.indexOf('videoURL') !== -1){
-                    responseText[responseText.indexOf('videoURL')] = "video url";
-                }
-                if(responseText.indexOf('mediaDownloadLink') !== -1){
-                    responseText[responseText.indexOf('mediaDownloadLink')] = "Media download link";
-                }
-                if(responseText.indexOf('contactNumber') !== -1){
-                    responseText[responseText.indexOf('contactNumber')] = "Contact number";
-                }
-                console.log(responseText)
-                let txt = `Invalid inputs : ${responseText.join(', ')}`
-                  displaymsg(txt)
-              }
-          }
-      });
-     }
-  });
-=======
          axios({
             method: 'post',
             url: '/create_advert',
@@ -297,19 +251,20 @@
                             behavior: 'smooth'
                         });
                     }
-           
                 })
                 .catch(error => {
                     // handle error
                     console.log(error);
                 })
 
-            return false;
-        }
+           }
         });
+        $(document).on('submit', '.advert-form', (event) => {
+        $(document).ready(function (){
+        event.preventDefault();
 
-       });
-       });
->>>>>>> 290b5510bc6bcefd54498d1d96f0a3d88476bc27
+    });
+});
+
   </script>
 <%- include('../../end'); -%>
