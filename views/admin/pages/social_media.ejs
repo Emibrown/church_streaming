@@ -1,0 +1,97 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Social Media Details
+               </div>
+           </div>
+         </div>
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div id = "message"></div>
+                        <form id="social_media">
+                            <div class = "form-group">
+                                <label for="facebook_handle">Facebook Handle</label>
+                                <input placeholder = "Facebook Handle" type="text" id = "facebook_handle" name = "facebook_handle" class = "form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="instagram_handle">Instagram Handle</label>
+                                <input placeholder = "Instagram Handle" type="text" id = "instagram_handle" name = "instagram_handle" class = "form-control">
+                            </div>
+                            <div class = "form-group">
+                                <label for="twitter_handle">Twitter Handle</label>
+                                <input placeholder = "Twitter Handle" type="text" id = "twitter_handle" name = "twitter_handle" class = "form-control">
+                            </div>
+                            <div class = "form-group">
+                                <label for="vimeo_handle">Vimeo Handle</label>
+                                <input placeholder = "Vimeo Handle" type="text" id = "vimeo_handle" name = "vimeo_handle" class = "form-control">
+                            </div>
+                            <div class = "form-group">
+                                <label for="google_handle">Google Handle</label>
+                                <input placeholder = "Google Handle" type="text" id = "google_handle" name = "google_handle" class = "form-control">
+                            </div>
+                            <button class="mt-1 btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+    $(document).on('submit', '#social_media', event => {
+        event.preventDefault();
+        const data = {
+            "facebookHandle": $("#facebook_handle").val(),
+            "instagramHandle": $("#instagram_handle").val(),
+            "twitterHandle":  $("#twitter_handle").val(),
+            "vimeoHandle": $("#vimeo_handle").val(),
+            "googleplusHandle": $("#google_handle").val(),
+         }
+         
+        jQuery.ajax({
+        url: '/admin/settings',
+        method: "PUT",
+        dataType : "json",
+        data: JSON.stringify(data),
+        "contentType": "application/json",
+        success: function(response) { 
+            console.log(response);
+            if(response.status==200){
+            displaymsg(response.message, "alert-secondary")
+            $('#social_media')[0].reset();
+            }
+          },
+          error:function(jqXhr){
+              if(jqXhr.status ==400){
+                let responseText = jQuery.parseJSON(jqXhr.responseText);
+                console.log(responseText)
+              }
+          }
+      });
+     })
+</script>
+<%- include('../../end'); -%>
