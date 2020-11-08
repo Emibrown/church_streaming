@@ -57,15 +57,16 @@
 <script>
     $(document).on('submit', '#add_about', event => {
         event.preventDefault();
+        const file = document.querySelector('#image')
         const data = {
-            "title": $("#image").val(),
-            "siteDis": $("#desc").val(),
-            "email":  $("#title").val(),
+            "file": file.files[0],
+            "description": $("#desc").val(),
+            "title":  $("#title").val(),
          }
-        clean(data)
+        console.log(data)
         jQuery.ajax({
-        url: '/admin/settings',
-        method: "PUT",
+        url: '/admin/about',
+        method: "POST",
         dataType : "json",
         data: JSON.stringify(data),
         "contentType": "application/json",
@@ -73,20 +74,13 @@
             console.log(response);
             if(response.status==200){
             displaymsg(response.message, "alert-secondary")
-            $('#site_details')[0].reset();
+            $('#add_about')[0].reset();
             }
           },
           error:function(jqXhr){
               if(jqXhr.status ==400){
-                let responseText = jQuery.parseJSON(jqXhr.responseText);
-                if(responseText.indexOf('prayerNumber') !== -1){
-                    responseText[responseText.indexOf('prayerNumber')] = "Prayer number";
-                }
-                if(responseText.indexOf('contactNumber') !== -1){
-                    responseText[responseText.indexOf('contactNumber')] = "Contact number";
-                }
-                console.log(responseText)
-                let txt = `Invalid inputs : ${responseText.join(', ')}`
+                let txt = jQuery.parseJSON(jqXhr.responseText);
+                console.log(txt)
                   displaymsg(txt)
               }
           }
