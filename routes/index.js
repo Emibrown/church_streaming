@@ -184,15 +184,17 @@ router.post('/create_advert', async (req, res, next) => {
   //  submit a programmer request
   try {
       console.log(req.body);
-      const {fullName, email} = req.body;
+      const {fullName :user_name, email:user_email} = req.body;
       const header = "Newly Created Advert";
       const message = "Advert created successfully";
       const advert = new Advert(req.body)
-      await advert.save()
-      if(advert){
-        customEmail.customEmail(fullName, email, header, message);
+      const saveAdevert = await advert.save()
+      if(saveAdevert){
+        customEmail.customEmail(user_name, user_email, header, message);
+        res.send({status: 200, message: 'Advert was created successfully'});
       }
-      res.send({status: 200, message: 'Advert was created successfully'});
+      res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+
   } catch (error) {
     sendJSONresponse(res, 400, Object.keys(error.errors));
   }

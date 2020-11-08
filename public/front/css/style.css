@@ -76,3 +76,7 @@
 .table-condensed > tfoot > tr > td {
   padding: 2px;
 }
+.error {
+  color: red;
+  font-family: sans-serif;
+}
