@@ -5,6 +5,8 @@ const sharp = require('sharp')
 const path = require('path')
 const fs = require('fs')
 const router = express.Router();
+const moment = require('moment');
+
 
 
 const sendJSONresponse = (res, status, content) => {
@@ -12,9 +14,24 @@ const sendJSONresponse = (res, status, content) => {
     res.json(content);
 };
 
+  
+  const ensureAuthenticated = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      res.redirect("/admin");
+    } else {
+      next();
+    }
+  };
+
+  router.use((req, res, next) => {
+    res.locals.moment = moment;
+    res.locals.currentUser = req.user;
+    next();
+  });
+
 //about
 
-router.get('/', async (req, res, next) => {
+router.get('/', ensureAuthenticated, async (req, res, next) => {
     // Get  all abouts
     try {
         const about = await About.find({}).sort({ addedOn : 1 })
@@ -23,6 +40,8 @@ router.get('/', async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
 });
+
+
 router.post('/', multers.upload.single('file'), async (req, res, next) => {
     // submit about
     try {
