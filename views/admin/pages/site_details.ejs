@@ -28,11 +28,11 @@
                         <form id="site_details">
                             <div class = "form-group">
                                 <label for="sitename">Site Name</label>
-                                <input placeholder = "Site name" type="text" id = "sitename" name = "sitename" class = "form-control">
+                                <input placeholder = "Site name" type="text" value="<%= settings.siteName %>" id = "sitename" name = "sitename" class = "form-control">
                             </div>
                             <div class="form-group">
                                 <label for="site_desc">Site description</label>
-                                <textarea id="site_desc" name="site_desc" rows="5" class="form-control" placeholder="Site description"></textarea>                  
+                                <textarea id="site_desc" name="site_desc" rows="5" class="form-control" placeholder="Site description"><%= settings.siteDis %></textarea>                  
                             </div>
                             <div class = "form-group">
                                 <label for="hq_address">Head quaters address</label>
