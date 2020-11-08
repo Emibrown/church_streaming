@@ -425,17 +425,6 @@ router.get('/settings/:id', async (req, res, next) => {
     }
 });
 
-router.put('/settings/:id', async (req, res, next) => {
-    // update a setting
-    try {
-        const settings = await Settings.findOne({_id:req.params.id})
-        await Object.assign(settings, req.body);
-        await settings.save()
-        sendJSONresponse(res, 200, {message: 'settings updated successfully'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
 
 router.delete('/settings/:id', async (req, res, next) => {
     // delete a setting

@@ -113,6 +113,18 @@ router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/site_details', { title: 'Site Details' });
 });
 
+//update sit settings from admin page
+router.put('/settings', ensureAuthenticated, async (req, res, next) => {
+  try {
+      const settings = await Settings.findOne({settingsId:"site_settings"})
+      await Object.assign(settings, req.body);
+      await settings.save()
+      console.log(settings)
+      res.send({status: 200, message: 'Settings saved'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
 
 
 router.get('/categories', ensureAuthenticated, async(req, res, next) => {

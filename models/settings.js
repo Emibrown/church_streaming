@@ -30,7 +30,7 @@ var settingsSchema = mongoose.Schema(
             type: String,
             required: false
         },
-        churchEmail: {
+        email: {
             type: String,
             required: false
         },

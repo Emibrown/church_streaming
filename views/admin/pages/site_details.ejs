@@ -24,47 +24,40 @@
             <div class="col-md-12">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
-                        <form id="site_details" class="">
-                            <div class="position-relative form-group">
-                                <label for="exampleEmail" class="">Email</label>
-                                <input name="email" id="exampleEmail" placeholder="with a placeholder" type="email" class="form-control">
+                        <div id = "message"></div>
+                        <form id="site_details">
+                            <div class = "form-group">
+                                <label for="sitename">Site Name</label>
+                                <input placeholder = "Site name" type="text" id = "sitename" name = "sitename" class = "form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="site_desc">Site description</label>
+                                <textarea id="site_desc" name="site_desc" rows="5" class="form-control" placeholder="Site description"></textarea>                  
+                            </div>
+                            <div class = "form-group">
+                                <label for="hq_address">Head quaters address</label>
+                                <input placeholder = "Head quaters address" type="text" id = "hq_address" name = "hq_address" class = "form-control">
                             </div>
                             <div class="position-relative form-group">
-                                <label for="examplePassword" class="">Password</label>
-                                <input name="password" id="examplePassword" placeholder="password placeholder" type="password" class="form-control">
+                                <label for="email" class="">Email</label>
+                                <input name="email" id="email" placeholder="Church email address" type="email" class="form-control">
                             </div>
                             <div class="position-relative form-group">
-                                <label for="exampleSelect" class="">Select</label>
-                                <select name="select" id="exampleSelect" class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
+                                <label for="contact_no" class="">Contact number</label>
+                                <input name="contact_no" id="contact_no" placeholder="Church contact number" type="text" class="form-control">
                             </div>
-                            <div class="position-relative form-group">
-                                <label for="exampleSelectMulti" class="">Select Multiple</label>
-                                <select multiple="" name="selectMulti" id="exampleSelectMulti" class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
+                            <div class = "form-group">
+                                <label for="prayer_no">Prayer number</label>
+                                <input placeholder = "Church prayer number" type="text" id = "prayer_no" name = "prayer_no" class = "form-control">
                             </div>
-                            <div class="position-relative form-group">
-                                <label for="exampleText" class="">Text Area</label>
-                                <textarea name="text" id="exampleText" class="form-control"></textarea>
+                            <div class="form-group">
+                                <label for="faith_st">Faith statement</label>
+                                <textarea id="faith_st" name="faith_st" rows="5" class="form-control" placeholder="Faith statement"></textarea>                  
                             </div>
-                            <div class="position-relative form-group">
-                                <label for="exampleFile" class="">File</label>
-                                <input name="file" id="exampleFile" type="file" class="form-control-file">
-                                <small class="form-text text-muted">This is some placeholder block-level help
-                                    text for the above input. It's a bit lighter and easily wraps to a new
-                                    line.
-                                </small>
-                            </div>
+                            <div class="form-group">
+                                <label for="salv_prayer">Salvation prayer</label>
+                                <textarea id="salv_prayer" name="salv_prayer" rows="5" class="form-control" placeholder="Salvation prayer"></textarea>                  
+                            </div> 
                             <button class="mt-1 btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -81,10 +74,47 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
-    $(document).on('submit', '#site_details', function(event) {
+    $(document).on('submit', '#site_details', event => {
         event.preventDefault();
-
-    })
-
+        const data = {
+            "siteName": $("#sitename").val(),
+            "siteDis": $("#site_desc").val(),
+            "email":  $("#email").val(),
+            "HQaddress": $("#hq_address").val(),
+            "contactNumber": $("#contact_no").val(),
+            "prayerNumber": $("#prayer_no").val(),
+            "faithStatement": $("#faith_st").val(),
+            "salvationPrayer": $("#salv_prayer").val(),
+         }
+         
+        jQuery.ajax({
+        url: '/admin/settings',
+        method: "PUT",
+        dataType : "json",
+        data: JSON.stringify(data),
+        "contentType": "application/json",
+        success: function(response) { 
+            console.log(response);
+            if(response.status==200){
+            displaymsg(response.message, "alert-secondary")
+            $('#site_details')[0].reset();
+            }
+          },
+          error:function(jqXhr){
+              if(jqXhr.status ==400){
+                let responseText = jQuery.parseJSON(jqXhr.responseText);
+                if(responseText.indexOf('prayerNumber') !== -1){
+                    responseText[responseText.indexOf('prayerNumber')] = "Prayer number";
+                }
+                if(responseText.indexOf('contactNumber') !== -1){
+                    responseText[responseText.indexOf('contactNumber')] = "Contact number";
+                }
+                console.log(responseText)
+                let txt = `Invalid inputs : ${responseText.join(', ')}`
+                  displaymsg(txt)
+              }
+          }
+      });
+     })
 </script>
 <%- include('../../end'); -%>
