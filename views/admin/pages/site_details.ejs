@@ -86,7 +86,7 @@
             "faithStatement": $("#faith_st").val(),
             "salvationPrayer": $("#salv_prayer").val(),
          }
-         
+        clean(data)
         jQuery.ajax({
         url: '/admin/settings',
         method: "PUT",
@@ -102,16 +102,16 @@
           },
           error:function(jqXhr){
               if(jqXhr.status ==400){
-                let responseText = jQuery.parseJSON(jqXhr.responseText);
-                if(responseText.indexOf('prayerNumber') !== -1){
-                    responseText[responseText.indexOf('prayerNumber')] = "Prayer number";
-                }
-                if(responseText.indexOf('contactNumber') !== -1){
-                    responseText[responseText.indexOf('contactNumber')] = "Contact number";
-                }
-                console.log(responseText)
-                let txt = `Invalid inputs : ${responseText.join(', ')}`
-                  displaymsg(txt)
+                // let responseText = jQuery.parseJSON(jqXhr.responseText);
+                // if(responseText.indexOf('prayerNumber') !== -1){
+                //     responseText[responseText.indexOf('prayerNumber')] = "Prayer number";
+                // }
+                // if(responseText.indexOf('contactNumber') !== -1){
+                //     responseText[responseText.indexOf('contactNumber')] = "Contact number";
+                // }
+                // console.log(responseText)
+                // let txt = `Invalid inputs : ${responseText.join(', ')}`
+                //   displaymsg(txt)
               }
           }
       });

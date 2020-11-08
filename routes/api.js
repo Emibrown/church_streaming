@@ -622,5 +622,4 @@ router.post('/schedule', async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
   });
-
 module.exports = router;

@@ -1,5 +1,12 @@
 <script type="text/javascript" src="/back/assets/scripts/main.d810cf0ae7f39f28f336.js"></script>
 <script>
+    function clean(obj) {
+        for (var prop in obj) { 
+            if (obj[prop] === null || obj[prop] === "") {
+                delete obj[prop];
+            }
+        }
+    } 
     function displaymsg(text, alertmsg= " alert-danger "){
         window.alert(text)
         // $('#message').html(`

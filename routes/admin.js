@@ -118,8 +118,8 @@ router.put('/settings', ensureAuthenticated, async (req, res, next) => {
   try {
       const settings = await Settings.findOne({settingsId:"site_settings"})
       await Object.assign(settings, req.body);
-      await settings.save()
       console.log(settings)
+      await settings.save()
       res.send({status: 200, message: 'Settings saved'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
