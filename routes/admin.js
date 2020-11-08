@@ -110,7 +110,8 @@ router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
 });
 
 router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
-  res.render('admin/pages/site_details', { title: 'Site Details' });
+  const settings = await Settings.findOne({settingsId:"site_settings"})
+  res.render('admin/pages/site_details', { title: 'Site Details', settings });
 });
 
 //update sit settings from admin page

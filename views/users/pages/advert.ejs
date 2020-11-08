@@ -224,47 +224,6 @@
             "contactNumber": $("#contact_no").val(),
             "VATnumber": $("#vat").val()
          }
-<<<<<<< HEAD
-         if (terms1.checked==false || terms2.checked==false){
-            displaymsg(text = "Please accept all terms and conditions")
-         }else{
-            jQuery.ajax({
-          url: '/create_advert',
-          method: "POST",
-          dataType : "json",
-          data: JSON.stringify(data),
-          "contentType": "application/json",
-          success: function(response) { 
-              console.log(response);
-              if(response.status==200){
-                displaymsg(response.message, "alert-success")
-                $('#advert-form')[0].reset();
-              }
-          },
-          error:function(jqXhr){
-              if(jqXhr.status ==400){
-                let responseText = jQuery.parseJSON(jqXhr.responseText);
-                if(responseText.indexOf('phoneNumber') !== -1){
-                    responseText[responseText.indexOf('phoneNumber')] = "Phone no";
-                }
-                if(responseText.indexOf('videoURL') !== -1){
-                    responseText[responseText.indexOf('videoURL')] = "video url";
-                }
-                if(responseText.indexOf('mediaDownloadLink') !== -1){
-                    responseText[responseText.indexOf('mediaDownloadLink')] = "Media download link";
-                }
-                if(responseText.indexOf('contactNumber') !== -1){
-                    responseText[responseText.indexOf('contactNumber')] = "Contact number";
-                }
-                console.log(responseText)
-                let txt = `Invalid inputs : ${responseText.join(', ')}`
-                  displaymsg(txt)
-              }
-          }
-      });
-     }
-  });
-=======
          axios({
             method: 'post',
             url: '/create_advert',
@@ -310,6 +269,5 @@
 
        });
        });
->>>>>>> 290b5510bc6bcefd54498d1d96f0a3d88476bc27
   </script>
 <%- include('../../end'); -%>
