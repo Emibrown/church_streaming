@@ -1,0 +1,71 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Edit Category
+               </div>
+           </div>
+         </div>
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <form id="edit_cat">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="Category title" value = "<%= category.title %>">                 
+                            </div>
+                            <button class="mt-1 btn btn-primary" id = "btn">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+    $(document).on('submit', '#edit_cat', event => {
+        event.preventDefault();
+        const data = {
+          "title": jQuery("#title").val(),
+        }
+        axios({
+            method: 'put',
+            url: '/admin/category/<%= category._id %>',
+            data: data,
+        }) .then(function (response) {
+            // handle success
+            const url = "/admin/categories";    
+            $(location).attr('href',url);
+            displaymsg(response.data.message);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error)
+        })
+    })
+
+</script>
+<%- include('../../end'); -%>

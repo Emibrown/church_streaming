@@ -201,7 +201,7 @@ router.put('/unblock/:id', async (req, res, next) => {
 
 router.get('/categories', ensureAuthenticated, async(req, res, next) => {
   const categories = await Category.find({})
-  res.render('admin/pages/index', { title: 'Dashboard', categories });
+  res.render('admin/pages/categories', { title: 'Categories', categories });
 });
 
 
@@ -271,10 +271,14 @@ router.get('/done/:id', async(req, res, next) => {
 });
 
 
-
-
 router.get('/add_category', ensureAuthenticated, (req, res, next) => {
   res.render('admin/pages/addCat', { title: 'Add category' });
+});
+
+router.get('/edit_category/:id', ensureAuthenticated, async(req, res, next) => {
+  const category = await Category.findOne({_id: req.params.id})
+  console.log(category)
+  res.render('admin/pages/edit_cat', { title: 'Edit categories', category });
 });
 
 router.get('/add_video', ensureAuthenticated, async (req, res, next) => {
@@ -320,19 +324,18 @@ router.put('/category/:id', async (req, res, next) => {
       const category = await Category.findOne({_id:req.params.id})
       await Object.assign(category, req.body);
       await category.save()
-      sendJSONresponse(res, 200, {message: 'category details updated successfully'});
+      sendJSONresponse(res, 200, {message: 'category updated successfully'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }
 });
 
 
-
-
-router.delete('/category/:id', async (req, res, next) => {
+router.get('/delete_category/:id', async (req, res, next) => {
   // delete a category
   try {
       await Category.findOneAndDelete({_id:req.params.id});
+      res.redirect('/admin/categories');
       sendJSONresponse(res, 200, {message: 'Category deleted successfully'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});

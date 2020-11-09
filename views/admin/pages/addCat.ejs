@@ -1,83 +1,75 @@
 <%- include('../header'); -%>
 <%- include('../sidebar'); -%>
-<%- include('../navbar'); -%>
-
   <!-- Page Content  -->
-  <div id="content-page" class="content-page">
-    <div class="container-fluid">
-       <div class="row">
-          <div class="col-sm-12">
-             <div class="iq-card">
-                <div class="iq-card-header d-flex justify-content-between">
-                   <div class="iq-header-title">
-                      <h4 class="card-title">Add Category</h4>
-                   </div>
-                </div>
-                <div class="iq-card-body">
-                    <form id="loginForm" class="mt-4">
-                      <div class="row">
-                         <div class="col-lg-7">
-                            <div class="row">
-                               <div class="col-12 form-group">
-                                  <input type="text" id="title" class="form-control" placeholder="Title">
-                               </div>
-                               <div class="col-12 form_gallery form-group">
-                                  <label id="gallery2" for="form_gallery-upload">Upload Image</label>
-                                  <input data-name="#gallery2" id="form_gallery-upload" class="form_gallery-upload"
-                                     type="file" accept=".png, .jpg, .jpeg">
-                               </div>
-                          
-                               <div class="col-12 form-group">
-                                  <textarea id="description" name="text" rows="5" class="form-control"
-                                     placeholder="Description"></textarea>
-                               </div>
-                            </div>
-                         </div>
-                        
-                      </div>
-                   </form>
-                   <div class="row">
-                        <div class="col-12 form-group ">
-                            <button id="submitButton" class="btn btn-primary">Submit</button>
-                            <a  href="/admin/dashboard" class="btn btn-danger">cancel</a>
-                        </div>
-                    </div>
-                </div>
-             </div>
+<div class="app-main__inner">
+   <!-- title  -->
+  <div class="app-page-title">
+      <div class="page-title-wrapper">
+          <div class="page-title-heading">
+              <div class="page-title-icon">
+                  <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+              </div>
+              <div>
+                   Add category
+              </div>
           </div>
+        </div>
+  </div>       
+  <!-- title -->
+   <!--body  -->
+  <div class="tabs-animation">
+      <!-- form -->
+       <div class="row">
+           <div class="col-md-12">
+               <div class="main-card mb-3 card">
+                   <div class="card-body">
+                       <div id = "message"></div>
+                       <form id="add_cat">
+                           <div class="form-group">
+                               <label for="title">Title</label>
+                               <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="Category title" required>                 
+                           </div>
+                           <div class="row">
+                              <div class="col-12 form-group ">
+                                  <button id="submit" class="btn btn-primary">Submit</button>
+                                  <a  href="/admin/categories" class="btn btn-danger">cancel</a>
+                              </div>
+                          </div>                       
+                        </form>
+                   </div>
+               </div>
+           </div>
        </div>
-    </div>
+        <!-- form ends -->
  </div>
- <!-- Page Content END -->
+ <!-- body ends -->
+</div>
+<!-- Page Content END -->
 
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    $('#submitButton').click( function() {
-        const file = document.querySelector('#form_gallery-upload');
-        const data = new FormData();
-        data.append("title", $("#title").val());
-        data.append("description", $("#description").val());
-        data.append("file", file.files[0]);
-
+$(document).on('submit', '#add_cat', event => {
+        event.preventDefault();      
+        const data = {
+          "title": jQuery("#title").val(),
+        }
         axios({
             method: 'post',
             url: '/admin/add_category',
             data: data,
         }) .then(function (response) {
             // handle success
-            const url = "/admin/dashboard";    
+            const url = "/admin/categories";    
             $(location).attr('href',url);
+            displaymsg(response.data.message)
         })
         .catch(function (error) {
             // handle error
             console.log(error);
+            displayerr(error)
         })
     })
-
-  
-
 </script>
 <%- include('../../end'); -%></div>
