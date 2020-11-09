@@ -135,6 +135,10 @@ router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/edit_about', { title: 'Edit About', about });
 });
 
+router.get('/add_static', ensureAuthenticated, async(req, res, next) => {
+  res.render('admin/pages/add_static',{ title: 'Add static files',  });
+});
+
 router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
   res.render('admin/pages/social_media', { title: 'Social Media', settings });
