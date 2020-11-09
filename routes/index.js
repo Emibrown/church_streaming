@@ -270,11 +270,13 @@ router.post('/register', async (req, res, next) =>{
     const user = new User(req.body);
     const newUser = await user.save()
     if(newUser){
-      res.send({status: 200, message: 'Registration was successful'});
-    }else{
-      res.send({status: 400, message: 'Registration was unsuccessful'});
-
-    }
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        res.send({status:200, message: "Registration was successful"});
+        return;
+      })
+      
+    }    
 } catch (error) {
   console.log(error);
   sendJSONresponse(res, 400, Object.keys(error.errors));
