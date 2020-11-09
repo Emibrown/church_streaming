@@ -22,13 +22,14 @@ var patnershipSchema = mongoose.Schema(
             type: String, 
             required: true
         },
-        phone:{
-            type: String,
-            required:true,
-        },
         whatsAppNo:{
             type:String,
-            required:true,
+            required:false,
+            validate: value => {
+                if (!validator.isMobilePhone(value, 'en-NG')) {
+                    throw new Error({error: 'Invalid phone number'})
+                }
+            }
         },
     
         fellowship: {
@@ -50,16 +51,12 @@ var patnershipSchema = mongoose.Schema(
         },
         phoneNumber: {
             type: String,
-            required: false,
+            required: true,
             validate: value => {
                 if (!validator.isMobilePhone(value, 'en-NG')) {
                     throw new Error({error: 'Invalid phone number'})
                 }
             }
-        },
-        address: {
-            type: String, 
-            required: true,
         },
         categories: [
             {

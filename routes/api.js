@@ -51,7 +51,7 @@ router.get('/advert/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single advert
     try {
         const advert = await Advert.findOne({_id:req.params.id})
-        res.render('admin/pages/adverts', { title: 'Advert', advert });
+        res.render('admin/pages/advert', { title: 'Advert', advert });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -85,7 +85,7 @@ router.get('/prayer_requests', ensureAuthenticated, async (req, res, next) => {
     // Get  all prayer requests 
     try {
         const prayerRequest = await PrayerRequest.find({}).sort({ date : 1 })
-        sendJSONresponse(res, 200, {prayerRequest});
+        res.render('admin/pages/prayer_requests', { title: 'Prayer requests', prayerRequest });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -94,8 +94,8 @@ router.get('/prayer_requests', ensureAuthenticated, async (req, res, next) => {
 router.get('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single prayer request
     try {
-        const invoice = await Invoice.findOne({_id:req.params.id})
-        sendJSONresponse(res, 200, {invoice});
+        const prayerRequest = await PrayerRequest.find({}).sort({ date : 1 })
+        res.render('admin/pages/prayer_requests', { title: 'Prayer requests', prayerRequest });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -125,11 +125,11 @@ router.delete('/prayer_request/:id', ensureAuthenticated, async (req, res, next)
 
 //programmer routes
 
-router.get('/become_programmer', ensureAuthenticated, async (req, res, next) => {
+router.get('/become_programmers', ensureAuthenticated, async (req, res, next) => {
     // Get all programmer requests
     try {
         const programmer = await Programmer.find({}).sort({ lastName : 1 })
-        sendJSONresponse(res, 200, {programmer});
+        res.render('admin/pages/become_programmers', { title: 'Become a programmer', programmer });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -139,7 +139,7 @@ router.get('/become_programmer/:id', ensureAuthenticated, async (req, res, next)
     // get a single programmer
     try {
         const programmer = await Programmer.findOne({_id:req.params.id})
-        sendJSONresponse(res, 200, {programmer});
+        res.render('admin/pages/become_programmer', { title: 'Become a programmer', programmer });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -216,7 +216,7 @@ router.get('/testimonies',  ensureAuthenticated, async (req, res, next) => {
     // Get all testimonies 
   try {
         const testimonies = await Testimony.find({}).sort({ date : 1 })
-        sendJSONresponse(res, 200, {testimonies});
+        res.render('admin/pages/testimonies', { title: 'testimonies', testimonies });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -255,11 +255,11 @@ router.delete('/testimony/:id', ensureAuthenticated, async (req, res, next) => {
 });
 
 //music video routes
-router.get('/music_video', ensureAuthenticated, async (req, res, next) => {
+router.get('/music_videos', ensureAuthenticated, async (req, res, next) => {
     // Get all music videos
     try {
         const musicVideo = await MusicVideo.find({}).sort({ date : 1 })
-        sendJSONresponse(res, 200, {musicVideo});
+        res.render('admin/pages/music_videos', { title: 'Music video', musicVideo });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -269,7 +269,7 @@ router.get('/music_video/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single music video
     try {
         const musicVideo = await MusicVideo.findOne({_id:req.params.id})
-        sendJSONresponse(res, 200, {musicVideo});
+        res.render('admin/pages/music_video', { title: 'Music video', musicVideo });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -299,11 +299,11 @@ router.delete('/music_video/:id', ensureAuthenticated, async (req, res, next) =>
 });
 
 //patnership routes
-router.get('/patnership', ensureAuthenticated, async (req, res, next) => {
+router.get('/patnerships', ensureAuthenticated, async (req, res, next) => {
     // Get patnerships
     try {
         const patnership = await Patnership.find({}).sort({ date : 1 })
-        sendJSONresponse(res, 200, {patnership});
+        res.render('admin/pages/patnerships', { title: 'Patnerships', patnership });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -313,7 +313,7 @@ router.get('/patnership/:id', ensureAuthenticated, async (req, res, next) => {
     // get a patnership
     try {
         const patnership = await Patnership.findOne({_id:req.params.id})
-        sendJSONresponse(res, 200, {patnership});
+        res.render('admin/pages/patnership', { title: 'Patnership', patnership });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -346,7 +346,7 @@ router.get('/static_files', ensureAuthenticated, async (req, res, next) => {
     // Get  all static files
     try {
         const static = await Static.find({}).sort({ addedOn : 1 })
-        sendJSONresponse(res, 200, {static});
+        res.render('admin/pages/static_files', { title: 'Static files', static });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -599,7 +599,7 @@ router.post('/schedule', ensureAuthenticated, async (req, res, next) => {
     // get all feedbacks
     try {
         const enquiries = await Enquiry.find({})
-        sendJSONresponse(res, 200, {enquiries});
+        res.render('admin/pages/enquiries', { title: 'Enquiries', enquiries });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }

@@ -10,7 +10,7 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                  Adverts
+                 Feedbacks
                </div>
            </div> 
         </div>
@@ -23,25 +23,21 @@
                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th class="text-center">Full name</th>
-                                <th class="text-center">ministry name</th>
-                                <th class="text-center"> phone no</th>
+                                <th>Full name</th>
+                                <th class="text-center">email</th>
+                                <th class="text-center">Phone no</th>
+                                <th class="text-center">Feedback</th>
                                 <th class="text-center">Date added</th>
-                                <th class="text-center">Options</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% advert.forEach(function (advert,index){ %>
+                            <% enquiries.forEach(function (enquiries,index){ %>
                                 <tr>
-                                    <td class="text-left"><%= advert.title %></td>
-                                    <td class="text-center"><%= advert.fullName %></td>
-                                    <td class="text-center"><%= advert.ministryName %></td>
-                                    <td class="text-center"><%= advert.phoneNumber %></td>
-                                    <td class="text-center"><%= moment(advert.date).format('LL') %></td><td class="text-center">
-                                        <a href= "/admin/api/advert/<%=advert._id%>" type="button" id="PopoverCustomT-1"
-                                            class="btn btn-primary btn-sm">View</a>
-                                    </td>
+                                    <td class="text-left"><%= enquiries.fullName %></td>
+                                    <td class="text-center"><%= enquiries.email %></td>
+                                    <td class="text-center"><%= enquiries.phoneNumber %></td>
+                                    <td class="text-center"><%= enquiries.enquiries %></td>
+                                    <td class="text-center"><%= moment(enquiries.date).format('LL') %></td>
                                 </tr>
                             <% }) %>      
                         </tbody>

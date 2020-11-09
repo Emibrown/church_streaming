@@ -10,7 +10,7 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                  Adverts
+                  Patnerships
                </div>
            </div> 
         </div>
@@ -24,22 +24,22 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th class="text-center">Full name</th>
-                                <th class="text-center">ministry name</th>
+                                <th class="text-center">Sur name</th>
+                                <th class="text-center">first name</th>
                                 <th class="text-center"> phone no</th>
                                 <th class="text-center">Date added</th>
                                 <th class="text-center">Options</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% advert.forEach(function (advert,index){ %>
+                            <% patnership.forEach(function (patnership,index){ %>
                                 <tr>
-                                    <td class="text-left"><%= advert.title %></td>
-                                    <td class="text-center"><%= advert.fullName %></td>
-                                    <td class="text-center"><%= advert.ministryName %></td>
-                                    <td class="text-center"><%= advert.phoneNumber %></td>
-                                    <td class="text-center"><%= moment(advert.date).format('LL') %></td><td class="text-center">
-                                        <a href= "/admin/api/advert/<%=advert._id%>" type="button" id="PopoverCustomT-1"
+                                    <td class="text-left"><%= patnership.title %></td>
+                                    <td class="text-center"><%= patnership.surName %></td>
+                                    <td class="text-center"><%= patnership.firstName %></td>
+                                    <td class="text-center"><%= patnership.phoneNumber %></td>
+                                    <td class="text-center"><%= moment(patnership.date).format('LL') %></td><td class="text-center">
+                                        <a href= "/admin/api/patnership/<%=patnership._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                     </td>
                                 </tr>

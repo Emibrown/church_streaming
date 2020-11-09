@@ -10,7 +10,7 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                  Adverts
+                  Music videos
                </div>
            </div> 
         </div>
@@ -24,22 +24,22 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th class="text-center">Full name</th>
-                                <th class="text-center">ministry name</th>
-                                <th class="text-center"> phone no</th>
+                                <th class="text-center">Genre</th>
+                                <th class="text-center">Supplier name</th>
+                                <th class="text-center">Phone no</th>
                                 <th class="text-center">Date added</th>
                                 <th class="text-center">Options</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% advert.forEach(function (advert,index){ %>
+                            <% musicVideo.forEach(function (musicVideo,index){ %>
                                 <tr>
-                                    <td class="text-left"><%= advert.title %></td>
-                                    <td class="text-center"><%= advert.fullName %></td>
-                                    <td class="text-center"><%= advert.ministryName %></td>
-                                    <td class="text-center"><%= advert.phoneNumber %></td>
-                                    <td class="text-center"><%= moment(advert.date).format('LL') %></td><td class="text-center">
-                                        <a href= "/admin/api/advert/<%=advert._id%>" type="button" id="PopoverCustomT-1"
+                                    <td class="text-left"><%= musicVideo.title %></td>
+                                    <td class="text-center"><%= musicVideo.genre %></td>
+                                    <td class="text-center"><%= musicVideo.supplierName %></td>
+                                    <td class="text-center"><%= musicVideo.contactName %></td>
+                                    <td class="text-center"><%= moment(musicVideo.date).format('LL') %></td><td class="text-center">
+                                        <a href= "/admin/api/music_video/<%=musicVideo._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                     </td>
                                 </tr>

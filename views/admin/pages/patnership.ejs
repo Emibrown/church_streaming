@@ -10,7 +10,7 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                <%= advert.title %> Advert
+                 Patnership
                </div>
            </div> 
         </div>
@@ -23,63 +23,59 @@
                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                             <tr>
                                 <th class="">Title</th>
-                                <td class=""><%= advert.title %></td>
+                                <td class=""><%= patnership.title %></td>
                             </tr>
                             <tr>
-                                <th class="">Full name</th>
-                                <td class=""><%= advert.fullName %></td>
+                                <th class="">Sur name</th>
+                                <td class=""><%= patnership.surName %></td>
                             </tr>
                             <tr>
-                                <th class="">Ministry name</th>
-                                <td class=""><%= advert.ministryName %></td>
+                                <th class="">First name</th>
+                                <td class=""><%= patnership.firstName %></td>
                             </tr> 
                             <tr>
                                 <th class="">Phone no</th>
-                                <td class=""><%= advert.phoneNumber %></td>
+                                <td class=""><%= patnership.phoneNumber %></td>
                             </tr>
                             <tr>
                                 <th class="">Date added</th> 
-                                <td class=""><%= moment(advert.date).format('LL') %></td>
+                                <td class=""><%= moment(patnership.date).format('LL') %></td>
                             </tr>
                             <tr>
                                 <th class="">Email</th>
-                                <td class=""><%= advert.email %></td>
+                                <td class=""><%= patnership.email %></td>
                             </tr>
                             <tr>
-                                <th class="">Description</th>
-                                <td class=""><%= advert.description %></td>
+                                <th class="">membership</th>
+                                <td class=""><%= patnership.membership %></td>
                             </tr>
                             <tr>
-                                <th class="">Website Url/ facebook page</th>
-                                <td class=""><%= advert.webURL %></td>
+                                <th class="">fellowship</th>
+                                <td class=""><%= patnership.fellowship %></td>
                             </tr>
                             <tr>
-                                <th class="">Location</th>
-                                <td class=""><%= advert.location %></td>
+                                <th class="">Address</th>
+                                <td class=""><%= patnership.address %></td>
                             </tr>
                             <tr>
-                                <th class="">video Url</th>
-                                <td class=""><%= advert.videoURL %></td>
+                                <th class="">whatsapp no</th>
+                                <td class=""><%= patnership.whatsAppNo %></td>
                             </tr>
                             <tr>
-                                <th class="">Media Download Link</th>
-                                <td class=""><%= advert.mediaDownloadLink %></td>
+                                <th class="">Categories</th>
+                                <td class=""><%= patnership.categories.join(', ') %></td>
                             </tr>
                             <tr>
-                                <th class="">Invoice made to</th>
-                                <td class=""><%= advert.invoiceMade %></td>
+                                <th class="">Levels</th>
+                                <td class=""><%= patnership.levels.join(', ')  %></td>
                             </tr>
                             <tr>
-                                <th class="">Invoice address</th>
-                                <td class=""><%= advert.invoiceAddress %></td>
+                                <th class="">Prayer point 1</th>
+                                <td class=""><%= patnership.prayerPoint1 %></td>
                             </tr>
                             <tr>
-                                <th class="">contact number</th>
-                                <td class=""><%= advert.contactNumber %></td>
-                            </tr>
-                            <tr>
-                                <th class="">VAT</th>
-                                <td class=""><%= advert.VATnumber %></td>
+                                <th class="">Prayer point 2</th>
+                                <td class=""><%= patnership.prayerPoint2 %></td>
                             </tr>
                      
                     </table>
