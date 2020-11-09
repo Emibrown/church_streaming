@@ -23,14 +23,13 @@
             <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th>firstname</th>
-                    <th>lastname</th>
-                    <th>email</th>
-                    <th>address</th>
-                    <th>location</th>
+                    <th>First Name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Location</th>
+                    <th>Status</th>
                     <th>View</th>
-                    
-
                 </tr>
                 </thead>
                 <tbody>
@@ -42,6 +41,14 @@
                     <td><%= user.email %></td>
                     <td><%= user.address %></td>
                     <td><%= user.location %></td>
+                    <td>
+                        <% if (user.isBlocked){  %>
+                         <span style = "background-color:red;color:white;padding:5px;">Inactive</span> 
+                        <% } else{ %>  
+                            <span style = "background-color:green;color:white; padding:5px">Active</span> 
+                        <% } %>
+
+                    </td>
                     <td>
                         <a href = "/admin/view-single/<%=user._id %>" class="mb-2 mr-2 btn-hover-shine btn btn-shadow btn-success"><i class="far fa-eye"></i> View record</a>
                     </td>
@@ -61,88 +68,4 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
-<script>
-    $(document).on('submit', '#social_media', event => {
-        event.preventDefault();
-        const data = {
-            "facebookHandle": $("#facebook_handle").val(),
-            "instagramHandle": $("#instagram_handle").val(),
-            "twitterHandle":  $("#twitter_handle").val(),
-            "vimeoHandle": $("#vimeo_handle").val(),
-            "googleplusHandle": $("#google_handle").val(),
-         }
-         
-        jQuery.ajax({
-        url: '/admin/settings',
-        method: "PUT",
-        dataType : "json",
-        data: JSON.stringify(data),
-        "contentType": "application/json",
-        success: function(response) { 
-            console.log(response);
-            if(response.status==200){
-            displaymsg(response.message, "alert-secondary")
-            }
-          },
-          error:function(jqXhr){
-              if(jqXhr.status ==400){
-                let responseText = jQuery.parseJSON(jqXhr.responseText);
-                console.log(responseText)
-              }
-          }
-      });
-     })
-
-    $(document).on('click', '.btn-danger', function(e) {
-    e.preventDefault();
-    const id = $(this).attr('id');
-    jQuery.ajax({
-        url: '/admin/block/'+id,
-        method: "PUT",
-        dataType : "json",
-        "contentType": "application/json",
-        success: function(response) { 
-            console.log(response);
-            if(response.status==200){
-            displaymsg(response.message, "alert-secondary")
-            window.location.reload()
-            }
-          },
-          error:function(jqXhr){
-              if(jqXhr.status ==400){
-                let responseText = jQuery.parseJSON(jqXhr.responseText);
-                console.log(responseText)
-              }
-          }
-      });
-
-   
-});
-
-$(document).on('click', '.btn-info', function(e) {
-    e.preventDefault();
-    const id = $(this).attr('id');
-    jQuery.ajax({
-        url: '/admin/unblock/'+id,
-        method: "PUT",
-        dataType : "json",
-        "contentType": "application/json",
-        success: function(response) { 
-            console.log(response);
-            if(response.status==200){
-            displaymsg(response.message, "alert-secondary")
-            window.location.reload();
-            }
-          },
-          error:function(jqXhr){
-              if(jqXhr.status ==400){
-                let responseText = jQuery.parseJSON(jqXhr.responseText);
-                console.log(responseText)
-              }
-          }
-      });
-
-   
-});
-</script>
 <%- include('../../end'); -%>
