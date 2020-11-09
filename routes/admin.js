@@ -23,7 +23,11 @@ const sendJSONresponse = (res, status, content) => {
 
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-       res.redirect('/admin/dashboard');
+        if(req.user.type == 1){
+          res.redirect('/admin/dashboard');
+        }else{
+          next();
+        }
   }else {
      next();
   }
@@ -33,6 +37,9 @@ const ensureAuthenticated = (req, res, next) => {
   if (!req.isAuthenticated()) {
     res.redirect("/admin");
   } else {
+    if(req.user.type != 1){
+      res.redirect('/');
+    }
     next();
   }
 };
@@ -98,7 +105,7 @@ router.get('/',authenticated, (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-  passport.authenticate('user-local', function(err, user, info) {
+  passport.authenticate('admin-local', function(err, user, info) {
     if (err) { return next(err); }
     if (!user) { 
       sendJSONresponse(res, 400, info);

@@ -144,6 +144,22 @@ router.get('/forgot', (req, res, next) =>{
   res.render('users/pages/forgot', { title: 'Faith TV | Forgot Password' });
 });
 
+// user login
+router.post('/login', (req, res, next) => {
+  passport.authenticate('user-local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { 
+      sendJSONresponse(res, 400, info);
+      return;
+    }
+    req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        sendJSONresponse(res, 200, {"message": "Login successfull please wait..."});
+        return;
+    });
+  })(req, res, next);
+});
+
 
 /** GET requests for pages ends here **/
 

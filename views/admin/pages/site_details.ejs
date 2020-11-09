@@ -52,11 +52,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="faith_st">Faith statement</label>
-                                <textarea id="faith_st" name="faith_st" rows="5" class="form-control" placeholder="Faith statement"><%= settings.HQaddress %></textarea>                  
+                                <textarea id="faith_st" name="faith_st" rows="5" class="form-control" placeholder="Faith statement"><%- settings.faithStatement %></textarea>                  
                             </div>
                             <div class="form-group">
                                 <label for="salv_prayer">Salvation prayer</label>
-                                <textarea id="salv_prayer" name="salv_prayer" rows="5" class="form-control" placeholder="Salvation prayer"><%= settings.HQaddress %></textarea>                  
+                                <textarea id="salv_prayer" name="salv_prayer" rows="5" class="form-control" placeholder="Salvation prayer"><%= settings.salvationPrayer %></textarea>                  
                             </div> 
                             <button class="mt-1 btn btn-primary">Submit</button>
                         </form>
@@ -73,6 +73,13 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
+<script>
+    $(function () {
+        $("#faith_st").ckeditor();
+    });
+</script>
 <script>
     $(document).on('submit', '#site_details', event => {
         event.preventDefault();

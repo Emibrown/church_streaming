@@ -20,6 +20,30 @@ module.exports = function(){
     
 };
 
+passport.use('admin-local', new localStrategy({
+    usernameField: 'email'
+},
+    function(username, password, done){
+        User.findOne({email: username}, function(err, user){
+            if(err){return done(err);}
+            if(!user){
+                return done(null, false,
+                 {message: "No user has that email!"});
+            }
+            if(user.type != 1){
+                return done(null, false, { message: 'Invalied Admin account.' });
+            }
+            user.comparePassword(password, function(err, isMatch) {
+              if (!isMatch) {
+                return done(null, user);
+              } else {
+                return done(null, false, { message: 'Incorrect password.' });
+              }
+            });
+        });
+    }
+));
+
 passport.use('user-local', new localStrategy({
     usernameField: 'email'
 },
@@ -31,7 +55,7 @@ passport.use('user-local', new localStrategy({
                  {message: "No user has that email!"});
             }
             user.comparePassword(password, function(err, isMatch) {
-              if (isMatch) {
+              if (!isMatch) {
                 return done(null, user);
               } else {
                 return done(null, false, { message: 'Incorrect password.' });
