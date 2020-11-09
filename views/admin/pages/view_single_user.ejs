@@ -115,7 +115,6 @@
 </div>
 <!-- Page Content END -->
 
-
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
@@ -140,7 +139,7 @@ $(document).on('click', '.btn-danger', function(e) {
                 success: function(data) {
                     window.location.reload();
                     if (data.status == 200) {
-                        $('#success_message').html("user has been blocked");
+                        $('#success_message').html(data.message);
                     }
                 },
                 error: function(jqXhr) {
@@ -181,12 +180,11 @@ $(document).on('click', '.btn-info', function(e) {
                 success: function(data) {
                     window.location.reload();
                     if (data.status == 200) {
-                        $('#success_message').html("user has been blocked");
+                        $('#success_message').html(data.message);
                     }
                 },
                 error: function(jqXhr) {
                     if (jqXhr.status == 400) {
-                       
                     }
                 }
             });
@@ -199,11 +197,6 @@ $(document).on('click', '.btn-info', function(e) {
         }
     })
 });
-
-
-
-
-
 </script>
 
 <%- include('../../end'); -%>
