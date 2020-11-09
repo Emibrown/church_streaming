@@ -145,6 +145,10 @@ router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
+router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
+  const user = await User.findById({_id: req.params.id})
+  res.render('admin/pages/view_single_user', { title: 'View Single User', user });
+});
 //update sit settings from admin page
 router.put('/settings', ensureAuthenticated, async (req, res, next) => {
   try {
@@ -153,6 +157,38 @@ router.put('/settings', ensureAuthenticated, async (req, res, next) => {
       console.log(settings)
       await settings.save()
       res.send({status: 200, message: 'Settings saved'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+router.put('/block/:id', async (req, res, next) => {
+  // block user
+  try {
+      await User.updateOne(
+        { _id: req.params.id },
+        { $set:
+           {
+             isBlocked: true,
+           }
+        }
+     )
+      res.status(200).send({status: 200, message: 'User has been blocked successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+router.put('/unblock/:id', async (req, res, next) => {
+  // unblock user
+  try {
+      await User.updateOne(
+        { _id: req.params.id },
+        { $set:
+           {
+             isBlocked: false,
+           }
+        }
+     )
+      res.status(200).send({status: 200,message: 'User has been unblocked successfully'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }
@@ -272,6 +308,8 @@ router.post('/add_category', ensureAuthenticated, async (req, res, next) => {
   }
 });
 
+
+
 router.put('/category/:id', async (req, res, next) => {
   // update category
   try {
@@ -284,22 +322,7 @@ router.put('/category/:id', async (req, res, next) => {
   }
 });
 
-router.put('/blockUser/:id', async (req, res, next) => {
-  // block user
-  try {
-      await User.updateOne(
-        { _id: req.params.id },
-        { $set:
-           {
-             isBlocked: true,
-           }
-        }
-     )
-      res.status(200).send({message: 'User has been blocked successfully'});
-  } catch (error) {
-      sendJSONresponse(res, 400, {error});
-  }
-});
+
 
 
 router.delete('/category/:id', async (req, res, next) => {
