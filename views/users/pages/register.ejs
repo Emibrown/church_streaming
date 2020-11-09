@@ -1,5 +1,4 @@
 <%- include('../header'); -%>
-
 <div class="content">
     <div class="container">
       <div class="block">
@@ -19,8 +18,17 @@
                                   <div class="col-sm-12">
                                       <div class="tbl form">
                                           <div class="tbl-cell" id="rgstrForm">
-                                              <form accept-charset="UTF-8" action="" method="post" class="" role="form">
-                                                  <input type="hidden" value="register" id="formRegister" name="form">                                              
+                                            <div  style = "text-align:center" id="message"></div>
+                                              <form id = "register-form">
+                                                <div class="form-group">
+                                                  <label for="title" class="sr-only">TITLE: </label>
+                                                  <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <em class="fas fa-user"></em>
+                                                      </span>
+                                                      <input value="" id="title" name="title" type="text" class="form-control" placeholder="Enter your title">                                                        
+                                                    </div>
+                                                  </div>
                                                   <div class="form-group">
                                                     <label for="firstname" class="sr-only">FIRST NAME: </label>
                                                     <div class="input-group">
@@ -112,12 +120,12 @@
                                                                     </div>
                                                                   </div>
                                                                   <div class="form-group">
-                                                                    <label for="church_pst" class="sr-only">RESIDENT PASTOR: </label>
+                                                                    <label for="resident_pst" class="sr-only">RESIDENT PASTOR: </label>
                                                                     <div class="input-group">
                                                                       <span class="input-group-addon">
                                                                           <em class="fa fa-fw fa-user"></em>
                                                                         </span>
-                                                                        <input value="" id="church_pst" name="church_pst" type="text" class="form-control" placeholder= "Resident Pastor">                                                        
+                                                                        <input value="" id="resident_pst" name="resident_pst" type="text" class="form-control" placeholder= "Resident Pastor">                                                        
                                                                       </div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -138,14 +146,33 @@
                                                                             <input value="" id="min_name" name="min_name" type="text" class="form-control" placeholder= "Name of ministry / organization">                                                        
                                                                           </div>
                                                                         </div>
-                                                                       <div class="move-center">
+                                                                        <div class="form-group">
+                                                                          <label for="password" class="sr-only">PASSWORD: </label>
+                                                                          <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                                <em class="fa fa-fw fa-lock"></em>
+                                                                              </span>
+                                                                              <input value="" id="password" name="password" type="text" class="form-control" placeholder= "Provide password">                                                        
+                                                                            </div>
+                                                                          </div>
+                                                                          <div class="form-group">
+                                                                            <label for="confirm_password" class="sr-only">CONFIRM PASSWORD: </label>
+                                                                            <div class="input-group">
+                                                                              <span class="input-group-addon">
+                                                                                  <em class="fa fa-fw fa-lock"></em>
+                                                                                </span>
+                                                                                <input value="" id="confirm_password" name="confirm_password" type="text" class="form-control" placeholder= "Confirm Password">                                                        
+                                                                              </div>
+
+                                                                            </div>
+                                                                          <div class="move-center">
                                                                           <h3 style = "text-align:center">DECLARATIONS</h3>
                                                                        </div>
                                                                        <hr>
                                                                        <div class = "move-center">
                                                                         <p>
                                                                           <label class="chkBox">
-                                                                              <input type="checkbox" value="Y" id="agreePhone" name="agree_phone" class="inputCheckbox" /> 
+                                                                              <input type="checkbox" value="Y" id ="terms1" class="inputCheckbox" /> 
                                                                               <strong>
                                                                                 I affirm that the details provided above are accurate and I consent to the processing of my personal 
                                                                                 data by FAITH TO FAITH TV with its registered office in Port Harcourt, Rivers State, Nigeria, in order 
@@ -160,8 +187,8 @@
                
                                                                   <p>
                                                                     <label class = "chkBox">
-                                                                      <input type="checkbox" value="Y" id="agreePhone" name="agree_phone" class="inputCheckbox" /> 
-                                                                      <strong>By submitting this form you agree to Faith TV <a href="https://www.tbnafrica.org/terms-and-conditions" class="ukced-terms">terms</a></strong>
+                                                                      <input type="checkbox" value="Y" id = "terms2" class="inputCheckbox" /> 
+                                                                      <strong>By submitting this form you agree to Faith TV <a href="" class="ukced-terms">terms</a></strong>
                                                                     </label>
                                                                     
                                                                   </p>
@@ -298,7 +325,7 @@
     
     <p>Order processing will not begin until we receive a confirmed order and full payment.</p>
     
-    <p><img alt="" src="https://www.tbnafrica.org/files/uploads/images/standard-bank.png" style="height:138px; width:205px" /></p>
+    <p><img alt="" src="/front/images/standard-bank.png" style="height:138px; width:205px" /></p>
     
     <p>Standard Bank</p>
     
@@ -316,7 +343,7 @@
     
     <p>We accept MasterCard and Visa credit cards. If you do not have a credit card please utilise one of the other payment options.</p>
     
-    <p><img alt="" src="https://www.tbnafrica.org/files/uploads/files/VCS-logos.png" style="height:125px; width:180px" /></p>
+    <p><img alt="" src="" style="height:125px; width:180px" /></p>
     
     <h4>EFT (Electronic Fund Transfer)</h4>
     
@@ -346,7 +373,7 @@
     
     <p><strong>Ref:</strong>&nbsp;Name, Surname &amp; Cell Number<br />
     <br />
-    For more information about other payment options, please <a href="https://www.tbnafrica.org/give">click here</a>.</p>
+    For more information about other payment options, please <a href="">click here</a>.</p>
     
     <h4>Security Policy</h4>
     
@@ -358,7 +385,7 @@
     
     <p>Virtual Card Services continually reviews and enhances its security in line with technological changes.</p>
     
-    <p><a href="http://www.vcs.co.za/"><img alt="" src="https://www.tbnafrica.org/files/uploads/files/VCS-logos.png" style="height:125px; width:180px" /></a></p>
+    <p><a href=""><img alt="" src="" style="height:125px; width:180px" /></a></p>
     
     <h4>Monitoring</h4>
     
@@ -378,7 +405,7 @@
     
     <h4>Contact Details</h4>
     
-    <p>Please <a href="https://www.tbnafrica.org/contact">click here</a> for a full list of contact details.</p>
+    <p>Please <a href="/contact">click here</a> for a full list of contact details.</p>
               
                   </article>
               </div> <!-- /.modal-body -->
@@ -403,4 +430,139 @@
 </div> <!-- /.content -->
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script>
+  $('#register-form').validate({
+  rules: {
+      title: 'required',
+      firstname: 'required',
+      middlename: 'required',
+      surname: 'required',
+      address: 'required',
+      state: 'required',
+      lga: 'required',
+      church: 'required',
+      location:'required',
+      resident_pst: 'required',
+      min_name: 'required',
+      chapter_location: 'required',
+      password : {
+          required: true,
+      },
+      confirm_password : {
+          required: true,
+          equalTo : "#password"
+      },
+      'terms1': {
+          required: true,
+                
+       },
+     'terms2': {
+        required: true,
+                
+       },
+      email: {
+      required: true,
+      email: true,
+      },
+      download: {
+          required: true,
+          url: true
+      },
+     
+      dob: {
+        required: true,
+        date: true
+     },
+  },
+  messages: {
+      title: 'Please Enter title',
+      firstname: 'Please provide your First name',
+      email: 'Please provide a valid email',
+      middlename: 'Please provide your Middle name',
+      surname: 'Please provide your Surname name',
+      dob: 'Your Date is Required',
+      address: 'Please provide your Address',
+      state: 'Please provide your state',
+      lga: 'Provide your Local Government',
+      church: 'Church chapter is required',
+      resident_pst: 'Please provide your resident pastor',
+      chapter_location: 'Please provide chapter location',
+      min_name: 'Provide Ministry Name',
+      contact_no: 'This field is required',
+      location: 'Please provide your location',
+      password: 'Password is required',
+      confirm_password: 'Both password MUST match',
+      'terms1': {
+                required: "Please accept this condition",
+            },
+      'terms2':{
+           required: "Please accept this condition",
+        },
+      dob:{
+         required: "Date of Birth is required",
+         date:"enter date only"
+       },
+  },
+  errorPlacement: function(error, element) {
+      error.appendTo(element.parent("div").parent("div") );
+  },
+  submitHandler: () => {
+      const data = {
+      "firstname": $("#firstname").val(),
+      "lastname":  $("#email").val(),
+      "title": $("#title").val(),
+      "middlename": $("#middlename").val(),
+      "location": $("#location").val(),
+      "email": $("#email").val(),
+      "address": $("#address").val(),
+      "stateOfOrigin": $("#state").val(),
+      "LGA": $("#lga").val(),
+      "residentPastor": $("#resident_pst").val(),
+      "chapterLocation": $("#chapter_location").val(),
+      "organisationName": $("#min_name").val(),
+      "password": $("#password").val()
+   }
+   if (terms1.checked==false || terms2.checked==false){
+            displaymsg(text = "Please accept all terms and conditions")
+      }else{
+     jQuery.ajax({
+            url: '/register',
+            method: "POST",
+            dataType : "json",
+            data: JSON.stringify(data),
+            "contentType": "application/json",
+            success: function(response) { 
+                console.log(response);
+                if(response.status==200){
+                    displaymsg(response.message, "alert-success")
+                    $('#register-form')[0].reset();
+                    window.location.href="/login";
+                }
+            },
+            error:function(jqXhr){
+                if(jqXhr.status ==400){
+                    let responseText = jQuery.parseJSON(jqXhr.responseText);
+
+                    if(responseText.indexOf('email') !== -1){
+                    responseText[responseText.indexOf('email')] = "email";
+                    }
+                    console.log(responseText)
+                    let txt = `Invalid inputs : ${responseText.join(', ')}`
+                     displaymsg(txt)
+                }
+            }
+        });
+      }
+     }
+  });
+
+  $(document).on('submit', '#register-form', (event) => {
+  $(document).ready(function (){
+  event.preventDefault();
+
+  
+});
+});
+
+</script>
 <%- include('../../end'); -%>

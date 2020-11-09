@@ -4,6 +4,7 @@ const Video = require('../models/video');
 const Advert = require('../models/advert');
 const PrayerRequest = require('../models/prayerRequest');
 const Programmer = require('../models/programmer');
+const User = require('../models/user');
 const Proposal = require('../models/showProposal');
 const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
@@ -263,6 +264,23 @@ router.post('/become_programmer', async (req, res, next) => {
       sendJSONresponse(res, 400, Object.keys(error.errors));
     }
 });
+//user registration 
+router.post('/register', async (req, res, next) =>{
+  try {
+    const user = new User(req.body);
+    const newUser = await user.save()
+    if(newUser){
+      res.send({status: 200, message: 'Registration was successful'});
+    }else{
+      res.send({status: 400, message: 'Registration was unsuccessful'});
+
+    }
+} catch (error) {
+  console.log(error);
+  sendJSONresponse(res, 400, Object.keys(error.errors));
+}
+
+})
 
 //show proposal routes
 router.post('/show_proposal', async (req, res, next) => {
