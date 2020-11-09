@@ -18,13 +18,60 @@
     <meta name="msapplication-tap-highlight" content="no">
 
 <link href="/back/main.d810cf0ae7f39f28f336.css" rel="stylesheet"></head>
-
-
-<script type="text/javascript" src="/back/assets/scripts/main.d810cf0ae7f39f28f336.js"></script>
-<script type="text/javascript" src="/back/jquery-1.11.1.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
+<style>
+   /* Center the loader */
+   #loader {
+     position: absolute;
+     left: 50%;
+     top: 50%;
+     z-index: 1;
+     width: 150px;
+     height: 150px;
+     margin: -75px 0 0 -75px;
+     border: 10px solid #f3f3f3;
+     border-radius: 50%;
+     border-top: 10px solid #ecb90e;
+     width: 70px;
+     height: 70px;
+     -webkit-animation: spin 2s linear infinite;
+     animation: spin 2s linear infinite;
+   }
+   
+   @-webkit-keyframes spin {
+     0% { -webkit-transform: rotate(0deg); }
+     100% { -webkit-transform: rotate(360deg); }
+   }
+   
+   @keyframes spin {
+     0% { transform: rotate(0deg); }
+     100% { transform: rotate(360deg); }
+   }
+   
+   /* Add animation to "page content" */
+   .animate-bottom {
+     position: relative;
+     -webkit-animation-name: animatebottom;
+     -webkit-animation-duration: 1s;
+     animation-name: animatebottom;
+     animation-duration: 1s
+   }
+   
+   @-webkit-keyframes animatebottom {
+     from { bottom:-100px; opacity:0 } 
+     to { bottom:0px; opacity:1 }
+   }
+   
+   @keyframes animatebottom { 
+     from{ bottom:-100px; opacity:0 } 
+     to{ bottom:0; opacity:1 }
+   }
+   
+   #main-page {
+     display: none;
+   }
+   </style>
 
 <style>
    .logo img {
@@ -36,8 +83,9 @@
  </style>
 
 <body>
+   <div id="loader"></div>
     
-    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar">
+    <div id="main-page" class="app-container app-theme-white body-tabs-shadow fixed-sidebar">
          <div class="app-header header-shadow">
              <div class="app-header__logo">
                  <!-- <div class="logo-src"></div> -->
