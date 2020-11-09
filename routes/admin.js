@@ -52,7 +52,7 @@ User.find({}, (err, users) => {
         lastname: "Eneche",
         middlename: "Samson",
         title:'Mr',
-        email: "emmaeneche@gmail.com",
+        email: "emi@gmail.com",
         password: "11223344E",
         address:"Port Harcourt",
         location: "Port",
@@ -140,6 +140,10 @@ router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
 router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
   const about = await About.findOne({_id:req.query.id})
   res.render('admin/pages/edit_about', { title: 'Edit About', about });
+});
+
+router.get('/add_static', ensureAuthenticated, async(req, res, next) => {
+  res.render('admin/pages/add_static',{ title: 'Add static files',  });
 });
 
 router.get('/social-media', ensureAuthenticated, async(req, res, next) => {

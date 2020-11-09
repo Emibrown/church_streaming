@@ -9,15 +9,22 @@ const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
 const Enquiry = require('../models/enquiries');
 const Partnership = require('../models/patnership');
+const About = require('../models/about');
 const customEmail = require('../services/email');
 const moment = require('moment');
 const Feedback = require('../models/enquiries');
 const router = express.Router();
 
-router.use((req, res, next) => {
+
+
+
+
+router.use(async(req, res, next) => {
   res.locals.moment = moment;
+  res.locals.allAbout = await About.find({})
   next();
 });
+
 
 const sendJSONresponse = (res, status, content) => {
   res.status(status);
@@ -75,8 +82,13 @@ router.get('/categories', (req, res, next) => {
   res.render('users/pages/cats', { title: 'Faith TV | Categories' });
 });
 
-router.get('/about', (req, res, next) =>{
-  res.render('users/pages/about', { title: 'Faith TV | About' });
+router.get('/about/:code', async(req, res, next) =>{
+  const about = await About.findOne(
+    { 
+      code: req.params.code,
+    }
+  )
+  res.render('users/pages/about', { title: 'Faith TV | About', about });
 });
 
 router.get('/dayview', (req, res, next) =>{

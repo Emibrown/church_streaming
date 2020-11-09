@@ -345,7 +345,7 @@ router.delete('/patnership/:id', ensureAuthenticated, async (req, res, next) => 
 router.get('/static_files', ensureAuthenticated, async (req, res, next) => {
     // Get  all static files
     try {
-        const static = await Static.find({}).sort({ addedOn : 1 })
+        const static = await Static.find({}).sort({ date : 1 })
         res.render('admin/pages/static_files', { title: 'Static files', static });
     } catch (error) {
         sendJSONresponse(res, 400, {error});
@@ -357,7 +357,8 @@ router.post('/static_files', ensureAuthenticated, multers.static.single('file'),
         if(!req.file){
             sendJSONresponse(res, 400, {message: "file required"});
         }
-        req.body.fileURL = req.file.filename
+        req.body.fileName = req.file.filename
+        req.body.fileURL = path.join(req.hostname,req.file.path,req.file.filename)
         const static = new Static(req.body);
         await static.save();    
         sendJSONresponse(res, 200, {message: "Static file added successfully"});

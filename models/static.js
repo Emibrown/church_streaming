@@ -6,6 +6,9 @@ mongoose.Promise = require('bluebird');
 
 var staticSchema = mongoose.Schema(
     {
+        fileName: {
+            type: String,
+        },
         fileURL: {
             type: String,
         },
@@ -13,6 +16,10 @@ var staticSchema = mongoose.Schema(
             type: String,
             required: true,
             unique: true
+        },
+        date: {
+            type: Date,
+            default: Date.now
         }
     }
 )

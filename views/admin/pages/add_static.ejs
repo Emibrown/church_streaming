@@ -11,7 +11,7 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                    Add about
+                    Add Static file
                </div>
            </div>
          </div>
@@ -25,19 +25,15 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <div id = "message"></div>
-                        <form id="add_about">
+                        <form id="add_static">
                             <div class="form_gallery form-group">
-                                <label id="gallery2" for="image">About Image</label><br>
-                                <input rows="5" data-name="#gallery2" id="image" class="form_gallery-upload "
-                                   type="file" accept=".png, .jpg, .jpeg">
+                                <label id="file2" for="file">File</label><br>
+                                <input rows="5" data-name="#file2" id="file" class="form_file-upload "
+                                   type="file">
                              </div>
                             <div class="form-group">
                                 <label for="title">Title</label>
                                 <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="About title" required>                 
-                            </div>
-                            <div class="form-group">
-                                <label for="desc">Description</label>
-                                <textarea id="desc" name="desc" rows="5" class="form-control" placeholder="About description" required></textarea>                 
                             </div>
                             <button class="mt-1 btn btn-primary" id = "btn">Submit</button>
                         </form>
@@ -54,23 +50,15 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
-<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
 <script>
-    $(function () {
-        $("#desc").ckeditor();
-    });
-</script>
-<script>
-    $(document).on('submit', '#add_about', event => {
+    $(document).on('submit', '#add_static', event => {
         event.preventDefault();
-        const file = document.querySelector('#image')
+        const file = document.querySelector('#file')
         const data = new FormData()
-        data.append("description", $("#desc").val());
         data.append("title", $("#title").val());
         data.append("file", file.files[0]);
         if(file.files.length < 1 ){
-            displayerr("Please add an image");
+            displayerr("Please select a file");
         }else{
             const config = {
                 onUploadProgress: function(progressEvent) {
@@ -80,11 +68,11 @@
                 }
             }
 
-            axios.post('/admin/about',data, config)
+            axios.post('/admin/api/static_files',data, config)
             .then(function (response) {
                 // handle success
                 console.log(response)
-                const url = "/admin/about";    
+                const url = "/admin/api/static_files";    
                 $(location).attr('href',url);
                 displaymsg(response.data.message);
             })

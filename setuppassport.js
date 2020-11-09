@@ -34,7 +34,7 @@ passport.use('admin-local', new localStrategy({
                 return done(null, false, { message: 'Invalied Admin account.' });
             }
             user.comparePassword(password, function(err, isMatch) {
-              if (!isMatch) {
+              if (isMatch) {
                 return done(null, user);
               } else {
                 return done(null, false, { message: 'Incorrect password.' });
