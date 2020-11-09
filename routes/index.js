@@ -11,20 +11,20 @@ const MusicVideo = require('../models/musicVideo');
 const Enquiry = require('../models/enquiries');
 const Partnership = require('../models/patnership');
 const About = require('../models/about');
+const passport = require('passport');
 const customEmail = require('../services/email');
 const moment = require('moment');
 const Feedback = require('../models/enquiries');
 const router = express.Router();
 
 
-
-
-
 router.use(async(req, res, next) => {
   res.locals.moment = moment;
+  res.locals.currentUser = req.user;
   res.locals.allAbout = await About.find({})
   next();
 });
+
 
 
 const sendJSONresponse = (res, status, content) => {
@@ -147,7 +147,7 @@ router.get('/change-password', (req, res, next) =>{
   res.render('users/pages/change_password', { title: 'Faith TV | Change password' });
 });
 router.get('/edit-profile', (req, res, next) =>{
-  res.render('users/pages/edit_profile', { title: 'Faith TV | Edit Profile' });
+  res.render('users/pages/edit_profile', { title: 'Faith TV | Edit Profile', user:req.user });
 });
 router.get('/my-profile', (req, res, next) =>{
   res.render('users/pages/my_profile', { title: 'Faith TV | User Dashboard' });
@@ -265,7 +265,7 @@ router.post('/become_programmer', async (req, res, next) => {
     }
 });
 //user registration 
-router.post('/register', async (req, res, next) =>{
+router.post( '/register', async (req, res, next) =>{
   try {
     const {firstname:name, email} = req.body;
     const capitalizer = string =>  string && string.charAt(0).toUpperCase() + string.substring(1);
@@ -278,15 +278,13 @@ router.post('/register', async (req, res, next) =>{
       customEmail.customEmail(firstName, email, header, message);
       req.logIn(user, function(err) {
         if (err) { return next(err); }
-        res.send({status:200, message: "Registration was successful"});
-        return;
+         res.send({status:200, message: "Registration was successful"});
       })
     }    
-} catch (error) {
-  console.log(error);
-  sendJSONresponse(res, 400, Object.keys(error.errors));
-}
-
+  }catch (error) {
+    console.log(error);
+    sendJSONresponse(res, 400, Object.keys(error.errors));
+  }
 })
 
 //show proposal routes

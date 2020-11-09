@@ -464,11 +464,6 @@
       required: true,
       email: true,
       },
-      download: {
-          required: true,
-          url: true
-      },
-     
       dob: {
         required: true,
         date: true
@@ -480,7 +475,6 @@
       email: 'Please provide a valid email',
       middlename: 'Please provide your Middle name',
       surname: 'Please provide your Surname name',
-      dob: 'Your Date is Required',
       address: 'Please provide your Address',
       state: 'Please provide your state',
       lga: 'Provide your Local Government',
@@ -511,6 +505,7 @@
       "firstname": $("#firstname").val(),
       "lastname":  $("#email").val(),
       "title": $("#title").val(),
+      "dateOfBirth": $("#dob").val(),
       "middlename": $("#middlename").val(),
       "location": $("#location").val(),
       "email": $("#email").val(),
