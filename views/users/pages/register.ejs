@@ -544,10 +544,10 @@
                     let responseText = jQuery.parseJSON(jqXhr.responseText);
 
                     if(responseText.indexOf('email') !== -1){
-                    responseText[responseText.indexOf('email')] = "email";
+                    responseText[responseText.indexOf('email')] = "Email";
                     }
                     console.log(responseText)
-                    let txt = `Invalid inputs : ${responseText.join(', ')}`
+                    let txt = `Already taken : ${responseText.join(', ')}`
                      displaymsg(txt)
                 }
             }

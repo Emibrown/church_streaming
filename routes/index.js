@@ -267,15 +267,20 @@ router.post('/become_programmer', async (req, res, next) => {
 //user registration 
 router.post('/register', async (req, res, next) =>{
   try {
+    const {firstname:name, email} = req.body;
+    const capitalizer = string =>  string && string.charAt(0).toUpperCase() + string.substring(1);
+    const firstName = capitalizer(name);
+    const header = "Congratulations!!";
+    const message = "Your Registration was successful";
     const user = new User(req.body);
-    const newUser = await user.save()
+    const newUser = await user.save();
     if(newUser){
+      customEmail.customEmail(firstName, email, header, message);
       req.logIn(user, function(err) {
         if (err) { return next(err); }
         res.send({status:200, message: "Registration was successful"});
         return;
       })
-      
     }    
 } catch (error) {
   console.log(error);
