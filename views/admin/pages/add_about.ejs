@@ -54,6 +54,13 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
+<script>
+    $(function () {
+        $("#desc").ckeditor();
+    });
+</script>
 <script>
     $(document).on('submit', '#add_about', event => {
         event.preventDefault();

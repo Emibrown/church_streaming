@@ -4,20 +4,28 @@ const Video = require('../models/video');
 const Advert = require('../models/advert');
 const PrayerRequest = require('../models/prayerRequest');
 const Programmer = require('../models/programmer');
+const User = require('../models/user');
 const Proposal = require('../models/showProposal');
 const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
 const Enquiry = require('../models/enquiries');
 const Partnership = require('../models/patnership');
+const About = require('../models/about');
 const customEmail = require('../services/email');
 const moment = require('moment');
 const Feedback = require('../models/enquiries');
 const router = express.Router();
 
-router.use((req, res, next) => {
+
+
+
+
+router.use(async(req, res, next) => {
   res.locals.moment = moment;
+  res.locals.allAbout = await About.find({})
   next();
 });
+
 
 const sendJSONresponse = (res, status, content) => {
   res.status(status);
@@ -75,8 +83,13 @@ router.get('/categories', (req, res, next) => {
   res.render('users/pages/cats', { title: 'Faith TV | Categories' });
 });
 
-router.get('/about', (req, res, next) =>{
-  res.render('users/pages/about', { title: 'Faith TV | About' });
+router.get('/about/:code', async(req, res, next) =>{
+  const about = await About.findOne(
+    { 
+      code: req.params.code,
+    }
+  )
+  res.render('users/pages/about', { title: 'Faith TV | About', about });
 });
 
 router.get('/dayview', (req, res, next) =>{
@@ -142,6 +155,22 @@ router.get('/my-profile', (req, res, next) =>{
 
 router.get('/forgot', (req, res, next) =>{
   res.render('users/pages/forgot', { title: 'Faith TV | Forgot Password' });
+});
+
+// user login
+router.post('/login', (req, res, next) => {
+  passport.authenticate('user-local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { 
+      sendJSONresponse(res, 400, info);
+      return;
+    }
+    req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        sendJSONresponse(res, 200, {"message": "Login successfull please wait..."});
+        return;
+    });
+  })(req, res, next);
 });
 
 
@@ -235,6 +264,25 @@ router.post('/become_programmer', async (req, res, next) => {
       sendJSONresponse(res, 400, Object.keys(error.errors));
     }
 });
+//user registration 
+router.post('/register', async (req, res, next) =>{
+  try {
+    const user = new User(req.body);
+    const newUser = await user.save()
+    if(newUser){
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        res.send({status:200, message: "Registration was successful"});
+        return;
+      })
+      
+    }    
+} catch (error) {
+  console.log(error);
+  sendJSONresponse(res, 400, Object.keys(error.errors));
+}
+
+})
 
 //show proposal routes
 router.post('/show_proposal', async (req, res, next) => {
