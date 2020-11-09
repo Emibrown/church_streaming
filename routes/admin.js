@@ -141,7 +141,7 @@ router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
 });
 
 router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
-  const users = await User.find({})
+  const users = await User.find({type:0})
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
