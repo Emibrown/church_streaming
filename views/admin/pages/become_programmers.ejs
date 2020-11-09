@@ -10,7 +10,7 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                  Adverts
+                  Become a programmer 
                </div>
            </div> 
         </div>
@@ -23,23 +23,23 @@
                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th class="text-center">Full name</th>
-                                <th class="text-center">ministry name</th>
-                                <th class="text-center"> phone no</th>
+                                <th>Full name</th>
+                                <th class="text-center">Ministry name</th>
+                                <th class="text-center">Programme title</th>
+                                <th class="text-center">Phone no</th>
                                 <th class="text-center">Date added</th>
                                 <th class="text-center">Options</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% advert.forEach(function (advert,index){ %>
+                            <% programmer.forEach(function (programmer,index){ %>
                                 <tr>
-                                    <td class="text-left"><%= advert.title %></td>
-                                    <td class="text-center"><%= advert.fullName %></td>
-                                    <td class="text-center"><%= advert.ministryName %></td>
-                                    <td class="text-center"><%= advert.phoneNumber %></td>
-                                    <td class="text-center"><%= moment(advert.date).format('LL') %></td><td class="text-center">
-                                        <a href= "/admin/api/advert/<%=advert._id%>" type="button" id="PopoverCustomT-1"
+                                    <td class="text-left"><%= programmer.fullName %></td>
+                                    <td class="text-center"><%= programmer.ministryName %></td>
+                                    <td class="text-center"><%= programmer.programmeTitle %></td>
+                                    <td class="text-center"><%= programmer.phone %></td>
+                                    <td class="text-center"><%= moment(programmer.date).format('LL') %></td><td class="text-center">
+                                        <a href= "/admin/api/become_programmer/<%=programmer._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                     </td>
                                 </tr>
