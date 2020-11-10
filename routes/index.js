@@ -12,7 +12,7 @@ const Enquiry = require('../models/enquiries');
 const Partnership = require('../models/patnership');
 const About = require('../models/about');
 const Settings = require('../models/settings');
-
+const bcrypt = require('bcryptjs')
 const passport = require('passport');
 const customEmail = require('../services/email');
 const moment = require('moment');
@@ -172,6 +172,10 @@ router.get('/my-profile', (req, res, next) =>{
 
 router.get('/forgot', authenticated, (req, res, next) =>{
   res.render('users/pages/forgot', { title: 'Faith TV | Forgot Password' });
+});
+
+router.get('/reset-password/:id', authenticated, (req, res, next) =>{
+  res.render('users/pages/reset_password', { title: 'Faith TV | Password Reset' });
 });
 
 // user login
@@ -343,7 +347,31 @@ router.post('/request_password', async(req, res, next) =>{
   }catch(error){
     res.status(404).send({msg: error.message})
   }
-}) 
+});
+
+// update password
+router.post('/update_password', async(req, res, next) => {
+  
+  try{
+   const {password, user_id}  = req.body;
+   const reseter =  await User.updateOne(
+      { _id: user_id },
+      { $set:
+         {
+           password : await bcrypt.hash(password, 8)
+          
+         }
+      }
+   )
+   if(reseter){
+    res.send({status: 200, message: `Password has been changed successfully`});
+   }else{
+    res.status(404).send({message: "Process failed"})
+   }
+  }catch(error){
+    res.status(404).send({msg: error.message})
+  }
+});
 
 //show proposal routes
 router.post('/show_proposal', async (req, res, next) => {
