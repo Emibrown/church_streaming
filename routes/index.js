@@ -11,6 +11,8 @@ const MusicVideo = require('../models/musicVideo');
 const Enquiry = require('../models/enquiries');
 const Partnership = require('../models/patnership');
 const About = require('../models/about');
+const Settings = require('../models/settings');
+
 const passport = require('passport');
 const customEmail = require('../services/email');
 const moment = require('moment');
@@ -22,8 +24,10 @@ router.use(async(req, res, next) => {
   res.locals.moment = moment;
   res.locals.currentUser = req.user;
   res.locals.allAbout = await About.find({})
+  res.locals.settings = await Settings.findOne({settingsId:"site_settings"})
   next();
 });
+
 
 
 

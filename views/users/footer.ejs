@@ -14,7 +14,9 @@
            <nav>
              <h3>About</h3>
              <ul>
-               <li><a href="">No pages</a></li>
+               <% allAbout.forEach(function (about,index){ %>
+                <li><a href="/about/<%= about.code %>"><%= about.title %></a></li>
+                <% }) %>
              </ul>
            </nav>
                        
@@ -46,10 +48,10 @@
            <nav>
              <h3>Production</h3>
              <ul>
-               <li><a href="">Submit a show proposal</a></li>
-               <li><a href="">Submit your music video</a></li>
-               <li><a href="">Become a programmer</a></li>
-               <li><a href="">Browse Originals</a></li>
+               <li><a href="/show-proposal">Submit a show proposal</a></li>
+               <li><a href="/music-video">Submit your music video</a></li>
+               <li><a href="/become-programmer">Become a programmer</a></li>
+               <li><a href="/vod">Browse Originals</a></li>
              </ul>
            </nav>
                        
@@ -63,8 +65,8 @@
            <nav>
              <h3>Prayer</h3>
              <ul>
-               <li><a href="">Salvation Prayer</a></li>
-               <li><a href="">Prayer Requests</a></li>
+               <li><a href="/salvation-prayer">Salvation Prayer</a></li>
+               <li><a href="/prayer-request">Prayer Requests</a></li>
              </ul>
            </nav>
                        
