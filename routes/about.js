@@ -42,7 +42,7 @@ router.get('/', ensureAuthenticated, async (req, res, next) => {
 });
 
 
-router.post('/', multers.upload.single('file'), async (req, res, next) => {
+router.post('/', ensureAuthenticated, multers.upload.single('file'), async (req, res, next) => {
     // submit about
     try {
         if(!req.file){
@@ -74,7 +74,7 @@ router.post('/', multers.upload.single('file'), async (req, res, next) => {
     }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', ensureAuthenticated, async (req, res, next) => {
     // get a single about
     try {
         const about = await About.findOne({code:req.params.id})
@@ -84,7 +84,7 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
-router.put('/:id', multers.upload.single('file'), async (req, res, next) => {
+router.put('/:id', ensureAuthenticated, multers.upload.single('file'), async (req, res, next) => {
     // update an about
     try {
         const about = await About.findOne({_id:req.params.id})
@@ -113,7 +113,7 @@ router.put('/:id', multers.upload.single('file'), async (req, res, next) => {
     }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', ensureAuthenticated, async (req, res, next) => {
     // delete an about
     try {
         const about = await About.findOne({_id:req.params.id});

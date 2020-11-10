@@ -555,7 +555,7 @@ router.put('/video/:id', multers.upload.array('file',6),  async (req, res, next)
 });
 
 //delete from a video schema
-router.delete('/pre_recorded/:id', async (req, res, next) => {
+router.delete('/pre_recorded/:id', ensureAuthenticated, async (req, res, next) => {
   // delete a video
   try {
       const video = Video.findOne({_id:req.params.id})
@@ -571,7 +571,7 @@ router.delete('/pre_recorded/:id', async (req, res, next) => {
 
 //programme routes 
 
-router.post('/add_programme', multers.upload.single('file'), async (req, res, next) => {
+router.post('/add_programme', ensureAuthenticated, multers.upload.single('file'), async (req, res, next) => {
   try {
     if(!req.file){
       sendJSONresponse(res, 400, {message: "Image required"});
@@ -601,14 +601,14 @@ router.post('/add_programme', multers.upload.single('file'), async (req, res, ne
   }
 });
 
-router.get('/programmes', async (req, res, next) => {
+router.get('/programmes', ensureAuthenticated, async (req, res, next) => {
   // get all programmes
     const programmes = await Programme.find({}).populate('categories')
     res.render('admin/pages/programmes', { title: 'Programmes', programmes });
     console.log(programmes)
 });
 
-router.get('/programme/:id', async (req, res, next) => {
+router.get('/programme/:id', ensureAuthenticated, async (req, res, next) => {
   // get a single programmme
   try {
       const programme = await Programme.findOne({_id:req.params.id}).populate('categories')
@@ -660,7 +660,7 @@ router.put('/programme/:id', multers.upload.single('file'), async (req, res, nex
   }
 });
 
-router.get('/delete_programme/:id', async (req, res, next) => {
+router.get('/delete_programme/:id', ensureAuthenticated, async (req, res, next) => {
   // delete a programme
   try {
       const programme =  await Programme.findOne({_id:req.params.id});
@@ -674,37 +674,52 @@ router.get('/delete_programme/:id', async (req, res, next) => {
 });
 
 // season routes
-router.post('/season', async (req, res, next) => {
+router.post('/add_season', ensureAuthenticated, async (req, res, next) => {
   try{
     const season = new Season(req.body);
+    console.log(season)
     await season.save();
     sendJSONresponse(res, 200, {message: "Season added successfully"});
   } catch (error) {
     sendJSONresponse(res, 400, {error});
+    console.log(error)
   }
 });
 
-router.get('/season', async (req, res, next) => {
+router.get('/seasons', ensureAuthenticated, async (req, res, next) => {
   // get all seasons
   try {
-      const season = await Season.find({})
-      sendJSONresponse(res, 200, {season});
-  } catch (error) {
+      const seasons = await Season.find({}).populate('programme')
+      res.render('admin/pages/seasons', { title: 'Seasons', seasons});
+    } catch (error) {
       sendJSONresponse(res, 400, {error});
+      console.log(error)
   }
 });
 
-router.get('/season/:id', async (req, res, next) => {
-  // get a single season
-  try {
-      const season = await Season.findOne({_id: req.params.id})
-      sendJSONresponse(res, 200, {season});
-  } catch (error) {
-      sendJSONresponse(res, 400, {error});
-  }
+// router.get('/season/:id', async (req, res, next) => {
+//   // get a single season
+//   try {
+//       const season = await Season.findOne({_id: req.params.id}).populate('programme')
+//       res.render('admin/pages/season', { title: 'Season'});
+//   } catch (error) {
+//       sendJSONresponse(res, 400, {error});
+//   }
+// });
+
+router.get('/add_season', ensureAuthenticated, async (req, res, next) => {
+  const programmes = await Programme.find({})
+  res.render('admin/pages/add_season', { title: 'Add season', programmes });
 });
 
-router.put('/season/:id', async (req, res, next) => {
+router.get('/edit_season/:id', ensureAuthenticated, async(req, res, next) => {
+  const season = await (await Season.findOne({_id: req.params.id})).populate('programme')
+  const programmes = await Programme.find({})
+  res.render('admin/pages/edit_season', { title: 'Edit programme', season , programmes});
+});
+
+
+router.put('/edit_season/:id', ensureAuthenticated, async (req, res, next) => {
   // update a season
   try {
       const season = await Season.findOne({_id:req.params.id})
@@ -716,10 +731,11 @@ router.put('/season/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/season/:id', async (req, res, next) => {
+router.get('/delete_season/:id', ensureAuthenticated, async (req, res, next) => {
   // delete a season
   try {
       await Season.findOneAndDelete({_id:req.params.id});
+      res.redirect('/admin/seasons');
       sendJSONresponse(res, 200, {message: 'season deleted successfully'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
