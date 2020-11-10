@@ -63,6 +63,7 @@ User.find({}, (err, users) => {
         organisationName: "Coders",
         type: 1,
         isBlocked: false,
+        dateOfBirth: "1990-02-19",
 
       });
       newUser.save((err, user) => {

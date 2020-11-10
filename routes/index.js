@@ -333,7 +333,7 @@ router.post('/request_password', async(req, res, next) =>{
     const getUser = await User.findOne({email});  
     if(getUser){
       const header = "Password Change!!";
-      const message = `<h3> please follow this link to reset your password</h3>: 
+      const message = `<h3> Please follow this link to reset your password</h3>: 
       <p><a href="localhost:3000/reset-password/${getUser._id}">Click to reset now </a> </p>`;
        customEmail.customEmail(getUser.firstname, email, header, message);
        res.send({status: 200, message: `Mail contaning password information has been sent to  ${email}`});
