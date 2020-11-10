@@ -19,6 +19,9 @@ const sendJSONresponse = (res, status, content) => {
     if (!req.isAuthenticated()) {
       res.redirect("/admin");
     } else {
+      if(req.user.type != 1){
+        res.redirect('/');
+      }
       next();
     }
   };

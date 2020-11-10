@@ -28,6 +28,22 @@ router.use(async(req, res, next) => {
   next();
 });
 
+const authenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+      res.redirect('/profile');
+  }else {
+     next();
+  }
+};
+
+const ensureAuthenticated = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
+};
+
 
 
 
@@ -140,17 +156,17 @@ router.get('/enquiries', (req, res, next) =>{
 router.get('/partnership', (req, res, next) =>{
   res.render('users/pages/partnership', { title: 'Faith TV | Partnership' });
 });
-router.get('/register', (req, res, next) =>{
+router.get('/register', authenticated, (req, res, next) =>{
   res.render('users/pages/register', { title: 'Faith TV | Register' });
 });
-router.get('/login', (req, res, next) =>{
+router.get('/login', authenticated, (req, res, next) =>{
   res.render('users/pages/login', { title: 'Faith TV | Login' });
 });
 
 router.get('/change-password', (req, res, next) =>{
   res.render('users/pages/change_password', { title: 'Faith TV | Change password' });
 });
-router.get('/edit-profile', (req, res, next) =>{
+router.get('/edit-profile', ensureAuthenticated, (req, res, next) =>{
   res.render('users/pages/edit_profile', { title: 'Faith TV | Edit Profile', user:req.user });
 });
 router.get('/my-profile', (req, res, next) =>{
@@ -162,7 +178,7 @@ router.get('/forgot', (req, res, next) =>{
 });
 
 // user login
-router.post('/login', (req, res, next) => {
+router.post('/login', authenticated, (req, res, next) => {
   passport.authenticate('user-local', function(err, user, info) {
     if (err) { return next(err); }
     if (!user) { 
@@ -175,6 +191,11 @@ router.post('/login', (req, res, next) => {
         return;
     });
   })(req, res, next);
+});
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/login');
 });
 
 

@@ -55,7 +55,7 @@ passport.use('user-local', new localStrategy({
                  {message: "No user has that email!"});
             }
             user.comparePassword(password, function(err, isMatch) {
-              if (!isMatch) {
+              if (isMatch) {
                 return done(null, user);
               } else {
                 return done(null, false, { message: 'Incorrect password.' });
