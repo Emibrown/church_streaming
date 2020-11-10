@@ -289,7 +289,24 @@ router.post( '/register', async (req, res, next) =>{
     console.log(error);
     sendJSONresponse(res, 400, Object.keys(error.errors));
   }
-})
+});
+
+//user login
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { 
+      sendJSONresponse(res, 400, info);
+      return;
+    }
+    req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        sendJSONresponse(res, 200, {"message": "Login successfull please wait..."});
+        return;
+    });
+  })(req, res, next);
+});
 
 //show proposal routes
 router.post('/show_proposal', async (req, res, next) => {
