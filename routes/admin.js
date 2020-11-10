@@ -128,40 +128,9 @@ router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/index', { title: 'Dashboard' });
 });
 
-router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
-  const settings = await Settings.findOne({settingsId:"site_settings"})
-  res.render('admin/pages/site_details', { title: 'Site Details', settings });
-});
-
-router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
-  res.render('admin/pages/add_about', { title: 'Add About' }); 
-});
-
-router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
-  const about = await About.findOne({_id:req.query.id})
-  res.render('admin/pages/edit_about', { title: 'Edit About', about });
-});
-
-router.get('/add_static', ensureAuthenticated, async(req, res, next) => {
-  res.render('admin/pages/add_static',{ title: 'Add static files',  });
-});
-
-router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
-  const settings = await Settings.findOne({settingsId:"site_settings"})
-  res.render('admin/pages/social_media', { title: 'Social Media', settings });
-});
-
-router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
-  const users = await User.find({type:0})
-  res.render('admin/pages/view_users', { title: 'View Users', users });
-});
-
-router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
-  const user = await User.findById({_id: req.params.id})
-  res.render('admin/pages/view_single_user', { title: 'View Single User', user });
-});
-//update sit settings from admin page
+//settings
 router.put('/settings', ensureAuthenticated, async (req, res, next) => {
+  // site settings
   try {
       const settings = await Settings.findOne({settingsId:"site_settings"})
       await Object.assign(settings, req.body);
@@ -172,6 +141,45 @@ router.put('/settings', ensureAuthenticated, async (req, res, next) => {
       sendJSONresponse(res, 400, {error});
   }
 });
+
+// settings/site details
+router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
+  const settings = await Settings.findOne({settingsId:"site_settings"})
+  res.render('admin/pages/site_details', { title: 'Site Details', settings });
+});
+
+// settings/about
+router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
+  res.render('admin/pages/add_about', { title: 'Add About' }); 
+});
+
+router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
+  const about = await About.findOne({_id:req.query.id})
+  res.render('admin/pages/edit_about', { title: 'Edit About', about });
+});
+
+// settings/static files
+router.get('/add_static', ensureAuthenticated, async(req, res, next) => {
+  res.render('admin/pages/add_static',{ title: 'Add static files',  });
+});
+
+// manage users/socialmedia
+router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
+  const settings = await Settings.findOne({settingsId:"site_settings"})
+  res.render('admin/pages/social_media', { title: 'Social Media', settings });
+});
+
+// manage users/view users
+router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
+  const users = await User.find({type:0})
+  res.render('admin/pages/view_users', { title: 'View Users', users });
+});
+
+router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
+  const user = await User.findById({_id: req.params.id})
+  res.render('admin/pages/view_single_user', { title: 'View Single User', user });
+});
+
 router.put('/block/:id', async (req, res, next) => {
   // block user
   try {
@@ -205,12 +213,54 @@ router.put('/unblock/:id', async (req, res, next) => {
   }
 });
 
-
+//category handlers
 router.get('/categories', ensureAuthenticated, async(req, res, next) => {
   const categories = await Category.find({})
   res.render('admin/pages/categories', { title: 'Categories', categories });
 });
 
+router.get('/add_category', ensureAuthenticated, (req, res, next) => {
+  res.render('admin/pages/addCat', { title: 'Add category' });
+});
+
+router.get('/edit_category/:id', ensureAuthenticated, async(req, res, next) => {
+  const category = await Category.findOne({_id: req.params.id})
+  console.log(category)
+  res.render('admin/pages/edit_cat', { title: 'Edit categories', category });
+});
+
+router.post('/add_category', ensureAuthenticated, async (req, res, next) => {
+  try {
+    const category = new Category(req.body);
+    await category.save();
+    sendJSONresponse(res, 200, {"message": "Category added successfully"});
+  } catch (error) {
+    sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.put('/category/:id', async (req, res, next) => {
+  // update category
+  try {
+      const category = await Category.findOne({_id:req.params.id})
+      await Object.assign(category, req.body);
+      await category.save()
+      sendJSONresponse(res, 200, {message: 'category updated successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+
+router.get('/delete_category/:id', async (req, res, next) => {
+  // delete a category
+  try {
+      await Category.findOneAndDelete({_id:req.params.id});
+      res.redirect('/admin/categories');
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
 
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
@@ -277,17 +327,6 @@ router.get('/done/:id', async(req, res, next) => {
  
 });
 
-
-router.get('/add_category', ensureAuthenticated, (req, res, next) => {
-  res.render('admin/pages/addCat', { title: 'Add category' });
-});
-
-router.get('/edit_category/:id', ensureAuthenticated, async(req, res, next) => {
-  const category = await Category.findOne({_id: req.params.id})
-  console.log(category)
-  res.render('admin/pages/edit_cat', { title: 'Edit categories', category });
-});
-
 router.get('/add_video', ensureAuthenticated, async (req, res, next) => {
   const categories = await Category.find({},{ 
     _id:1,
@@ -310,43 +349,6 @@ router.get('/add_pre_recorded', ensureAuthenticated, async (req, res, next) => {
     title:1,
   })
   res.render('admin/pages/addPreRecorded', { title: 'Add Pre Recorded',categories });
-});
-
-//category handlers
-router.post('/add_category', ensureAuthenticated, async (req, res, next) => {
-  try {
-    const category = new Category(req.body);
-    await category.save();
-    sendJSONresponse(res, 200, {"message": "Category added successfully"});
-  } catch (error) {
-    sendJSONresponse(res, 400, {error});
-  }
-});
-
-
-
-router.put('/category/:id', async (req, res, next) => {
-  // update category
-  try {
-      const category = await Category.findOne({_id:req.params.id})
-      await Object.assign(category, req.body);
-      await category.save()
-      sendJSONresponse(res, 200, {message: 'category updated successfully'});
-  } catch (error) {
-      sendJSONresponse(res, 400, {error});
-  }
-});
-
-
-router.get('/delete_category/:id', async (req, res, next) => {
-  // delete a category
-  try {
-      await Category.findOneAndDelete({_id:req.params.id});
-      res.redirect('/admin/categories');
-      sendJSONresponse(res, 200, {message: 'Category deleted successfully'});
-  } catch (error) {
-      sendJSONresponse(res, 400, {error});
-  }
 });
 
 
@@ -529,6 +531,13 @@ router.post('/add_programme', multers.upload.single('file'), async (req, res, ne
       sendJSONresponse(res, 400, {message: "Image required"});
     }
     req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
+
+    await sharp(req.file.path)
+    .resize({ width: 384, height: 216 })
+    .webp({quality: 60})
+    .toFile(
+        path.resolve('./public','small_images',req.body.image)
+    )
     await sharp(req.file.path)
     .resize({ width: 640, height: 360 })
     .webp({quality: 90})
@@ -537,31 +546,41 @@ router.post('/add_programme', multers.upload.single('file'), async (req, res, ne
     )
     fs.unlinkSync(req.file.path)
     const programme = new Programme(req.body);
+    console.log(programme)
     await programme.save();
-    sendJSONresponse(res, 200, {"message": "Programme added successfully"});
+    sendJSONresponse(res, 200, {message: "Programme added successfully"});
   } catch (error) {
-    sendJSONresponse(res, 400, {error});
+    sendJSONresponse(res, 400, {error})
+    console.log(error);
   }
 });
 
 router.get('/programmes', async (req, res, next) => {
   // get all programmes
-  try {
-      const programmes = await Programme.find({})
-      sendJSONresponse(res, 200, {programmes});
-  } catch (error) {
-      sendJSONresponse(res, 400, {error});
-  }
+    const programmes = await Programme.find({}).populate('categories')
+    res.render('admin/pages/programmes', { title: 'Programmes', programmes });
+    console.log(programmes)
 });
 
 router.get('/programme/:id', async (req, res, next) => {
   // get a single programmme
   try {
-      const programme = await Programme.findOne({code:req.params.id})
-      sendJSONresponse(res, 200, {programme});
-  } catch (error) {
+      const programme = await Programme.findOne({_id:req.params.id}).populate('categories')
+      res.render('admin/pages/programme', { title: 'Programme', programme });
+    } catch (error) {
       sendJSONresponse(res, 400, {error});
   }
+});
+
+router.get('/add_programme', ensureAuthenticated, async (req, res, next) => {
+  const categories = await Category.find({})
+  res.render('admin/pages/add_programme', { title: 'Add programme', categories });
+});
+
+router.get('/edit_programme/:id', ensureAuthenticated, async(req, res, next) => {
+  const programme = await (await Programme.findOne({_id: req.params.id})).populate('categories')
+  const categories = await Category.find({})
+  res.render('admin/pages/edit_programme', { title: 'Edit programme', programme , categories});
 });
 
 router.put('/programme/:id', multers.upload.single('file'), async (req, res, next) => {
@@ -586,21 +605,23 @@ router.put('/programme/:id', multers.upload.single('file'), async (req, res, nex
         fs.unlinkSync(req.file.path)
       }
       await Object.assign(programme, req.body);
+      console.log(programme)
       await programme.save()
       sendJSONresponse(res, 200, {message: 'programme updated successfully'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
+      console.log(error)
   }
 });
 
-router.delete('/programme/:id', async (req, res, next) => {
+router.get('/delete_programme/:id', async (req, res, next) => {
   // delete a programme
   try {
       const programme =  await Programme.findOne({_id:req.params.id});
       fs.unlinkSync(path.resolve('./public','small_images', programme.image))
       fs.unlinkSync(path.resolve('./public','large_images', programme.image))
       await Programme.deleteOne(programme);
-      sendJSONresponse(res, 200, {message: 'Programme deleted successfully'});
+      res.redirect('/admin/programmes');
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }

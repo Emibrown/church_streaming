@@ -7,8 +7,8 @@ mongoose.Promise = require('bluebird');
 const programmeSchema = mongoose.Schema(
     {
         title: {type: String, required: true, unique: true},
-        code: {type: String, required: true},
-        category : [{
+        code: {type: String},
+        categories : [{
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Category'
         }],
@@ -17,7 +17,7 @@ const programmeSchema = mongoose.Schema(
         },
         description: {type: String, required: true},
         image: {type: String, required: true},
-        addedOn: {
+        date: {
             type: Date, 
             default: Date.now
         },
