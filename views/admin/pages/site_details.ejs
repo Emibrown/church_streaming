@@ -54,10 +54,10 @@
                                 <label for="faith_st">Faith statement</label>
                                 <textarea id="faith_st" name="faith_st" rows="5" class="form-control" placeholder="Faith statement"><%- settings.faithStatement %></textarea>                  
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="salv_prayer">Salvation prayer</label>
                                 <textarea id="salv_prayer" name="salv_prayer" rows="5" class="form-control" placeholder="Salvation prayer"><%= settings.salvationPrayer %></textarea>                  
-                            </div> 
+                            </div>  -->
                             <button class="mt-1 btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -91,7 +91,7 @@
             "contactNumber": $("#contact_no").val(),
             "prayerNumber": $("#prayer_no").val(),
             "faithStatement": $("#faith_st").val(),
-            "salvationPrayer": $("#salv_prayer").val(),
+            // "salvationPrayer": $("#salv_prayer").val(),
          }
         clean(data)
         jQuery.ajax({

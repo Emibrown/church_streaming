@@ -22,6 +22,10 @@ var settingsSchema = mongoose.Schema(
             type: String,
             required: false,
         },
+        salvationPrayerImage: {
+            type: String,
+            required: false
+        },
         salvationPrayer: {
             type: String,
             required: false

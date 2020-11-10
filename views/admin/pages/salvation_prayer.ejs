@@ -1,0 +1,89 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                Salvation Prayer
+               </div>
+           </div>
+         </div>
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div id = "message"></div>
+                        <form id="add_about">
+                            <div class="form_gallery form-group">
+                                <label id="gallery2" for="image">Salvation Prayer Image</label><br>
+                                <input rows="5" data-name="#gallery2" id="image" class="form_gallery-upload "
+                                   type="file" accept=".png, .jpg, .jpeg">
+                             </div>
+                            <div class="form-group">
+                                <label for="salv_prayer">Salvation Prayer</label>
+                                <textarea id="salv_prayer" name="salv_prayer" rows="5" class="form-control" placeholder="Salvation prayer"><%= settings.salvationPrayer %></textarea>                
+                            </div>
+                            <button class="mt-1 btn btn-primary" id = "btn">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
+<script>
+    $(function () {
+        $("#salv_prayer").ckeditor();
+    });
+</script>
+<script>
+    $(document).on('submit', '#add_about', event => {
+        event.preventDefault();
+        const file = document.querySelector('#image')
+        const data = new FormData()
+        data.append("salvationPrayer", $("#salv_prayer").val());
+        data.append("file", file.files[0]);
+       
+        const config = {
+            onUploadProgress: function(progressEvent) {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            $('#btn').val(percentCompleted + "% of 100%");
+            }
+        }
+
+        axios.put('/admin/salvation-prayer',data, config)
+        .then(function (response) {
+            // handle success
+            console.log(response)
+            displaymsg(response.data.message);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error.message)
+        })
+
+     })
+</script>
+<%- include('../../end'); -%>

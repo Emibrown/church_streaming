@@ -15,7 +15,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.firstname) { %> <%= user.firstname %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -26,7 +26,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.middlename) { %> <%= user.middlename %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -34,12 +34,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                       <div class="form-group">
-                                        <label for="">SURNAME::</label>
+                                        <label for="">LASTNAME:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.lastname) { %> <%= user.lastname %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -51,7 +51,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-calendar"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.dateOfBirth) { %> <%= user.dateOfBirth %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -64,7 +64,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-home"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.address) { %> <%= user.address %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -75,7 +75,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-map-marker-alt"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.location) { %> <%= user.location %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -88,7 +88,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-street-view"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.LGA) { %> <%= user.LGA %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -100,7 +100,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-envelope"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.email) { %> <%= user.email %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -113,7 +113,7 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-church"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.chapterLocation) { %> <%= user.chapterLocation %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -125,39 +125,27 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user-tie"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value ="<% if(user.residentPastor) { %> <%= user.residentPastor %><% } %> "type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
                                     </div>
                                     <div class="row">
-                                    <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">CHAPTER LOCATION:</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fas fa-map-marker-alt"></i>
-                                            </span>
-                                            <input type="text" class = "form-control">
-                                        </div>
-                                    </div>
-                                    </div>
-                            
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="">NAME OF MINISTRY/ORGANIZATION:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-sitemap"></i>
                                             </span>
-                                            <input type="text" class = "form-control">
+                                            <input value = "<% if(user.organisationName) { %> <%= user.organisationName %><% } %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
                                     </div>
                                 <button style ="margin-top:10px;" class = "btn btn-primary">Update profile record</button>
                             </form>
-                    </div>
+                        </div>
                     <div class="col-md-3">
                       <div style = "margin-top:18px;" class="mytbn-nav ">
                           <div class="item">

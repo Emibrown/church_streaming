@@ -28,6 +28,10 @@ var userSchema = mongoose.Schema(
             type: String, 
             required: true,
         },
+        dateOfBirth:{
+            type: String,
+            required: true,
+        },
         location: {
             type: String, 
             required: true,

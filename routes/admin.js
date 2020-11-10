@@ -148,7 +148,11 @@ router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/site_details', { title: 'Site Details', settings });
 });
 
-// settings/about
+router.get('/salvation-prayer', ensureAuthenticated, async(req, res, next) => {
+  const settings = await Settings.findOne({settingsId:"site_settings"})
+  res.render('admin/pages/salvation_prayer', { title: 'Salvation Prayer', settings });
+});
+
 router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/add_about', { title: 'Add About' }); 
 });
@@ -178,6 +182,48 @@ router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
 router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
   const user = await User.findById({_id: req.params.id})
   res.render('admin/pages/view_single_user', { title: 'View Single User', user });
+});
+//update sit settings from admin page
+router.put('/settings', ensureAuthenticated, async (req, res, next) => {
+  try {
+      const settings = await Settings.findOne({settingsId:"site_settings"})
+      await Object.assign(settings, req.body);
+      console.log(settings)
+      await settings.save()
+      res.send({status: 200, message: 'Settings saved'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.put('/salvation-prayer', multers.upload.single('file'), async (req, res, next) => {
+  // submit about
+  try {
+      if(req.file){
+        req.body.salvationPrayerImage = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
+      
+        await sharp(req.file.path)
+        .resize({ width: 384, height: 216 })
+        .webp({quality: 60})
+        .toFile(path.resolve('./public','small_images',req.body.salvationPrayerImage))
+  
+        await sharp(req.file.path)
+        .resize({ width: 640, height: 360 })
+        .webp({quality: 90})
+        .toFile(path.resolve('./public','large_images',req.body.salvationPrayerImage))
+  
+        fs.unlinkSync(req.file.path)
+      }
+
+      const settings = await Settings.findOne({settingsId:"site_settings"})
+      await Object.assign(settings, req.body);
+      console.log(settings)
+      await settings.save()
+      res.send({status: 200, message: 'Salvation Prayer Saved'});
+      
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
 });
 
 router.put('/block/:id', async (req, res, next) => {
