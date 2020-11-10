@@ -313,7 +313,6 @@ router.post( '/register', async (req, res, next) =>{
 });
 
 //user login
-
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err); }

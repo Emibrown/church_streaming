@@ -74,7 +74,10 @@
 <script>
     $('#login-form').validate({
     rules: {
-        email: 'required',
+        email: {
+        required: true,
+        email: true,
+      },
         password: 'required',
     },
     messages: {
