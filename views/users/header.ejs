@@ -100,9 +100,14 @@
                         <span class="control-wrap">
                             <a href="/vod" class="online-btn"><em class="fa fa-history"></em> On Demand</a>
                         </span>
+                        <% if (currentUser){ %>
+                        <a href="/edit-profile">HI <%= currentUser.firstname %> </a>
                         <a href="/edit-profile">My profile</a>
-                        <a href="/register">Register</a>
-                        <a href="/login">Sign In</a>
+                        <a href="/logout">Logout</a>
+                        <% } else { %>
+                          <a href="/register">Register</a>
+                          <a href="/login">Sign In</a>
+                        <% } %>
                     </div> <!-- /.controls -->
                     
                     </div> <!-- /.col -->
