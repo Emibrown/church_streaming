@@ -44,9 +44,6 @@ const ensureAuthenticated = (req, res, next) => {
   }
 };
 
-
-
-
 const sendJSONresponse = (res, status, content) => {
   res.status(status);
   res.json(content);
@@ -173,7 +170,7 @@ router.get('/my-profile', (req, res, next) =>{
   res.render('users/pages/my_profile', { title: 'Faith TV | User Dashboard' });
 });
 
-router.get('/forgot', (req, res, next) =>{
+router.get('/forgot', authenticated, (req, res, next) =>{
   res.render('users/pages/forgot', { title: 'Faith TV | Forgot Password' });
 });
 
@@ -328,10 +325,30 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+//request password
+router.post('/request_password', async(req, res, next) =>{
+
+  try{
+    const email = req.body.email;
+    const getUser = await User.findOne({email});  
+    if(getUser){
+      const header = "Password Change!!";
+      const message = `<h3> please follow this link to reset your password</h3>: 
+      <p><a href="localhost:3000/reset-password/${getUser._id}">Click to reset now </a> </p>`;
+       customEmail.customEmail(getUser.firstname, email, header, message);
+       res.send({status: 200, message: `Mail contaning password information has been sent to  ${email}`});
+    }else{
+      res.status(404).send({message: "Email provided does not exist. Please kindly register"})
+    }
+  }catch(error){
+    res.status(404).send({msg: error.message})
+  }
+}) 
+
 //show proposal routes
 router.post('/show_proposal', async (req, res, next) => {
     // create a proposal
-    try {
+    try{
         const {supplierName, email} = req.body;
         const header = "show proposal";
         const message = "Request was processed successfully";
@@ -340,7 +357,7 @@ router.post('/show_proposal', async (req, res, next) => {
         console.log(proposal)
         await proposal.save()
         res.send({status: 200, message: 'show proposal submitted'});
-    } catch (error) {
+    }catch(error) {
       sendJSONresponse(res, 400, Object.keys(error.errors));
     }
 });

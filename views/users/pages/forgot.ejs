@@ -1,4 +1,12 @@
 <%- include('../header'); -%>
+<style>
+    .red{
+        color:red;
+    }
+    .green{
+        color:green;
+    }
+</style>
 <div class="content">
     <div class="container">
       <div class="block">
@@ -10,7 +18,7 @@
                           <div class="item">
                               <h4 style="text-align:center">FORGOT PASSWORD</h4>
                               <div class="row">
-                                <div style = "text-align:center; color:red;" id="alertBox" role="alert"></div>
+                                <div style = "text-align:center" class="alertBox" role="alert"></div>
                                   <div class="col-sm-12">
                                       <div class="tbl form">
                                           <div class="tbl-cell" id="rgstrForm">
@@ -64,19 +72,20 @@
     submitHandler: () => {
    
      $.ajax({
-         url: '/forgot',
+         url: '/request_password',
          type: 'post',
          dataType: 'json',
          data: {
             'email': $("#email").val(),
          },
          success: function(data) {
-            var url = "/";    
-            $(location).attr('href',url);
+            $(".alertBox").html(data.message).addClass('green');
+            $('#forgot-form')[0].reset();
+            
          },
          error: function(data) {
-            $("#alertBox").show();
-            $("#alertBox").text(data.responseJSON.message);
+            $(".alertBox").removeClass("green");
+            $(".alertBox").html(data.responseJSON.message).addClass('red');
          },
         });
        }
@@ -84,8 +93,6 @@
     $(document).on('submit', '#forgot-form', (event) => {
     $(document).ready(function (){
     event.preventDefault();
-  
-    
   });
   });
 </script>
