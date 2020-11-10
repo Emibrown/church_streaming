@@ -708,13 +708,13 @@ router.get('/seasons', ensureAuthenticated, async (req, res, next) => {
 // });
 
 router.get('/add_season', ensureAuthenticated, async (req, res, next) => {
-  const programmes = await Programme.find({})
+  const programmes = await Programme.find({type:"series"})
   res.render('admin/pages/add_season', { title: 'Add season', programmes });
 });
 
 router.get('/edit_season/:id', ensureAuthenticated, async(req, res, next) => {
   const season = await (await Season.findOne({_id: req.params.id})).populate('programme')
-  const programmes = await Programme.find({})
+  const programmes = await Programme.find({type:"series"})
   res.render('admin/pages/edit_season', { title: 'Edit programme', season , programmes});
 });
 
