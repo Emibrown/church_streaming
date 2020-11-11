@@ -109,17 +109,17 @@ router.get('/about/:code', async(req, res, next) =>{
   res.render('users/pages/about', { title: 'Faith TV | About', about });
 });
 
-router.get('/dayview', (req, res, next) =>{
-  res.render('users/pages/dayview', { title: 'Day View' });
-});
+// router.get('/dayview', (req, res, next) =>{
+//   res.render('users/pages/dayview', { title: 'Day View' });
+// });
 
-router.get('/schedule', (req, res, next) =>{
-  res.render('users/pages/schedule', { title: 'Faith TV | Schedule' });
-});
+// router.get('/schedule', (req, res, next) =>{
+//   res.render('users/pages/schedule', { title: 'Faith TV | Schedule' });
+// });
 
-router.get('/highlights', (req, res, next) =>{
-  res.render('users/pages/high', { title: 'Faith TV | Highlights' });
-});
+// router.get('/highlights', (req, res, next) =>{
+//   res.render('users/pages/high', { title: 'Faith TV | Highlights' });
+// });
 
 router.get('/show-proposal', (req, res, next) =>{
   res.render('users/pages/show_proposal', { title: 'Faith TV | Submit Show Proposal' });
