@@ -372,8 +372,8 @@ router.post('/update_password', async(req, res, next) => {
    const getRequester = await RequestPassword.findOne({userId: user_id, });
    if(getRequester){
     const now = new Date();
-    const previous=new Date(getRequester.tokenTime)
-    const difference=previous > now ? previous-now : now - previous
+    const previous = new Date(getRequester.tokenTime)
+    const difference = previous > now ? previous - now : now - previous
     const diff_min = Math.floor(difference/(1000*60))
     if (diff_min <= 5) {
       await User.updateOne(
