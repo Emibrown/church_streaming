@@ -31,6 +31,7 @@
                                 <th class="">Title</th>
                                 <td class=""><%= video.title %></td>
                             </tr>
+                            <%if (video.programme){%> 
                             <tr>
                                 <th class="">Type</th>
                                 <td class=""><%= video.programme.type %></td>
@@ -39,6 +40,8 @@
                                 <th class="">Programme</th>
                                 <td class=""><%= video.programme.title %></td>
                             </tr> 
+                            <%}%>
+
                             <% if (video.season){%> 
                             <tr>
                                 <th class="">Season</th>

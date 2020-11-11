@@ -13,6 +13,7 @@ const path = require('path')
 const fs = require('fs')
 const moment = require('moment');
 const shortid = require('shortid');
+const { Session } = require('inspector');
 const router = express.Router();
 
 const sendJSONresponse = (res, status, content) => {
@@ -691,12 +692,18 @@ router.put('/programme/:id', multers.upload.single('file'), async (req, res, nex
 router.get('/delete_programme/:id', ensureAuthenticated, async (req, res, next) => {
   // delete a programme
   try {
+    const seasons = await Season.find({programme:req.params.id})
+    if (seasons.length>0){
+      await Season.remove({programme:req.params.id});
+    }
       const programme =  await Programme.findOne({_id:req.params.id});
       fs.unlinkSync(path.resolve('./public','small_images', programme.image))
       fs.unlinkSync(path.resolve('./public','large_images', programme.image))
       await Programme.deleteOne(programme);
+      
       res.redirect('/admin/programmes');
   } catch (error) {
+      console.log(error)
       sendJSONresponse(res, 400, {error});
   }
 });
@@ -714,10 +721,12 @@ router.post('/add_season', ensureAuthenticated, async (req, res, next) => {
   }
 });
 
+
 router.get('/seasons', ensureAuthenticated, async (req, res, next) => {
   // get all seasons
   try {
       const seasons = await Season.find({}).populate('programme')
+      console.log(seasons)
       res.render('admin/pages/seasons', { title: 'Seasons', seasons});
     } catch (error) {
       sendJSONresponse(res, 400, {error});
@@ -769,6 +778,7 @@ router.get('/delete_season/:id', ensureAuthenticated, async (req, res, next) => 
       sendJSONresponse(res, 400, {error});
   }
 });
+
 
 // populate pragramme seasons on add video form
 router.post('/get_seasons', ensureAuthenticated, async(req, res, next) => {

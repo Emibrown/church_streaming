@@ -55,8 +55,13 @@
                                  
                            </td>
                            <td class= "text-center"><%= item.title %></td>
+                           <%if(item.programme){%> 
                            <td class= "text-center"><%= item.programme.type %></td>
-                           <td class= "text-center"><%= item.programme.title %></td>                   
+                           <td class= "text-center"><%= item.programme.title %></td>
+                           <% }else{ %>  
+                           <td class= "text-center">null</td>
+                           <td class= "text-center">null</td> 
+                           <% } %>                  
                            <td class= "text-center"><%= moment(item.date).format('LL') %></td>   
                            <td class= "text-center"><%= item.duration %></td>  
                            <td class= "text-center">
