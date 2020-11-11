@@ -7,7 +7,7 @@ mongoose.Promise = require('bluebird');
 const videoSchema = mongoose.Schema(
     {
         title: {type: String, required: true, unique: true},
-        code: {type: String, required: true},
+        code: {type: String},
         description: {type: String, required: true},
         image: {type: String, required: true},
         video: {type: String},
@@ -21,7 +21,7 @@ const videoSchema = mongoose.Schema(
         },
         season : {
             type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Season'
+            ref: 'Season',
         },
         addedOn: {
             type: Date, 
@@ -36,7 +36,7 @@ const videoSchema = mongoose.Schema(
 
 videoSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
-videoSchema.pre('save', async (next) => {
+videoSchema.pre('save', async function (next){
     const video = this
     video.code = video.title.split(" ").join("-")
     next()
