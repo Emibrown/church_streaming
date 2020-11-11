@@ -62,9 +62,8 @@
         }else{
             const config = {
                 onUploadProgress: function(progressEvent) {
-                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                console.log(percentCompleted)
-                $('#btn').val(percentCompleted);
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                    $('#btn').html(percentCompleted + "% of 100%");
                 }
             }
 

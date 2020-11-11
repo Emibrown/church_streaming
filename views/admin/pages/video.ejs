@@ -21,11 +21,21 @@
             <div class="main-card mb-3 card">
                 <div class="table-responsive">
                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                            <tr>
-                                <th class="">Cover Image</th>
-                                <td class="">
-                                    <img width="400" class=" thumbnail" src="/large_images/<%= video.image %>" alt="">
-                                </td>
+                            <tr > 
+                                <th class="">
+                                    <figure class="figure">
+                                        <h5><figcaption class="figure-caption text-center">Video</figcaption></h5>
+                                        <video width="400" src="/uploads/<%= video.video %>" controls>
+                                            Your browser does not support the video tag.
+                                          </video>
+                                    </figure>    
+                                </th>
+                                <th class="">
+                                    <figure class="figure">
+                                        <h5><figcaption class="figure-caption text-center">Cover image</figcaption></h5>
+                                        <img height="200" src= "/small_images/<%= video.image %>" class="figure-img img-fluid rounded" alt="">
+                                      </figure>
+                                </th>
                             </tr>
                             <tr>
                                 <th class="">Title</th>

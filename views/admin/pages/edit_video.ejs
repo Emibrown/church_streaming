@@ -11,7 +11,7 @@
                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
               </div>
               <div>
-                   Add video
+                   Edit video
               </div>
           </div>
         </div>
@@ -26,29 +26,37 @@
                    <div class="card-body">
                        <div id = "message"></div>
                        <form id="videoForm">
-                           <div class = "form-group">
+                           <div class = "form-group prog">
                               <label for="prog">Select programme</label>
-                              <select  class ="form-control" name="prog" id="programme" required>
+                              <select  class ="form-control" name="prog" id="programme">
                                  <option value="" disabled selected>Select programme</option>
-                                 <%programmes.forEach((item,index) =>{ %>
+                                 <% programmes.forEach((item,index) =>{ %>
                                     <option value="<%= item._id %>"><%= item.title %></option>
                                  <% }) %> 
                               </select>
-                           </div> 
+                           </div>
                            <div class = "form-group" id="seasons">
-                              
+                            <% if(video.season){ %>  
+                                <label for="season" >Select season</label>
+                                <select class ="form-control" name="season" id="seas" required>
+                                    <option value="" disabled selected>Select season</option>
+                                    <%seasons.forEach((season) =>{ %>
+                                        <option value="<%= season._id %>"><%= season.title %></option>
+                                    <% }) %> 
+                                    </select>
+                            <% } %> 
                            </div>   
                            <div class="form-group">
                               <label for="title">Title</label>
-                              <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="Video title" required>                 
+                              <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="Video title" value = "<%=video.title%>">                 
                            </div>
                            <div class="form-group">
                               <label for="description">Description</label>
-                              <textarea id="description" name="description" rows="5" class="form-control" placeholder="Video description" required></textarea>                 
+                              <textarea id="description" name="description" rows="5" class="form-control" placeholder="Video description"><%=video.description%></textarea>                 
                            </div>
                            <div class="form-group">
                               <label for="duration">Duration</label>
-                              <input type = "text" id="duration" name="duration" rows="5" class="form-control" placeholder= "Enter duration in seconds" required>                 
+                              <input type = "text" id="duration" name="duration" rows="5" class="form-control" placeholder= "Enter duration in seconds" value = "<%=video.duration%>">                 
                            </div>
                            <div class="form_gallery form-group">
                                <label id="gallery2" for="image">Cover image</label><br>
@@ -79,9 +87,12 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-$(document).ready(function(){
+<script> 
 
+$("div.prog select").val("<%=video.programme%>")
+$("div#seasons select").val("<%=video.season%>")
+
+$(document).ready(function(){
 $("#programme").change(function(){
    $("#seasons").empty();
     var programmeid = $(this).val();
@@ -97,7 +108,7 @@ $("#programme").change(function(){
             <label for="prog" >Select season</label>
             <select class ="form-control" name="prog" id="seas" required>
                <option value="" disabled selected>Select season</option>
-            </season>`)
+            </select>`)
             response.season.forEach((item,index)=>{
                console.log(item.title)
                $("#seas").append(`<option value="${item._id}">${item.title}</option>`); 
@@ -121,11 +132,13 @@ $("#programme").change(function(){
         if($("#seas").val()){
          data.append("season", $("#seas").val());
         }
-        data.append("file", image.files[0]);
-        data.append("file", videofile.files[0]);
-        if(image.files.length < 1 || videofile.files.length<1){
-         displayerr("Please upload all media files");
-         }else{
+        if(image.value){
+            data.append("file", image.files[0]);
+        }
+        if(videofile.value){
+            data.append("file", videofile.files[0]);
+        }
+        
         const config = {
             onUploadProgress: function(progressEvent) {
             const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
@@ -133,7 +146,7 @@ $("#programme").change(function(){
             }
         }
 
-      axios.post('/admin/add_video',data, config)
+      axios.put('/admin/edit_video/<%=video._id%>',data, config)
       .then(function (response) {
             // handle success
             console.log(response)
@@ -143,11 +156,8 @@ $("#programme").change(function(){
         .catch(function (error) {
             // handle error
             console.log(error);
-        })
-      }
-    })
-
-  
+        }) 
+    }) 
 
 </script>
 <%- include('../../end'); -%></div>
