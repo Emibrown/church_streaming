@@ -39,6 +39,10 @@ build/Release
 
 # Dependency directories
 node_modules/
+public/large_images/
+public/small_images/
+public/static_files/
+public/uploads/
 jspm_packages/
 
 # TypeScript v1 declaration files
