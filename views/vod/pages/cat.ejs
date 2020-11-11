@@ -18,52 +18,23 @@
 
             <div class="col-md-12">
                 <div class="row  ">
+        
+                    <% programmes.forEach(function (pro,i){ %>
                     <div class=" col-sm-6 col-lg-4 pr-0 pl-0">
                         <div>
-                            <a href="/vod/watch">
-                                <img class=" img-thumbnail" src="https://www.tbnafrica.org/images/static/ondemand-programme-1563806105.jpg" alt="">
-                            </a> 
-                        </div>
-                    </div>
-
-                    <div class=" col-sm-6 col-lg-4 pr-0 pl-0">
-                        <div>
-                            <a href="/vod/watch">
-                                <img class=" img-thumbnail" src="https://www.tbnafrica.org/images/static/ondemand-programme-1534238791.png" alt="">
+                            <a href="/vod/watch/<%= pro.code %> ">
+                                <img class=" img-thumbnail" src="/small_images/<%= pro.image %> " alt="">
+                                <span class="playlist-content--title">
+                                    <%= pro.title %>                                      
+                                </span>
                             </a>
                         </div>
                     </div>
-
-                    <div class=" col-sm-6 col-lg-4 pr-0 pl-0">
-                        <div>
-                            <a href="/vod/watch">
-                                <img class=" img-thumbnail" src="https://www.tbnafrica.org/images/static/ondemand-programme-1465466099.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class=" col-sm-6 col-lg-4 pr-0 pl-0">
-                        <div>
-                            <a href="/vod/watch">
-                                <img class=" img-thumbnail" src="https://www.tbnafrica.org/images/static/ondemand-programme-1555075436.jpg" alt="">
-                              
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class=" col-sm-6 col-lg-4 pr-0 pl-0">
-                        <div>
-                            <a href="/vod/watch">
-                                <img class=" img-thumbnail" src="https://www.tbnafrica.org/images/static/ondemand-programme-1555074886.jpg" alt="">
-                              
-                            </a>
-                        </div>
-                    </div>
-
-                   
-                      
+                    <% }) %>
                 </div>
             </div>
+          
+
         </div>
         
     </div>

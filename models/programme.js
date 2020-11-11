@@ -29,7 +29,8 @@ programmeSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
 programmeSchema.pre('save', async function (next) {
     const programme = this
-    programme.code = programme.title.split(" ").join("-")
+    const str = programme.title.toLowerCase()
+    programme.code = str.split(" ").join("-")
     next()
 })
 
