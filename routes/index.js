@@ -12,6 +12,7 @@ const Enquiry = require('../models/enquiries');
 const Partnership = require('../models/patnership');
 const About = require('../models/about');
 const Settings = require('../models/settings');
+const RequestPassword = require('../models/requestPassword');
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
 const customEmail = require('../services/email');
@@ -109,17 +110,17 @@ router.get('/about/:code', async(req, res, next) =>{
   res.render('users/pages/about', { title: 'Faith TV | About', about });
 });
 
-router.get('/dayview', (req, res, next) =>{
-  res.render('users/pages/dayview', { title: 'Day View' });
-});
+// router.get('/dayview', (req, res, next) =>{
+//   res.render('users/pages/dayview', { title: 'Day View' });
+// });
 
-router.get('/schedule', (req, res, next) =>{
-  res.render('users/pages/schedule', { title: 'Faith TV | Schedule' });
-});
+// router.get('/schedule', (req, res, next) =>{
+//   res.render('users/pages/schedule', { title: 'Faith TV | Schedule' });
+// });
 
-router.get('/highlights', (req, res, next) =>{
-  res.render('users/pages/high', { title: 'Faith TV | Highlights' });
-});
+// router.get('/highlights', (req, res, next) =>{
+//   res.render('users/pages/high', { title: 'Faith TV | Highlights' });
+// });
 
 router.get('/show-proposal', (req, res, next) =>{
   res.render('users/pages/show_proposal', { title: 'Faith TV | Submit Show Proposal' });
@@ -336,11 +337,26 @@ router.post('/request_password', async(req, res, next) =>{
     const email = req.body.email;
     const getUser = await User.findOne({email});  
     if(getUser){
+      const token = Math.floor(100000 + Math.random() * 900000); 
+      const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
       const header = "Password Change!!";
       const message = `<h3> Please follow this link to reset your password</h3>: 
       <p><a href="http://localhost:3000/reset-password/${getUser._id}">Click to reset now </a> </p>`;
-       customEmail.customEmail(getUser.firstname, email, header, message);
-       res.send({status: 200, message: `Mail contaning password information has been sent to  ${email}`});
+       
+       const requestPassword = new RequestPassword({
+        userId: getUser._id,
+        email,
+        ip,
+        token,
+      });
+      const saveData = await requestPassword.save();
+      
+      if(saveData){
+        customEmail.customEmail(getUser.firstname, email, header, message);
+        res.send({status: 200, message: `Mail contaning password information has been sent to  ${email}`});
+      }else{
+         res.status(404).send({message: "failed to save request data"})
+      }
     }else{
       res.status(404).send({message: "Email provided does not exist. Please kindly register"})
     }
@@ -351,25 +367,35 @@ router.post('/request_password', async(req, res, next) =>{
 
 // update password
 router.post('/update_password', async(req, res, next) => {
-  
   try{
    const {password, user_id}  = req.body;
-   const reseter =  await User.updateOne(
-      { _id: user_id },
-      { $set:
-         {
-           password : await bcrypt.hash(password, 8)
-          
-         }
-      }
-   )
-   if(reseter){
-    res.send({status: 200, message: `Password has been changed successfully`});
-   }else{
-    res.status(404).send({message: "Process failed"})
-   }
+   const getRequester = await RequestPassword.findOne({userId: user_id, });
+   if(getRequester){
+    const now = new Date();
+    const previous = new Date(getRequester.tokenTime)
+    const difference = previous > now ? previous - now : now - previous
+    const diff_min = Math.floor(difference/(1000*60))
+    if (diff_min <= 5) {
+      await User.updateOne(
+        { _id: user_id },
+        { $set:
+           {
+             password : await bcrypt.hash(password, 8)
+            
+           }
+        }
+     );
+    await RequestPassword.deleteOne( { token: getRequester.token } )
+    return res.status(200).send({status:200, message: "Password was changed successfully"})
+    }else{
+     await RequestPassword.deleteOne( { token: getRequester.token } )
+     return res.status(400).send({msg: "Password reset link is expired please request new"})
+  }
+  }else{
+    return res.status(400).send({msg: "Cannot find details please request new"})
+  }
   }catch(error){
-    res.status(404).send({msg: error.message})
+    return res.status(400).send({msg: "Records not found, failed to process"})
   }
 });
 

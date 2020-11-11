@@ -30,9 +30,9 @@ var aboutSchema = mongoose.Schema(
 aboutSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
 aboutSchema.pre('save', async function (next) {
-    console.log(this)
     const about = this
-    about.code = about.title.split(" ").join("-")
+    const str = about.title.toLowerCase()
+    about.code = str.split(" ").join("-")
     next()
 })
 

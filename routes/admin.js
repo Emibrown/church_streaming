@@ -49,11 +49,11 @@ User.find({}, (err, users) => {
   if(err){ return;}
   if(users.length == 0){
       var newUser = new User({
-        firstname: "Emmanuel",
-        lastname: "Eneche",
-        middlename: "Samson",
+        firstname: "Admin",
+        lastname: "Admin",
+        middlename: "Admin",
         title:'Mr',
-        email: "emi@gmail.com",
+        email: "admin@gmail.com",
         password: "11223344E",
         address:"Port Harcourt",
         location: "Port",
@@ -64,7 +64,7 @@ User.find({}, (err, users) => {
         organisationName: "Coders",
         type: 1,
         isBlocked: false,
-        dateOfBirth: "1990-02-19",
+        dateOfBirth: "1967-02-19",
 
       });
       newUser.save((err, user) => {
@@ -608,13 +608,13 @@ router.post('/add_programme', ensureAuthenticated, multers.upload.single('file')
     req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
 
     await sharp(req.file.path)
-    .resize({ width: 384, height: 216 })
-    .webp({quality: 60})
+    .resize({ width: 356, height: 200 })
+    .webp({quality: 90})
     .toFile(
         path.resolve('./public','small_images',req.body.image)
     )
     await sharp(req.file.path)
-    .resize({ width: 640, height: 360 })
+    .resize({ width: 712, height: 400 })
     .webp({quality: 90})
     .toFile(
         path.resolve('./public','large_images',req.body.image)
@@ -668,12 +668,12 @@ router.put('/programme/:id', multers.upload.single('file'), async (req, res, nex
 
         req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
         await sharp(req.file.path)
-        .resize({ width: 384, height: 216 })
-        .webp({quality: 60})
+        .resize({ width: 356, height: 200 })
+        .webp({quality: 90})
         .toFile(path.resolve('./public','small_images',req.body.image))
 
         await sharp(req.file.path)
-        .resize({ width: 640, height: 360 })
+        .resize({ width: 712, height: 400 })
         .webp({quality: 90})
         .toFile(path.resolve('./public','large_images',req.body.image))
 
