@@ -8,27 +8,23 @@
             <div class="col-xs-12 col-sm-6 col-md-4">
             <h3 class="block-title"><span>Contact</span> Us</h3>
             <address>
-              <div><em class="fa fa-fw fa-phone"></em> +44 (0) 208 208 5688</div>
-              <div><em class="fa fa-fw fa-fax"></em> 0866027150</div>
+              <div><em class="fa fa-fw fa-phone"></em> <% if(settings.contactNumber) { %> <%= settings.contactNumber %><% } %></div>
+              <div><em class="fa fa-fw fa-fax"></em><% if(settings.prayerNumber) { %> <%= settings.prayerNumber %><% } %> </div>
               <hr>
-              <div class="addr clearfix"><em class="fa fa-fw fa-envelope-o"></em> <div>FAITH TO FAITH<br />
-                Private Bag X343<br />
-                Cresta, Johannesburg<br />
-                2118, South Africa</div></div>
-                        <hr>
-                        <div class="addr clearfix"><em class="fa fa-fw fa-map-marker"></em> <div>Cnr Rabie and Hans Schoeman Streets <br />
-                        Randpark Ridge, Randburg, South Africa</div></div>
-                        </address>
             
+                        <hr>
+                        <div class="addr clearfix"><em class="fa fa-fw fa-map-marker"></em> <div> <% if(settings.HQaddress) { %> <%= settings.HQaddress %><% } %> <br />
+                        </div></div>
+                        </address>
             <address>
               <h5>EMAIL a Prayer Partner</h5>
-              <!--<div><em class="fa fa-fw fa-phone"></em> WhatsApp +27 (0) 62 282 8583</div>-->
-              <div class="nowrap" id="e2"><em class="fa fa-fw fa-spinner fa-spin"></em></div>
+              <div><em class="fa fa-fw fa-fax"></em><% if(settings.email) { %> <%= settings.email %><% } %></div>
             </address>
             
             <address>
               <h5>Partner Time / Faith to Faith Meets</h5>
-              <div class="nowrap" id="e4"><em class="fa fa-fw fa-spinner fa-spin"></em></div>
+              <div><em class="fa fa-fw fa-fax"></em> <% if(settings.email) { %> <%= settings.email %><% } %></div>
+
             </address>
             
             <hr>
@@ -44,29 +40,7 @@
             <hr>
           </div> <!-- /.col -->
         </div> <!-- /.row -->
-        <div class="row">
-          <div class="col-xs-12 col-sm-4">
-            <address>
-              <h5>FAITH TO FAITH</h5>
-              <div class="nowrap"><a href="mailto:info@tbnuk.org"><em class="fa fa-fw fa-envelope"></em> info@tbnuk.org</a></div>
-              <div><a href="http://www.tbnuk.org/" rel="external"><em class="fa fa-fw fa-external-link"></em> tbnuk.org</a></div>
-            </address>
-          </div> <!-- /.col -->
-          <div class="col-xs-12 col-sm-4">
-            <address>
-              <h5>FAITH TO FAITH</h5>
-              <div class="nowrap"><a href="mailto:info@tbn.org"><em class="fa fa-fw fa-envelope"></em> info@tbn.org</a></div>
-              <div><a href="http://www.tbn.org/" rel="external"><em class="fa fa-fw fa-external-link"></em> tbn.org</a></div>
-            </address>
-          </div> <!-- /.col -->
-          <div class="col-xs-12 col-sm-4">
-            <address>
-              <h5>FAITH TO FAITH</h5>
-              <div class="nowrap"><a href="mailto:info@itbn.org"><em class="fa fa-fw fa-envelope"></em> info@itbn.org</a></div>
-              <div><a href="http://www.itbn.org/" rel="external"><em class="fa fa-fw fa-external-link"></em> itbn.org</a></div>
-            </address>
-          </div> <!-- /.col -->
-        </div> <!-- /.row -->
+       
       </div> <!-- /.contact -->
     </div> <!-- /.block -->
           

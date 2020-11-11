@@ -34,6 +34,10 @@ var settingsSchema = mongoose.Schema(
             type: String,
             required: false
         },
+        tag:{
+            type:String,
+            required:false,
+        },
         email: {
             type: String,
             required: false
