@@ -1,80 +1,83 @@
 <%- include('../header'); -%>
 <%- include('../sidebar'); -%>
-<%- include('../navbar'); -%>
 
-  <!-- Page Content  -->
-  <div id="content-page" class="content-page">
-   <div class="container-fluid">
-      <div class="row">
-         <div class="col-sm-12">
-            <div class="iq-card">
-               <div class="iq-card-header d-flex justify-content-between">
-                  <div class="iq-header-title">
-                     <h4 class="card-title">Video List</h4>
-                  </div>
-                  <div class="iq-card-header-toolbar d-flex align-items-center">
-                     <a href="/admin/add_video" class="btn btn-primary">Add video</a>
-                  </div>
+<!-- Page Content  -->
+<div class="app-main__inner">
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
-               <div class="iq-card-body">
-                  <div class="table-view">
-                     <table class="data-tables table movie_table " style="width:100%">
-                        <thead>
-                           <tr>
-                              <th>Title</th>
-                              <th style="width: 40%;">Description</th>
-                              <th>Category</th>
-                              <th>Duration</th>
-                              <th>Action</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <%for (var video in videos){%>
-                           <tr>
-                              <td>
-                                 <div class="media align-items-center">
-                                    <div class="iq-movie">
-                                       <a href="javascript:void(0);"><img
-                                             src="/small_images/<%= videos[video].image %>"
-                                             class="img-border-radius avatar-40 img-fluid" alt=""></a>
-                                    </div>
-                                    <div class="media-body text-white text-left ml-3">
-                                       <p class="mb-0"><%= videos[video].title %></p>
-                                    </div>
-                                 </div>
-                              </td>
-                              <td>
-                                 <p>
-                                    <%= videos[video].description %>
-                                 </p>
-                              </td>
-                              <td><%= videos[video].category.title %></td>                   
-                              <td><%= videos[video].duration %></td>                    
-                              <td>
-                                 <div class="flex align-items-center list-user-action">
-                                    <a class="iq-bg-warning" data-toggle="tooltip" data-placement="top" title=""
-                                       data-original-title="View" href="#"><i class="lar la-eye"></i></a>
-                                    <a class="iq-bg-success" data-toggle="tooltip" data-placement="top" title=""
-                                       data-original-title="Edit" href="#"><i class="ri-pencil-line"></i></a>
-                                    <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title=""
-                                       data-original-title="Delete" href="#"><i
-                                          class="ri-delete-bin-line"></i></a>
-                                 </div>
-                              </td>
-                           </tr>
-
-                           <%}%>
-                           
-                        </tbody>
-                     </table>
-                  </div>
+               <div>
+                 Video list
                </div>
+           </div> 
+           <div class="page-title-actions">
+            <div class="d-inline-block dropdown">
+                <a type="button" href="/admin/add_video" class="btn-shadow 
+                 btn btn-info">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                        <i class="fa fa-business-time fa-w-20"></i>
+                    </span>
+                    Add video
+                </a>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>   
+        </div>
+   </div>        
+   <div class="tabs-animation">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="table-responsive">
+                  <table class="data-tables table movie_table " style="width:100%">
+                     <thead>
+                        <tr>
+                           <th >Cover image</th>
+                           <th class= "text-center">Title</th>
+                           <th class= "text-center">Type</th>
+                           <th class= "text-center">Programme</th>
+                           <th class= "text-center">Date added</th>
+                           <th class= "text-center">Duration</th>
+                           <th class= "text-center">Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <%videos.map((item)=>{%>
+                        <tr>
+                           <td>
+                                 <div class="iq-movie">
+                                    <a href="javascript:void(0);"><img
+                                          src="/small_images/<%= item.image %>" width= "100"
+                                          class="img-border-radius avatar-40 img-fluid" alt=""></a>
+                                 </div>
+                                 
+                           </td>
+                           <td class= "text-center"><%= item.title %></td>
+                           <td class= "text-center"><%= item.programme.type %></td>
+                           <td class= "text-center"><%= item.programme.title %></td>                   
+                           <td class= "text-center"><%= moment(item.date).format('LL') %></td>   
+                           <td class= "text-center"><%= item.duration %></td>  
+                           <td class= "text-center">
+                              <div class="col-12 form-group ">
+                                 <a href="/admin/video/<%= item._id %>" class="btn btn-primary " id = "btn">view</a>
+                                 <a  href="/admin/delete_video/<%= item._id %> " class="btn btn-danger">Delete</a>
+                              </div>
+                           </td>                 
+                        </tr>
+                        <%})%>
+                        
+                     </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  </div>
 </div>
- <!-- Page Content END -->
+<!-- Page Content END -->
 
 
 <%- include('../footer'); -%>

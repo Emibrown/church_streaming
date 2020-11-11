@@ -77,6 +77,7 @@ User.find({}, (err, users) => {
   }
 })
 
+
 Settings.find({}, (err, settings) => {
   if(err){ return;}
   if(settings.length == 0){
@@ -309,13 +310,20 @@ router.get('/delete_category/:id', async (req, res, next) => {
   }
 });
 
+//view all videos
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
-    { $or: [ { type: '0' }, { doneStreaming: '2' } ] }
-  )
-  .populate('category')
+    { }
+  ).populate('programme')
   console.log(videos)
   res.render('admin/pages/videos', { title: 'Videos', videos });
+});
+
+// view single video
+router.get('/video/:id', ensureAuthenticated, async(req, res, next) => {
+  const video = await Video.findOne({_id:req.params.id}).populate('programme').populate('season')
+  console.log(video)
+  res.render('admin/pages/video', { title: 'Video', video });
 });
 
 router.get('/live_stream', ensureAuthenticated, async(req, res, next) => {
@@ -379,7 +387,9 @@ router.get('/add_video', ensureAuthenticated, async (req, res, next) => {
     _id:1,
     title:1,
   })
-  res.render('admin/pages/addVideo', { title: 'Add video',categories });
+  const programmes = await Programme.find({})
+  const seasons = await Season.find({})
+  res.render('admin/pages/addVideo', { title: 'Add video', seasons, programmes });
 });
 
 router.get('/add_live_stream', ensureAuthenticated, async (req, res, next) => {
@@ -399,8 +409,12 @@ router.get('/add_pre_recorded', ensureAuthenticated, async (req, res, next) => {
 });
 
 
-router.post('/add_video', ensureAuthenticated,  multers.upload.array('file',6), async (req, res, next) => {
+router.post('/add_video', ensureAuthenticated, multers.upload.array('file',6), async (req, res, next) => {
   try {
+    console.log(req.body)
+    if(req.files.length<1){
+      sendJSONresponse(res, 400, {message: "File required"});
+    }
     req.body.image = path.basename(req.files[0].filename, path.extname(req.files[0].filename))+'.webp'
     req.body.video = req.files[1].filename
 
@@ -419,13 +433,26 @@ router.post('/add_video', ensureAuthenticated,  multers.upload.array('file',6), 
     )
 
     fs.unlinkSync(req.files[0].path)
-
     const video = new Video(req.body);
     await video.save();
 
     sendJSONresponse(res, 200, {"message": "Video added successfully"});
   } catch (error) {
+    console.log(error)
     sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.get('/delete_video/:id', ensureAuthenticated, async (req, res, next) => {
+  // delete a video
+  try {
+      const video =  await Video.findOne({_id:req.params.id});
+      fs.unlinkSync(path.resolve('./public','small_images', video.image))
+      fs.unlinkSync(path.resolve('./public','large_images', video.image))
+      await Video.deleteOne(video);
+      res.redirect('/admin/videos');
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
   }
 });
 
@@ -714,7 +741,7 @@ router.get('/add_season', ensureAuthenticated, async (req, res, next) => {
 });
 
 router.get('/edit_season/:id', ensureAuthenticated, async(req, res, next) => {
-  const season = await (await Season.findOne({_id: req.params.id})).populate('programme')
+  const season = await Season.findOne({_id: req.params.id}).populate('programme')
   const programmes = await Programme.find({type:"series"})
   res.render('admin/pages/edit_season', { title: 'Edit programme', season , programmes});
 });
@@ -741,6 +768,12 @@ router.get('/delete_season/:id', ensureAuthenticated, async (req, res, next) => 
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }
+});
+
+// populate pragramme seasons on add video form
+router.post('/get_seasons', ensureAuthenticated, async(req, res, next) => {
+  const season = await Season.find({programme: req.body.programme})
+  sendJSONresponse(res, 200, {season});
 });
 
 module.exports = router;
