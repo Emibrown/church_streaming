@@ -48,11 +48,11 @@ User.find({}, (err, users) => {
   if(err){ return;}
   if(users.length == 0){
       var newUser = new User({
-        firstname: "Emmanuel",
-        lastname: "Eneche",
-        middlename: "Samson",
+        firstname: "Admin",
+        lastname: "Admin",
+        middlename: "Admin",
         title:'Mr',
-        email: "emi@gmail.com",
+        email: "admin@gmail.com",
         password: "11223344E",
         address:"Port Harcourt",
         location: "Port",
@@ -63,7 +63,7 @@ User.find({}, (err, users) => {
         organisationName: "Coders",
         type: 1,
         isBlocked: false,
-        dateOfBirth: "1990-02-19",
+        dateOfBirth: "1967-02-19",
 
       });
       newUser.save((err, user) => {
