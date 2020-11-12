@@ -52,6 +52,8 @@ const sendJSONresponse = (res, status, content) => {
 
 router.get("/auth/facebook", passport.authenticate("facebook", {scope: "email"}));
 
+router.get("/register/auth/facebook", passport.authenticate("facebook", {scope: "email"}));
+
 router.get('/facebook/callback', passport.authenticate('facebook', {
   successRedirect:"/",
   failureMessage:"/login",
