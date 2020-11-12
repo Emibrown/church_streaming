@@ -38,7 +38,8 @@ videoSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
 videoSchema.pre('save', async function (next){
     const video = this
-    video.code = video.title.split(" ").join("-")
+    const str = video.title.toLowerCase()
+    video.code = str.split(" ").join("-")
     next()
 })
 

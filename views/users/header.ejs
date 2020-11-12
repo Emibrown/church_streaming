@@ -98,10 +98,10 @@
                 	<div class="col-md-5 col-lg-5">
                     <div class="controls">
                         <span class="control-wrap">
+                          <a href="" class="online-btn"><em class="fa fa-play"></em> Online Radio</a>
                             <a href="/vod" class="online-btn"><em class="fa fa-history"></em> On Demand</a>
                         </span>
                         <% if (currentUser){ %>
-                        <a href="/edit-profile">HI <%= currentUser.firstname %> </a>
                         <a href="/edit-profile">My profile</a>
                         <a href="/logout">Logout</a>
                         <% } else { %>
@@ -204,14 +204,18 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="/show-proposal">Submit a show proposal</a></li>
-                  <li><a href="/music-video">Submit your music video</a></li>
                   <li><a href="/vod/cat/originals">Browse originals</a></li>
-                  <li><a href="/become-programmer">Become a programmer</a></li>
+                  <li><a href="/become-programmer">Become a content provider</a></li>
+                  <li><a href="/music-video">Submit your music video</a></li>
+                  <li><a href="/show-proposal">Submit a show proposal</a></li>
+                  
                 </ul> <!-- /.dropdown-menu -->
               </li> <!-- /.dropdown -->
               <li class="navbar-text">|</li>
               <li><a href="/advertise">Advertise</a></li>
+              <li class="navbar-text">|</li>
+              <li><a href="/">Online Store</a></li>
+              <li class="navbar-text">|</li>
               <li class="navbar-text">|</li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -228,11 +232,22 @@
 
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                  Contact                  
+                  Testimonies                 
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="/testimony">Share your testimonies</a></li>
+                  <li><a href="/">Watch testimonies</a></li>
+                </ul> <!-- /.dropdown-menu -->
+              </li> <!-- /.dropdown -->
+              <li class="navbar-text">|</li>
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  Contact                  
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
                   <li><a href="/contact">Contact Us</a></li>
                   <li><a href="/enquiries">Feedback</a></li>
                   <li><a href="/partnership">Partnership</a></li>
@@ -242,7 +257,7 @@
 
             </ul> <!-- /.nav -->
             
-            <p class="navbar-text navbar-left hidden-xs hidden-sm" style="color: #FFF; margin-right: 10px;">Prayer <%= settings.prayerNumber %></p>
+            <p class="navbar-text navbar-left hidden-xs hidden-sm" style="color: #FFF; margin-right: 10px;"><a style = "color:white;" href ="/">Home</a></p>
             
           </div> <!-- /.navbar-collapse -->
       	</nav> <!-- /.navbar -->

@@ -46,6 +46,10 @@ var settingsSchema = mongoose.Schema(
             type: String,
             required: false
         },
+        appreciationMessage:{
+            type: String,
+            required:false,
+        },
         instagramHandle:{
             type: String,
             required: false
