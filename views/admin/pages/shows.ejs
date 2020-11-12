@@ -60,14 +60,13 @@
                                     <td class="text-center"><%=item.description%></td>
                                     <td class="text-center"><%= moment(item.date).format('LL') %></td>
                                     <td class="text-center">
-                                        <a href= "/admin/api/edit_about?id=<%=item._id%>" type="button" id="PopoverCustomT-1"
+                                        <a href= "/admin/api/edit_show/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">Edit</a>
-                                        <a href= "/admin/api/delete_about?id=<%=item._id%>" type="button" id="PopoverCustomT-1"
+                                        <a href= "/admin/api/delete_show/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
-                            <% }) %>
-                              
+                            <% }) %>                            
                         </tbody>
                     </table>
                 </div>

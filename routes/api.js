@@ -462,18 +462,19 @@ router.get('/shows', ensureAuthenticated, async (req, res, next) => {
     }
 });
 router.get('/add_show', ensureAuthenticated, async (req, res, next) => {
-    // add shows route
+    // add shows view
     try {
-        res.render('admin/pages/add_shows', { title: 'Add Shows'});
+        res.render('admin/pages/add_show', { title: 'Add Shows'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
 });
 router.get('/edit_show/:id', ensureAuthenticated, async (req, res, next) => {
-    // edit shows route
+    // edit shows view
     try {
-        const show = await Show.find({_id:req.params.id})
-        res.render('admin/pages/edit_shows', { title: 'Edit Shows', show});
+        const show = await Show.findOne({_id:req.params.id})
+        console.log(show)
+        res.render('admin/pages/edit_show', { title: 'Edit Shows', show});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -546,13 +547,14 @@ router.put('/show/:id', ensureAuthenticated, multers.upload.single('file'), asyn
     }
 });
 
-router.delete('/show/:id', ensureAuthenticated, async (req, res, next) => {
+router.get('/delete_show/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a show
     try {
         const show = await Show.findOne({_id:req.params.id});
+        await Show.deleteOne(show);
         fs.unlinkSync(path.resolve('./public','small_images', show.image))
         fs.unlinkSync(path.resolve('./public','large_images', show.image))
-        await Show.deleteOne(show);
+        res.redirect('/admin/api/shows')
         sendJSONresponse(res, 200, {message: 'show deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});

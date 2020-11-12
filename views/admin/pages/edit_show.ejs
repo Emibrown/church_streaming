@@ -25,19 +25,19 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <div id = "message"></div>
-                        <form id="add_about">
+                        <form id="show">
                             <div class="form_gallery form-group">
-                                <label id="gallery2" for="image">About Image</label><br>
+                                <label id="gallery2" for="image">Image</label><br>
                                 <input rows="5" data-name="#gallery2" id="image" class="form_gallery-upload "
                                    type="file" accept=".png, .jpg, .jpeg">
                              </div>
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="About title" required>                 
+                                <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="Show title" value = "<%= show.title %>" >                 
                             </div>
                             <div class="form-group">
                                 <label for="desc">Description</label>
-                                <textarea id="desc" name="desc" rows="5" class="form-control" placeholder="About description" required></textarea>                 
+                                <textarea id="desc" name="desc" rows="5" class="form-control" placeholder="Show description" ><%= show.description %> </textarea>                 
                             </div>
                             <button class="mt-1 btn btn-primary" id = "btn">Submit</button>
                         </form>
@@ -54,24 +54,17 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
-<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
+
 <script>
-    $(function () {
-        $("#desc").ckeditor();
-    });
-</script>
-<script>
-    $(document).on('submit', '#add_about', event => {
+    $(document).on('submit', '#show', event => {
         event.preventDefault();
         const file = document.querySelector('#image')
         const data = new FormData()
         data.append("description", $("#desc").val());
         data.append("title", $("#title").val());
-        data.append("file", file.files[0]);
-        if(file.files.length < 1 ){
-            displayerr("Please add an image");
-        }else{
+        if(file.value){
+            data.append("file", file.files[0]);
+        }
             const config = {
                 onUploadProgress: function(progressEvent) {
                 const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
@@ -79,11 +72,11 @@
                 }
             }
 
-            axios.post('/admin/about',data, config)
+            axios.put('/admin/api/show/<%=show._id%>',data, config)
             .then(function (response) {
                 // handle success
                 console.log(response)
-                const url = "/admin/about";    
+                const url = "/admin/api/shows";    
                 $(location).attr('href',url);
                 displaymsg(response.data.message);
             })
@@ -92,7 +85,7 @@
                 console.log(error);
                 displayerr(error.message)
             })
-        }
+        
      })
 </script>
 <%- include('../../end'); -%>

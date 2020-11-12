@@ -27,13 +27,13 @@
                         <div id = "message"></div>
                         <form id="add_show">
                             <div class="form_gallery form-group">
-                                <label id="gallery2" for="image">About Image</label><br>
+                                <label id="gallery2" for="image">Image</label><br>
                                 <input rows="5" data-name="#gallery2" id="image" class="form_gallery-upload "
                                    type="file" accept=".png, .jpg, .jpeg">
                              </div>
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="About title" required>                 
+                                <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="Show title" required>                 
                             </div>
                             <div class="form-group">
                                 <label for="desc">Description</label>
@@ -54,12 +54,8 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
-<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
 <script>
-    $(function () {
-        $("#desc").ckeditor();
-    });
+    
 </script>
 <script>
     $(document).on('submit', '#add_show', event => {
