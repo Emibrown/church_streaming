@@ -10,9 +10,8 @@
                     <div class="live-audience clearfix">
                         <h2 class="block-title"><span>ADVERTISE ON FAITH</span> TO FAITH TV
                         </h2>
-                        <p class = "pt-3">
-                          Complete our online application form to place your TV ad or commercial on FAITH TO FAITH TV, and become a part of the FAITH TO FAITH TV, 
-                          where viewers experience the message of faith and inspiring television like never </p>
+                        <%- settings.appreciationMessage %> 
+
                         <hr />
                       <p>&nbsp;</p>
 
@@ -69,7 +68,7 @@
                               <span class = "video-text">Please supply a download link of your ad/event assets.</span>
                            </div>
                            <br>
-                           <h4 style = "font-weight: bold;" class = "pb-2 pt-4">INVOICING DETAILS</h4>
+                           <!-- <h4 style = "font-weight: bold;" class = "pb-2 pt-4">INVOICING DETAILS</h4>
                            <div class = "form-group">
                               <label for="invoice_made">* Invoice Made Out To</label>
                               <input placeholder = "Company/Entity Name to be Invoiced (Required)" type="text" id ="invoice_made" name = "invoice_made" class = "form-control">
@@ -85,7 +84,7 @@
                            <div class = "form-group">
                               <label for="vat">VAT Number (If Applicable)</label>
                               <input placeholder = "VAT Registration Number" id = "vat" type="text" name = "vat" class = "form-control">
-                           </div>
+                           </div> -->
                           <hr class = "my-4">
                           <div class = "form-group">
                               <label class="chkBox">
@@ -165,9 +164,6 @@
             fullname: 'required',
             advert_title: 'required',
             describe: 'required',
-            invoice_made: 'required',
-            invoice_address: 'required',
-            contact_no: 'required',
             email: {
             required: true,
             email: true,
@@ -191,9 +187,6 @@
             advert_title: 'An advert title is required',
             describe: 'Provide description for advert',
             download: 'This field is required. (And must be valid URL)',
-            invoice_made: 'This field is required',
-            invoice_address: 'This field is required',
-            contact_no: 'This field is required',
             'terms1': {
                 required: "Please accept this condition",
             },
@@ -213,10 +206,6 @@
             "description": $("#describe").val(),
             "videoURL": $("#video").val(),
             "mediaDownloadLink": $("#download").val(),
-            "invoiceMade": $("#invoice_made").val(),
-            "invoiceAddress": $("#invoice_address").val(),
-            "contactNumber": $("#contact_no").val(),
-            "VATnumber": $("#vat").val()
          }
          axios({
             method: 'post',

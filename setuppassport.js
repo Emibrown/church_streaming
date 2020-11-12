@@ -1,6 +1,6 @@
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
-
+var strategy = require ("passport-facebook");
 var User = require('./models/user');
 
 
@@ -19,6 +19,7 @@ module.exports = function(){
     });
     
 };
+
 
 passport.use('admin-local', new localStrategy({
     usernameField: 'email'

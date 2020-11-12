@@ -58,27 +58,27 @@ var advertSchema = mongoose.Schema(
                 }
             }
         },
-        invoiceMade: {
-            type: String, 
-            required: true, 
-        },
-        invoiceAddress: {
-            type: String, 
-            required: true, 
-        },
-        contactNumber: {
-            type: String,
-            required: false,
-            validate: value => {
-                if (!validator.isMobilePhone(value, 'en-NG')) {
-                    throw new Error({error: 'Invalid phone number'})
-                }
-            }
-        },
-        VATnumber: {
-            type: String, 
-            default:null,
-        },
+        // invoiceMade: {
+        //     type: String, 
+        //     required: true, 
+        // },
+        // invoiceAddress: {
+        //     type: String, 
+        //     required: true, 
+        // },
+        // contactNumber: {
+        //     type: String,
+        //     required: false,
+        //     validate: value => {
+        //         if (!validator.isMobilePhone(value, 'en-NG')) {
+        //             throw new Error({error: 'Invalid phone number'})
+        //         }
+        //     }
+        // },
+        // VATnumber: {
+        //     type: String, 
+        //     default:null,
+        // },
         date: {
             type: Date, 
             default: Date.now

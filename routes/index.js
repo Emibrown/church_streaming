@@ -21,6 +21,7 @@ const Feedback = require('../models/enquiries');
 const router = express.Router();
 
 
+
 router.use(async(req, res, next) => {
   res.locals.moment = moment;
   res.locals.currentUser = req.user;
@@ -335,13 +336,14 @@ router.post('/request_password', async(req, res, next) =>{
 
   try{
     const email = req.body.email;
+    const host = req.get('host');
     const getUser = await User.findOne({email});  
     if(getUser){
       const token = Math.floor(100000 + Math.random() * 900000); 
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
       const header = "Password Change!!";
       const message = `<h3> Please follow this link to reset your password</h3>: 
-      <p><a href="http://localhost:3000/reset-password/${getUser._id}">Click to reset now </a> </p>`;
+      <p><a href="http://${host}/reset-password/${getUser._id}">Click to reset now </a> </p>`;
        
        const requestPassword = new RequestPassword({
         userId: getUser._id,
