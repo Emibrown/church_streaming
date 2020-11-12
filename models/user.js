@@ -6,18 +6,19 @@ mongoose.Promise = require('bluebird');
 
 var userSchema = mongoose.Schema(
     {
-        firstname: {type: String, required: true},
-        lastname: {type: String, required: true},
-        middlename: {type: String, required: true},
-        title: {type: String, required: true},
+    
+        firstname: {type: String, required: false},
+        lastname: {type: String, required: false},
+        middlename: {type: String, required: false},
+        title: {type: String, required: false},
         type: {
             type: String,
             default: "0"
         },
         email: {
             type: String, 
-            required: true, 
-            unique: true,
+            required: false, 
+            unique: false,
             validate: value => {
                 if (!validator.isEmail(value)) {
                     throw new Error({error: 'Invalid Email Address'})
@@ -26,44 +27,51 @@ var userSchema = mongoose.Schema(
         },
         address: {
             type: String, 
-            required: true,
+            required: false,
         },
         dateOfBirth:{
             type: String,
-            required: true,
+            required: false,
         },
         location: {
             type: String, 
-            required: true,
+            required: false,
         },
         stateOfOrigin: {
             type: String, 
-            required: true,
+            required: false,
         },
         LGA: {
             type: String, 
-            required: true,
+            required: false,
         },
         residentPastor: {
             type: String, 
-            required: true
+            required: false
         },
         chapterLocation: {
             type: String, 
-            required: true
+            required: false
         },
         organisationName: {
             type: String, 
-            required: true
+            required: false
         },
         isBlocked:{
             type: Boolean, default: false,
         },
         password: {
             type: String, 
-            required: true
+            required: false
         },
+        facebookId: String,
+        facebookToken: String,
+        facebookEmail:String,
+        facebookNames:String,
+
     }
+
+
 )
 
 userSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
