@@ -452,11 +452,28 @@ router.delete('/settings/:id', async (req, res, next) => {
 });
 
 //show routes
-router.get('/show', ensureAuthenticated, async (req, res, next) => {
+router.get('/shows', ensureAuthenticated, async (req, res, next) => {
     // Get  all shows
     try {
-        const show = await Show.find({}).sort({ addedOn : 1 })
-        sendJSONresponse(res, 200, {show});
+        const shows = await Show.find({}).sort({ date : 1 })
+        res.render('admin/pages/shows', { title: 'Shows', shows });
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+router.get('/add_show', ensureAuthenticated, async (req, res, next) => {
+    // add shows route
+    try {
+        res.render('admin/pages/add_shows', { title: 'Add Shows'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+router.get('/edit_show/:id', ensureAuthenticated, async (req, res, next) => {
+    // edit shows route
+    try {
+        const show = await Show.find({_id:req.params.id})
+        res.render('admin/pages/edit_shows', { title: 'Edit Shows', show});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -470,12 +487,12 @@ router.post('/show', ensureAuthenticated, multers.upload.single('file'), async (
 
         req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
         await sharp(req.file.path)
-        .resize({ width: 384, height: 216 })
+        .resize({ width: 400, height: 200 })
         .webp({quality: 60})
         .toFile(path.resolve('./public','small_images',req.body.image))
 
         await sharp(req.file.path)
-        .resize({ width: 640, height: 360 })
+        .resize({ width: 600, height: 300 })
         .webp({quality: 90})
         .toFile(path.resolve('./public','large_images',req.body.image))
 

@@ -21,7 +21,7 @@ var showSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        addedOn: {
+        date: {
             type: Date, 
             default: Date.now
         }
