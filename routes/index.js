@@ -21,7 +21,6 @@ const Feedback = require('../models/enquiries');
 const router = express.Router();
 
 
-
 router.use(async(req, res, next) => {
   res.locals.moment = moment;
   res.locals.currentUser = req.user;
@@ -50,6 +49,15 @@ const sendJSONresponse = (res, status, content) => {
   res.status(status);
   res.json(content);
 };
+
+router.get("/auth/facebook", passport.authenticate("facebook", {scope: "email"}));
+
+router.get('/facebook/callback', passport.authenticate('facebook', {
+  successRedirect:"/",
+  failureMessage:"/login",
+}));
+
+
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -391,7 +399,7 @@ router.post('/update_password', async(req, res, next) => {
     return res.status(200).send({status:200, message: "Password was changed successfully"})
     }else{
      await RequestPassword.deleteOne( { token: getRequester.token } )
-     return res.status(400).send({msg: "Password reset link is expired please request new"})
+     return res.status(400).send({msg: "Cannot reset password with an EXPIRED please request new"})
   }
   }else{
     return res.status(400).send({msg: "Cannot find details please request new"})
