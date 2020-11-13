@@ -52,6 +52,8 @@ const sendJSONresponse = (res, status, content) => {
 
 router.get("/auth/facebook", passport.authenticate("facebook", {scope: "email"}));
 
+router.get("/register/auth/facebook", passport.authenticate("facebook", {scope: "email"}));
+
 router.get('/facebook/callback', passport.authenticate('facebook', {
   successRedirect:"/",
   failureMessage:"/login",
@@ -170,7 +172,7 @@ router.get('/login', authenticated, (req, res, next) =>{
   res.render('users/pages/login', { title: 'Faith TV | Login' });
 });
 
-router.get('/change-password', (req, res, next) =>{
+router.get('/change-password', ensureAuthenticated, (req, res, next) =>{
   res.render('users/pages/change_password', { title: 'Faith TV | Change password' });
 });
 router.get('/edit-profile', ensureAuthenticated, (req, res, next) =>{
@@ -351,7 +353,7 @@ router.post('/request_password', async(req, res, next) =>{
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
       const header = "Password Change!!";
       const message = `<h3> Please follow this link to reset your password</h3>: 
-      <p><a href="http://${host}/reset-password/${getUser._id}">Click to reset now </a> </p>`;
+      <p><a href="https://${host}/reset-password/${getUser._id}">Click to reset now </a> </p>`;
        
        const requestPassword = new RequestPassword({
         userId: getUser._id,
@@ -399,15 +401,97 @@ router.post('/update_password', async(req, res, next) => {
     return res.status(200).send({status:200, message: "Password was changed successfully"})
     }else{
      await RequestPassword.deleteOne( { token: getRequester.token } )
-     return res.status(400).send({msg: "Cannot reset password with an EXPIRED please request new"})
+     return res.status(400).send({msg: "Password reset link is expired. Please request new"})
   }
   }else{
     return res.status(400).send({msg: "Cannot find details please request new"})
   }
   }catch(error){
-    return res.status(400).send({msg: "Records not found, failed to process"})
+    res.status(404).send({msg: error.message})
   }
 });
+
+// change password
+router.put('/change_password', async(req, res, next) => {
+  try{
+   const {userId, previous, password} = req.body;
+ 
+   const userGet = await User.findOne({_id: userId})
+   console.log(userGet);
+   console.log(userGet.password);
+   if(await bcrypt.compare(previous, userGet.password)){
+    await User.updateOne(
+      { _id: userId },
+      { $set:
+         {
+           password : await bcrypt.hash(password, 8)
+          
+         }
+      }
+   );
+    return res.status(200).send({status:200, message: "Password was changed successfully"})
+   }else{
+    return res.status(404).send({status:400, msg: "Previous password is incorrect"})
+   }
+  }catch(error){
+    console.log
+    res.status(404).send({msg: error.message})
+  }
+});
+
+// update user profile both facebook and local
+router.put('/update_profile', async(req, res) =>{
+  try{
+   
+      const {userId, firstname, lastname, 
+      middlename, dateOfBirth, location, address, LGA,
+      email, chapterLocation, residentPastor, organisationName } = req.body;
+      const capitalizer = string =>  string && string.charAt(0).toUpperCase() + string.substring(1);
+
+      const emailClean = email.trim();
+      const firstClean = capitalizer(firstname);
+      const lastClean = capitalizer(lastname);
+      const middleClean = capitalizer(middlename);
+  
+      await User.findOneAndUpdate(
+      { 
+          "_id": userId
+      },
+      { 
+          $set: { 
+            firstname:firstClean, 
+            lastname:lastClean,
+            middlename: middleClean, 
+            dateOfBirth, 
+            location, 
+            address, 
+            LGA, 
+            email:emailClean,
+            chapterLocation,
+            residentPastor,
+            organisationName,
+
+          }
+      },
+      { new: true, useFindAndModify: false},
+      (err, data) => {
+          if (!err)
+            return res.status(200).send({status:200, message: "Records updated successfully"});
+              //res.json(data);
+          else{
+            return res.status(400).send({msg: "Operation was unsuccessful"});
+              //res.json(err);
+          }
+      }
+  );
+
+  }catch(error){
+    console.log(error);
+    res.status(404).send({msg: error.message})
+  }
+});
+
+
 
 //show proposal routes
 router.post('/show_proposal', async (req, res, next) => {

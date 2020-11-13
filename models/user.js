@@ -66,8 +66,6 @@ var userSchema = mongoose.Schema(
         },
         facebookId: String,
         facebookToken: String,
-        facebookEmail:String,
-        facebookNames:String,
 
     }
 

@@ -1,17 +1,18 @@
 <%- include('../header'); -%>
    <!-- MainContent -->
-   
+   <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
    <div class="content">
       <div class="container">
        <!-- // TODAYS HIGHLIGHTS // -->
        <div class="block">
          <div class="row">
             <div class="col-xs-12 col-md-9">
-                 <video style = "padding-bottom:20px;" width="100%" height="100%" controls>
-                     <source src="movie.mp4" type="video/mp4">
-                     <source src="movie.ogg" type="video/ogg">
-                     Your browser does not support the video tag.
-               </video>
+              <video id="my_video_1"  class="video-js vjs-default-skin  vjs-big-play-centered vjs-live vjc">
+                <source src="https://live.faithtofaithtv.org/hls/<%= settings.publicStreamKey %>.m3u8" type="application/x-mpegURL">
+              </video>
+              <!-- <video id="my_video_1" class="video-js vjs-fluid vjs-16-9 vjs-big-play-centered" style="width: 100%; height: 100%; min-height: 350px;"    preload="auto" >
+              </video> -->
+          
            </div> <!-- /.col -->
             
             <div class="col-xs-12 col-md-3">
@@ -413,4 +414,30 @@
  <!-- MainContent End-->
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script src="https://unpkg.com/video.js/dist/video.js"></script>
+<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
+<script>
+  var link = "https://live.faithtofaithtv.org/hls/<%= settings.publicStreamKey %>.m3u8"
+  var video = videojs('my_video_1', {
+      controls: true,
+      preload: 'auto',
+      autoplay: 'muted',
+      liveui: true,
+   }).ready(function(){
+      this.play();
+      
+      player.on('ended', function() {
+         alert('video is done!');
+      });
+      player.on('error', function() {
+         setTimeout(function(){ 
+            player.reset() 
+            player.src({ type: "application/x-mpegURL", src: link  })
+            player.load(); 
+            player.play();
+         }, 5000);
+      });
+   });
+
+</script>
 <%- include('../../end'); -%>

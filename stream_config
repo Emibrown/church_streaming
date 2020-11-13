@@ -156,8 +156,14 @@ rtmp {
 http {
     default_type application/octet-stream;
 
+    # HTTPS certificate and key
+    ssl_certificate /etc/letsencrypt/live/live.faithtofaithtv.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/live.faithtofaithtv.org/privkey.pem;
+
     server {
-        listen 80;
+        listen 80 ssl;
+        listen 443 ssl;
+        server_name live.faithtofaithtv.org;
 
          location / {
             # Disable cache
@@ -187,3 +193,9 @@ http {
 }
 
 
+# HTTPS certificate and key
+    ssl_certificate /etc/letsencrypt/live/live.faithtofaithtv.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/live.faithtofaithtv.org/privkey.pem;
+
+ listen 443 ssl;
+        server_name live.faithtofaithtv.org;

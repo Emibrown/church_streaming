@@ -6,8 +6,8 @@ const transport = {
     port: 465,
     secure: true,
     auth: {
-        user: 'officialkamchezreal@gmail.com',
-        pass: 'eneche123?'
+        user: 'officialfaithtv@gmail.com',
+        pass: '123faithtv'
     }
 }
 const transporter = nodemailer.createTransport(transport)
@@ -46,9 +46,9 @@ const customEmail = (name,email,header,message) =>{
                 reject(err)
             } else {
                 var mainOptions = {
-                    from: 'kamchezreal@gmail.com',
+                    from: 'officialfaithtv@gmail.com',
                     to: email,
-                    subject: 'Faith TV | Response',
+                    subject: 'FaithtoFaith TV | Response',
                     html: data
                 };
                 transporter.sendMail(mainOptions, function (err, info) {

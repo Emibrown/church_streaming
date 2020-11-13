@@ -1,0 +1,139 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                   Streaming Settings
+               </div>
+           </div>
+         </div>
+   </div>       
+ 
+    <!-- form -->
+     <div class="row">
+         <div class="col-md-12">
+             <div class="main-card mb-3 card">
+                 <div class="card-body">
+                   
+                
+                       <p class=" text-danger">Recommended Bitrate <b>400 Kbps</b></p>
+              
+                 </div>
+             </div>
+         </div>
+     </div>
+      <!-- form ends -->
+
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div id = "message"></div>
+                      
+                            <div class="">
+                                <label for="title">Streaming server URL</label>
+                            </div>
+                            
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="stream" readonly value="rtmp://live.faithtofaithtv.org/show/">
+                                <div class="input-group-append">
+                                    <button type="button" data-clipboard-target="#stream" class="btn btn-primary clipboard-trigger">
+                                       Copy
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            </div>
+                
+                            <div class="">
+                                <label for="title">Public live streaming key</label>
+                            </div>
+                            
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="stream1" readonly value="<%= settings.publicStreamKey %>">
+                                <div class="input-group-append">
+                                    <button type="button" data-clipboard-target="#stream1" class="btn btn-primary clipboard-trigger">
+                                        Copy
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="mt-1 btn btn-primary" id ="publicbtn">Generate new Key</button>             
+                            </div>
+                        
+                            <div class="">
+                                <label for="title">Members only live streaming key</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="stream2" readonly value="<%= settings.memberStreamKey %>">
+                                <div class="input-group-append">
+                                    <button type="button" data-clipboard-target="#stream2" class="btn btn-primary clipboard-trigger">
+                                        Copy
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="mt-1 btn btn-primary" id = "memberbtn">Generate new Key</button>             
+                            </div>
+                        
+                          
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+
+<script>
+    $("#publicbtn").click(function() {
+        axios.get('/admin/public-key')
+            .then(function (response) {
+            // handle success
+            $("#stream1").val(response.data.message)
+            displaymsg("Streaming key generated");
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error.message)
+        })
+    });
+
+    $("#memberbtn").click(function() {
+        axios.get('/admin/member-key')
+            .then(function (response) {
+            // handle success
+            $("#stream2").val(response.data.message)
+            displaymsg("Streaming key generated");
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error.message)
+        })
+    });
+
+
+</script>
+<%- include('../../end'); -%>

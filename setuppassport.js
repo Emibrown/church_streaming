@@ -2,7 +2,7 @@ var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('./models/user');
-var facebookAuth = require('./config/facebookAuth');
+var oAuth = require('./config/oAuth');
 
 
 module.exports = function(){
@@ -70,9 +70,9 @@ passport.use('user-local', new localStrategy({
 passport.use(
     new FacebookStrategy(
       {
-        clientID: facebookAuth.oAuth.clientID,
-        clientSecret: facebookAuth.oAuth.clientSecret,
-        callbackURL: facebookAuth.oAuth.callbackURL,
+        clientID: oAuth.facebookOAuth.clientID,
+        clientSecret: oAuth.facebookOAuth.clientSecret,
+        callbackURL: oAuth.facebookOAuth.callbackURL,
         profileFields: ["email", "name"]
       },
        //sends back token and profile
@@ -85,8 +85,9 @@ passport.use(
                         const newUser = new User();
                          newUser.facebookId = profile.id;
                          newUser.facebookToken = accessToken;
-                         newUser.facebookNames = profile.name.givenName + ' '+ profile.name.familyName;
-                         newUser.facebookEmail = profile.emails[0].value;
+                         newUser.firstname = profile.name.givenName;
+                         newUser.lastname = profile.name.familyName;
+                         newUser.email = profile.emails[0].value;
                 
                  newUser.save(function(err){
                       if(err)
@@ -100,4 +101,7 @@ passport.use(
       }
     )
   );
+
+
+
 

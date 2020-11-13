@@ -5,28 +5,32 @@
             <h2 class="block-title">Edit Profile Records</h2>
             <div class="mytbn">
                 <div class="row">
+
                     <div class="col-md-9">
-                        <form action="">
+                        <form id = "update-form">
+
                             <div class="row">
+                                <div style = "text-align:center; padding-bottom:30px" class="alertBox" role="alert"></div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">FIRST NAME:</label>
+                                        <label for="firstname">FIRST NAME:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user"></i>
                                             </span>
-                                            <input value = "<% if(user.firstname) { %> <%= user.firstname %><% } %>" type="text" class = "form-control">
+                                            <input type="hidden" id = "userId" name = "userId" value = "<%= user._id %>">
+                                            <input name ="firstname"  id = "firstname" value = "<%=currentUser.firstname %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
                                     <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">MIDDLE NAME:</label>
+                                        <label for="middlename">MIDDLE NAME:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user"></i>
                                             </span>
-                                            <input value = "<% if(user.middlename) { %> <%= user.middlename %><% } %>" type="text" class = "form-control">
+                                            <input name = "middlename" id = "middlename" value = "<%=currentUser.middlename %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -34,24 +38,24 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                       <div class="form-group">
-                                        <label for="">LASTNAME:</label>
+                                        <label for="lastname">LASTNAME:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user"></i>
                                             </span>
-                                            <input value = "<% if(user.lastname) { %> <%= user.lastname %><% } %>" type="text" class = "form-control">
+                                            <input name = "lastname" id = "lastname" value = "<%=currentUser.lastname %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
                                 
                                     <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">DATE OF BIRTH:</label>
+                                        <label for="dob">DATE OF BIRTH:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-calendar"></i>
                                             </span>
-                                            <input value = "<% if(user.dateOfBirth) { %> <%= user.dateOfBirth %><% } %>" type="text" class = "form-control">
+                                            <input name ="dob" id = "dob" value = " <%=currentUser.dateOfBirth %>" type="text" class = "form-control" placeholder="E.g 1946-12-31">
                                         </div>
                                     </div>
                                     </div>
@@ -59,23 +63,23 @@
                                     <div class="row">
                                     <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">ADDRESS:</label>
+                                        <label for="address">ADDRESS:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-home"></i>
                                             </span>
-                                            <input value = "<% if(user.address) { %> <%= user.address %><% } %>" type="text" class = "form-control">
+                                            <input name ="address" id = "address" value = "<%=currentUser.address %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
                                     <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">LOCATION:</label>
+                                        <label for="location">LOCATION:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-map-marker-alt"></i>
                                             </span>
-                                            <input value = "<% if(user.location) { %> <%= user.location %><% } %>" type="text" class = "form-control">
+                                            <input name = "location" id = "location" value = " <%=currentUser.location %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -83,24 +87,24 @@
                                     <div class="row">
                                     <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">LOCAL GOVERNMENT AREA:</label>
+                                        <label for="lga">LOCAL GOVERNMENT AREA:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-street-view"></i>
                                             </span>
-                                            <input value = "<% if(user.LGA) { %> <%= user.LGA %><% } %>" type="text" class = "form-control">
+                                            <input name = "lga" id = "lga" value = "<%=currentUser.LGA %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
                         
                                     <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">EMAIL:</label>
+                                        <label for="email">EMAIL:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-envelope"></i>
                                             </span>
-                                            <input value = "<% if(user.email) { %> <%= user.email %><% } %>" type="text" class = "form-control">
+                                            <input id = "email" value = "<%=currentUser.email %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -108,24 +112,24 @@
                                     <div class="row">
                                     <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">CHURCH CHAPTER:</label>
+                                        <label for="church_chapter">CHURCH CHAPTER:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-church"></i>
                                             </span>
-                                            <input value = "<% if(user.chapterLocation) { %> <%= user.chapterLocation %><% } %>" type="text" class = "form-control">
+                                            <input name = "church_chapter" id = "church_chapter" value = "<%=currentUser.chapterLocation %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
                         
                                     <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">RESIDENT PASTOR:</label>
+                                        <label for="resident_pastor">RESIDENT PASTOR:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user-tie"></i>
                                             </span>
-                                            <input value ="<% if(user.residentPastor) { %> <%= user.residentPastor %><% } %> "type="text" class = "form-control">
+                                            <input name = "resident_pastor" id = "resident_pastor" value ="<%=currentUser.residentPastor %> "type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -133,12 +137,12 @@
                                     <div class="row">
                                     <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="">NAME OF MINISTRY/ORGANIZATION:</label>
+                                        <label for="organization">NAME OF MINISTRY/ORGANIZATION:</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-sitemap"></i>
                                             </span>
-                                            <input value = "<% if(user.organisationName) { %> <%= user.organisationName %><% } %>" type="text" class = "form-control">
+                                            <input name = "organization" id = "organization" value = "<%=currentUser.organisationName %>" type="text" class = "form-control">
                                         </div>
                                     </div>
                                     </div>
@@ -147,7 +151,7 @@
                             </form>
                         </div>
                     <div class="col-md-3">
-                      <div style = "margin-top:18px;" class="mytbn-nav ">
+                      <div style = "margin-top:70px;" class="mytbn-nav ">
                           <div class="item">
                             <h4>My Account</h4>
                               <ul>
@@ -186,4 +190,83 @@
 </div>
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script>
+    $('#update-form').validate({
+    rules: {
+        firstname: 'required',
+        middlename: 'required',
+        lastname: 'required',
+        dob:{
+         required: "Date of Birth is required",
+         date:"Enter date only"
+       },
+       address: 'required',
+       lga: 'required',
+       location: 'required',
+       email: {
+        required: true,
+        email: true,
+       },
+       church_chapter: 'required',
+       resident_pastor: 'required',
+       organization: 'required',
+
+    },
+    messages: {
+        firstname: 'Please provide firstname',
+        middlename: 'Please provide middlename',
+        lastname: 'Please provide lastname',
+        dob:{
+         required: "Date of Birth is required",
+         date:"enter date only"
+       },
+       address: 'Please provide address',
+       lga: 'Please provide Local Government Area',
+       location: 'Please provide location',
+       email: 'Please provide a valid email',
+       church_chapter: 'Please provide Church chapter',
+       resident_pastor: 'Please provide Resident Pastor',
+       organization: 'Please provide organization',
+
+    },
+    errorPlacement: (error, element) => {
+        error.appendTo(element.parent("div").parent("div") );
+    },
+    submitHandler: () => {
+        const data = {
+            "firstname": $("#firstname").val(),
+            "middlename": $("#middlename").val(),
+            "lastname": $("#lastname").val(),
+            "dateOfBirth": $("#dob").val(),
+            "location": $("#location").val(),
+            "address": $("#address").val(),
+            "LGA": $("#lga").val(),
+            "email": $("#email").val(),
+            "chapterLocation": $("#church_chapter").val(),
+            "residentPastor": $("#resident_pastor").val(),
+            "organisationName": $("#organization").val(),
+            "userId" : $("#userId").val(),
+        }
+        
+     $.ajax({
+         url: '/update_profile',
+         type: 'PUT',
+         dataType: 'json',
+         data,
+         success: data => {
+            $(".alertBox").html(data.message).addClass('green');
+         },
+         error: data => {
+            $(".alertBox").removeClass("green");
+            $(".alertBox").html(data.responseJSON.msg).addClass('red');
+         },
+        });
+       }
+    });
+    $(document).on('submit', '#update-form', event => {
+    $(document).ready(function (){
+    event.preventDefault();
+  });
+  });
+</script>
 <%- include('../../end'); -%>
