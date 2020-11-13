@@ -187,3 +187,9 @@ http {
 }
 
 
+# HTTPS certificate and key
+    ssl_certificate /etc/letsencrypt/live/live.faithtofaithtv.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/live.faithtofaithtv.org/privkey.pem;
+
+ listen 443 ssl;
+        server_name live.faithtofaithtv.org;
