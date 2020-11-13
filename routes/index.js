@@ -461,7 +461,9 @@ router.put('/update_profile', async(req, res) =>{
     console.log(error);
     res.status(404).send({msg: error.message})
   }
-})
+});
+
+
 
 //show proposal routes
 router.post('/show_proposal', async (req, res, next) => {
