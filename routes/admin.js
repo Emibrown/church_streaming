@@ -84,6 +84,8 @@ Settings.find({}, (err, settings) => {
   if(settings.length == 0){
       var newSettings = new Settings({
         settingsId: "site_settings",
+        publicStreamKey: shortid.generate(),
+        memberStreamKey: shortid.generate()
       });
       newSettings.save((err, settings) => {
         if (err) { 
@@ -161,7 +163,8 @@ router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
 });
 
 router.get('/streaming', ensureAuthenticated, async(req, res, next) => {
-  res.render('admin/pages/streaming', { title: 'Streaming settings' }); 
+  const settings = await Settings.findOne({settingsId:"site_settings"})
+  res.render('admin/pages/streaming', { title: 'Streaming settings', settings }); 
 });
 
 router.get('/edit_about', ensureAuthenticated, async(req, res, next) => {
@@ -198,6 +201,34 @@ router.put('/settings', ensureAuthenticated, async (req, res, next) => {
       console.log(settings)
       await settings.save()
       res.send({status: 200, message: 'Settings saved'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.get('/public-key', ensureAuthenticated, async (req, res, next) => {
+  try {
+      const settings = await Settings.findOne({settingsId:"site_settings"})
+      const publicStreamKey = shortid.generate()
+      await Object.assign(settings, {
+        publicStreamKey
+      });
+      await settings.save()
+      res.send({status: 200, message: publicStreamKey});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.get('/member-key', ensureAuthenticated, async (req, res, next) => {
+  try {
+      const settings = await Settings.findOne({settingsId:"site_settings"})
+      const memberStreamKey = shortid.generate()
+      await Object.assign(settings, {
+        memberStreamKey
+      });
+      await settings.save()
+      res.send({status: 200, message: memberStreamKey});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }

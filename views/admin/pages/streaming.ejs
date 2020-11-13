@@ -25,22 +25,55 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <div id = "message"></div>
-                        <form id="add_about">
+                      
+                            <div class="">
+                                <label for="title">Streaming server URL</label>
+                            </div>
+                            
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="stream" readonly value="rtmp://live.faithtofaithtv.org/show/">
+                                <div class="input-group-append">
+                                    <button type="button" data-clipboard-target="#stream" class="btn btn-primary clipboard-trigger">
+                                       Copy
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            </div>
                 
-                            <div class="form-group">
+                            <div class="">
                                 <label for="title">Public live streaming key</label>
-                                <input type = "text" id="title" name="title" rows="5" class="form-control" disabled  required>    
-                                <button class="mt-1 btn btn-primary" id = "btn">Generate new Key</button>             
                             </div>
-
-                        
+                            
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="stream1" readonly value="<%= settings.publicStreamKey %>">
+                                <div class="input-group-append">
+                                    <button type="button" data-clipboard-target="#stream1" class="btn btn-primary clipboard-trigger">
+                                        Copy
+                                    </button>
+                                </div>
+                            </div>
                             <div class="form-group">
-                                <label for="title">Member only live streaming key</label>
-                                <input type = "text" id="title" name="title" rows="5" class="form-control" disabled required>     
-                                <button class="mt-1 btn btn-primary" id = "btn">Generate new Key</button>                         
+                                <button class="mt-1 btn btn-primary" id ="publicbtn">Generate new Key</button>             
                             </div>
+                        
+                            <div class="">
+                                <label for="title">Members only live streaming key</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="stream2" readonly value="<%= settings.memberStreamKey %>">
+                                <div class="input-group-append">
+                                    <button type="button" data-clipboard-target="#stream2" class="btn btn-primary clipboard-trigger">
+                                        Copy
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="mt-1 btn btn-primary" id = "memberbtn">Generate new Key</button>             
+                            </div>
+                        
                           
-                        </form>
+                      
                     </div>
                 </div>
             </div>
@@ -57,37 +90,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
 
 <script>
-    $(document).on('submit', '#add_about', event => {
-        event.preventDefault();
-        const file = document.querySelector('#image')
-        const data = new FormData()
-        data.append("description", $("#desc").val());
-        data.append("title", $("#title").val());
-        data.append("file", file.files[0]);
-        if(file.files.length < 1 ){
-            displayerr("Please add an image");
-        }else{
-            const config = {
-                onUploadProgress: function(progressEvent) {
-                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                $('#btn').html(percentCompleted + "% of 100%");
-                }
-            }
-
-            axios.post('/admin/about',data, config)
+    $("#publicbtn").click(function() {
+        axios.get('/admin/public-key')
             .then(function (response) {
-                // handle success
-                console.log(response)
-                const url = "/admin/about";    
-                $(location).attr('href',url);
-                displaymsg(response.data.message);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-                displayerr(error.message)
-            })
-        }
-     })
+            // handle success
+            $("#stream1").val(response.data.message)
+            displaymsg("Streaming key generated");
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error.message)
+        })
+    });
+
+    $("#memberbtn").click(function() {
+        axios.get('/admin/member-key')
+            .then(function (response) {
+            // handle success
+            $("#stream2").val(response.data.message)
+            displaymsg("Streaming key generated");
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error.message)
+        })
+    });
+
+
 </script>
 <%- include('../../end'); -%>
