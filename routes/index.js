@@ -172,7 +172,7 @@ router.get('/login', authenticated, (req, res, next) =>{
   res.render('users/pages/login', { title: 'Faith TV | Login' });
 });
 
-router.get('/change-password', (req, res, next) =>{
+router.get('/change-password', ensureAuthenticated, (req, res, next) =>{
   res.render('users/pages/change_password', { title: 'Faith TV | Change password' });
 });
 router.get('/edit-profile', ensureAuthenticated, (req, res, next) =>{
@@ -407,7 +407,35 @@ router.post('/update_password', async(req, res, next) => {
     return res.status(400).send({msg: "Cannot find details please request new"})
   }
   }catch(error){
-    return res.status(400).send({msg: "Records not found, failed to process"})
+    res.status(404).send({msg: error.message})
+  }
+});
+
+// change password
+router.put('/change_password', async(req, res, next) => {
+  try{
+   const {userId, previous, password} = req.body;
+ 
+   const userGet = await User.findOne({_id: userId})
+   console.log(userGet);
+   console.log(userGet.password);
+   if(await bcrypt.compare(previous, userGet.password)){
+    await User.updateOne(
+      { _id: userId },
+      { $set:
+         {
+           password : await bcrypt.hash(password, 8)
+          
+         }
+      }
+   );
+    return res.status(200).send({status:200, message: "Password was changed successfully"})
+   }else{
+    return res.status(404).send({status:400, msg: "Previous password is incorrect"})
+   }
+  }catch(error){
+    console.log
+    res.status(404).send({msg: error.message})
   }
 });
 
