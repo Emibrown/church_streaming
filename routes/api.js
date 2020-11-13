@@ -461,6 +461,7 @@ router.get('/shows', ensureAuthenticated, async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
 });
+
 router.get('/add_show', ensureAuthenticated, async (req, res, next) => {
     // add shows view
     try {
@@ -508,15 +509,15 @@ router.post('/show', ensureAuthenticated, multers.upload.single('file'), async (
     }
 });
 
-router.get('/show/:id', ensureAuthenticated, async (req, res, next) => {
-    // get a single a show
-    try {
-        const show = await Show.findOne({code:req.params.id})
-        sendJSONresponse(res, 200, {show});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
+// router.get('/show/:id', ensureAuthenticated, async (req, res, next) => {
+//     // get a single a show
+//     try {
+//         const show = await Show.findOne({code:req.params.id})
+//         sendJSONresponse(res, 200, {show});
+//     } catch (error) {
+//         sendJSONresponse(res, 400, {error});
+//     }
+// });
 
 router.put('/show/:id', ensureAuthenticated, multers.upload.single('file'), async (req, res, next) => {
     // update a show
@@ -562,21 +563,42 @@ router.get('/delete_show/:id', ensureAuthenticated, async (req, res, next) => {
 });
 
 //schedule routes
-router.post('/schedule', ensureAuthenticated, async (req, res, next) => {
+router.get('/add_schedule', ensureAuthenticated, async (req, res, next) => {
+    // add schedule view
+    try {
+        const shows = await Show.find({})
+        res.render('admin/pages/add_schedule', { title: 'Add Schedule', shows});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.get('/edit_schedule/:id', ensureAuthenticated, async (req, res, next) => {
+    // edit shows view
+    try {
+        const schedule = await Schedule.findOne({_id:req.params.id})
+        res.render('admin/pages/edit_schedule', { title: 'Edit Schedule', schedule});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
+router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
     try{
       const schedule = new Schedule(req.body);
       await schedule.save();
       sendJSONresponse(res, 200, {message: "schedule added successfully"});
     } catch (error) {
+        console.log(error)
       sendJSONresponse(res, 400, {error});
     }
   });
   
-  router.get('/schedule', ensureAuthenticated, async (req, res, next) => {
+  router.get('/schedules', ensureAuthenticated, async (req, res, next) => {
     // get all schedules
     try {
-        const schedule = await Schedule.find({})
-        sendJSONresponse(res, 200, {schedule});
+        const schedules = await Schedule.find({}).populate('show')
+        res.render('admin/pages/schedules', { title: 'Schedules', schedules});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -604,10 +626,11 @@ router.post('/schedule', ensureAuthenticated, async (req, res, next) => {
     }
   });
   
-  router.delete('/schedule/:id', ensureAuthenticated, async (req, res, next) => {
+  router.get('/delete_schedule/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a schedule
     try {
         await Schedule.findOneAndDelete({_id:req.params.id});
+        res.redirect('/admin/api/schedules')
         sendJSONresponse(res, 200, {message: 'schedule deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});

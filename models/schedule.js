@@ -10,17 +10,33 @@ var scheduleSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Show'
         },
-        startDate: {
-            type: Date, 
+        type: {
+            type: String, 
             required: true,
         },
-        endDate: {
-            type: Date, 
+       
+        date:{
+            type: Date,
+            required: true 
+        },
+        startTime: {
+            type: String, 
             required: true,
-        }
+        },
+        endTime: {
+            type: String, 
+            required: true,
+        },
+        timeRange: [{
+            type: String, 
+            required: true,
+            unique: true
+        }],
     }
 )
+scheduleSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
 var Schedule = mongoose.model('Schedule', scheduleSchema);
+
 
 module.exports = Schedule;
