@@ -1,7 +1,6 @@
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 var User = require('./models/user');
 var oAuth = require('./config/oAuth');
 
@@ -104,16 +103,5 @@ passport.use(
   );
 
 
-//   passport.use(new GoogleStrategy({
-//     clientID:     GOOGLE_CLIENT_ID,
-//     clientSecret: GOOGLE_CLIENT_SECRET,
-//     callbackURL: "http://yourdomain:3000/auth/google/callback",
-//     passReqToCallback   : true
-//   },
-//   function(request, accessToken, refreshToken, profile, done) {
-//     User.findOrCreate({ googleId: profile.id }, function (err, user) {
-//       return done(err, user);
-//     });
-//   }
-// ));
+
 
