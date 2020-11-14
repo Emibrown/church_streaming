@@ -82,9 +82,10 @@ router.get('/watch/:pro', async (req, res, next) => {
 router.get('/watch/:pro/:video', async(req, res, next) => {
   const video = await Video.findOne({code:req.params.video}).populate('season')
   const programme = await Programme.findOne({code:req.params.pro})
-  const season = await Season.find({programme:programme._id})
+  let season = []
   let list = []
   if(programme.type == 'series' ){
+    season = await Season.find({programme:programme._id})
     list = await Video.find({season:video.season})
   }else{ 
     list = await Video.find({programme:programme._id})
