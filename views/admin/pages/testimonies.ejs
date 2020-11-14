@@ -24,22 +24,22 @@
                         <thead>
                             <tr>
                                 <th>Full name</th>
-                                <th class="text-center">location</th>
-                                <th class="text-center">email</th>
-                                <th class="text-center">Phone no</th>
-                                <th class="text-center">Testimony</th>
-                                <th class="text-center">Date added</th>
+                                <th class="">location</th>
+                                <th class="">email</th>
+                                <th class="">Phone no</th>
+                                <th class="">Testimony</th>
+                                <th class="">Date added</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% testimonies.forEach(function (testimonies,index){ %>
                                 <tr>
                                     <td class="text-left"><%= testimonies.fullName %></td>
-                                    <td class="text-center"><%= testimonies.location %></td>
-                                    <td class="text-center"><%= testimonies.email %></td>
-                                    <td class="text-center"><%= testimonies.phone %></td>
-                                    <td class="text-center"><%= testimonies.testimony %></td>
-                                    <td class="text-center"><%= moment(testimonies.date).format('LL') %></td>
+                                    <td class=""><%= testimonies.location %></td>
+                                    <td class=""><%= testimonies.email %></td>
+                                    <td class=""><%= testimonies.phone %></td>
+                                    <td class=""><%= testimonies.testimony %></td>
+                                    <td class=""><%= moment(testimonies.date).format('LL') %></td>
                                 </tr>
                             <% }) %>      
                         </tbody>

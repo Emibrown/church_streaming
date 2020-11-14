@@ -24,20 +24,20 @@
                         <thead>
                             <tr>
                                 <th>Full name</th>
-                                <th class="text-center">email</th>
-                                <th class="text-center">Phone no</th>
-                                <th class="text-center">Feedback</th>
-                                <th class="text-center">Date added</th>
+                                <th class="">email</th>
+                                <th class="">Phone no</th>
+                                <th class="">Feedback</th>
+                                <th class="">Date added</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% enquiries.forEach(function (enquiries,index){ %>
                                 <tr>
                                     <td class="text-left"><%= enquiries.fullName %></td>
-                                    <td class="text-center"><%= enquiries.email %></td>
-                                    <td class="text-center"><%= enquiries.phoneNumber %></td>
-                                    <td class="text-center"><%= enquiries.enquiries %></td>
-                                    <td class="text-center"><%= moment(enquiries.date).format('LL') %></td>
+                                    <td class=""><%= enquiries.email %></td>
+                                    <td class=""><%= enquiries.phoneNumber %></td>
+                                    <td class=""><%= enquiries.enquiries %></td>
+                                    <td class=""><%= moment(enquiries.date).format('LL') %></td>
                                 </tr>
                             <% }) %>      
                         </tbody>

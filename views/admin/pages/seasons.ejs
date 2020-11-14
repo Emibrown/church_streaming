@@ -35,23 +35,23 @@
                         <thead>
                             <tr>
                                 <th>Programme</th>
-                                <th class="text-center">Season</th>
-                                <th class="text-center">Date added</th>
-                                <th class="text-center">Edit</th>
-                                <th class="text-center">Delete</th>
+                                <th class="">Season</th>
+                                <th class="">Date added</th>
+                                <th class="">Edit</th>
+                                <th class="">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% seasons.forEach(function (item,index){ %>
                                 <tr>
                                     <td class=""><%= item.programme.title %></td>
-                                    <td class="text-center"><%= item.title%></td>
-                                    <td class="text-center"><%= moment(item.date).format('LL') %></td>
-                                    <td class="text-center">
+                                    <td class=""><%= item.title%></td>
+                                    <td class=""><%= moment(item.date).format('LL') %></td>
+                                    <td class="">
                                         <a href= "/admin/edit_season/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">Edit</a>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <a href= "/admin/delete_season/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-danger btn-sm">Delete</a>
                                     </td>

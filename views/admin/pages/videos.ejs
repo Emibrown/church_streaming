@@ -35,12 +35,12 @@
                      <thead>
                         <tr>
                            <th >Cover image</th>
-                           <th class= "text-center">Title</th>
-                           <th class= "text-center">Type</th>
-                           <th class= "text-center">Programme</th>
-                           <th class= "text-center">Date added</th>
-                           <th class= "text-center">Duration</th>
-                           <th class= "text-center">Action</th>
+                           <th class= "">Title</th>
+                           <th class= "">Type</th>
+                           <th class= "">Programme</th>
+                           <th class= "">Date added</th>
+                           <th class= "">Duration</th>
+                           <th class= "">Action</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -54,17 +54,17 @@
                                  </div>
                                  
                            </td>
-                           <td class= "text-center"><%= item.title %></td>
+                           <td class= ""><%= item.title %></td>
                            <%if(item.programme){%> 
-                           <td class= "text-center"><%= item.programme.type %></td>
-                           <td class= "text-center"><%= item.programme.title %></td>
+                           <td class= ""><%= item.programme.type %></td>
+                           <td class= ""><%= item.programme.title %></td>
                            <% }else{ %>  
-                           <td class= "text-center">null</td>
-                           <td class= "text-center">null</td> 
+                           <td class= "">null</td>
+                           <td class= "">null</td> 
                            <% } %>                  
-                           <td class= "text-center"><%= moment(item.date).format('LL') %></td>   
-                           <td class= "text-center"><%= item.duration %></td>  
-                           <td class= "text-center">
+                           <td class= ""><%= moment(item.date).format('LL') %></td>   
+                           <td class= ""><%= item.duration %></td>  
+                           <td class= "">
                               <div class="col-12 form-group ">
                                  <a href="/admin/video/<%= item._id %>" class="btn btn-primary " id = "btn">view</a>
                                  <a  href="/admin/delete_video/<%= item._id %> " class="btn btn-danger">Delete</a>

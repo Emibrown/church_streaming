@@ -24,21 +24,21 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th class="text-center">Sur name</th>
-                                <th class="text-center">first name</th>
-                                <th class="text-center"> phone no</th>
-                                <th class="text-center">Date added</th>
-                                <th class="text-center">Options</th>
+                                <th class="">Sur name</th>
+                                <th class="">first name</th>
+                                <th class=""> phone no</th>
+                                <th class="">Date added</th>
+                                <th class="">Options</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% patnership.forEach(function (patnership,index){ %>
                                 <tr>
                                     <td class="text-left"><%= patnership.title %></td>
-                                    <td class="text-center"><%= patnership.surName %></td>
-                                    <td class="text-center"><%= patnership.firstName %></td>
-                                    <td class="text-center"><%= patnership.phoneNumber %></td>
-                                    <td class="text-center"><%= moment(patnership.date).format('LL') %></td><td class="text-center">
+                                    <td class=""><%= patnership.surName %></td>
+                                    <td class=""><%= patnership.firstName %></td>
+                                    <td class=""><%= patnership.phoneNumber %></td>
+                                    <td class=""><%= moment(patnership.date).format('LL') %></td><td class="">
                                         <a href= "/admin/api/patnership/<%=patnership._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                     </td>

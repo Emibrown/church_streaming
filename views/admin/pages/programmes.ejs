@@ -35,12 +35,12 @@
                         <thead>
                             <tr>
                                 <th>Image</th>
-                                <th class="text-center">Title</th>
-                                <th class="text-center">Type</th>
-                                <th class="text-center">Category</th>
-                                <th class="text-center">Date</th>
-                                <th class="text-center">Options</th>
-                                <th  class="text-center">Delete</th>
+                                <th class="">Title</th>
+                                <th class="">Type</th>
+                                <th class="">Category</th>
+                                <th class="">Date</th>
+                                <th class="">Options</th>
+                                <th  class="">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,19 +49,19 @@
                                     <td class="text-left">
                                         <img width="40" class=" thumbnail" src="/large_images/<%= item.image %>" alt="">
                                     </td>
-                                    <td class="text-center"><%= item.title%></td>
-                                    <td class="text-center"><%= item.type %></td>
-                                    <td class="text-center">
+                                    <td class=""><%= item.title%></td>
+                                    <td class=""><%= item.type %></td>
+                                    <td class="">
                                         <% item.categories.map((cat)=>{ %>
                                         <%= cat.title %> <br>
                                         <% }) %>
                                     </td>
-                                    <td class="text-center"><%= moment(item.date).format('LL') %></td>
-                                    <td class="text-center">
+                                    <td class=""><%= moment(item.date).format('LL') %></td>
+                                    <td class="">
                                         <a href= "/admin/programme/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <a href= "/admin/delete_programme/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-danger btn-sm">Delete</a>
                                     </td>
