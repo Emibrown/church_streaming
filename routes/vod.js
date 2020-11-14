@@ -73,6 +73,9 @@ router.get('/', async(req, res, next) => {
 router.get('/watch/:pro', async (req, res, next) => {
   const programme = await Programme.findOne({code:req.params.pro})
   const videos = await Video.find({programme:programme._id}).sort({ addedOn : 1 })
+  if(videos.length == 0){
+    res.redirect("/vod");
+  }
   res.redirect("/vod/watch/"+req.params.pro+"/"+videos[0].code);
 });
 
