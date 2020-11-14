@@ -35,9 +35,9 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th class="text-center">Description</th>
-                                <th class="text-center">Added On</th>
-                                <th class="text-center">Actions</th>
+                                <th class="">Description</th>
+                                <th class="">Added On</th>
+                                <th class="">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,9 +57,9 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-center"><%=item.description%></td>
-                                    <td class="text-center"><%= moment(item.date).format('LL') %></td>
-                                    <td class="text-center">
+                                    <td class=""><%=item.description%></td>
+                                    <td class=""><%= moment(item.date).format('LL') %></td>
+                                    <td class="">
                                         <a href= "/admin/api/edit_show/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">Edit</a>
                                         <a href= "/admin/api/delete_show/<%=item._id%>" type="button" id="PopoverCustomT-1"
