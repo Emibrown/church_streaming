@@ -1,4 +1,5 @@
 <%- include('../header'); -%>
+<link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
  <!-- MainContent -->
  <div id="Main">
     <div class="container">
@@ -120,7 +121,8 @@
  <!-- MainContent End-->
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
-<script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
+<script src="https://unpkg.com/video.js/dist/video.js"></script>
+<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
 
 <script>
     var _play_count = 0;
