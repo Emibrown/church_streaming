@@ -35,16 +35,16 @@
                         <thead>
                             <tr>
                                 <th>File name </th>
-                                <th class="text-center">FIle Url</th>
-                                <th class="text-center">Date added</th>
+                                <th class="">FIle Url</th>
+                                <th class="">Date added</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% static.forEach(function (item,index){ %>
                                 <tr>
                                     <td class="text-left"><%= item.title %></td>
-                                    <td class="text-center"><%= item.fileURL %></td>
-                                    <td class="text-center"><%= moment(item.date).format('LL') %></td>
+                                    <td class=""><%= item.fileURL %></td>
+                                    <td class=""><%= moment(item.date).format('LL') %></td>
                                 </tr>
                             <% }) %>      
                         </tbody>

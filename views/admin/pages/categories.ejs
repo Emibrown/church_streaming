@@ -35,21 +35,21 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th class="text-center">Date added</th>
-                                <th class="text-center">Edit</th>
-                                <th  class="text-center">Delete</th>
+                                <th class="">Date added</th>
+                                <th class="">Edit</th>
+                                <th  class="">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% categories.forEach(function (item,index){ %>
                                 <tr>
                                     <td class="text-left"><%= item.title %></td>
-                                    <td class="text-center"><%= moment(item.date).format('LL') %></td>
-                                    <td class="text-center">
+                                    <td class=""><%= moment(item.date).format('LL') %></td>
+                                    <td class="">
                                         <a href= "/admin/edit_category/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">Edit</a>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <a href= "/admin/delete_category/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">Delete</a>
                                     </td>

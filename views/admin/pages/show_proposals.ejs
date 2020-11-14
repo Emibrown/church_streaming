@@ -24,21 +24,21 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th class="text-center">Genre</th>
-                                <th class="text-center">Supplier name</th>
-                                <th class="text-center">Supplier phone no</th>
-                                <th class="text-center">Date added</th>
-                                <th class="text-center">Options</th>
+                                <th class="">Genre</th>
+                                <th class="">Supplier name</th>
+                                <th class="">Supplier phone no</th>
+                                <th class="">Date added</th>
+                                <th class="">Options</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% proposal.forEach(function (proposal,index){ %>
                                 <tr>
                                     <td class="text-left"><%= proposal.title %></td>
-                                    <td class="text-center"><%= proposal.genre %></td>
-                                    <td class="text-center"><%= proposal.supplierName %></td>
-                                    <td class="text-center"><%= proposal.phoneNumber %></td>
-                                    <td class="text-center"><%= moment(proposal.date).format('LL') %></td><td class="text-center">
+                                    <td class=""><%= proposal.genre %></td>
+                                    <td class=""><%= proposal.supplierName %></td>
+                                    <td class=""><%= proposal.phoneNumber %></td>
+                                    <td class=""><%= moment(proposal.date).format('LL') %></td><td class="">
                                         <a href= "/admin/api/show_proposal/<%=proposal._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                     </td>

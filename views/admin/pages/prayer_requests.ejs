@@ -24,20 +24,20 @@
                         <thead>
                             <tr>
                                 <th>Full name</th>
-                                <th class="text-center">email</th>
-                                <th class="text-center">Phone no</th>
-                                <th class="text-center">Prayer request</th>
-                                <th class="text-center">Date added</th>
+                                <th class="">email</th>
+                                <th class="">Phone no</th>
+                                <th class="">Prayer request</th>
+                                <th class="">Date added</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% prayerRequest.forEach(function (prayerRequest,index){ %>
                                 <tr>
                                     <td class="text-left"><%= prayerRequest.fullName %></td>
-                                    <td class="text-center"><%= prayerRequest.email %></td>
-                                    <td class="text-center"><%= prayerRequest.phone %></td>
-                                    <td class="text-center"><%= prayerRequest.prayerRequest %></td>
-                                    <td class="text-center"><%= moment(prayerRequest.date).format('LL') %></td>
+                                    <td class=""><%= prayerRequest.email %></td>
+                                    <td class=""><%= prayerRequest.phone %></td>
+                                    <td class=""><%= prayerRequest.prayerRequest %></td>
+                                    <td class=""><%= moment(prayerRequest.date).format('LL') %></td>
                                 </tr>
                             <% }) %>      
                         </tbody>

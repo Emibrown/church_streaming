@@ -24,21 +24,22 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th class="text-center">Full name</th>
-                                <th class="text-center">ministry name</th>
-                                <th class="text-center"> phone no</th>
-                                <th class="text-center">Date added</th>
-                                <th class="text-center">Options</th>
+                                <th class="">Full name</th>
+                                <th class="">ministry name</th>
+                                <th class=""> phone no</th>
+                                <th class="">Date added</th>
+                                <th class="">Options</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% advert.forEach(function (advert,index){ %>
                                 <tr>
                                     <td class="text-left"><%= advert.title %></td>
-                                    <td class="text-center"><%= advert.fullName %></td>
-                                    <td class="text-center"><%= advert.ministryName %></td>
-                                    <td class="text-center"><%= advert.phoneNumber %></td>
-                                    <td class="text-center"><%= moment(advert.date).format('LL') %></td><td class="text-center">
+                                    <td class=""><%= advert.fullName %></td>
+                                    <td class=""><%= advert.ministryName %></td>
+                                    <td class=""><%= advert.phoneNumber %></td>
+                                    <td class=""><%= moment(advert.date).format('LL') %></td>
+                                    <td class="">
                                         <a href= "/admin/api/advert/<%=advert._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                     </td>

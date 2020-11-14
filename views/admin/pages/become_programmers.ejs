@@ -24,21 +24,22 @@
                         <thead>
                             <tr>
                                 <th>Full name</th>
-                                <th class="text-center">Ministry name</th>
-                                <th class="text-center">Programme title</th>
-                                <th class="text-center">Phone no</th>
-                                <th class="text-center">Date added</th>
-                                <th class="text-center">Options</th>
+                                <th class="">Ministry name</th>
+                                <th class="">Programme title</th>
+                                <th class="">Phone no</th>
+                                <th class="">Date added</th>
+                                <th class="">Options</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% programmer.forEach(function (programmer,index){ %>
                                 <tr>
                                     <td class="text-left"><%= programmer.fullName %></td>
-                                    <td class="text-center"><%= programmer.ministryName %></td>
-                                    <td class="text-center"><%= programmer.programmeTitle %></td>
-                                    <td class="text-center"><%= programmer.phone %></td>
-                                    <td class="text-center"><%= moment(programmer.date).format('LL') %></td><td class="text-center">
+                                    <td class=""><%= programmer.ministryName %></td>
+                                    <td class=""><%= programmer.programmeTitle %></td>
+                                    <td class=""><%= programmer.phone %></td>
+                                    <td class=""><%= moment(programmer.date).format('LL') %></td>
+                                    <td class="">
                                         <a href= "/admin/api/become_programmer/<%=programmer._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                     </td>
