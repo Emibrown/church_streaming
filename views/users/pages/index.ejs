@@ -440,10 +440,10 @@
       });
       this.on('error', function() {
          setTimeout(function(){ 
-            player.reset() 
-            player.src({ type: "application/x-mpegURL", src: link  })
-            player.load(); 
-            player.play();
+            this.reset() 
+            this.src({ type: "application/x-mpegURL", src: link  })
+            this.load(); 
+            this.play();
          }, 5000);
       });
    });
