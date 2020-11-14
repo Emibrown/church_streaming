@@ -34,7 +34,7 @@ const youtube = (fileName,stream_key) =>  [
 
 
 const startStreaming = (live_stream,streamingKey) => {
-    const ffmpeg_process = spawn(cmd, local(live_stream.video,streamingKey),{detached: true});
+    const ffmpeg_process = spawn(cmd, local(live_stream.video.video, streamingKey),{detached: true});
 
     ffmpeg_process.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
