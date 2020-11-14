@@ -530,7 +530,7 @@ router.get('/ready', async(req, res, next) => {
     const live_stream = await Schedule.findOne(
       { 
         doneStreaming:'0',
-        scheduledOn: {$lte: new Date()},
+        startTime: {$lte: new Date()},
       }
     );
     if(live_stream){
