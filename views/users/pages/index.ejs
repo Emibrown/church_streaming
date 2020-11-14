@@ -435,10 +435,10 @@
    }).ready(function(){
       this.play();
       
-      player.on('ended', function() {
+      this.on('ended', function() {
          alert('video is done!');
       });
-      player.on('error', function() {
+      this.on('error', function() {
          setTimeout(function(){ 
             player.reset() 
             player.src({ type: "application/x-mpegURL", src: link  })
