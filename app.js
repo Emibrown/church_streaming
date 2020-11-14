@@ -15,7 +15,7 @@ const vodRouter = require('./routes/vod');
 const adminRouter = require('./routes/admin');
 const apiRouter = require('./routes/api');
 const aboutRouter = require('./routes/about');
-// const jobs = require('./cron/job');
+const jobs = require('./cron/job');
 
 
 const setuppassport = require('./setuppassport');
@@ -99,6 +99,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// jobs.start()
+jobs.start()
 
 module.exports = app;

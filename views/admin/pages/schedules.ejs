@@ -13,17 +13,7 @@
                  Schedules
                </div>
            </div> 
-           <div class="page-title-actions">
-            <div class="d-inline-block dropdown">
-                <a type="button" href="/admin/api/add_schedule" class="btn-shadow 
-                 btn btn-info">
-                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                        <i class="fa fa-business-time fa-w-20"></i>
-                    </span>
-                    Add schedule
-                </a>
-            </div>
-        </div>   
+          
         </div>
    </div>        
    <div class="tabs-animation">
@@ -35,25 +25,21 @@
                         <thead>
                             <tr>
                                 <th>Show</th>
-                                <th  class="text-center">Type</th>
-                                <th class="text-center">Date</th>
-                                <th  class="text-center">Start time</th>
-                                <th  class="text-center">End time</th>
-                                <th  class="text-center">Actions</th>
+                                <th>Video</th>
+                                <th  class="">Start time</th>
+                                <th  class="">End time</th>
+                                <th  class="">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% schedules.forEach(function (item,index){ %>
                                 <tr>
-                                    <td class="text-left"><%= item.show.title %></td>
-                                    <td class="text-left"><%= item.type %></td>
-                                    <td class="text-center"><%= moment(item.date).format('YYYY-MM-DD') %></td>
-                                    <td class="text-center"><%= item.startTime %></td>
-                                    <td class="text-center"><%= item.endTime %></td>
+                                    <td class=""><%= item.show.title %></td>
+                                    <td class=""><a href="/admin/video/<%= item.video._id  %> "><%= item.video.title %></a></td>
+                                    <td class=""><%= moment(item.startTime).format('LLL') %></td>
+                                    <td class=""><%= moment(item.endTime).format('LLL')  %></td>
 
-                                    <td class="text-center">
-                                        <a href= "/admin/api/edit_schedule/<%=item._id%>" type="button" id="PopoverCustomT-1"
-                                            class="btn btn-primary btn-sm">Edit</a>
+                                    <td class="">
                                         <a href= "/admin/api/delete_schedule/<%=item._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">Delete</a>
                                     </td>

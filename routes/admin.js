@@ -5,6 +5,7 @@ const Video = require('../models/video');
 const Settings = require('../models/settings');
 const About = require('../models/about');
 const Programme = require('../models/programme');
+const Schedule = require('../models/schedule');
 const Season = require('../models/season');
 const passport = require('passport');
 const multers = require('../middleware/multers')
@@ -526,9 +527,8 @@ router.get('/pre_recorded', ensureAuthenticated, async(req, res, next) => {
 
 router.get('/ready', async(req, res, next) => {
   try{
-    const live_stream = await Video.findOne(
+    const live_stream = await Schedule.findOne(
       { 
-        type: '2',
         doneStreaming:'0',
         scheduledOn: {$lte: new Date()},
       }
@@ -537,11 +537,11 @@ router.get('/ready', async(req, res, next) => {
       await Object.assign(live_stream, {doneStreaming:'1'});
       await live_stream.save()
     }
-    sendJSONresponse(res, 200, {live_stream});
+    const settings = await Settings.findOne({settingsId:"site_settings"})
+    sendJSONresponse(res, 200, {live_stream,settings});
   }catch{
     sendJSONresponse(res, 400, {error});
   }
- 
 });
 
 router.get('/done/:id', async(req, res, next) => {

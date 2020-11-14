@@ -8,6 +8,7 @@ const MusicVideo = require('../models/musicVideo');
 const Patnership = require('../models/patnership');
 const Static = require('../models/static');
 const Settings = require('../models/settings');
+const Video = require('../models/video');
 const Show = require('../models/show');
 const Schedule = require('../models/schedule');
 const Enquiry = require('../models/enquiries');
@@ -490,7 +491,7 @@ router.post('/show', ensureAuthenticated, multers.upload.single('file'), async (
         req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
         await sharp(req.file.path)
         .resize({ width: 400, height: 200 })
-        .webp({quality: 60})
+        .webp({quality: 100})
         .toFile(path.resolve('./public','small_images',req.body.image))
 
         await sharp(req.file.path)
@@ -563,11 +564,15 @@ router.get('/delete_show/:id', ensureAuthenticated, async (req, res, next) => {
 });
 
 //schedule routes
-router.get('/add_schedule', ensureAuthenticated, async (req, res, next) => {
+router.get('/add_schedule/:video', ensureAuthenticated, async (req, res, next) => {
     // add schedule view
     try {
         const shows = await Show.find({})
-        res.render('admin/pages/add_schedule', { title: 'Add Schedule', shows});
+        const video = await Video.findOne({_id:req.params.video})
+        if(!video){
+            res.redirect('/admin/api/schedules')
+        }
+        res.render('admin/pages/add_schedule', { title: 'Add Schedule', shows,video});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -597,7 +602,7 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
   router.get('/schedules', ensureAuthenticated, async (req, res, next) => {
     // get all schedules
     try {
-        const schedules = await Schedule.find({}).populate('show')
+        const schedules = await Schedule.find({}).populate('show').populate('video').sort({startTime:'asc'})
         res.render('admin/pages/schedules', { title: 'Schedules', schedules});
     } catch (error) {
         sendJSONresponse(res, 400, {error});

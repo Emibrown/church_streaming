@@ -10,28 +10,22 @@ var scheduleSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Show'
         },
-        type: {
-            type: String, 
-            required: true,
+        doneStreaming: {
+            type: String,
+            default: "0"
         },
-       
-        date:{
-            type: Date,
-            required: true 
+        video: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Video'
         },
         startTime: {
-            type: String, 
+            type: Date, 
             required: true,
         },
         endTime: {
-            type: String, 
+            type: Date, 
             required: true,
         },
-        timeRange: [{
-            type: String, 
-            required: true,
-            unique: true
-        }],
     }
 )
 scheduleSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });

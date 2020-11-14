@@ -10,6 +10,7 @@ const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
 const Enquiry = require('../models/enquiries');
 const Partnership = require('../models/patnership');
+const Schedule = require('../models/schedule');
 const About = require('../models/about');
 const Settings = require('../models/settings');
 const RequestPassword = require('../models/requestPassword');
@@ -63,49 +64,56 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
-  const categories = await Category.find({})
-  // const test = await Video.find(
-  //   { 
-  //     type: {$gt: '0'},
-  //     doneStreaming:  {$lt: '2'},
-  //   }
-  // )
-  // .sort({scheduledOn:1}) 
-
-  const streams = await Video.aggregate([
+  const schedules = await Schedule.find(
     { 
-      $match: 
-      { 
-        type: { $gt: '0' } ,
-        doneStreaming:  {$lte: '2'},
-        scheduledOn: {$gte: new Date(new Date().setHours(00, 00, 00))}
-      } 
-    },
-    {
-        $project : {
-            title : 1,
-            description : 1,
-            image: 1,
-            type: 1,
-            doneStreaming: 1,
-            streamKey: 1,
-            scheduledOn: 1,
-            difference : {
-                $abs : {
-                    $subtract : [new Date(new Date().setHours(00, 00, 00)), "$scheduledOn"]
-                }
-            }
-        }
-    },
-    {
-        $sort : {difference : 1}
-    },
-    {
-        $limit : 3
+      startTime: {$gte: new Date(new Date().setHours(00, 00, 00))},
     }
-    ])
-  console.log(streams)
-  res.render('users/pages/index', { title: 'Home',categories,streams });
+  )
+  .populate('show')
+  .sort({startTime: 'asc'}) 
+
+  const highlight = await Schedule.find(
+    { 
+      startTime: {$gte: new Date()},
+    }
+  )
+  .populate('show')
+  .sort({startTime:-1}) 
+  .limit(2)
+
+  // const streams = await Video.aggregate([
+  //   { 
+  //     $match: 
+  //     { 
+  //       startTime: {$gte: new Date(new Date().setHours(00, 00, 00))}
+  //     } 
+  //   },
+  //   {
+  //       $project : {
+  //           title : 1,
+  //           description : 1,
+  //           image: 1,
+  //           type: 1,
+  //           doneStreaming: 1,
+  //           streamKey: 1,
+  //           scheduledOn: 1,
+  //           difference : {
+  //               $abs : {
+  //                   $subtract : [new Date(new Date().setHours(00, 00, 00)), "$scheduledOn"]
+  //               }
+  //           }
+  //       }
+  //   },
+  //   {
+  //       $sort : {difference : 1}
+  //   },
+  //   {
+  //       $limit : 3
+  //   }
+  //   ])
+  console.log(schedules)
+  console.log(highlight)
+  res.render('users/pages/index', { title: 'Home',schedules,highlight });
 });
 
 router.get('/categories', (req, res, next) => {

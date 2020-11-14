@@ -8,8 +8,7 @@ const local = (fileName,stream_key) =>  [
     '-c:v', 'libx264', '-preset', 
     'veryfast','-tune', 'zerolatency', '-c:a', 'aac',
      '-ar', '44100', 
-     '-f', 'flv', 'rtmp://159.65.236.148/show/'+stream_key
-
+     '-f', 'flv', 'rtmp://live.faithtofaithtv.org/show/'+stream_key
 ]
 
 
@@ -34,8 +33,8 @@ const youtube = (fileName,stream_key) =>  [
 
 
 
-const startStreaming = (live_stream) => {
-    const ffmpeg_process = spawn(cmd, local(live_stream.video,live_stream.streamKey));
+const startStreaming = (live_stream,streamingKey) => {
+    const ffmpeg_process = spawn(cmd, local(live_stream.video,streamingKey),{detached: true});
 
     ffmpeg_process.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
@@ -43,34 +42,34 @@ const startStreaming = (live_stream) => {
     
     ffmpeg_process.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
-    });
+    }); 
     
     ffmpeg_process.on('close', (code) => {
         console.log(`Local process exited with code ${code}`);
-        request
-        .get('http://127.0.0.1:3000/admin/done/'+live_stream._id, function (error, response, body) {
-            let live_stream = JSON.parse(body).live_stream;
-            if(live_stream){
-                console.log(live_stream)
-            }
-        });
+        // request
+        // .get('http://127.0.0.1:3000/admin/done/'+live_stream._id, function (error, response, body) {
+        //     let live_stream = JSON.parse(body).live_stream;
+        //     if(live_stream){
+        //         console.log(live_stream)
+        //     }
+        // });
     });
 
-    if(live_stream.facebookStreamKey){
-        const ffmpeg_process_fb = spawn(cmd, facebook(live_stream.video,live_stream.facebookStreamKey));
+    // if(live_stream.facebookStreamKey){
+    //     const ffmpeg_process_fb = spawn(cmd, facebook(live_stream.video,live_stream.facebookStreamKey));
 
-        ffmpeg_process_fb.stdout.on('data', (data) => {
-            console.log(`stdout: ${data}`);
-        });
+    //     ffmpeg_process_fb.stdout.on('data', (data) => {
+    //         console.log(`stdout: ${data}`);
+    //     });
         
-        ffmpeg_process_fb.stderr.on('data', (data) => {
-            console.error(`stderr: ${data}`);
-        });
+    //     ffmpeg_process_fb.stderr.on('data', (data) => {
+    //         console.error(`stderr: ${data}`);
+    //     });
 
-        ffmpeg_process_fb.on('close', (code) => {
-            console.log(`FB process exited with code ${code}`);
-        });
-    }
+    //     ffmpeg_process_fb.on('close', (code) => {
+    //         console.log(`FB process exited with code ${code}`);
+    //     });
+    // }
 };
 
 module.exports = {

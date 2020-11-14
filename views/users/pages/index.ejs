@@ -27,15 +27,20 @@
                <div class="scroller-wrap">
                  <ul id="scroller">
                 
-                 
-<!-- 
+                  <% var showing %>
+                  <% schedules.forEach(function (schedule,index){ %>
                    <li class="item alt now">
-                     <span class="time">11:30</span>
+                     <span class="time"><%= moment(schedule.startTime).format('LT') %> </span>
                      <span class="program">
-                       <a href="/" class="tbnuk-live-stream">Watch Now</a> -
-                       Worship with The Binions &amp; Friends
+                       <% if(new Date(schedule.startTime) <= new Date() && new Date(schedule.endTime) >= new Date() ){%> 
+                        <% showing  = index  ; %>
+                       <a href="#" class="tbnuk-live-stream">Watch Now</a> -
+                       <% } %> 
+                        <%= schedule.show.title %> 
                      </span> 
-                   </li> -->
+                   </li>
+
+                  <% }) %> 
                  
                 
                
@@ -48,19 +53,19 @@
  
              <script>
           $(function() {
- 
+            var showing =  '<% showing %>'
             var _moves = 0;
             var _nt = $('.schedule #scroller').newsTicker({
                row_height: 30,
                max_rows: 7,
-               autostart: 1,
+               autostart: showing<7?0:1,
                speed: 5,
                duration: 10,
                prevButton: $('#schedule-prev'),
                nextButton: $('#schedule-next'),
                hasMoved: function() {
                   _moves++;
-                  if (_moves >= 21) {
+                  if (_moves >= showing+3) {
                      _nt.newsTicker('stop');
                      _nt.newsTicker('updateOption', 'autostart', 0);
                      _nt.newsTicker('updateOption', 'speed', 400);
@@ -90,24 +95,28 @@
        <div class="block">
          <h2 class="block-title"><span>TV</span> Highlights</h2>
          <div class="row">
-             <!-- <div class="col-xs-12 col-md-6">
+
+          <% highlight.forEach(function (hl,index){ %>
+
+             <div class="col-xs-12 col-md-6">
                  <div class="program">
                    <div class="has-overlay">
-                     <img src="/front/image/Daniel-Kolendac3a8.jpg" class="img-responsive" alt="Daniel Kolenda">
+                     <img src="/large_images/<%= hl.show.image %> " class="img-responsive" alt="">
                    <span class="overlay">
-                         <span class="caption">Sunday</span>
-                       <span class="time">12PM</span>
+                         <span class="caption"><%= moment(hl.startTime).format('dddd') %> </span>
+                       <span class="time"><%= moment(hl.startTime).format('LT') %></span>
                    </span>
                  </div> 
                  <div class="info">
                      <div class="equal-height">
-                     <h3>Daniel Kolenda</h3>
-                     <p>Christ For All Nations with Daniel Kolenda</p>
+                     <h3><%= hl.show.title %> </h3>
+                     <p><%= hl.show.description %></p>
                      <div class="overlay"></div>
                    </div> 
                  </div> 
                </div> 
-             </div>  -->
+             </div> 
+             <% }) %> 
          
          </div> <!-- /.row -->
        </div> <!-- /.block -->

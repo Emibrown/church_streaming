@@ -10,7 +10,8 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                    Add schedule
+                    Schedule Video
+                    <p class=" lnr-text-size"><%= video.title %> </p>
                </div>
            </div>
          </div>
@@ -27,41 +28,20 @@
                         <form id="add_schedule">
                             <div class = "form-group">
                                 <label for="show">Show</label>
-                                  <select  class ="form-control" name="show" id="show" required>
+                                  <select  class ="form-control" name="show" id="show" required >
                                     <option value="" disabled selected>select show</option>
                                     <%shows.forEach((item,index) =>{ %>
                                         <option value="<%= item._id %>"><%= item.title %></option>
                                     <% }) %> 
                                   </select>
                               </div> 
-                              <div class = "form-group">
-                                <label for="type">Type</label>
-                                  <select  class ="form-control" name="type" id="type" required>
-                                    <option value="" disabled selected>select repeat type</option>
-                                        <option value="daily">Daily </option>
-                                        <option value="weekly">Weekly</option>
-                                        <option value="none">None</option>
-                                  </select>
-                              </div> 
+                            
                               <div class="form-group">
-                                <label for="start">start date/ time</label>
-                                <div class='input-group date datetimepicker'>
-                                    <input type='text' class="form-control month" name = "start" id = "start" required>
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
+                                <label for="type">Time (Start - End)</label>
+                                <input type="text" id="range" class="form-control" name="datetimes"  required>
                               </div>
-                              <div class="form-group">
-                                <label for="month">End date/ time</label>
-                                <div class='input-group date datetimepicker' id='datetimepicker'>
-                                    <input type='text' class="form-control month" name = "end" id = "end" required>
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                              </div>
-                        
+                            
+                              
                             <button class="mt-1 btn btn-primary" id = "btn">Submit</button>
                         </form>
                     </div>
@@ -77,73 +57,21 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
-<script>
-$(".month").change(function(){
-    console.log('na wa')
-})
+<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
 
-$(function() {
-    $('.datetimepicker').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm'
-    });
-   
-})
-             
-</script>
 <script>
-    dateRange = []
+
+
     $(document).on('submit', '#add_schedule', event => {
         event.preventDefault();
-        var date = moment($("#start").val()).format('YYYY-MM-DD')
-        var start = moment($("#start").val()).format('HH:mm')
-        var end = moment($("#end").val()).format('HH:mm')
-
-        const data = {
-          "show": $("#show").val(),
-          "date": date,
-          "type": $("#type").val(),
-          "startTime": start,
-          "endTime": end,
-        }  
-        if($("#type").val() == "none" ){
-            var startDate =  date + " " + start
-            var endDate =  date + " " + end
-            var period = getDates(startDate, endDate)
-            Object.assign(data, {"timeRange": period}); 
+        var range = $("#range").val()
+        var arr = range.split('-')
+        var data = {
+            show: $("#show").val(),
+            video: '<%= video._id %>',
+            startTime: moment(arr[0]).format(),
+            endTime: moment(arr[1]).format()
         }
-
-        if($("#type").val()== "weekly"){
-            var day = moment($("#start").val()).format('dddd')
-            var month = moment($("#start").val()).format('MM')
-
-            var days = getWeekDays(day, month)
-            
-            var periods = days.map((item) => {
-                var startDate =  item + " " + start
-                var endDate =  item + " " + end
-                var dates = getDates(startDate, endDate)
-                return dates
-            })
-            period = periods.flat(1)
-            Object.assign(data, {"timeRange": period}); 
-        }
-        if(!$("#date").val() || !$("#date").val()){
-
-            var day = moment($("#start").val()).format('dddd')
-            var month = moment($("#start").val()).format('MM')
-
-            var days = getDays(month)
-
-            var periods = days.map((item) => {
-                var startDate =  item +" "+start
-                var endDate =  item +" "+start
-                var dates = getDates(startDate, endDate)
-                return dates
-            })
-            period = periods.flat(1)
-            Object.assign(data, {"timeRange": period}); 
-        }
-        console.log(data)
         axios.post('/admin/api/add_schedule',data)
         .then(function (response) {
             // handle success
@@ -157,39 +85,8 @@ $(function() {
             console.log(error);
             displayerr(error.message)
         })
-     })
-</script>
-<script>
 
-function getDates(startDate, stopDate) {
-    var dateArray = [];
-    var currentDate = moment(startDate);
-    var stopDate = moment(stopDate);
-    while (currentDate <= stopDate) {
-        dateArray.push( moment(currentDate).format('YYYY-MM-DD HH mm') )
-        currentDate = moment(currentDate).add(10, 'minutes');
-    }
-    return dateArray;
-}
-function getWeekDays(day,month){
-    var weekDays = []
-    var weekDay = moment(month).startOf('month').day(day);
-    if (weekDay.date() > 7) weekDay.add(7,'d');
-    var month = weekDay.month();
-    console.log(month)
-    while(month === weekDay.month()){
-        weekDays.push(moment(weekDay).format('YYYY-MM-DD')) ;
-        weekDay.add(7,'d');
-    }
-    return weekDays
-}
-function getDays(month) {
-    var count =  moment().month(month).daysInMonth();
-    var days = [];
-    for (var i = 1; i < count+1; i++) {
-      days.push(moment().month(month).date(i).format('YYYY-MM-DD'));
-    }
-    return days;
-  }
+     })
+
 </script>
 <%- include('../../end'); -%>
