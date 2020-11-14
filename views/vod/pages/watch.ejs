@@ -58,6 +58,7 @@
                                         </div>
                                         
                                         <div class="tab-pane fade" id="SeriesTab2" role="tabpanel" aria-labelledby="series-tab-2">
+                                            <% if(season.length != 0){%> 
                                             <div class="fsPlayer--series" style="margin-bottom: 20px;">
                                                 Now playing <strong><%= video.season.title %></strong>. <br>Also available: 
                                                 <% season.forEach(function (sea,i){ %>
@@ -66,6 +67,7 @@
                                                     <% } %>    
                                                 <% }) %>    
                                             </div>
+                                            <%}%> 
 
                                             <ul class="series-list">
                                                 <% list.forEach(function (item,i){ %>
