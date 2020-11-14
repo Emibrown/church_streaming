@@ -532,7 +532,7 @@ router.get('/ready', async(req, res, next) => {
         doneStreaming:'0',
         startTime: {$lte: new Date()},
       }
-    );
+    ).populate("video");
     if(live_stream){
       await Object.assign(live_stream, {doneStreaming:'1'});
       await live_stream.save()
