@@ -97,8 +97,7 @@ router.get('/watch/:pro/:video', async(req, res, next) => {
   res.render('vod/pages/watch', { title: 'On-demand Watch',video,programme,season,list });
 });
 
-router.get('/webcast', async(req, res, next) => {
- 
+router.get('/webcast', ensureAuthenticated, async(req, res, next) => {
   res.render('vod/pages/webcast', { title: 'On-demand Watch' });
 });
 
