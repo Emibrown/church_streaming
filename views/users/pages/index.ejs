@@ -433,18 +433,26 @@
       autoplay: 'muted',
       liveui: true,
    }).ready(function(){
-      this.play();
-      
-      this.on('ended', function() {
+    var player = this;
+      player.load(); 
+      player.play();
+
+      player.on('ended', function() {
          alert('video is done!');
       });
-      this.on('error', function() {
+
+      player.on('error', function() {
+         
          setTimeout(function(){ 
-            this.reset() 
-            this.src({ type: "application/x-mpegURL", src: link  })
-            this.load(); 
-            this.play();
+            player.reset() 
+            player.src({ type: "application/x-mpegURL", src: link  })
+            player.load(); 
+            player.play();
          }, 5000);
+         // if(this.error().code === 2) {
+         //    player.load(); 
+         //    player.play();
+         // }
       });
    });
 
