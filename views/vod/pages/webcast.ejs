@@ -1,0 +1,95 @@
+<%- include('../header'); -%>
+<link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
+ <!-- MainContent -->
+ <div id="Main">
+    <div class="container">
+        <div class="fsPlayer fsPlayer_1" id="fsPlayer_1">
+            <div class="fsPlayer-overlay">
+                <div class="fsPlayer-overlay--container">
+                    <div class="fsPlayer-overlay--container-panel">
+                        <div class="fsPlayer-overlay--container-panel--player">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="movie-player">
+                                        <div class="vjs-video-container">
+                                            <video class="video-js vjs-fluid vjs-16-9 vjs-big-play-centered" controls preload="none" width="640" height="264"  id="fsPlayerVideo_1">
+                                                <source src="https://live.faithtofaithtv.org/hls/<%= settings.memberStreamKey %>.m3u8" type="application/x-mpegURL">
+                                            </video>
+                                        </div> <!-- /.video-container -->
+                                        
+                                        <div class="movie-player--footer">
+                                            <em class="fa fa-tags"></em> <a href="#" class="ondemand-tag">Members only</a>       
+                                        </div>
+                                    </div> <!-- /.movie-player -->
+                                </div>
+                                <div class="col-lg-4">
+                                    
+                                 
+                                    
+                                    <div class="tab-content" id="SeriesTabContent">
+                                        <div class="tab-pane fade show active" id="SeriesTab1" role="tabpanel" aria-labelledby="series-tab-1">
+                                            
+                                            <div class="fsPlayer--title">Live Webcast </div>
+                                            <div class="fsPlayer--meta">Members only</div>
+                                            <div class="fsPlayer--description">Faith To Faith live webcast is available on any internet enabled device right here 24/7</div>
+
+                                          
+                                            
+                                        </div>
+                                        
+                                      
+                                    </div>
+                                        
+                                 
+                                </div>
+                            </div>
+                        </div>
+                
+        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+ <!-- MainContent End-->
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script src="https://unpkg.com/video.js/dist/video.js"></script>
+<script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
+
+<script>
+    var link = "https://live.faithtofaithtv.org/hls/<%= settings.memberStreamKey %>.m3u8"
+    var video = videojs('fsPlayerVideo_1', {
+        controls: true,
+        preload: 'auto',
+        autoplay: 'muted',
+        liveui: true,
+     }).ready(function(){
+      var player = this;
+        player.load(); 
+        player.play();
+  
+        player.on('ended', function() {
+           alert('video is done!');
+        });
+  
+        player.on('error', function() {
+           
+           setTimeout(function(){ 
+              player.reset() 
+              player.src({ type: "application/x-mpegURL", src: link  })
+              player.load(); 
+              player.play();
+           }, 5000);
+           // if(this.error().code === 2) {
+           //    player.load(); 
+           //    player.play();
+           // }
+        });
+     });
+  
+  </script>
+<%- include('../../end'); -%>
