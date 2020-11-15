@@ -30,6 +30,10 @@ const videoSchema = mongoose.Schema(
         active: {
             type: String,
             default: 1
+        },
+        views: {
+            type: String,
+            default: 0
         }
     }
 )

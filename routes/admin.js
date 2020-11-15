@@ -131,7 +131,10 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
-  res.render('admin/pages/index', { title: 'Dashboard' });
+  const members = await User.find({});
+  const programmes = await Programme.find({});
+  const videos = await Video.find({});
+  res.render('admin/pages/index', { title: 'Dashboard', members, programmes, videos });
 });
 
 //settings

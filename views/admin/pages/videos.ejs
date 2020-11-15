@@ -23,7 +23,7 @@
                     Add video
                 </a>
             </div>
-        </div>   
+            </div>   
         </div>
    </div>        
    <div class="tabs-animation">
@@ -40,6 +40,7 @@
                            <th class= "">Programme</th>
                            <th class= "">Date added</th>
                            <th class= "">Duration</th>
+                           <th class= "">Views</th>
                            <th class= "">Action</th>
                         </tr>
                      </thead>
@@ -63,7 +64,8 @@
                            <td class= "">null</td> 
                            <% } %>                  
                            <td class= ""><%= moment(item.date).format('LL') %></td>   
-                           <td class= ""><%= item.duration %></td>  
+                           <td class= ""><%= item.duration %></td>
+                           <td class= ""><%= item.views %></td>    
                            <td class= "">
                               <div class="col-12 form-group ">
                                  <a href="/admin/video/<%= item._id %>" class="btn btn-primary " id = "btn">view</a>
