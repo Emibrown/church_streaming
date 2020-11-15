@@ -32,7 +32,7 @@
                             <div class = "form-group">
                                 <label for="programme">Programmes</label>
                                   <select  class ="form-control" name="programme" id="programme" required>
-                                    <option value="" disabled selected>select programme</option>
+                                    <option value="" disabled selected>Select programme</option>
                                     <%programmes.forEach((item,index) =>{ %>
                                         <option value="<%= item._id %>"><%= item.title %></option>
                                     <% }) %> 
