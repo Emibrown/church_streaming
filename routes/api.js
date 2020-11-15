@@ -581,7 +581,7 @@ router.get('/add_schedule', ensureAuthenticated, async (req, res, next) => {
     // add schedule without video view
     try {
         const shows = await Show.find({})
-        res.render('admin/pages/add_schedule', { title: 'Add Schedule', shows, video: ""});
+        res.render('admin/pages/schedule_show', { title: 'Add Schedule', shows,});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }

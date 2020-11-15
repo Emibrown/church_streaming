@@ -13,19 +13,18 @@
                  Schedules
                </div>
            </div> 
-          
-        </div>
-        <div class="page-title-actions">
+           <div class="page-title-actions">
             <div class="d-inline-block dropdown">
                 <a type="button" href="/admin/api/add_schedule" class="btn-shadow 
-                 btn btn-info">
+                    btn btn-info">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fa fa-business-time fa-w-20"></i>
                     </span>
                     Add schedule
                 </a>
             </div>
-        </div>   
+            </div>   
+        </div>
    </div>        
    <div class="tabs-animation">
     <div class="row">
@@ -46,7 +45,11 @@
                             <% schedules.forEach(function (item,index){ %>
                                 <tr>
                                     <td class=""><%= item.show.title %></td>
+                                    <% if(item.video){%> 
                                     <td class=""><a href="/admin/video/<%= item.video._id  %>"><%= item.video.title %></a></td>
+                                    <% }else{%> 
+                                    <td class=""><a href="#">No video</a></td>
+                                    <%} %> 
                                     <td class=""><%= moment(item.startTime).format('LLL') %></td>
                                     <td class=""><%= moment(item.endTime).format('LLL')  %></td>
 

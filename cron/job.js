@@ -8,8 +8,10 @@ const job = new CronJob('*/5 * * * * *', function () {
         let live_stream = JSON.parse(body).live_stream;
         let streamingKey = JSON.parse(body).settings.publicStreamKey;
         if(live_stream){
-            console.log(live_stream)
-            helpers.startStreaming(live_stream,streamingKey)
+            if(live_stream.video){
+                console.log(live_stream)
+                helpers.startStreaming(live_stream,streamingKey)
+            }
         }
     });
 }, null, true);
