@@ -2,6 +2,8 @@ const express = require('express');
 const User = require('../models/user');
 const Category = require('../models/category');
 const Programme = require('../models/programme');
+const Settings = require('../models/settings');
+
 const Season = require('../models/season');
 
 
@@ -51,6 +53,7 @@ const getProgrammes = async (id) =>{
 router.use(async(req, res, next) => {
   res.locals.moment = moment;
   res.locals.currentUser = req.user;
+  res.locals.settings = await Settings.findOne({settingsId:"site_settings"})
   next();
 });
 
@@ -92,6 +95,10 @@ router.get('/watch/:pro/:video', async(req, res, next) => {
   }
   console.log(list)
   res.render('vod/pages/watch', { title: 'On-demand Watch',video,programme,season,list });
+});
+
+router.get('/webcast', ensureAuthenticated, async(req, res, next) => {
+  res.render('vod/pages/webcast', { title: 'On-demand Watch' });
 });
 
 router.get('/cat/:code', async(req, res, next) => {
