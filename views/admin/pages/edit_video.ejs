@@ -63,11 +63,6 @@
                                <input rows="5" data-name="#gallery2" id="image" class="form_gallery-upload "
                                   type="file" accept=".png, .jpg, .jpeg">
                             </div>
-                            <div class="form_video form-group">
-                              <label id="video" for="image">Video</label><br>
-                              <input rows="5" data-name="video" id="videofile" class="form_video-upload "
-                                 type="file" accept="video/mp4,video/x-m4v,video/*">
-                           </div>
                            <div class="col-12 form-group ">
                               <button type="submit" class="btn btn-primary " id = "btn">Submit</button>
                               <a  href="/admin/videos" class="btn btn-danger">cancel</a>
@@ -120,10 +115,8 @@ $("#programme").change(function(){
 
 });
    $( "#videoForm" ).submit(function( event ) {
-         event.preventDefault();
-      
+        event.preventDefault();
         const image = document.querySelector('#image');
-        const videofile = document.querySelector('#videofile');
         const data = new FormData();
         data.append("title", $("#title").val());
         data.append("description", $("#description").val());
@@ -135,10 +128,7 @@ $("#programme").change(function(){
         if(image.value){
             data.append("file", image.files[0]);
         }
-        if(videofile.value){
-            data.append("file", videofile.files[0]);
-        }
-        
+       
         const config = {
             onUploadProgress: function(progressEvent) {
             const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)

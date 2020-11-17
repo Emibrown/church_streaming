@@ -15,11 +15,15 @@ const vodRouter = require('./routes/vod');
 const adminRouter = require('./routes/admin');
 const apiRouter = require('./routes/api');
 const aboutRouter = require('./routes/about');
-const jobs = require('./cron/job');
+// const jobs = require('./cron/job');
+const busboy = require('connect-busboy');
 
 
 const setuppassport = require('./setuppassport');
 const app = express();
+app.use(busboy({
+  highWaterMark: 2 * 1024 * 1024, // Set 2MiB buffer
+})); // Insert the busboy middle-ware
 
 setuppassport();
 
@@ -99,6 +103,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-jobs.start()
+// jobs.start()
 
 module.exports = app;

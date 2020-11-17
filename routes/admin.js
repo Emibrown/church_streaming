@@ -12,15 +12,20 @@ const multers = require('../middleware/multers')
 const sharp = require('sharp')
 const path = require('path')
 const fs = require('fs')
+const fse = require('fs-extra');   
 const moment = require('moment');
 const shortid = require('shortid');
 const { Session } = require('inspector');
 const router = express.Router();
+const {v4:uuid} = require('uuid');
 
 const sendJSONresponse = (res, status, content) => {
   res.status(status);
   res.json(content);
 };
+
+const uploadPath = path.join(__dirname, '../public/uploads/'); // Register the upload path
+fse.ensureDir(uploadPath); // Make sure that he upload path exits
 
 
 const authenticated = (req, res, next) => {
@@ -376,33 +381,96 @@ router.get('/add_video', ensureAuthenticated, async (req, res, next) => {
 });
 
 //post a video
-router.post('/add_video', ensureAuthenticated, multers.upload.array('file',6), async (req, res, next) => {
+// router.post('/add_video', ensureAuthenticated, multers.upload.array('file',6), async (req, res, next) => {
+//   try {
+//     if(req.files.length<1){
+//       sendJSONresponse(res, 400, {message: "File required"});
+//     }
+//     req.body.image = path.basename(req.files[0].filename, path.extname(req.files[0].filename))+'.webp'
+//     req.body.video = req.files[1].filename
+
+//     await sharp(req.files[0].path)
+//     .resize({ width: 384, height: 216 })
+//     .webp({quality: 60})
+//     .toFile(
+//         path.resolve('./public','small_images',req.body.image)
+//     )
+
+//     await sharp(req.files[0].path)
+//     .resize({ width: 640, height: 360 })
+//     .webp({quality: 90})
+//     .toFile(
+//         path.resolve('./public','large_images',req.body.image)
+//     )
+
+//     fs.unlinkSync(req.files[0].path)
+//     const video = new Video(req.body);
+//     await video.save();
+
+//     sendJSONresponse(res, 200, {"message": "Video added successfully"});
+//   } catch (error) {
+//     console.log(error)
+//     sendJSONresponse(res, 400, {error});
+//   }
+// });
+
+router.post('/add_video', ensureAuthenticated, async (req, res, next) => {
   try {
-    if(req.files.length<1){
-      sendJSONresponse(res, 400, {message: "File required"});
-    }
-    req.body.image = path.basename(req.files[0].filename, path.extname(req.files[0].filename))+'.webp'
-    req.body.video = req.files[1].filename
+    let formData = new Map();
+    let img_name  = ''
+    req.busboy.on('file',  (fieldname, file, filename) => {
+        // Create a write stream of the new file
+        filename = uuid()+path.extname(filename);
+        formData.set(fieldname, filename);
+        const fstream = fse.createWriteStream(path.join(uploadPath, filename));
+        // Pipe it trough
+        file.pipe(fstream);
+        // On finish of the upload
+      
+        fstream.on('close', async() => {
 
-    await sharp(req.files[0].path)
-    .resize({ width: 384, height: 216 })
-    .webp({quality: 60})
-    .toFile(
-        path.resolve('./public','small_images',req.body.image)
-    )
+            if(fieldname == 'image'){
+              img_name = path.basename(filename, path.extname(filename))+'.webp'
 
-    await sharp(req.files[0].path)
-    .resize({ width: 640, height: 360 })
-    .webp({quality: 90})
-    .toFile(
-        path.resolve('./public','large_images',req.body.image)
-    )
+              await sharp(path.join(uploadPath, filename))
+              .resize({ width: 384, height: 216 })
+              .webp({quality: 90})
+              .toFile(
+                  path.resolve('./public','small_images',img_name)
+              )
+          
+              await sharp(path.join(uploadPath, filename))
+              .resize({ width: 640, height: 360 })
+              .webp({quality: 90})
+              .toFile(
+                  path.resolve('./public','large_images',img_name)
+              )
+          
+              fs.unlinkSync(path.join(uploadPath, filename))
+            }
+        });
+    });
 
-    fs.unlinkSync(req.files[0].path)
-    const video = new Video(req.body);
-    await video.save();
+    req.busboy.on('field', (key, value) => {
+      formData.set(key, value);
+      // ...
+    });
 
-    sendJSONresponse(res, 200, {"message": "Video added successfully"});
+    req.busboy.on("finish", async() => {
+      const obj = await Object.fromEntries(formData);
+      obj.image = img_name
+      console.log(obj)
+      const vd =  await Video.findOne({title:obj.title})
+      if(vd){
+        obj.title = obj.title + " "+shortid.generate()
+      }
+      const video = new Video(obj);
+      await video.save();
+      res.status(200);
+      res.end()
+    });
+    return req.pipe(req.busboy);
+
   } catch (error) {
     console.log(error)
     sendJSONresponse(res, 400, {error});

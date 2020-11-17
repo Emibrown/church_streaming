@@ -121,8 +121,8 @@ $("#programme").change(function(){
         if($("#seas").val()){
          data.append("season", $("#seas").val());
         }
-        data.append("file", image.files[0]);
-        data.append("file", videofile.files[0]);
+        data.append("image", image.files[0]);
+        data.append("video", videofile.files[0]);
         if(image.files.length < 1 || videofile.files.length<1){
          displayerr("Please upload all media files");
          }else{
