@@ -55,21 +55,21 @@ const startStreaming = (live_stream,streamingKey) => {
         // });
     });
 
-    // if(live_stream.facebookStreamKey){
-    //     const ffmpeg_process_fb = spawn(cmd, facebook(live_stream.video,live_stream.facebookStreamKey));
+    if(live_stream.facebook){
+        const ffmpeg_process_fb = spawn(cmd, facebook(live_stream.video.video,live_stream.facebook),{detached: true});
 
-    //     ffmpeg_process_fb.stdout.on('data', (data) => {
-    //         console.log(`stdout: ${data}`);
-    //     });
+        ffmpeg_process_fb.stdout.on('data', (data) => {
+            console.log(`stdout: ${data}`);
+        });
         
-    //     ffmpeg_process_fb.stderr.on('data', (data) => {
-    //         console.error(`stderr: ${data}`);
-    //     });
+        ffmpeg_process_fb.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
 
-    //     ffmpeg_process_fb.on('close', (code) => {
-    //         console.log(`FB process exited with code ${code}`);
-    //     });
-    // }
+        ffmpeg_process_fb.on('close', (code) => {
+            console.log(`FB process exited with code ${code}`);
+        });
+    }
 };
 
 module.exports = {

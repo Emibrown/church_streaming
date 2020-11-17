@@ -35,6 +35,16 @@
                                     <% }) %> 
                                   </select>
                               </div> 
+
+                              <div class="form-group">
+                                <label for="type">Facebook Stream Key (Optional)</label>
+                                <input type="text" id="facebook" class="form-control" name="facebook">
+                              </div>
+
+                              <div class="form-group">
+                                <label for="type">YouTube Stream Key (Optional)</label>
+                                <input type="text" id="youtube" class="form-control" name="youtube">
+                              </div>
                             
                               <div class="form-group">
                                 <label for="type">Time (Start - End)</label>
@@ -68,6 +78,8 @@
         var arr = range.split('-')
         var data = {
             show: $("#show").val(),
+            facebook: $("#facebook").val(),
+            youtube: $("#youtube").val(),
             video: '<%= video._id %>',
             startTime: moment(arr[0]).format(),
             endTime: moment(arr[1]).format()

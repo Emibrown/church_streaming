@@ -18,6 +18,12 @@ var scheduleSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Video'
         },
+        facebook: {
+            type: String,
+        },
+        youtube: {
+            type: String,
+        },
         startTime: {
             type: Date, 
             required: true,
