@@ -25,9 +25,9 @@ const facebook = (fileName,stream_key) =>  [
 
 const youtube = (fileName,stream_key) =>  [
     '-re', '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
-    '-c:v', 'libx264', '-b:v',
-    '500k', '-c:a', 'copy',
-    '-strict', '-2', '-flags', '+global_header', '-bsf:a', 
+    '-c:v', 'libx264', '-preset', 
+    'veryfast', '-b:v',
+    '1500k','-strict', '-2', '-flags', '+global_header', '-bsf:a', 
     'aac_adtstoasc', '-bufsize', '500k', '-f', 'flv', 'rtmp://a.rtmp.youtube.com/live2/'+stream_key
 ]
 
