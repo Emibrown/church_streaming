@@ -3,12 +3,23 @@ const spawn = require('child_process').spawn,
     request = require('request');
 
 
+// const local = (fileName,stream_key) =>  [
+//     '-re', '-i', 'http://127.0.0.1:3000/uploads/'+fileName, 
+//     '-c:v', 'libx264', '-preset', 
+//     'veryfast','-tune', 'zerolatency', '-c:a', 'aac',
+//      '-ar', '44100', 
+//      '-f', 'flv', 'rtmp://live.faithtofaithtv.org/show/'+stream_key
+// ]
+
 const local = (fileName,stream_key) =>  [
-    '-re', '-i', 'http://127.0.0.1:3000/uploads/'+fileName, 
-    '-c:v', 'libx264', '-preset', 
-    'veryfast','-tune', 'zerolatency', '-c:a', 'aac',
-     '-ar', '44100', 
-     '-f', 'flv', 'rtmp://live.faithtofaithtv.org/show/'+stream_key
+    '-re',
+    '-y',
+    '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
+    '-c:a', 'copy', '-ac', '1','-ar',
+    '44100', '-b:a','96k','-vcodec','libx264','-pix_fmt','yuv420p',
+    '-vf','scale=1080:-1','-r', '30', '-g', '60','-tune',
+    'zerolatency','-f', 'flv', '-maxrate', '2000k', '-preset', 'veryfast',
+    'rtmp://live.faithtofaithtv.org/show/'+stream_key
 ]
 
 
@@ -49,37 +60,37 @@ const startStreaming = (live_stream,streamingKey) => {
         console.log(`Local process exited with code ${code}`);
     });
 
-    if(live_stream.youtube){
-        const ffmpeg_process_yt = spawn(cmd, youtube(live_stream.video.video,live_stream.youtube),{detached: true});
+    // if(live_stream.youtube){
+    //     const ffmpeg_process_yt = spawn(cmd, youtube(live_stream.video.video,live_stream.youtube),{detached: true});
 
-        ffmpeg_process_yt.stdout.on('data', (data) => {
-            console.log(`stdout: ${data}`);
-        });
+    //     ffmpeg_process_yt.stdout.on('data', (data) => {
+    //         console.log(`stdout: ${data}`);
+    //     });
         
-        ffmpeg_process_yt.stderr.on('data', (data) => {
-            console.error(`stderr: ${data}`);
-        });
+    //     ffmpeg_process_yt.stderr.on('data', (data) => {
+    //         console.error(`stderr: ${data}`);
+    //     });
 
-        ffmpeg_process_yt.on('close', (code) => {
-            console.log(`FB process exited with code ${code}`);
-        });
-    }
+    //     ffmpeg_process_yt.on('close', (code) => {
+    //         console.log(`FB process exited with code ${code}`);
+    //     });
+    // }
 
-    if(live_stream.facebook){
-        const ffmpeg_process_fb = spawn(cmd, facebook(live_stream.video.video,live_stream.facebook),{detached: true});
+    // if(live_stream.facebook){
+    //     const ffmpeg_process_fb = spawn(cmd, facebook(live_stream.video.video,live_stream.facebook),{detached: true});
 
-        ffmpeg_process_fb.stdout.on('data', (data) => {
-            console.log(`stdout: ${data}`);
-        });
+    //     ffmpeg_process_fb.stdout.on('data', (data) => {
+    //         console.log(`stdout: ${data}`);
+    //     });
         
-        ffmpeg_process_fb.stderr.on('data', (data) => {
-            console.error(`stderr: ${data}`);
-        });
+    //     ffmpeg_process_fb.stderr.on('data', (data) => {
+    //         console.error(`stderr: ${data}`);
+    //     });
 
-        ffmpeg_process_fb.on('close', (code) => {
-            console.log(`FB process exited with code ${code}`);
-        });
-    }
+    //     ffmpeg_process_fb.on('close', (code) => {
+    //         console.log(`FB process exited with code ${code}`);
+    //     });
+    // }
 };
 
 module.exports = {
