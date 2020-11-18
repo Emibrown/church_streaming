@@ -20,7 +20,7 @@ const facebook = (fileName,stream_key) =>  [
     '44100', '-b:a','96k','-vcodec','libx264','-pix_fmt','yuv420p',
     '-vf','scale=1080:-1','-r', '30', '-g', '60','-tune',
     'zerolatency','-f', 'flv', '-maxrate', '2000k', '-preset', 'veryfast',
-    '"rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key+'"',
+    'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
 ]
 
 const youtube = (fileName,stream_key) =>  [
