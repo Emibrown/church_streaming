@@ -28,7 +28,7 @@ const youtube = (fileName,stream_key) =>  [
     '-c:v', 'libx264', '-b:v',
     '2M', '-c:a', 'copy',
     '-strict', '-2', '-flags', '+global_header', '-bsf:a', 
-    'aac_adtstoasc', '-bufsize', '2100k', '-f', 'flv', 'rtmp://a.rtmp.youtube.com/live2/'+stream_key
+    'aac_adtstoasc', '-bufsize', '500k', '-f', 'flv', 'rtmp://a.rtmp.youtube.com/live2/'+stream_key
 ]
 
 
