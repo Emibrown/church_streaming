@@ -56,7 +56,7 @@ const startStreaming = (live_stream,streamingKey) => {
     // });
 
     if(live_stream.facebook){
-        const ffmpeg_process_fb = spawn(cmd, facebook(live_stream.video.video,live_stream.facebook),{detached: true});
+        const ffmpeg_process_fb = spawn(cmd, youtube(live_stream.video.video,live_stream.facebook),{detached: true});
 
         ffmpeg_process_fb.stdout.on('data', (data) => {
             console.log(`stdout: ${data}`);
