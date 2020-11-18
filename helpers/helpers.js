@@ -7,7 +7,7 @@ const local = (fileName,stream_key) =>  [
     '-re', '-i', 'http://127.0.0.1:3000/uploads/'+fileName, 
     '-c:v', 'libx264', '-preset', 
     'veryfast','-b:v',
-    '100k','-tune', 'zerolatency', '-c:a', 'aac',
+    '4500k','-tune', 'zerolatency', '-c:a', 'aac',
      '-ar', '44100', 
      '-f', 'flv', 'rtmp://live.faithtofaithtv.org/show/'+stream_key
 ]
@@ -28,7 +28,7 @@ const youtube = (fileName,stream_key) =>  [
     '-re', '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
     '-c:v', 'libx264', '-preset', 
     'veryfast', '-b:v',
-    '700k', '-c:a', 'copy',
+    '4500k', '-c:a', 'copy',
     '-strict', '-2', '-flags', '+global_header', '-bsf:a', 
     'aac_adtstoasc', '-bufsize', '700k', '-f', 'flv', 'rtmp://a.rtmp.youtube.com/live2/'+stream_key
 ]
