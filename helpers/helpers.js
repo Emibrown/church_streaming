@@ -35,32 +35,48 @@ const youtube = (fileName,stream_key) =>  [
 
 
 const startStreaming = (live_stream,streamingKey) => {
-    const ffmpeg_process = spawn(cmd, local(live_stream.video.video, streamingKey),{detached: true});
+    // const ffmpeg_process = spawn(cmd, local(live_stream.video.video, streamingKey),{detached: true});
 
-    ffmpeg_process.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-    });
+    // ffmpeg_process.stdout.on('data', (data) => {
+    //     console.log(`stdout: ${data}`);
+    // });
     
-    ffmpeg_process.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-    }); 
+    // ffmpeg_process.stderr.on('data', (data) => {
+    //     console.error(`stderr: ${data}`);
+    // }); 
     
-    ffmpeg_process.on('close', (code) => {
-        console.log(`Local process exited with code ${code}`);
-    });
+    // ffmpeg_process.on('close', (code) => {
+    //     console.log(`Local process exited with code ${code}`);
+    // });
 
-    if(live_stream.youtube){
-        const ffmpeg_process_yt = spawn(cmd, youtube(live_stream.video.video,live_stream.youtube),{detached: true});
+    // if(live_stream.youtube){
+    //     const ffmpeg_process_yt = spawn(cmd, youtube(live_stream.video.video,live_stream.youtube),{detached: true});
 
-        ffmpeg_process_yt.stdout.on('data', (data) => {
+    //     ffmpeg_process_yt.stdout.on('data', (data) => {
+    //         console.log(`stdout: ${data}`);
+    //     });
+        
+    //     ffmpeg_process_yt.stderr.on('data', (data) => {
+    //         console.error(`stderr: ${data}`);
+    //     });
+
+    //     ffmpeg_process_yt.on('close', (code) => {
+    //         console.log(`FB process exited with code ${code}`);
+    //     });
+    // }
+
+    if(live_stream.facebook){
+        const ffmpeg_process_fb = spawn(cmd, facebook(live_stream.video.video,live_stream.facebook),{detached: true});
+
+        ffmpeg_process_fb.stdout.on('data', (data) => {
             console.log(`stdout: ${data}`);
         });
         
-        ffmpeg_process_yt.stderr.on('data', (data) => {
+        ffmpeg_process_fb.stderr.on('data', (data) => {
             console.error(`stderr: ${data}`);
         });
 
-        ffmpeg_process_yt.on('close', (code) => {
+        ffmpeg_process_fb.on('close', (code) => {
             console.log(`FB process exited with code ${code}`);
         });
     }
