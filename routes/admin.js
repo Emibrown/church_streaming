@@ -142,6 +142,25 @@ router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/index', { title: 'Dashboard', members, programmes, videos });
 });
 
+router.get('/stop_streaming', ensureAuthenticated, async(req, res, next) => {
+   try {
+     if(localpid){
+      process.kill(localpid)
+     }
+     if(facebookpid){
+        process.kill(facebookpid)
+      }
+      if(youtubepid){
+         process.kill(youtubepid)
+      }
+      console.log('streaming stoped');
+    } catch (error) {
+        console.error(error);
+        // return error.code === 'EPERM';
+    }
+    sendJSONresponse(res, 200, {message: 'Streaming ended on all platforms'});
+});
+
 //settings
 router.put('/settings', ensureAuthenticated, async (req, res, next) => {
   // site settings

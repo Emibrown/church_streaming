@@ -14,6 +14,17 @@
                    Streaming Settings
                </div>
            </div>
+           <div class="page-title-actions">
+            <div class="d-inline-block dropdown">
+                <button id="stop" type="button" class="btn-shadow 
+                 btn btn-info">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                        <i class="fa fa-business-time fa-w-20"></i>
+                    </span>
+                    Stop all streaming
+                </button>
+            </div>
+            </div>   
          </div>
    </div>       
  
@@ -126,6 +137,19 @@
             // handle success
             $("#stream2").val(response.data.message)
             displaymsg("Streaming key generated");
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error.message)
+        })
+    });
+
+    $("#stop").click(function() {
+        axios.get('/admin/stop_streaming')
+            .then(function (response) {
+            // handle success
+            displaymsg(response.data.message);
         })
         .catch(function (error) {
             // handle error

@@ -21,6 +21,7 @@ const busboy = require('connect-busboy');
 
 const setuppassport = require('./setuppassport');
 const app = express();
+
 app.use(busboy({
   highWaterMark: 2 * 1024 * 1024, // Set 2MiB buffer
 })); // Insert the busboy middle-ware
@@ -29,7 +30,9 @@ setuppassport();
 
 require('./models/db');
 
-
+global.localpid = ''
+global.facebookpid = ''
+global.youtubepid = ''
 // view engine setup
 app.use(minifyHTML({
   override:      true,
@@ -79,6 +82,7 @@ app.use('/',session({
   }
 }));
 
+app.set('cp',['first']);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', indexRouter);
