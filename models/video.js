@@ -9,7 +9,7 @@ const videoSchema = mongoose.Schema(
         title: {type: String, required: true, unique: true},
         code: {type: String},
         description: {type: String, required: true},
-        image: {type: String, required: true},
+        image: {type: String},
         video: {type: String},
         duration: {type: String},
         programme : {
@@ -18,6 +18,7 @@ const videoSchema = mongoose.Schema(
         },
         type: {
             type: String,
+            default: "0"
         },
         season : {
             type: mongoose.Schema.Types.ObjectId, 

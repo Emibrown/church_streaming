@@ -1,0 +1,89 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+   <!-- title  -->
+  <div class="app-page-title">
+      <div class="page-title-wrapper">
+          <div class="page-title-heading">
+              <div class="page-title-icon">
+                  <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+              </div>
+              <div>
+                   Link a video
+              </div>
+          </div>
+        </div>
+  </div>       
+  <!-- title -->
+   <!--body  -->
+  <div class="tabs-animation">
+      <!-- form -->
+       <div class="row">
+           <div class="col-md-12">
+               <div class="main-card mb-3 card">
+                   <div class="card-body">
+                       <div id = "message"></div>
+                       <form id="add_streaming_videos">
+                            <div class="form-group">
+                                <label for="title">Filename</label>
+                                <input type = "text" id="video" name="video" rows="5" class="form-control" placeholder="Filename" required>                 
+                            </div>
+                           <div class="form-group">
+                              <label for="title">Title</label>
+                              <input type = "text" id="title" name="title" rows="5" class="form-control" placeholder="Video title" required>                 
+                           </div>
+                           <div class="form-group">
+                              <label for="description">Description</label>
+                              <textarea id="description" name="description" rows="5" class="form-control" placeholder="Video description" required></textarea>                 
+                           </div>
+                           <div class="form-group">
+                              <label for="duration">Duration</label>
+                              <input type = "text" id="duration" name="duration" rows="5" class="form-control" placeholder= "Enter duration in seconds" required>                 
+                           </div>
+                           <div class="col-12 form-group ">
+                              <button type="submit" class="btn btn-primary " id = "btn">Submit</button>
+                              <a  href="/admin/streaming_videos" class="btn btn-danger">cancel</a>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+        <!-- form ends -->
+ </div>
+ <!-- body ends -->
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    $(document).on('submit', '#add_streaming_videos', event => {
+            event.preventDefault();      
+            const data = {
+              "video": jQuery("#video").val(),
+              "title": jQuery("#title").val(),
+              "description": jQuery("#description").val(),
+              "duration": jQuery("#duration").val(),
+            }
+            axios({
+                method: 'post',
+                url: '/admin/add_streaming_videos',
+                data: data,
+            }) .then(function (response) {
+                // handle success
+                const url = "/admin/streaming_videos";    
+                $(location).attr('href',url);
+                displaymsg(response.data.message)
+            })
+            .catch(function (error) {
+                // handle error
+                displayerr(error.response.data.message)
+            })
+        })
+    </script>
+<%- include('../../end'); -%></div>

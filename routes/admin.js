@@ -358,9 +358,24 @@ router.get('/delete_category/:id', ensureAuthenticated, async (req, res, next) =
 //view all videos
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
-    { }
+    {
+      type: { $ne: '1' }
+     }
   ).populate('programme')
   res.render('admin/pages/videos', { title: 'Videos', videos });
+});
+
+router.get('/streaming_videos', ensureAuthenticated, async(req, res, next) => {
+  const videos = await Video.find(
+    {
+      type: '1'
+     }
+  )
+  res.render('admin/pages/streaming_videos', { title: 'Streaming videos', videos });
+});
+
+router.get('/add_streaming_videos', ensureAuthenticated, async(req, res, next) => {
+  res.render('admin/pages/add_streaming_videos', { title: 'Add streaming videos' });
 });
 
 // view single video
@@ -380,39 +395,23 @@ router.get('/add_video', ensureAuthenticated, async (req, res, next) => {
   res.render('admin/pages/addVideo', { title: 'Add video', seasons, programmes });
 });
 
-//post a video
-// router.post('/add_video', ensureAuthenticated, multers.upload.array('file',6), async (req, res, next) => {
-//   try {
-//     if(req.files.length<1){
-//       sendJSONresponse(res, 400, {message: "File required"});
-//     }
-//     req.body.image = path.basename(req.files[0].filename, path.extname(req.files[0].filename))+'.webp'
-//     req.body.video = req.files[1].filename
-
-//     await sharp(req.files[0].path)
-//     .resize({ width: 384, height: 216 })
-//     .webp({quality: 60})
-//     .toFile(
-//         path.resolve('./public','small_images',req.body.image)
-//     )
-
-//     await sharp(req.files[0].path)
-//     .resize({ width: 640, height: 360 })
-//     .webp({quality: 90})
-//     .toFile(
-//         path.resolve('./public','large_images',req.body.image)
-//     )
-
-//     fs.unlinkSync(req.files[0].path)
-//     const video = new Video(req.body);
-//     await video.save();
-
-//     sendJSONresponse(res, 200, {"message": "Video added successfully"});
-//   } catch (error) {
-//     console.log(error)
-//     sendJSONresponse(res, 400, {error});
-//   }
-// });
+// post a video
+router.post('/add_streaming_videos', ensureAuthenticated, async (req, res, next) => {
+  try {
+    if (fs.existsSync(path.join(uploadPath, req.body.video))) {
+      //file exists
+      req.body.type = '1';
+      const video = new Video(req.body);
+      await video.save();
+      sendJSONresponse(res, 200, {"message": "Streaming video added successfully"});
+    }else{
+      sendJSONresponse(res, 400, {"message": "File not found"});
+    }
+  } catch (error) {
+    console.log(error)
+    sendJSONresponse(res, 400, {error});
+  }
+});
 
 router.post('/add_video', ensureAuthenticated, async (req, res, next) => {
   try {
@@ -573,6 +572,17 @@ router.get('/delete_video/:id', ensureAuthenticated, async (req, res, next) => {
       fs.unlinkSync(path.resolve('./public','uploads', video.video))
       await Video.deleteOne(video);
       res.redirect('/admin/videos');
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.get('/delete_streaming_video/:id', ensureAuthenticated, async (req, res, next) => {
+  // delete a video
+  try {
+      const video =  await Video.findOne({_id:req.params.id});
+      await Video.deleteOne(video);
+      res.redirect('/admin/streaming_videos');
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }
