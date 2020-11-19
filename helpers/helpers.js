@@ -27,8 +27,7 @@ const facebook = (fileName,stream_key) =>  [
     '-y',
     '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
     '-c:a', 'copy', '-ac', '1','-ar',
-    '44100', '-b:a','96k','-vcodec','libx264','-pix_fmt','yuv420p',
-    '-vf','scale=1080:-1','-r', '30', '-g', '60','-tune',
+    '44100', '-b:a','96k','-vcodec','libx264','-tune',
     'zerolatency','-f', 'flv', '-maxrate', '2000k', '-preset', 'veryfast',
     'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
 ]
