@@ -17,7 +17,7 @@ const local = (fileName,stream_key) =>  [
     '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
     '-c:a', 'copy', '-ac', '1','-ar',
     '44100', '-b:a','96k','-vcodec','libx264','-pix_fmt','yuv420p',
-    '-vf','-r', '30', '-g', '60','-tune',
+    '-vf','-tune',
     'zerolatency','-f', 'flv', '-maxrate', '2000k', '-preset', 'veryfast',
     'rtmp://live.faithtofaithtv.org/show/'+stream_key
 ]
