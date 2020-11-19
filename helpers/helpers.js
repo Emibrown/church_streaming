@@ -46,10 +46,10 @@ const youtube = (fileName,stream_key) =>  [
 
 const startStreaming = (live_stream,streamingKey) => {
     const ffmpeg_process = spawn(cmd, local(live_stream.video.video, streamingKey),{detached: true});
-    
+    localpid = ffmpeg_process.pid
 
     ffmpeg_process.stdout.on('data', (data) => {
-        localpid = ffmpeg_process.pid
+       
         console.log(`stdout: ${data}`);
     });
     
@@ -63,9 +63,10 @@ const startStreaming = (live_stream,streamingKey) => {
 
     if(live_stream.youtube){
         const ffmpeg_process_yt = spawn(cmd, youtube(live_stream.video.video,live_stream.youtube),{detached: true});
-       
+        youtubepid = ffmpeg_process_yt.pid
+
         ffmpeg_process_yt.stdout.on('data', (data) => {
-            youtubepid = ffmpeg_process_yt.pid
+           
             console.log(`stdout: ${data}`);
         });
         
@@ -80,9 +81,10 @@ const startStreaming = (live_stream,streamingKey) => {
 
     if(live_stream.facebook){
         const ffmpeg_process_fb = spawn(cmd, facebook(live_stream.video.video,live_stream.facebook),{detached: true});
+        facebookpid = ffmpeg_process_fb.pid
         
         ffmpeg_process_fb.stdout.on('data', (data) => {
-            facebookpid = ffmpeg_process_fb.pid
+          
             console.log(`stdout: ${data}`);
         });
         
