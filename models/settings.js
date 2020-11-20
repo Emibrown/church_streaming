@@ -77,20 +77,10 @@ var settingsSchema = mongoose.Schema(
         contactNumber:{
             type: String,
             required: false,
-            validate: value => {
-                if (!validator.isMobilePhone(value, 'en-NG')) {
-                    throw new Error({error: 'Invalid phone number'})
-                }
-            }
         },
         prayerNumber:{
             type: String,
             required: false,
-            validate: value => {
-                if (!validator.isMobilePhone(value, 'en-NG')) {
-                    throw new Error({error: 'Invalid phone number'})
-                }
-            }
         },
     }
 )

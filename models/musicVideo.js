@@ -31,11 +31,6 @@ var musicVideoSchema = mongoose.Schema(
         phoneNumber: {
             type: String,
             required: false,
-            validate: value => {
-                if (!validator.isMobilePhone(value, 'en-NG')) {
-                    throw new Error({error: 'Invalid phone number'})
-                }
-            }
         },
         ownershipRights: {
             type: String, 
@@ -48,11 +43,6 @@ var musicVideoSchema = mongoose.Schema(
         videoURL: {
             type: String,
             required: true,
-            validate: value => {
-                if (!validator.isURL(value)) {
-                    throw new Error({error: 'Invalid presentation URL'})
-                }
-            }
         },
         firstTimeProduction: {
             type: String,

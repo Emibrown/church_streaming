@@ -21,11 +21,6 @@ var programmerSchema = mongoose.Schema(
         phone: {
             type: String,
             required: false,
-            validate: value => {
-                if (!validator.isMobilePhone(value, 'en-NG')) {
-                    throw new Error({error: 'Invalid phone number'})
-                }
-            }
         },
         location: {
             type: String, 
@@ -37,11 +32,6 @@ var programmerSchema = mongoose.Schema(
         },
         webURL: {
             type: String,
-            validate: value => {
-                if (!validator.isURL(value)) {
-                    throw new Error({error: 'Invalid web URL'})
-                }
-            }
         },
         programmeTitle: {
             type: String,
@@ -55,11 +45,6 @@ var programmerSchema = mongoose.Schema(
         videoURL: {
             type: String,
             required: true,
-            validate: value => {
-                if (!validator.isURL(value)) {
-                    throw new Error({error: 'Invalid video URL'})
-                }
-            }
         }, 
         firstTimeProduction: {
             type: String,

@@ -19,11 +19,6 @@ var testimonySchema = mongoose.Schema(
         phoneNumber: {
             type: String,
             required: true,
-            validate: value => {
-                if (!validator.isMobilePhone(value, 'en-NG')) {
-                    throw new Error({error: 'Invalid phone number'})
-                }
-            }
         },
         location: {
             type: String, 
