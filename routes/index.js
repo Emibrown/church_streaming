@@ -14,6 +14,7 @@ const Schedule = require('../models/schedule');
 const About = require('../models/about');
 const Settings = require('../models/settings');
 const RequestPassword = require('../models/requestPassword');
+const Comment = require('../models/comments');
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
 const customEmail = require('../services/email');
@@ -56,10 +57,9 @@ router.get("/auth/facebook", passport.authenticate("facebook", {scope: "email"})
 router.get("/register/auth/facebook", passport.authenticate("facebook", {scope: "email"}));
 
 router.get('/facebook/callback', passport.authenticate('facebook', {
-  successRedirect:"/",
+  successRedirect:"/edit-profile",
   failureMessage:"/login",
 }));
-
 
 
 /* GET home page. */
@@ -141,7 +141,7 @@ router.get('/about/:code', async(req, res, next) =>{
 //   res.render('users/pages/high', { title: 'Faith TV | Highlights' });
 // });
 
-router.get('/show-proposal', (req, res, next) =>{
+router.get('/show-proposal',  (req, res, next) =>{
   res.render('users/pages/show_proposal', { title: 'Faith TV | Submit Show Proposal' });
 });
 
@@ -173,6 +173,11 @@ router.get('/enquiries', (req, res, next) =>{
 router.get('/partnership', (req, res, next) =>{
   res.render('users/pages/partnership', { title: 'Faith TV | Partnership' });
 });
+
+router.get('/members-only', ensureAuthenticated, async(req, res, next) =>{
+  res.render('users/pages/members_only', { title: 'Faith TV | Members Only'});
+});
+
 router.get('/register', authenticated, (req, res, next) =>{
   res.render('users/pages/register', { title: 'Faith TV | Register' });
 });
@@ -186,6 +191,7 @@ router.get('/change-password', ensureAuthenticated, (req, res, next) =>{
 router.get('/edit-profile', ensureAuthenticated, (req, res, next) =>{
   res.render('users/pages/edit_profile', { title: 'Faith TV | Edit Profile', user:req.user });
 });
+
 router.get('/my-profile', (req, res, next) =>{
   res.render('users/pages/my_profile', { title: 'Faith TV | User Dashboard' });
 });
@@ -252,6 +258,31 @@ router.get('/video/:id', async(req, res, next) => {
     }
   )
   res.render('users/pages/video_details', { title: 'Video details',video });
+});
+
+router.get('/get_comment',  ensureAuthenticated, async (req, res, next) => {
+  try {
+      const comments = await Comment.find({}).sort({date: 'descending'}).populate('user');
+      return res.status(200).send(comments);
+     
+  } catch (error) {
+    res.status(404).send({msg: error.message})
+  }
+});
+
+router.get('/get_recent_comment/:id',  ensureAuthenticated, async (req, res, next) => {
+
+  try {
+      const {counter} = await Comment.findOne({_id: req.params.id});
+      const newComment = await Comment.find({"counter" : { $gt: counter}}).sort({date: 'descending'}).populate('user');
+      if(newComment.length > 0){
+        return res.status(200).send(newComment)
+      }
+    
+    } catch (error) {
+      return res.status(404).send({msg: error.message})
+    }
+
 });
 
 //advert routes
@@ -386,7 +417,7 @@ router.post('/request_password', async(req, res, next) =>{
 });
 
 // update password
-router.post('/update_password', async(req, res, next) => {
+router.post('/update_password',  async(req, res, next) => {
   try{
    const {password, user_id}  = req.body;
    const getRequester = await RequestPassword.findOne({userId: user_id, });
@@ -420,7 +451,7 @@ router.post('/update_password', async(req, res, next) => {
 });
 
 // change password
-router.put('/change_password', async(req, res, next) => {
+router.put('/change_password', ensureAuthenticated, async(req, res, next) => {
   try{
    const {userId, previous, password} = req.body;
  
@@ -448,7 +479,7 @@ router.put('/change_password', async(req, res, next) => {
 });
 
 // update user profile both facebook and local
-router.put('/update_profile', async(req, res) =>{
+router.put('/update_profile', ensureAuthenticated, async(req, res) =>{
   try{
    
       const {userId, firstname, lastname, 
@@ -500,9 +531,27 @@ router.put('/update_profile', async(req, res) =>{
 });
 
 
+router.post('/post_comment', ensureAuthenticated, async(req, res) =>{
+  try{
+    if(!req.body)
+     return res.status(404).send({ msg: "empty data set" })
+      const comment = new Comment(req.body);
+      const newComment = await comment.save();
+    if(newComment)
+     return res.status(200).send({status: 200, message:"Comment was sent successfully"});
+    else{
+      return res.status(400).send({status: 400, message: "failed to process"});
+    }
+  }catch(error){
+    console.log(error);
+    res.status(404).send({ msg: error.message });
+  }
+
+});
+
 
 //show proposal routes
-router.post('/show_proposal', async (req, res, next) => {
+router.post('/show_proposal', ensureAuthenticated, async (req, res, next) => {
     // create a proposal
     try{
         const {supplierName, email} = req.body;
@@ -519,7 +568,7 @@ router.post('/show_proposal', async (req, res, next) => {
 });
 
 //testimonies routes
-router.post('/testimony', async (req, res, next) => {
+router.post('/testimony', ensureAuthenticated, async (req, res, next) => {
     // create a testimony
     try {
         const {fullName, email} = req.body;
@@ -535,7 +584,7 @@ router.post('/testimony', async (req, res, next) => {
 });
 
 //music video routes
-router.post('/music_video', async (req, res, next) => {
+router.post('/music_video', ensureAuthenticated, async (req, res, next) => {
     // submit music video
     try {
         const {fullName, email} = req.body;
@@ -551,7 +600,7 @@ router.post('/music_video', async (req, res, next) => {
 });
 
 //feedback routes
-router.post('/enquiries', async (req, res, next) => {
+router.post('/enquiries', ensureAuthenticated, async (req, res, next) => {
   // submit feedback
   try {
       const {fullName, email} = req.body;
@@ -567,7 +616,7 @@ router.post('/enquiries', async (req, res, next) => {
 });
 
 //patnership routes
-router.post('/patnership', async (req, res, next) => {
+router.post('/patnership', ensureAuthenticated, async (req, res, next) => {
   // submit a patnership form
   try {
     const {firstName, email} = req.body;

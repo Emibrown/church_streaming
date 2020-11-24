@@ -1,0 +1,113 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<style>
+    .green{
+        color:green;
+    }
+    .red{
+        color:red;
+    }
+</style>
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Instant Mailer
+               </div>
+           </div>
+         </div>
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class = "message"></div>
+                        <form id="send_message">
+                            <div class = "form-group">
+                                <label for="useremail">To:</label>
+                                <input type="text" value="<%= getUser.email %>" id = "useremail" name = "useremail" class = "form-control" readonly>
+                            </div>
+                            <div class = "form-group">
+                                <label for="names">Name:</label>
+                                <input type="hidden" value="<%= getUser._id %>" id = "user" name = "user" class = "form-control">
+                                <input type="text" value="<%= getUser.firstname +" "+getUser.lastname %>" id = "names" name = "names" class = "form-control" readonly>
+                            </div>
+                            <div class = "form-group">
+                                <label for="subject">Subject:</label>
+                                <input placeholder = "Message Subject" type="text" value="" id = "subject" name = "subject" class = "form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="usermessage">Message body:</label>
+                                <textarea id="usermessage" name="usermessage" rows="5" class="form-control" placeholder="Message body" required></textarea>                  
+                            </div>
+                            <button class="mt-1 btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
+<script>
+    $(function () {
+        $("#usermessage").ckeditor();
+
+    });
+</script>
+<script>
+       $(document).ready(()=>{
+     
+        $(document).on('submit', '#send_message', event => {
+            event.preventDefault();
+
+        const data = {
+            "subject": $('#subject').val(),
+            "useremail": $('#useremail').val(),
+            "usermessage": $('#usermessage').val(),
+            "names": $('#names').val(),
+            "user": $('#user').val(),
+        }
+        //clean(data);
+        $.ajax({
+        url: '/admin/send_message',
+        type: 'post',
+        dataType: 'json',
+        data,
+        success: data => {
+            const url = "/admin/view-users";    
+                $(location).attr('href',url);
+                displaymsg(data.message);
+        },
+        error: data => {
+            displaymsg(data.responseJSON.msg);
+
+        },
+        });
+        
+    }) 
+        
+});
+
+</script>
+<%- include('../../end'); -%>

@@ -8,7 +8,7 @@ const About = require('../models/about');
 const Programme = require('../models/programme');
 const Schedule = require('../models/schedule');
 const Season = require('../models/season');
-const Proposal = require('../models/showProposal');
+const SendMessage = require('../models/sendMessage');
 const passport = require('passport');
 const multers = require('../middleware/multers')
 const sharp = require('sharp')
@@ -17,6 +17,7 @@ const fs = require('fs')
 const fse = require('fs-extra');   
 const moment = require('moment');
 const shortid = require('shortid');
+const customEmail = require('../services/email');
 const { Session } = require('inspector');
 const router = express.Router();
 const {v4:uuid} = require('uuid');
@@ -165,10 +166,16 @@ router.get('/stop_streaming', ensureAuthenticated, async(req, res, next) => {
 
 
 
+
 // settings/site details
 router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
-  res.render('admin/pages/site_details', { title: 'Site Details', settings });
+  res.render('admin/pages/site_details', { title: 'Admin | Site Details', settings });
+});
+
+router.get('/send-message/:id', ensureAuthenticated, async(req, res, next) => {
+  const getUser = await User.findOne({_id:req.params.id})
+  res.render('admin/pages/send_message', { title: 'Admin | Send Message', getUser });
 });
 
 router.get('/salvation-prayer', ensureAuthenticated, async(req, res, next) => {
@@ -308,7 +315,7 @@ router.put('/salvation-prayer', ensureAuthenticated, multers.upload.single('file
   }
 });
 
-router.put('/block/:id', async (req, res, next) => {
+router.put('/block/:id', ensureAuthenticated, async (req, res, next) => {
   // block user
   try {
       await User.updateOne(
@@ -324,7 +331,7 @@ router.put('/block/:id', async (req, res, next) => {
       sendJSONresponse(res, 400, {error});
   }
 });
-router.put('/unblock/:id', async (req, res, next) => {
+router.put('/unblock/:id', ensureAuthenticated, async (req, res, next) => {
   // unblock user
   try {
       await User.updateOne(
@@ -340,6 +347,8 @@ router.put('/unblock/:id', async (req, res, next) => {
       sendJSONresponse(res, 400, {error});
   }
 });
+
+
 
 //category handlers
 router.get('/categories', ensureAuthenticated, async(req, res, next) => {
@@ -810,6 +819,25 @@ router.post('/add_programme', ensureAuthenticated, multers.upload.single('file')
   } catch (error) {
     sendJSONresponse(res, 400, {error})
     console.log(error);
+  }
+});
+
+//send single message to user
+router.post('/send_message', ensureAuthenticated, async (req, res, next) => {
+  // send message to single user
+  try {
+    const {names, useremail, subject, usermessage} = req.body;
+
+    const messageUser = new SendMessage(req.body);
+    const saveMessage = await messageUser.save();
+    if(saveMessage){
+       customEmail.customEmail(names, useremail, subject, usermessage);
+      return res.status(200).send({status: 200, message: 'Message was sent successfully'});
+    }else{
+        return res.status(400).send({status: 400, msg: 'failed to process'});
+    }
+  } catch (error) {
+    return res.status(400).send({status: 400, msg: 'Message sending failed'});
   }
 });
 

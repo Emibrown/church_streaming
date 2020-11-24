@@ -1,0 +1,166 @@
+<%- include('../../vod/header.ejs'); -%>
+<style>
+    .green{
+        color:green;
+    }
+    .red{
+        color:red;
+    }
+</style>
+<div id="Main">
+    <div class="container">
+        <div class="fsPlayer fsPlayer_1" id="fsPlayer_1">
+            <div class="fsPlayer-overlay">
+                <div class="fsPlayer-overlay--container">
+                    <div class="fsPlayer-overlay--container-panel">
+                        <div class="fsPlayer-overlay--container-panel--player">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="movie-player">
+                                        <div class="vjs-video-container">
+                                            <video class="video-js vjs-fluid vjs-16-9 vjs-big-play-centered" controls preload="none" width="640" height="264" poster="/large_images/ " id="fsPlayerVideo_1" playsinline>
+                                                <source src="/uploads/" type="video/mp4">
+                                                <p class="vjs-no-js"></p>
+                                            </video>
+                                        </div> <!-- /.video-container -->
+                                        
+                                        <div class="movie-player--footer">
+                                            <em class="fa fa-tags"></em> <a href="#" class="ondemand-tag"></a>       
+                                        </div>
+                                    </div> <!-- /.movie-player -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul class="nav nav-tabs" id="SeriesTabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="series-tab-1" data-toggle="tab" href="#SeriesTab1" role="tab" aria-controls="SeriesTab1" aria-expanded="true">
+                                                <em class="fa fa-align-left"></em> COMMENTS SECTION
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="SeriesTabContent">
+                                        <div style = "max-height:420px;" class="tab-pane fade show active" id="SeriesTab2" role="tabpanel" aria-labelledby="series-tab-2">
+                                            <div class="fsPlayer--controls">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <h4><a href ="" >Leave a comment</a></h4>
+                                    <div class="alertBox"></div>
+                                 <form id = "post-comment">
+                                    <div class="form-group">
+                                        <label for="comment" class="sr-only">comment</label>
+                                        <div class="input-group">
+                                            <input type="hidden" id = "userid" value = "<%= currentUser._id %>">
+                                            <textarea style = "background:black; color:white; resize:none" name="comment" id="comment" rows="5" class = "form-control"></textarea><br>
+                                        </div>
+                                        <span class= "error" style = "color:red"></span>
+                                    </div> 
+                                    <button style = "cursor:pointer" class = "button button-red button-red--signin ">Submit</button>
+                                 </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../../vod/footer.ejs'); -%>
+<%- include('../../vod/js.ejs'); -%>
+<script src="https://cdn.jsdelivr.net/momentjs/2.13.0/moment.min.js"></script>
+<script>
+   $(document).ready(()=>{
+
+        $(document).on('submit', '#post-comment', event => {
+            event.preventDefault();
+
+        const data = {
+            "user": $('#userid').val(),
+            "message": $('#comment').val(),
+        }
+
+        if($('#comment').val()==""){
+                $('.alertBox').empty();
+                $(".error").html("Please fill this comment box");
+        }else{
+            $.ajax({
+            url: '/post_comment',
+            type: 'post',
+            dataType: 'json',
+            data,
+            success: data => {
+                $(".alertBox").html(data.message).addClass('green');
+                $('#post-comment')[0].reset();
+                $(".error").empty();
+
+            },
+            error: data => {
+                $(".alertBox").removeClass("green");
+                $(".alertBox").html(data.responseJSON.msg).addClass('red');
+            },
+            });
+           }
+        }) 
+    var lastArray = [];
+        function getMessages(){
+        $.ajax({
+           url: "/get_comment",
+           type: "get",
+           data: {},
+           dataType: "json",
+           success: result => {
+               if(result.length > 0){
+                 lastItem = result[result.length-1]._id;
+                  lastArray.push(lastItem)
+                     const format = 'LLLL';
+                //      result.map(comment =>{
+
+                //     $('.fsPlayer--controls').append(
+                //        `<span>${comment.user.firstname}</span>
+                //            <p><strong>${comment.message} <a href=""></a> 
+                //         <br><a href="#">${moment(comment.date).format(format)} </a></p>
+                //        `
+                //       );
+                //    })
+               }
+            }
+        })
+    }
+    getMessages();
+    
+//         setInterval( function(){
+//            const prev = []; 
+//         $.ajax({
+//         url: 'get_recent_comment/'+lastArray[0], 
+//         success: function(result) {
+//           if(result.length > 0){
+//             lastArray[0] = result[result.length-1]._id;
+//             const format = 'LLLL';
+//             result.map(comment =>{
+//             $('.fsPlayer--controls').append(
+//                 `<span>${comment.user.firstname}</span>
+//                     <p><strong>${comment.message} <a href=""></a> 
+//                 <br><a href="#">${moment(comment.date).format(format)} </a></p>
+//                 `
+//                 );
+//             })
+//            }
+//         },
+        
+//       });
+    
+    
+//   }, 3000)
+    
+});
+
+
+        
+</script>
+
+<%- include('../../end.ejs'); -%>

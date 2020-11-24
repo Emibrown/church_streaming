@@ -29,7 +29,7 @@
                     <th>Address</th>
                     <th>Location</th>
                     <th>Status</th>
-                    <th>View</th>
+                    <th class ="text-center">View</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,8 +49,8 @@
                         <% } %>
 
                     </td>
-                    <td>
-                        <a href = "/admin/view-single/<%=user._id %>" class="mb-2 mr-2 btn-hover-shine btn btn-shadow btn-success"><i class="far fa-eye"></i> View record</a>
+                    <td class = "text-center">
+                        <a href = "/admin/view-single/<%=user._id %>" class="mb-2 mr-2 btn-hover-shine btn btn-shadow btn-success"> View record</a>
                     </td>
                 </tr>
             <% }) %>
