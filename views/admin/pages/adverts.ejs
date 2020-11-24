@@ -15,42 +15,47 @@
            </div> 
         </div>
    </div>        
-   <div class="tabs-animation">
-    <div class="row">
-        <div class="col-md-12">
+  
             <div class="main-card mb-3 card">
-                <div class="table-responsive">
-                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <div class="card-body">
+                    <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
+                                <th>S/N</th>
                                 <th>Title</th>
-                                <th class="">Full name</th>
-                                <th class="">ministry name</th>
-                                <th class=""> phone no</th>
-                                <th class="">Date added</th>
-                                <th class="">Options</th>
+                                <th>Full name</th>
+                                <th>ministry name</th>
+                                <th> phone no</th>
+                                <th>Date added</th>
+                                <th class = "text-center"> Actions</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <% if(advert.length > 0){ let sn=1;  %>
+
                             <% advert.forEach(function (advert,index){ %>
                                 <tr>
-                                    <td class="text-left"><%= advert.title %></td>
-                                    <td class=""><%= advert.fullName %></td>
-                                    <td class=""><%= advert.ministryName %></td>
-                                    <td class=""><%= advert.phoneNumber %></td>
-                                    <td class=""><%= moment(advert.date).format('LL') %></td>
-                                    <td class="">
+                                    <td><%= sn %></th>
+                                    <td><%= advert.title %></td>
+                                    <td><%= advert.fullName %></td>
+                                    <td><%= advert.ministryName %></td>
+                                    <td><%= advert.phoneNumber %></td>
+                                    <td><%= moment(advert.date).format('LL') %></td>
+                                    <td class = "text-center">
                                         <a href= "/admin/api/advert/<%=advert._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
+                                        <a href= "/admin/api/edit-advert/<%=advert._id%>" type="button" id="PopoverCustomT-1"
+                                            class="btn btn-warning btn-sm">Edit</a>
+                                        <button id= "<%=advert._id%>" class="btn btn-danger btn-sm">Delete</button>
                                     </td>
                                 </tr>
-                            <% }) %>      
+                                <% sn++ %>
+                            <% }) %>  
+                            <%  } %>     
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </div>
+    
     
   </div>
 </div>
@@ -59,4 +64,46 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script>
+    $(document).on('click', '.btn-danger', function(e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+        swal({
+            title: 'Are you sure?',
+            text: "This advert will be DELETED!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed & Delete!'
+        }).then((result) => {
+            if (result) {
+                $.ajax({
+                    url: '/admin/delete_advert/'+id,
+                    method: "DELETE",
+                    dataType : "json",
+                    "contentType": "application/json",
+                    success: function(data) {
+                        window.location.reload();
+                        if (data.status == 200) {
+                            $('#success_message').html(data.message);
+                        }
+                    },
+                    error: function(jqXhr) {
+                        if (jqXhr.status == 400) {
+                           
+                        }
+                    }
+                });
+                swal(
+                    'Deleted!',
+                    'Advert Deleted.',
+                    'success'
+                )
+    
+            }
+        })
+    });
+    
+    </script>
 <%- include('../../end'); -%>

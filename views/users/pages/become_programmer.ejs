@@ -67,10 +67,21 @@
                           <label for="first_time">1. * Have you submitted to this channel before? K
                               indly indicate if yes? (State video content and date of submission)</label>
                           <select class ="form-control" name="declaration" id="declaration" required>
-                              <option>CHOOSE AN OPTION</option>
+                             <option>CHOOSE AN OPTION</option>
                              <option value="yes">YES</option>
                              <option value="no">NO</option>
                           </select>
+
+                      </div>
+                      <hr id = "vc_r">
+                      <div class="form-group" id ="video-content">
+                        <label for="prog_title">*Provide video content</label>
+                        <textarea id="content_of_video" rows="5" class="form-control" placeholder="Provide Content of Video (Required)"></textarea>                  
+                      </div>
+                      <hr id = "date_r">
+                      <div class="form-group" id = "date-submitted">
+                        <label for="prog_title">*Provide Date of submission</label>
+                        <input type="date" id = "date_submitted"  class ="form-control" placeholder = "Date of submission">
                       </div>
                       <hr>
                       <div class = "form-group">
@@ -86,7 +97,7 @@
                             <label class="chkBox">
                                 <input type="checkbox" value="Y" id="terms1" name="agree_phone" class="inputCheckbox" /> 
                                 <strong>By using this service i agree to FAITH TO FAITH TV's <a href = "">Terms of Service</a> and privacy policy</strong>
-                              </label>
+                            </label>
                         </p>
                         <hr />
                         <div>
@@ -161,8 +172,60 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
+  $(document).ready(function(){
+      $('#video-content').hide();
+      $('#content_of_video').removeAttr('required');
+      $('#content_of_video').removeAttr('data-error');
+
+      $('#date-submitted').hide();
+      $('#vc_r').hide();
+      $('#date_r').hide();
+      $('#date_submitted').removeAttr('required');
+      $('#date_submitted').removeAttr('data-error');
+
+  $("#declaration").change(function() {
+    const declaration = $('#declaration').val();
+  if (declaration == "yes") {
+     
+    $('#video-content').show();
+    $('#content_of_video').attr('required', '');
+    $('#content_of_video').attr('data-error', 'This field is required.');
+
+    $('#vc_r').show();
+    $('#date_r').show();
+
+    $('#date-submitted').show();
+    $('#date_submitted').attr('required', '');
+    $('#date_submitted').attr('data-error', 'This field is required.');
+
+    }else{
+    
+      $('#video-content').hide();
+      $('#content_of_video').removeAttr('required');
+      $('#content_of_video').removeAttr('data-error');
+      
+      $('#vc_r').hide();
+      $('#date_r').hide();
+
+      $('#date-submitted').hide();
+      $('#date_submitted').removeAttr('required');
+      $('#date_submitted').removeAttr('data-error');
+  }
+
+});
+
   $(document).on('submit', '#become-programmer', function(event) {
       event.preventDefault();
+      if($('#content_of_video').val()==="" || $('#content_of_video').val()===null ){
+        let content_video = "Nil";
+      }else{
+         content_video = $('#content_of_video').val();
+      }
+      if($('#date_submitted').val()==="" || $('#date_submitted').val()===null ){
+        let date_submitted = "Nil";
+      }else{
+        date_submitted = $('#date_submitted').val();
+      }
       const data = {
           "fullName": $("#fullname").val(),
           "email":  $("#email").val(),
@@ -175,13 +238,16 @@
           "videoURL" : $("#video").val(),
           "firstTimeProduction": $("#declaration").val(),
           "personalRelationships" : $("#relationship").val(),
+          "contentVideo" : $("#content_of_video").val(),
+          "dateSubmitted" : $("#date_submitted").val(),
+
         }        
         if (terms1.checked==false || terms2.checked==false){
             displaymsg(text = "Please accept all terms and conditions")
       }else{
 
       jQuery.ajax({
-          url: '/programmer',
+          url: '/become_programmer',
           method: "POST",
           dataType : "json",
           data: JSON.stringify(data),
@@ -190,7 +256,7 @@
               console.log(response);
               if(response.status==200){
                 displaymsg(response.message, "alert-success")
-                $('#feedback-form')[0].reset();
+                $('#become-programmer')[0].reset();
               }
           },
           error:function(jqXhr){
@@ -213,5 +279,6 @@
       });
      }
   });
+});
 </script>
 <%- include('../../end'); -%>

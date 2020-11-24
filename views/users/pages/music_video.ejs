@@ -59,7 +59,8 @@
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
                           </select>
-                      </div>                      <h4 class = "pb-2">ASSETS</h4>
+                      </div>                      
+                      <h4 class = "pb-2">ASSETS</h4>
                       <div class = "form-group">
                         <label for="video">*Video url</label>
                         <input placeholder = "Youtube/Vimeo url" type="text" name = "video" id = "video" class = "form-control" required>
@@ -69,12 +70,24 @@
                       <div class = "form-group">
                           <label for="first_time">1. * Have you submitted to this channel before? K
                               indly indicate if yes? (State video content and date of submission)</label>
-                          <select class ="form-control" name="first_time" id="first_time" required>
+                          <select class ="form-control"  id="first_time" required>
                               <option value="" class = "none">CHOOSE AN OPTION</option>
                              <option value="yes">YES</option>
                              <option value="no">NO</option>
                           </select>
                       </div>
+
+                      <hr id = "vc_r">
+                      <div class="form-group" id ="video-content">
+                        <label for="prog_title">*Provide video content</label>
+                        <textarea id="content_of_video" rows="5" class="form-control" placeholder="Provide Content of Video (Required)"></textarea>                  
+                      </div>
+                      <hr id = "date_r">
+                      <div class="form-group" id = "date-submitted">
+                        <label for="prog_title">*Provide Date of submission</label>
+                        <input type="date" id = "date_submitted"  class ="form-control" placeholder = "Date of submission">
+                      </div>
+
                       <hr>
                       <div class = "form-group">
                           <label for="relationship">2. * Do you have an existing personal relationship with anyone at this 
@@ -165,8 +178,62 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
+  $(document).ready(function(){
+    $('#video-content').hide();
+      $('#content_of_video').removeAttr('required');
+      $('#content_of_video').removeAttr('data-error');
+
+      $('#date-submitted').hide();
+      $('#vc_r').hide();
+      $('#date_r').hide();
+      $('#date_submitted').removeAttr('required');
+      $('#date_submitted').removeAttr('data-error');
+
+  $("#first_time").change(function() {
+    const first_time = $('#first_time').val();
+  if (first_time == "yes") {
+     
+    $('#video-content').show();
+    $('#content_of_video').attr('required', '');
+    $('#content_of_video').attr('data-error', 'This field is required.');
+
+    $('#vc_r').show();
+    $('#date_r').show();
+
+    $('#date-submitted').show();
+    $('#date_submitted').attr('required', '');
+    $('#date_submitted').attr('data-error', 'This field is required.');
+
+    }else{
+    
+      $('#video-content').hide();
+      $('#content_of_video').removeAttr('required');
+      $('#content_of_video').removeAttr('data-error');
+      
+      $('#vc_r').hide();
+      $('#date_r').hide();
+
+      $('#date-submitted').hide();
+      $('#date_submitted').removeAttr('required');
+      $('#date_submitted').removeAttr('data-error');
+  }
+
+  });
+
+  });
   $(document).on('submit', '#music-video', function(event) {
       event.preventDefault();
+      if($('#content_of_video').val()==="" || $('#content_of_video').val()===null ){
+        let content_video = "Nil";
+      }else{
+         content_video = $('#content_of_video').val();
+      }
+      if($('#date_submitted').val()==="" || $('#date_submitted').val()===null ){
+        let date_submitted = "Nil";
+      }else{
+        date_submitted = $('#date_submitted').val();
+      }
+
       let contactForm = $(this)
       const data = {
           title : jQuery("#title").val(),
@@ -179,7 +246,10 @@
           videoURL : jQuery("#video").val(),
           ownershipRights : jQuery("#owner").val(),
           firstTimeProduction : jQuery("#first_time").val(),
-          personalRelationships : jQuery("#relationship").val()
+          personalRelationships : jQuery("#relationship").val(),
+          contentVideo : jQuery("#content_of_video").val(),
+          dateSubmitted : jQuery("#date_submitted").val(),
+
       }
       if (terms1.checked==false || terms2.checked==false){
             displaymsg(text = "Please accept all terms and conditions")
@@ -195,7 +265,7 @@
               console.log(response);
               if(response.status==200){
                 displaymsg(response.message, "alert-success")
-                $('#feedback-form')[0].reset();
+                $('#music-video')[0].reset();
               }
           },
           error:function(jqXhr){

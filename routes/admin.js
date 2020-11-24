@@ -1,4 +1,5 @@
 const express = require('express');
+const Advert = require('../models/advert');
 const User = require('../models/user');
 const Category = require('../models/category');
 const Video = require('../models/video');
@@ -7,6 +8,7 @@ const About = require('../models/about');
 const Programme = require('../models/programme');
 const Schedule = require('../models/schedule');
 const Season = require('../models/season');
+const Proposal = require('../models/showProposal');
 const passport = require('passport');
 const multers = require('../middleware/multers')
 const sharp = require('sharp')
@@ -161,19 +163,7 @@ router.get('/stop_streaming', ensureAuthenticated, async(req, res, next) => {
     sendJSONresponse(res, 200, {message: 'Streaming ended on all platforms'});
 });
 
-//settings
-router.put('/settings', ensureAuthenticated, async (req, res, next) => {
-  // site settings
-  try {
-      const settings = await Settings.findOne({settingsId:"site_settings"})
-      await Object.assign(settings, req.body);
-      console.log(settings)
-      await settings.save()
-      res.send({status: 200, message: 'Settings saved'});
-  } catch (error) {
-      sendJSONresponse(res, 400, {error});
-  }
-});
+
 
 // settings/site details
 router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
@@ -221,6 +211,8 @@ router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
   const user = await User.findById({_id: req.params.id})
   res.render('admin/pages/view_single_user', { title: 'View Single User', user });
 });
+
+
 //update sit settings from admin page
 router.put('/settings', ensureAuthenticated, async (req, res, next) => {
   try {
@@ -234,6 +226,30 @@ router.put('/settings', ensureAuthenticated, async (req, res, next) => {
   }
 });
 
+router.put('/update_proposal/:id', ensureAuthenticated, async (req, res, next) => {
+  // site settings
+  try {
+      const newProposal = await Proposal.findOne({_id:req.params.id})
+       console.log(newProposal);
+      await Object.assign(newProposal, req.body);
+      await newProposal.save()
+      res.send({status: 200, message: 'Proposal updated successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.put('/update_advert/:id', ensureAuthenticated, async (req, res, next) => {
+  // site settings
+  try {
+      const newAdvert = await Advert.findOne({_id:req.params.id})
+      await Object.assign(newAdvert, req.body);
+      await newAdvert.save()
+      res.send({status: 200, message: 'Advert updated successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
 router.get('/public-key', ensureAuthenticated, async (req, res, next) => {
   try {
       const settings = await Settings.findOne({settingsId:"site_settings"})
@@ -371,6 +387,26 @@ router.get('/delete_category/:id', ensureAuthenticated, async (req, res, next) =
       res.redirect('/admin/categories');
   } catch (error) {
       sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.delete('/delete_proposal/:id', async (req, res, next) => {
+  // delete show proposal
+  try {
+      await Proposal.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted proposal'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.delete('/delete_advert/:id', async (req, res, next) => {
+  // delete show proposal
+  try {
+      await Advert.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted advert'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
   }
 });
 

@@ -12,6 +12,7 @@ const Video = require('../models/video');
 const Show = require('../models/show');
 const Schedule = require('../models/schedule');
 const Enquiry = require('../models/enquiries');
+const ShowProposal = require('../models/showProposal');
 const multers = require('../middleware/multers');
 const sharp = require('sharp');
 const path = require('path')
@@ -189,6 +190,16 @@ router.get('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => 
         sendJSONresponse(res, 400, {error});
     }
 });
+router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
+    const showProposal = await ShowProposal.findById({_id: req.params.id})
+    console.log(showProposal);
+    res.render('admin/pages/edit_proposal', { title: 'Edit proposal', showProposal });
+  });
+
+  router.get('/edit-advert/:id', ensureAuthenticated, async(req, res, next) => {
+    const advert = await Advert.findById({_id: req.params.id})
+    res.render('admin/pages/edit_advert', { title: 'Edit proposal', advert });
+  });
 
 router.put('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {
     // update a show proposal
@@ -471,6 +482,17 @@ router.get('/add_show', ensureAuthenticated, async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
 });
+
+router.get('/add_schedule', ensureAuthenticated, async (req, res, next) => {
+    // add schedule view
+    try {
+        const shows = await Show.find({});
+        res.render('admin/pages/add_schedule', { title: 'Add Schedule', shows});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
 router.get('/edit_show/:id', ensureAuthenticated, async (req, res, next) => {
     // edit shows view
     try {
@@ -487,7 +509,7 @@ router.post('/show', ensureAuthenticated, multers.upload.single('file'), async (
         if(!req.file){
             sendJSONresponse(res, 400, {"message": "Image required"});
         }
-
+        
         req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
         await sharp(req.file.path)
         .resize({ width: 400, height: 200 })

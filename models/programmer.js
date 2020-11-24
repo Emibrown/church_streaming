@@ -54,6 +54,12 @@ var programmerSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        contentVideo: {
+            type: String,
+        },
+        dateSubmitted: {
+            type:String,
+        },
         date: {
             type: Date, 
             default: Date.now
