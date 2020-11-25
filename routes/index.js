@@ -291,8 +291,8 @@ router.post('/create_advert', async (req, res, next) => {
   try {
       console.log(req.body);
       const {fullName :user_name, email:user_email} = req.body;
-      const header = "Newly Created Advert";
-      const message = "Advert created successfully";
+      const header = "";
+      const message = "Request to submit advert has been delivered successfully";
       const advert = new Advert(req.body)
       const saveAdevert = await advert.save()
       if(saveAdevert){
@@ -616,17 +616,21 @@ router.post('/enquiries', ensureAuthenticated, async (req, res, next) => {
 });
 
 //patnership routes
-router.post('/patnership', ensureAuthenticated, async (req, res, next) => {
+router.post('/patnership', async(req, res, next) => {
   // submit a patnership form
   try {
+    if(!req.body){
+      return res.status(404).send({ msg: "empty data set" })
+    }
     const {firstName, email} = req.body;
-    const header = "Patnership";
-    const message = "Request was processed successfully";
-    customEmail.customEmail(firstName, email, header, message);
     const patnership = new Partnership(req.body);
     const saved = await patnership.save();
-    console.log(saved)
-    res.send({status: 200, message: 'patnership form submitted'});
+    if(saved){
+      const header = "";
+      const message = "Your partnership Request was processed successfully";
+      customEmail.customEmail(firstName, email, header, message);
+     return res.status(200).send({status: 200, message: 'patnership form submitted'});
+    }
   } catch (error) {
     sendJSONresponse(res, 400, Object.keys(error.errors));
   }

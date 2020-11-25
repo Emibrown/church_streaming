@@ -1,0 +1,68 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Enquiry
+               </div>
+           </div>
+           <div class="page-title-actions">
+            <div class="d-inline-block dropdown">
+               <a type="button" href="/admin/api/enquiries" class="btn-shadow 
+                btn btn-primary">
+                   <span class="btn-icon-wrapper pr-2 opacity-7">
+                   </span>
+                   Back to enquiries
+               </a>
+           </div>
+        </div>  
+        </div>
+   </div>        
+   <div class="tabs-animation">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="table-responsive">
+                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                            <tr>
+                                <th class="">Full name</th>
+                                <td class=""><%= enquiry.fullName %></td>
+                            </tr>
+                           
+                            <tr>
+                                <th class="">Phone no</th>
+                                <td class=""><%= enquiry.phoneNumber %></td>
+                            </tr>
+                            <tr>
+                                <th class="">Date added</th> 
+                                <td class=""><%= moment(enquiry.date).format('LL') %></td>
+                            </tr>
+                            <tr>
+                                <th class="">Email</th>
+                                <td class=""><%= enquiry.email %></td>
+                            </tr>
+                            <tr>
+                                <th class="">Description</th>
+                                <td class=""><%= enquiry.enquiries %></td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  </div>
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<%- include('../../end'); -%>

@@ -1,0 +1,99 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+<style>
+    .green{
+        color:green;
+    }
+    .red{
+        color:red;
+    }
+</style>
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Create Genres for music
+               </div>
+           </div>
+           <div class="page-title-actions">
+             <div class="d-inline-block dropdown">
+                <a type="button" href="/admin/api/music_videos" class="btn-shadow 
+                 btn btn-primary">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                    </span>
+                    Back to music
+                </a>
+            </div>
+         </div> 
+         </div>
+         
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div style = "text-align:center" class="alertBox"></div>
+                        <form id="create-genre">
+                            <div class = "form-group">
+                                <label for="name">Name of Music Genre:</label>
+                                <input value = "" type="text" id = "name" class = "form-control">
+                                <span class= "error" style = "color:red"></span>
+
+                            </div>
+                            <button class="mt-1 btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+$(document).on('submit', '#create-genre', event => {
+    event.preventDefault();
+
+        const data = {
+            "name": $('#name').val(),
+        }
+        if($('#name').val()==""){
+            $('.alertBox').empty();
+            $(".error").html("Please provide Genre name");
+        }else{
+            $.ajax({
+            url: '/admin/create_music_genre',
+            type: 'post',
+            dataType: 'json',
+            data,
+            success: data => {
+                console.log(data);
+                $(".alertBox").html(data.message).addClass('green');
+                $('#create-genre')[0].reset();
+                $(".error").empty();
+
+            },
+            error: data => {
+                console.log(data)
+                $(".alertBox").removeClass("green");
+                $(".alertBox").html(data.responseJSON.msg).addClass('red');
+            },
+            });
+        }
+})
+   
+</script>
+<%- include('../../end'); -%>

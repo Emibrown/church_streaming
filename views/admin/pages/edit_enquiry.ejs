@@ -1,0 +1,110 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+<style>
+
+    #message{
+        color:red;
+    }
+</style>
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Edit single enquiry
+               </div>
+           </div>
+           <div class="page-title-actions">
+             <div class="d-inline-block dropdown">
+                <a type="button" href="/admin/api/enquiries" class="btn-shadow 
+                 btn btn-primary">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                    </span>
+                    Back to enquiries
+                </a>
+            </div>
+         </div> 
+         </div>
+         
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div id = "message"></div>
+                        <form id="edit-enquiry">
+                            <div class = "form-group">
+                                <label for="fullName">Fullname:</label>
+                                <input value = "<%= enquiry._id %>" id = "enqId" type="hidden">
+                                <input value = "<%= enquiry.fullName %>" type="text" id = "fullName" class = "form-control" required>
+                            </div>
+                          
+                            <div class = "form-group">
+                                <label for="email">Email:</label>
+                                <input value = "<%= enquiry.email %>"  type="text" id = "email" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="phoneNumber">Phone Number:</label>
+                                <input value = "<%= enquiry.phoneNumber %>" type="text" id = "phoneNumber" class = "form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="enquiries">Description:</label>
+                                <textarea name="" id="enquiries" cols="30" rows="10" class = "form-control" required><%= enquiry.enquiries %></textarea>
+                            </div>
+                            <button class="mt-1 btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+    $(document).on('submit', '#edit-enquiry', event => {
+        event.preventDefault();
+        const enqId = $("#enqId").val();
+        const data = {
+            fullName: $("#fullName").val(),
+            email: $("#email").val(),
+            phoneNumber:  $("#phoneNumber").val(),
+            enquiries: $("#enquiries").val(),
+         }
+         
+        jQuery.ajax({
+        url: '/admin/update_enquiry/'+enqId,
+        method: "PUT",
+        dataType : "json",
+        data: JSON.stringify(data),
+        "contentType": "application/json",
+        success: function(response) { 
+            console.log(response);
+            if(response.status==200){
+            displaymsg(response.message, "alert-secondary")
+            }
+          },
+          error:function(jqXhr){
+              if(jqXhr.status ==400){
+                let responseText = jQuery.parseJSON(jqXhr.responseText);
+                $('#message').html(responseText.error)
+                console.log(responseText)
+              }
+          }
+      });
+     })
+</script>
+<%- include('../../end'); -%>

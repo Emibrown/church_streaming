@@ -9,6 +9,7 @@ const Programme = require('../models/programme');
 const Schedule = require('../models/schedule');
 const Season = require('../models/season');
 const SendMessage = require('../models/sendMessage');
+const MusicGenre = require('../models/musicGenres');
 const passport = require('passport');
 const multers = require('../middleware/multers')
 const sharp = require('sharp')
@@ -21,6 +22,12 @@ const customEmail = require('../services/email');
 const { Session } = require('inspector');
 const router = express.Router();
 const {v4:uuid} = require('uuid');
+const MusicVideo = require('../models/musicVideo');
+const Programmer = require('../models/programmer');
+const Testimony = require('../models/testimony');
+const PrayerRequest = require('../models/prayerRequest');
+const Enquiry = require('../models/enquiries');
+const Patnership = require('../models/patnership');
 
 const sendJSONresponse = (res, status, content) => {
   res.status(status);
@@ -247,7 +254,6 @@ router.put('/update_proposal/:id', ensureAuthenticated, async (req, res, next) =
 });
 
 router.put('/update_advert/:id', ensureAuthenticated, async (req, res, next) => {
-  // site settings
   try {
       const newAdvert = await Advert.findOne({_id:req.params.id})
       await Object.assign(newAdvert, req.body);
@@ -257,6 +263,81 @@ router.put('/update_advert/:id', ensureAuthenticated, async (req, res, next) => 
       sendJSONresponse(res, 400, {error: error.message});
   }
 });
+
+
+router.put('/update_music_video/:id', ensureAuthenticated, async (req, res, next) => {
+  
+  try {
+      const newMusicVideo = await MusicVideo.findOne({_id:req.params.id})
+      await Object.assign(newMusicVideo, req.body);
+      await newMusicVideo.save()
+      res.send({status: 200, message: 'Music Video updated successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.put('/update_content_developer/:id', ensureAuthenticated, async (req, res, next) => {
+
+  try {
+      const newContentDev = await Programmer.findOne({_id:req.params.id})
+      await Object.assign(newContentDev, req.body);
+      await newContentDev.save()
+      res.send({status: 200, message: 'Content Developer updated successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.put('/update_testimony/:id', ensureAuthenticated, async (req, res, next) => {
+
+  try {
+      const testimony = await Testimony.findOne({_id:req.params.id})
+      await Object.assign(testimony, req.body);
+      await testimony.save()
+      res.send({status: 200, message: 'Testimony Updated Successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.put('/update_prayerRequest/:id', ensureAuthenticated, async (req, res, next) => {
+
+  try {
+      const prayerRequest = await PrayerRequest.findOne({_id:req.params.id})
+      await Object.assign(prayerRequest, req.body);
+      await prayerRequest.save()
+      res.send({status: 200, message: 'Prayer Request Updated Successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.put('/update_enquiry/:id', ensureAuthenticated, async (req, res, next) => {
+
+  try {
+      const enquiry = await Enquiry.findOne({_id:req.params.id})
+      await Object.assign(enquiry, req.body);
+      await enquiry.save()
+      res.send({status: 200, message: 'Enquiry Updated Successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.put('/update_patnership/:id', ensureAuthenticated, async (req, res, next) => {
+
+  try {
+      const partnership = await Patnership.findOne({_id:req.params.id})
+      await Object.assign(partnership, req.body);
+      await partnership.save()
+      res.send({status: 200, message: 'Patnership Updated Successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+
 router.get('/public-key', ensureAuthenticated, async (req, res, next) => {
   try {
       const settings = await Settings.findOne({settingsId:"site_settings"})
@@ -399,8 +480,7 @@ router.get('/delete_category/:id', ensureAuthenticated, async (req, res, next) =
   }
 });
 
-router.delete('/delete_proposal/:id', async (req, res, next) => {
-  // delete show proposal
+router.delete('/delete_proposal/:id', ensureAuthenticated,  async (req, res, next) => {
   try {
       await Proposal.findOneAndDelete({_id: req.params.id})
       res.status(200).send({status: 200, message: 'Successfully Deleted proposal'});
@@ -409,8 +489,7 @@ router.delete('/delete_proposal/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/delete_advert/:id', async (req, res, next) => {
-  // delete show proposal
+router.delete('/delete_advert/:id', ensureAuthenticated, async (req, res, next) => {
   try {
       await Advert.findOneAndDelete({_id: req.params.id})
       res.status(200).send({status: 200, message: 'Successfully Deleted advert'});
@@ -419,7 +498,58 @@ router.delete('/delete_advert/:id', async (req, res, next) => {
   }
 });
 
-//view all videos
+router.delete('/delete_music_video/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await MusicVideo.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted music video'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.delete('/delete_content_developer/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await Programmer.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted Content Developer'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.delete('/delete_prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await PrayerRequest.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted Prayer Request'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+router.delete('/delete_testimony/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await Testimony.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted Testimony'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.delete('/delete_enquiry/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await Enquiry.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted Enquiry'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.delete('/delete_patnership/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await Patnership.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted Patnership'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
     {
@@ -474,6 +604,21 @@ router.post('/add_streaming_videos', ensureAuthenticated, async (req, res, next)
   } catch (error) {
     console.log(error)
     sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.post('/create_music_genre', ensureAuthenticated, async(req, res) =>{
+  try{
+    if(!req.body){
+      return res.status(404).send({ msg: "empty data set" })
+    }
+      const newGenre = new MusicGenre(req.body);
+      const submitted = await newGenre.save();
+    if(submitted) return res.status(200).send({status: 200, message:"Genre was created successfully"});
+
+   }catch(error){
+    console.log(error);
+    res.status(404).send({ msg: error.message });
   }
 });
 

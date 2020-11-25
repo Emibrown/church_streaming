@@ -1,0 +1,153 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+<style>
+
+    #message{
+        color:red;
+    }
+</style>
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Edit single Music Video
+               </div>
+           </div>
+           <div class="page-title-actions">
+             <div class="d-inline-block dropdown">
+                <a type="button" href="/admin/api/become_programmers" class="btn-shadow 
+                 btn btn-primary">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                    </span>
+                    Content providers
+                </a>
+            </div>
+         </div> 
+         </div>
+         
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div id = "message"></div>
+                        <form id="edit-music-video">
+                            <div class = "form-group">
+                                <label for="fullName">Fullname:</label>
+                                <input value = "<%= programmer._id %>" id = "progId" type="hidden">
+                                <input value = "<%= programmer.fullName %>" type="text" id = "fullName" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="email">Email:</label>
+                                <input value = "<%= programmer.email %>"  type="text" id = "email" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="phone">Phone Number:</label>
+                                <input value = "<%= programmer.phone %>" type="text" id = "phone" class = "form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Location:</label>
+                                <input value = "<%= programmer.location %>" type="text" id = "location" class = "form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for ="ministryName">Ministry Name:</label>
+                                <input value = "<%= programmer.ministryName %>" type="text" id ="ministryName" class = "form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for ="webURL">Web URL:</label>
+                                <input value = "<%= programmer.webURL %>" type="text" id ="webURL" class = "form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for ="programmeTitle">Programme Title:</label>
+                                <input value = "<%= programmer.programmeTitle %>" type="text" id ="programmeTitle" class = "form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for ="programmeDescription">Programme Description:</label>
+                                <textarea cols="50" id ="programmeDescription" class = "form-control" required ><%= programmer.programmeDescription %></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for ="videoURL">Video URL:</label>
+                                <input value = "<%= programmer.videoURL %>" type="text" id ="videoURL" class = "form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for ="firstTimeProduction">First Time Production:</label>
+                                <input value = "<%= programmer.firstTimeProduction %>" type="text" id ="firstTimeProduction" class = "form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for ="personalRelationships">Personal Relationships:</label>
+                                <input value = "<%= programmer.personalRelationships %>" type="text" id ="personalRelationships" class = "form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for ="contentVideo">Video Content:</label>
+                                <input value = "<%= programmer.contentVideo %>" type="text" id ="contentVideo" class = "form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for ="dateSubmitted">Date Submitted:</label>
+                                <input value = "<%= programmer.dateSubmitted %>" type="text" id ="dateSubmitted" class = "form-control">
+                            </div>
+                            <button class="mt-1 btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+    $(document).on('submit', '#edit-music-video', event => {
+        event.preventDefault();
+        const progId = $("#progId").val();
+        const data = {
+            fullName: $("#fullName").val(),
+            email: $("#email").val(),
+            phone:  $("#phone").val(),
+            ministryName: $("#ministryName").val(),
+            location: $("#location").val(),
+            webURL: $("#webURL").val(),
+            programmeTitle: $("#programmeTitle").val(),
+            programmeDescription: $("#programmeDescription").val(),
+            videoURL: $("#videoURL").val(),
+            firstTimeProduction: $("#firstTimeProduction").val(),
+            personalRelationships: $("#personalRelationships").val(),
+            contentVideo: $("#contentVideo").val(),
+            dateSubmitted: $("#dateSubmitted").val(),
+         }
+         
+        jQuery.ajax({
+        url: '/admin/update_content_developer/'+progId,
+        method: "PUT",
+        dataType : "json",
+        data: JSON.stringify(data),
+        "contentType": "application/json",
+        success: function(response) { 
+            console.log(response);
+            if(response.status==200){
+            displaymsg(response.message, "alert-secondary")
+            }
+          },
+          error:function(jqXhr){
+              if(jqXhr.status ==400){
+                let responseText = jQuery.parseJSON(jqXhr.responseText);
+                $('#message').html(responseText.error)
+                console.log(responseText)
+              }
+          }
+      });
+     })
+</script>
+<%- include('../../end'); -%>
