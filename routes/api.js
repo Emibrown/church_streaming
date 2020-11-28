@@ -181,16 +181,6 @@ router.get('/view-genres', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.get('/view-admin-testimonies', ensureAuthenticated, async (req, res, next) => {
-    // Get  all proposals 
-    try {
-        const testimonies = await AdminTestimony.find({})
-        res.render('admin/pages/view_admin_testimonies', { title: 'All Testimonies', testimonies });
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
 //show proposal routes
 
 router.get('/show_proposals', ensureAuthenticated, async (req, res, next) => {
@@ -288,6 +278,11 @@ router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
     const genre = await MusicGenre.findById({_id: req.params.id})
     res.render('admin/pages/edit_genre', { title: 'Edit Genre', genre });
   });
+  router.get('/create-testimony', ensureAuthenticated, async(req, res, next) => {
+    res.render('admin/pages/create_testimony', { title: 'Create Testimony' });
+  });
+
+  
 
   router.get('/single-testimony/:id', ensureAuthenticated, async (req, res, next) => {
     try {

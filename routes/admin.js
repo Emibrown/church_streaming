@@ -222,13 +222,20 @@ router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
-router.get('/create-testimony', ensureAuthenticated, async(req, res, next) => {
-  res.render('admin/pages/create_testimony', { title: 'Create Testimony' });
-});
 
 router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
   const user = await User.findById({_id: req.params.id})
   res.render('admin/pages/view_single_user', { title: 'View Single User', user });
+});
+
+router.get('/view-admin-testimonies', ensureAuthenticated, async (req, res, next) => {
+  // Get  all proposals 
+  try {
+      const testimonies = await AdminTestimony.find({})
+      res.render('admin/pages/view_admin_testimonies', { title: 'All Testimonies', testimonies });
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
 });
 
 
