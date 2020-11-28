@@ -19,23 +19,25 @@
    <!-- title -->
     <!--body  -->
     <div class="main-card mb-3 card">
-        <div class="card-body">
-            <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
+        <div class="card-body ">
+            <table style="width: 100%;" id="example2" class="table  table-striped table-bordered">
                 <thead>
                 <tr>
+                    <th>S/N</th>
                     <th>First Name</th>
                     <th>Last name</th>
                     <th>Email</th>
                     <th>Address</th>
                     <th>Location</th>
                     <th>Status</th>
-                    <th class ="text-center">View</th>
+                    <th class ="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <% if(users.length > 0) { %>
+                    <% if(users.length > 0) { let sn=1; %>
                         <% users.forEach(user => { %>               
                  <tr>
+                    <td><%= sn %></th>
                     <td><%= user.firstname %> </td>
                     <td><%= user.lastname %></td>
                     <td><%= user.email %></td>
@@ -53,6 +55,7 @@
                         <a href = "/admin/view-single/<%=user._id %>" class="mb-2 mr-2 btn-hover-shine btn btn-shadow btn-success"> View record</a>
                     </td>
                 </tr>
+             <% sn++ %>
             <% }) %>
             <% }else{ %>
                 No Record available
@@ -68,4 +71,14 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script>
+      $(document).ready(function() {
+    $('#example2').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+    } );
+} );
+</script>
 <%- include('../../end'); -%>

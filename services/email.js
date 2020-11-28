@@ -48,7 +48,7 @@ const customEmail = (name,email,header,message) =>{
                 var mainOptions = {
                     from: 'officialfaithtv@gmail.com',
                     to: email,
-                    subject: 'FaithtoFaith TV | Response',
+                    subject: 'FaithtoFaith TV',
                     html: data
                 };
                 transporter.sendMail(mainOptions, function (err, info) {

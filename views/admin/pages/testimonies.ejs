@@ -26,7 +26,6 @@
                                 <th>location</th>
                                 <th>email</th>
                                 <th>Phone no</th>
-                                <th>Testimony</th>
                                 <th>Date added</th>
                                 <th class = "text-center">Actions</th>
 
@@ -40,8 +39,7 @@
                                     <td><%= testimonies.fullName %></td>
                                     <td><%= testimonies.location %></td>
                                     <td><%= testimonies.email %></td>
-                                    <td><%= testimonies.phone %></td>
-                                    <td><%= testimonies.testimony %></td>
+                                    <td><%= testimonies.phoneNumber %></td>
                                     <td><%= moment(testimonies.date).format('LL') %></td>
                                     <td class="text-center">
                                         <a href= "/admin/api/view-testimony/<%=testimonies._id%>" type="button" id="PopoverCustomT-1"

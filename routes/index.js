@@ -17,9 +17,10 @@ const RequestPassword = require('../models/requestPassword');
 const Comment = require('../models/comments');
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
-const customEmail = require('../services/email');
+const {customEmail} = require('../services/email');
 const moment = require('moment');
 const Feedback = require('../models/enquiries');
+const MusicGenre = require('../models/musicGenres');
 const router = express.Router();
 
 
@@ -145,8 +146,9 @@ router.get('/show-proposal',  (req, res, next) =>{
   res.render('users/pages/show_proposal', { title: 'Faith TV | Submit Show Proposal' });
 });
 
-router.get('/music-video', (req, res, next) =>{
-  res.render('users/pages/music_video', { title: 'Faith TV | Submit Music Video' });
+router.get('/music-video', async(req, res, next) =>{
+  const genres = await MusicGenre.find({});
+  res.render('users/pages/music_video', { title: 'Faith TV | Submit Music Video', genres });
 });
 
 router.get('/become-programmer', (req, res, next) =>{
@@ -296,7 +298,7 @@ router.post('/create_advert', async (req, res, next) => {
       const advert = new Advert(req.body)
       const saveAdevert = await advert.save()
       if(saveAdevert){
-        customEmail.customEmail(user_name, user_email, header, message);
+        customEmail(user_name, user_email, header, message);
         res.send({status: 200, message: 'Advert was created successfully'});
       }
       res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
@@ -310,12 +312,12 @@ router.post('/create_advert', async (req, res, next) => {
 router.post('/prayer_request', async (req, res, next) => {
     try {
         const {fullName, email} = req.body;
-        const header = "Prayer request";
-        const message = "Request was processed successfully";
+        const header = "";
+        const message = "Your prayer request was sent successfully";
         const prayerRequest = new PrayerRequest(req.body)
         const savePrayer = await prayerRequest.save();
         if(savePrayer){
-           customEmail.customEmail(fullName, email, header, message);
+           customEmail(fullName, email, header, message);
            res.send({status: 200, message: 'Prayer Request Submitted'});
          }
     } catch (error) {
@@ -329,12 +331,12 @@ router.post('/become_programmer', async (req, res, next) => {
     try {
         console.log(req.body);
         const {fullName, email} = req.body;
-        const header = "Become a programmer";
-        const message = "Request was processed successfully";
+        const header = "";
+        const message = "Request to submit programme content was successful";
         const programmer = new Programmer(req.body);
         const saveProgrammer = await programmer.save()
         if(saveProgrammer){
-          customEmail.customEmail(fullName, email, header, message);
+          customEmail(fullName, email, header, message);
           res.send({status: 200, message: 'programmer request submitted successfully'});
         }
     } catch (error) {
@@ -352,7 +354,7 @@ router.post( '/register', async (req, res, next) =>{
     const user = new User(req.body);
     const newUser = await user.save();
     if(newUser){
-      customEmail.customEmail(firstName, email, header, message);
+      customEmail(firstName, email, header, message);
       req.logIn(user, function(err) {
         if (err) { return next(err); }
          res.send({status:200, message: "Registration was successful"});
@@ -403,7 +405,7 @@ router.post('/request_password', async(req, res, next) =>{
       const saveData = await requestPassword.save();
       
       if(saveData){
-        customEmail.customEmail(getUser.firstname, email, header, message);
+        customEmail(getUser.firstname, email, header, message);
         res.send({status: 200, message: `Mail contaning password information has been sent to  ${email}`});
       }else{
          res.status(404).send({message: "failed to save request data"})
@@ -557,7 +559,7 @@ router.post('/show_proposal', ensureAuthenticated, async (req, res, next) => {
         const {supplierName, email} = req.body;
         const header = "show proposal";
         const message = "Request was processed successfully";
-        customEmail.customEmail(supplierName, email, header, message);
+        customEmail(supplierName, email, header, message);
         const proposal = new Proposal(req.body)
         console.log(proposal)
         await proposal.save()
@@ -574,7 +576,7 @@ router.post('/testimony', ensureAuthenticated, async (req, res, next) => {
         const {fullName, email} = req.body;
         const header = "Testimony";
         const message = "Request was processed successfully";
-        customEmail.customEmail(fullName, email, header, message);
+        customEmail(fullName, email, header, message);
         const testimony = new Testimony(req.body)
         await testimony.save()
         res.send({status: 200, message: 'Testimony submitted'});
@@ -588,9 +590,9 @@ router.post('/music_video', ensureAuthenticated, async (req, res, next) => {
     // submit music video
     try {
         const {fullName, email} = req.body;
-        const header = "Music video";
-        const message = "Request was processed successfully";
-        customEmail.customEmail(fullName, email, header, message);
+        const header = "";
+        const message = "Request to submit music video was sent successfully";
+        customEmail(fullName, email, header, message);
         const musicVideo = new MusicVideo(req.body);
         await musicVideo.save();
         res.send({status: 200, message: 'music video submitted'});
@@ -606,7 +608,7 @@ router.post('/enquiries', ensureAuthenticated, async (req, res, next) => {
       const {fullName, email} = req.body;
       const header = "feeback / enquiry";
       const message = "Request was processed successfully";
-      customEmail.customEmail(fullName, email, header, message);
+      customEmail(fullName, email, header, message);
       const enquiry = new Enquiry(req.body);
       await enquiry.save();
       res.send({status: 200, message: 'feedback submitted'});
@@ -628,7 +630,7 @@ router.post('/patnership', async(req, res, next) => {
     if(saved){
       const header = "";
       const message = "Your partnership Request was processed successfully";
-      customEmail.customEmail(firstName, email, header, message);
+      customEmail(firstName, email, header, message);
      return res.status(200).send({status: 200, message: 'patnership form submitted'});
     }
   } catch (error) {

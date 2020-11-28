@@ -5,6 +5,7 @@ const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
 const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
+const MusicGenre = require('../models/musicGenres');
 const Patnership = require('../models/patnership');
 const Static = require('../models/static');
 const Settings = require('../models/settings');
@@ -169,6 +170,16 @@ router.delete('/become_programmer/:id', ensureAuthenticated, async (req, res, ne
     }
 });
 
+router.get('/view-genres', ensureAuthenticated, async (req, res, next) => {
+    // Get  all proposals 
+    try {
+        const genres = await MusicGenre.find({})
+        res.render('admin/pages/view_genres', { title: 'All Genres', genres });
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
 //show proposal routes
 
 router.get('/show_proposals', ensureAuthenticated, async (req, res, next) => {
@@ -261,6 +272,12 @@ router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
   router.get('/create-genre', ensureAuthenticated, async(req, res, next) => {
     res.render('admin/pages/create_genre', { title: 'Create Genre' });
   });
+
+  router.get('/edit-genres/:id', ensureAuthenticated, async(req, res, next) => {
+    const genre = await MusicGenre.findById({_id: req.params.id})
+    res.render('admin/pages/edit_genre', { title: 'Edit Genre', genre });
+  });
+
 
 
 router.put('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {

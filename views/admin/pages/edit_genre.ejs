@@ -18,7 +18,7 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                  Create Genres for music
+                  Edit single genre
                </div>
            </div>
            <div class="page-title-actions">
@@ -27,7 +27,7 @@
                  btn btn-primary">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                     </span>
-                    View all genres
+                    Back to Genres
                 </a>
             </div>
          </div> 
@@ -43,10 +43,11 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <div style = "text-align:center" class="alertBox"></div>
-                        <form id="create-genre">
+                        <form id="edit-genre">
                             <div class = "form-group">
                                 <label for="name">Name of Music Genre:</label>
-                                <input value = "" type="text" id = "name" class = "form-control">
+                                <input type="hidden" id = "genreId" value = "<%= genre._id %>">
+                                <input type="text" id = "name" class = "form-control" value = "">
                                 <span class= "error" style = "color:red"></span>
 
                             </div>
@@ -64,36 +65,40 @@
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
 <script>
-$(document).on('submit', '#create-genre', event => {
-    event.preventDefault();
-
-        const data = {
-            "name": $('#name').val(),
-        }
-        if($('#name').val()==""){
-            $('.alertBox').empty();
-            $(".error").html("Please provide Genre name");
-        }else{
-            $.ajax({
-            url: '/admin/create_music_genre',
-            type: 'post',
-            dataType: 'json',
-            data,
-            success: data => {
-                console.log(data);
-                $(".alertBox").html(data.message).addClass('green');
-                $('#create-genre')[0].reset();
-                $(".error").empty();
-
-            },
-            error: data => {
-                console.log(data)
-                $(".alertBox").removeClass("green");
-                $(".alertBox").html(data.responseJSON.msg).addClass('red');
-            },
-            });
-        }
-})
-   
-</script>
+    $('#name').on("input", function() {
+        //alert('heelo')
+    $('.alertBox').empty();
+});
+    $(document).on('submit', '#edit-genre', event => {
+        event.preventDefault();
+            const genreId = $('#genreId').val();
+            const data = {
+                "name": $('#name').val(),
+            }
+            if($('#name').val()==""){
+                $('.alertBox').empty();
+                $(".error").html("Please provide Genre name");
+            }else{
+                $.ajax({
+                url: '/admin/update_genre/'+genreId,
+                type: 'PUT',
+                dataType: 'json',
+                data,
+                success: data => {
+                    console.log(data);
+                    $(".alertBox").html(data.message).addClass('green');
+                    $('#edit-genre')[0].reset();
+                    $(".error").empty();
+    
+                },
+                error: data => {
+                    console.log(data)
+                    $(".alertBox").removeClass("green");
+                    $(".alertBox").html(data.responseJSON.msg).addClass('red');
+                },
+                });
+            }
+    })
+       
+    </script>
 <%- include('../../end'); -%>

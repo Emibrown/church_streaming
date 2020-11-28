@@ -23,9 +23,10 @@
                         <div class = "form-group">
                           <label for="genre">* Genre</label>
                           <select class ="form-control" name="genre" id="genre" required>
-                            <option value="">Choose an option</option>
-                           <option value="documentary">Documentary</option>
-                           <option value="comedy">Comedy</option>
+                            <option value="">Select a genre</option>
+                             <% genres.map(genre => { %>
+                                <option value="<%= genre.name %>"><%= genre.name %></option>
+                             <%   }) %>
                         </select>
                       </div>
                         

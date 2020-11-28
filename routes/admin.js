@@ -277,6 +277,19 @@ router.put('/update_music_video/:id', ensureAuthenticated, async (req, res, next
   }
 });
 
+router.put('/update_genre/:id', ensureAuthenticated, async (req, res, next) => {
+  
+  try {
+      const newGenre = await MusicGenre.findOne({_id:req.params.id})
+      await Object.assign(newGenre, req.body);
+      await newGenre.save()
+      return res.send({status: 200, message: 'Music genre updated successfully'});
+  } catch (error) {
+    console.log(error)
+    return res.status(404).send({ msg: error.message });
+  }
+});
+
 router.put('/update_content_developer/:id', ensureAuthenticated, async (req, res, next) => {
 
   try {
@@ -550,6 +563,16 @@ router.delete('/delete_patnership/:id', ensureAuthenticated, async (req, res, ne
       sendJSONresponse(res, 400, {error: error.message});
   }
 });
+
+router.delete('/delete_genre/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await MusicGenre.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Music Genre was Deleted Successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
     {
