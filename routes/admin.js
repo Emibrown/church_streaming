@@ -172,9 +172,6 @@ router.get('/stop_streaming', ensureAuthenticated, async(req, res, next) => {
     sendJSONresponse(res, 200, {message: 'Streaming ended on all platforms'});
 });
 
-
-
-
 // settings/site details
 router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
@@ -222,6 +219,10 @@ router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
+router.get('/view-admins', ensureAuthenticated, async(req, res, next) => {
+  const admins = await User.find({type:1})
+  res.render('admin/pages/view_admins', { title: 'View Admins', admins });
+});
 
 router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
   const user = await User.findById({_id: req.params.id})
