@@ -1,0 +1,105 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+<style>
+    .green{
+        color:green;
+    }
+    .red{
+        color:red;
+    }
+</style>
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Create Testimony
+               </div>
+           </div>
+           <div class="page-title-actions">
+             <div class="d-inline-block dropdown">
+                <a type="button" href="/admin/api/view-testimonies" class="btn-shadow 
+                 btn btn-primary">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                    </span>
+                    View all testimonies
+                </a>
+            </div>
+         </div> 
+         </div>
+         
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div style = "text-align:center" class="alertBox"></div>
+                        <span class= "error" style = "color:red"></span>
+                        <form id="create-testimony">
+                            <div class = "form-group">
+                                <label for="name">Name of Member</label>
+                                <input value = "" type="text" id = "name" class = "form-control">
+                            </div>
+                            <div class = "form-group">
+                                <label for="title">Title:</label>
+                                <input value = "" type="text" id = "title" class = "form-control">
+                            </div>
+                            <div class = "form-group">
+                                <label for="testimony">Details of Testimony</label>
+                                <textarea name="" id="testimony" rows="5" class = "form-control"></textarea>
+                            </div>
+                            <button class="mt-1 btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+$(document).on('submit', '#create-genre', event => {
+    event.preventDefault();
+
+        const data = {
+            "name": $('#name').val(),
+            "title": $('#title').val(),
+            "testimony": $('#testimony').val(),
+        }
+        if($('#name').val()=="" || $('#title').val()=="" || $('#testimony').val()=="" ){
+            $('.alertBox').empty();
+            $(".error").html("Please fill out all form fields");
+        }else{
+            $.ajax({
+            url: '/admin/create_testimony',
+            type: 'post',
+            dataType: 'json',
+            data,
+            success: data => {
+                $(".alertBox").html(data.message).addClass('green');
+                $('#create-testimony')[0].reset();
+                $(".error").empty();
+            },
+            error: data => {
+                $(".alertBox").removeClass("green");
+                $(".alertBox").html(data.responseJSON.msg).addClass('red');
+            },
+            });
+        }
+})
+   
+</script>
+<%- include('../../end'); -%>
