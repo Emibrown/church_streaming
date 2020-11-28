@@ -3,6 +3,11 @@ const User = require('../models/user');
 const Category = require('../models/category');
 const Programme = require('../models/programme');
 const Settings = require('../models/settings');
+const History = require('../models/history');
+const Watch = require('../models/watch');
+const Favourite = require('../models/favourite');
+
+
 
 const Season = require('../models/season');
 
@@ -82,8 +87,26 @@ router.get('/watch/:pro', async (req, res, next) => {
   res.redirect("/vod/watch/"+req.params.pro+"/"+videos[0].code);
 });
 
+router.get('/video/:video', async (req, res, next) => {
+  const video = await Video.findOne({code:req.params.video}).populate('programme')
+  if(!video){
+    res.redirect("/vod");
+  }
+  res.redirect("/vod/watch/"+video.programme.code+"/"+req.params.video);
+});
+
 router.get('/watch/:pro/:video', async(req, res, next) => {
   const video = await Video.findOne({code:req.params.video}).populate('season')
+  if(video){
+    const history = await History.findOne({video:video._id, member: req.user._id })
+    if(!history){
+      const newHistroy = new History({
+        video:video._id,
+        member: req.user._id,
+      })
+      await newHistroy.save()
+    }
+  }
   const programme = await Programme.findOne({code:req.params.pro})
   let season = []
   let list = []
@@ -93,7 +116,6 @@ router.get('/watch/:pro/:video', async(req, res, next) => {
   }else{ 
     list = await Video.find({programme:programme._id})
   }
-  console.log(list)
   res.render('vod/pages/watch', { title: 'On-demand Watch',video,programme,season,list });
 });
 
@@ -101,12 +123,27 @@ router.get('/webcast', ensureAuthenticated, async(req, res, next) => {
   res.render('vod/pages/webcast', { title: 'On-demand Watch' });
 });
 
+router.get('/watch-later', ensureAuthenticated, async(req, res, next) => {
+  const videos = await Watch.find({member: req.user._id}).populate('video')
+  res.render('vod/pages/videos', { title:"Watch later", videos });
+});
+
+router.get('/favourites', ensureAuthenticated, async(req, res, next) => {
+  const videos = await Favourite.find({member: req.user._id}).populate('video')
+  res.render('vod/pages/videos', { title:"Favourites", videos });
+});
+
+router.get('/history', ensureAuthenticated, async(req, res, next) => {
+  const videos = await History.find({member: req.user._id}).populate('video')
+  res.render('vod/pages/videos', { title:"History", videos });
+});
+
 router.get('/cat/:code', async(req, res, next) => {
   const cat = await Category.findOne({code:req.params.code})
   const programmes = await Programme.find({
     categories:cat._id
   })
-  res.render('vod/pages/cat', { title: 'On-demand Category',programmes });
+  res.render('vod/pages/cat', { title: cat.title,programmes });
 });
 
 module.exports = router;

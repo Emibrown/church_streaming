@@ -1,0 +1,61 @@
+<%- include('../header'); -%>
+ <!-- MainContent -->
+ <div id="Main">
+    <div class="container">
+        <div class="row p-3 ">
+
+            <div class="col-md-12">
+                <div class=" row pb-4">
+                    <div class=" col-md-12">
+                        <div class=" ">
+                            <h3>
+                                <%= title %>      
+                            </h3>     
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <% if(videos.length == 0){%> 
+                <div class="d-flex justify-content-center align-items-center  w-100">
+                    <p class="do-login">
+                        <span>
+                            You have no <%= title  %>  yet. Start <a href="/vod">browsing</a> now.
+                        </span>
+                    </p>
+                </div>
+            <% }else{%> 
+
+           
+                <div class="col-md-12">
+                    <div class="row  ">
+                        <% videos.forEach(function (video,i){ %>
+                        <div class=" col-sm-6 col-lg-4 pr-0 pl-0">
+                            <div>
+                                <a href="/vod/video/<%= video.video.code %> ">
+                                    <i class="material-icons" style="position: absolute; font-size: 30px;">play_circle_outline</i>
+                                    <img class=" img-thumbnail" src="/small_images/<%= video.video.image %> " alt="">
+                                    <span class="playlist-content--title">
+                                        <%= video.video.title %>                                      
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            
+            <% }%>
+           
+          
+
+        </div>
+        
+    </div>
+</div>
+    
+ 
+ <!-- MainContent End-->
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<%- include('../../end'); -%>
