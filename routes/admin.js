@@ -319,6 +319,18 @@ router.put('/update_testimony/:id', ensureAuthenticated, async (req, res, next) 
   }
 });
 
+router.put('/update_admin_testimony/:id', ensureAuthenticated, async (req, res, next) => {
+
+  try {
+      const testimony = await AdminTestimony.findOne({_id:req.params.id})
+      await Object.assign(testimony, req.body);
+      await testimony.save()
+      res.send({status: 200, message: 'Testimony Updated Successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
 router.put('/update_prayerRequest/:id', ensureAuthenticated, async (req, res, next) => {
 
   try {
@@ -573,6 +585,15 @@ router.delete('/delete_genre/:id', ensureAuthenticated, async (req, res, next) =
   try {
       await MusicGenre.findOneAndDelete({_id: req.params.id})
       res.status(200).send({status: 200, message: 'Music Genre was Deleted Successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.delete('/delete_admin_testimony/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await AdminTestimony.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted Testimony'});
   } catch (error) {
       sendJSONresponse(res, 400, {error: error.message});
   }

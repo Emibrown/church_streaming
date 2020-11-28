@@ -21,6 +21,7 @@ const {customEmail} = require('../services/email');
 const moment = require('moment');
 const Feedback = require('../models/enquiries');
 const MusicGenre = require('../models/musicGenres');
+const AdminTestimony = require('../models/adminTestimony');
 const router = express.Router();
 
 
@@ -165,6 +166,10 @@ router.get('/prayer-request', (req, res, next) =>{
 });
 router.get('/testimony', (req, res, next) =>{
   res.render('users/pages/testimony', { title: 'Faith TV | Share Your Testimony' });
+});
+router.get('/watch-testimonies', async(req, res, next) =>{
+  const testimonies = await AdminTestimony.find({});
+  res.render('users/pages/watch_testimonies', { title: 'Faith TV | Watch Testimonies', testimonies });
 });
 router.get('/contact', (req, res, next) =>{
   res.render('users/pages/contact', { title: 'Faith TV | Contact' });

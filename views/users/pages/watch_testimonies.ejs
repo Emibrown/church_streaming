@@ -1,0 +1,58 @@
+<%- include('../header'); -%>
+<div style = "margin-bottom: 166px;" class="content">
+    <div class="container">
+  <div class="testimonies page">
+    <div class="block clearfix">
+      <h2 class="block-title">
+        Testimonies
+        <div class="button-right">
+          <a href ="/contact"><button type="button" class="btn btn-primary">
+            <em class="fa fa-send"></em>
+            Contact us
+          </button></a>
+        </div>
+        <div class="button-right">
+          <a href="<%=settings.twitterHandle %>" class="btn btn-primary">
+            <em class="fa fa-twitter"></em>
+            Tweet Us
+          </a>
+        </div>
+      </h2>
+      <div class = "row">
+          
+        <% if (testimonies.length >0){ %>
+        <% testimonies.map(testimony =>{ %>
+       <div class = "col-md-4">   
+       
+        <div class="testimony testimony-6">
+          <h4><%= testimony.title %></h4>
+          <div class="bubble">
+            <p><%=testimony.testimony %></p>
+            <span class="bubble-caret"></span>
+          </div> <!-- /.bubble -->
+          <div class="author clearfix">
+            <img src="image.php/placeholder.png?w=50&amp;h=50&amp;src=/images/static/placeholder-female.png" alt="">
+            <span>
+              <strong><%= testimony.name %></strong><br>
+              FaithTV viewer</span>
+          </div>
+        </div> <!-- /.testimony -->
+        </div>
+    <% }) %>
+    <% }else{ %>
+
+        <div style ="color:white" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>No testimonies available at this time</strong>
+        </div>
+    <% } %>
+      </div> <!-- /#grid -->
+    </div> <!-- /.block -->
+  </div> <!-- /.testimonies -->
+  </div>
+  </div>
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<%- include('../../end'); -%>

@@ -6,6 +6,7 @@ const Proposal = require('../models/showProposal');
 const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
 const MusicGenre = require('../models/musicGenres');
+const AdminTestimony = require('../models/adminTestimony');
 const Patnership = require('../models/patnership');
 const Static = require('../models/static');
 const Settings = require('../models/settings');
@@ -180,6 +181,16 @@ router.get('/view-genres', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
+router.get('/view-admin-testimonies', ensureAuthenticated, async (req, res, next) => {
+    // Get  all proposals 
+    try {
+        const testimonies = await AdminTestimony.find({})
+        res.render('admin/pages/view_admin_testimonies', { title: 'All Testimonies', testimonies });
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+
 //show proposal routes
 
 router.get('/show_proposals', ensureAuthenticated, async (req, res, next) => {
@@ -278,6 +289,19 @@ router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
     res.render('admin/pages/edit_genre', { title: 'Edit Genre', genre });
   });
 
+  router.get('/single-testimony/:id', ensureAuthenticated, async (req, res, next) => {
+    try {
+        const testimony = await AdminTestimony.findOne({_id:req.params.id})
+        res.render('admin/pages/view_admin_testimony', { title: 'View Admin Testimony', testimony });
+    } catch (error) {
+        sendJSONresponse(res, 400, {error: error.message});
+    }
+});
+
+router.get('/edit-single-testimony/:id', ensureAuthenticated, async(req, res, next) => {
+    const testimony = await AdminTestimony.findById({_id: req.params.id})
+    res.render('admin/pages/edit_single_testimony', { title: 'Edit Single Testimony', testimony });
+  });
 
 
 router.put('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {
