@@ -11,7 +11,7 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                  All Systems Admins
+                  All System's Admins
                </div>
            </div>
            <div class="page-title-actions">
@@ -40,7 +40,7 @@
                     <th>Address</th>
                     <th>Location</th>
                     <th>Status</th>
-                    <th class ="text-center">Action</th>
+                    <th class ="">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,8 +61,8 @@
                         <% } %>
 
                     </td>
-                    <td class = "text-center">
-                        <a href = "/admin/view-single/<%=user._id %>" class="mb-2 mr-2 btn-hover-shine btn btn-shadow btn-success"> 
+                    <td class = "">
+                        <a class = "btn btn-primary btn-sm" href = "/admin/view-single-admin/<%=user._id %>" class="mb-2 mr-2 btn-hover-shine btn btn-shadow btn-success"> 
                             View record</a>
                         <button id = "<%=user._id%>"
                             class="btn btn-danger btn-sm">Delete</button>
@@ -93,5 +93,46 @@
         ],
     } );
 } );
+
+$(document).on('click', '.btn-danger', function(e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+        swal({
+            title: 'Are you sure?',
+            text: "This Admin will be DELETED!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed & Delete!'
+        }).then((result) => {
+            if (result) {
+                $.ajax({
+                    url: '/admin/delete_admin/'+id,
+                    method: "DELETE",
+                    dataType : "json",
+                    "contentType": "application/json",
+                    success: function(data) {
+                        window.location.reload();
+                        if (data.status == 200) {
+                            $('#success_message').html(data.message);
+                        }
+                    },
+                    error: function(jqXhr) {
+                        if (jqXhr.status == 400) {
+                           
+                        }
+                    }
+                });
+                swal(
+                    'Deleted!',
+                    'Admin Deleted.',
+                    'success'
+                )
+    
+            }
+        })
+    });
+    
 </script>
 <%- include('../../end'); -%>

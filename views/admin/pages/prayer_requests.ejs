@@ -26,7 +26,7 @@
                                 <th class="">email</th>
                                 <th class="">Phone no</th>
                                 <th class="">Date added</th>
-                                <th class = "text-center">Actions</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,11 +34,11 @@
                             <% prayerRequest.forEach(function (prayerRequest,index){ %>
                                 <tr>
                                     <td><%= sn %></th>
-                                    <td class="text-left"><%= prayerRequest.fullName %></td>
+                                    <td class=""><%= prayerRequest.fullName %></td>
                                     <td class=""><%= prayerRequest.email %></td>
                                     <td class=""><%= prayerRequest.phone %></td>
                                     <td class=""><%= moment(prayerRequest.date).format('LL') %></td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <a href= "/admin/api/view-prayer-request/<%=prayerRequest._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                         <a href= "/admin/api/edit-prayer-request/<%=prayerRequest._id%>" type="button" id="PopoverCustomT-1"

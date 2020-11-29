@@ -34,7 +34,7 @@
                                 <th>Name of member</th>
                                 <th>Title</th>
                                 <th>Date Created</th>
-                                <th class = "text-center">Actions</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,7 +45,7 @@
                                     <td><%= testimonies.name %></td>
                                     <td><%= testimonies.title %></td>
                                     <td><%= moment(testimonies.date).format('LL') %></td>
-                                    <td class = "text-center">
+                                    <td>
                                         <a href= "/admin/api/single-testimony/<%=testimonies._id%>" type="button" id="PopoverCustomT-1"
                                                 class="btn btn-primary btn-sm">View</a>
                                         <a href= "/admin/api/edit-single-testimony/<%=testimonies._id%>" type="button" id="PopoverCustomT-1"

@@ -135,236 +135,36 @@
  
        <!-- // TBN PLAY // -->
        <div class="block">
-          <h2 class="block-title">Play <span>List</span></h2>
+          <h2 class="block-title">LATEST  <span>VIDEOS</span></h2>
          <div class="row">
-           <!-- <div class="col-xs-12 col-sm-6 col-md-3">
+
+          <% latestVideos.forEach(function (video,index){ %>
+           <div class="col-xs-12 col-sm-6 col-md-3">
              <div class="item video">
                <div class="cover">
-                 <a href="" class="tbn-play-lucy-grimble-still-i-will-praise">
-                   <img src="/front/image/tbnplay-cover-1584380091f16d.png" class="img-responsive" alt="Lucy Grimble - Still I Will Praise ft Bianca Rose ">
+                 <a href="/vod/watch/<%= video.programme.code %>/<%= video.code %> ">
+                   <img src="/large_images/<%= video.image %> " class="img-responsive" alt="Lucy Grimble - Still I Will Praise ft Bianca Rose ">
                    <span class="overlay play"></span>
                  </a>
                </div> 
                <div class="info">
                  <div class="equal-height">
-                   <h3><a href="">Weekly Playlist</a></h3>
-                   <h4>Lucy Grimble - Still I Will Praise ft Bianca Rose </h4>
-                   <p>Lucy Grimble sings Still I Will Praise with Bianca Rose from the album, Live at Burgess Barn.</p>
+                   <h3><a href=""><%= video.programme.title %> </a></h3>
+                   <h4><%= video.title %>  </h4>
+                   <p><%= video.description %>.</p>
                  </div> 
                  <div class="overlay"></div>
                </div> 
              </div> 
-           </div>  -->
+           </div> 
+           <% }) %> 
          
         
           
          </div> <!-- /.row -->
        </div> <!-- /.block -->
- 
-       <div class="modal video-modal fade" id="tbn-play-lucy-grimble-still-i-will-praise" tabindex="-1" role="dialog" aria-labelledby="tbn-play-lucy-grimble-still-i-will-praise-Label" aria-hidden="true">
-         <div class="modal-dialog">
-           <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal">
-                 <span aria-hidden="true">&times;</span>
-                 <span class="sr-only">Close</span>
-               </button>
-               <h4 class="modal-title" id="tbn-play-lucy-grimble-still-i-will-praise-Label">Lucy Grimble - Still I Will Praise ft Bianca Rose </h4>
-             </div> <!-- /.modal-header -->
-             <div class="modal-body">
-             
-                <div class="video-container">
-                  <iframe width="1280" height="720" src="https://www.youtube.com/embed/PWu-iRaen6s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              </div>
-             
-             </div> <!-- /.modal-body -->
-             <div class="modal-footer">
-                <p>
-                 <span>Share This</span>
-                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.tbnuk.org/tbn-play/lucy-grimble-still-i-will-praise">
-                   <em class="fa fa-2x fa-facebook-square"></em>
-                 </a>
-                 <a href="http://twitter.com/home?status=Watch+this+TBN+Play+Music+Video+-+Lucy+Grimble+-+Still+I+Will+Praise+ft+Bianca+Rose+%20https://www.tbnuk.org/tbn-play/lucy-grimble-still-i-will-praise">
-                   <em class="fa fa-2x fa-twitter-square"></em>
-                 </a>
-                 <a href="tbn-play/lucy-grimble-still-i-will-praise.html" rel="permalink">Permalink</a>
-               </p>
-             </div> <!-- /.modal-footer -->
-           </div> <!-- /.modal-content -->
-         </div> <!-- /.modal-dialog -->
-       </div> <!-- /.modal -->
- 
- <script>
- $(function(){
-     
-     var _1_src = $('#tbn-play-lucy-grimble-still-i-will-praise iframe').attr('src');
-     $('#tbn-play-lucy-grimble-still-i-will-praise iframe').removeAttr('src');
-       
-     $('a.tbn-play-lucy-grimble-still-i-will-praise').click(function () {
-         $('#tbn-play-lucy-grimble-still-i-will-praise').modal('show');
-         $('#tbn-play-lucy-grimble-still-i-will-praise iframe').attr('src', _1_src);
-             
-        return false;
-     });
- 
-     $('#tbn-play-lucy-grimble-still-i-will-praise').on('hidden.bs.modal', function (e) {
-         $('#tbn-play-lucy-grimble-still-i-will-praise iframe').removeAttr('src');
-     });
-       
- });
- </script>
-       <div class="modal video-modal fade" id="tbn-play-st-aldates-raised-with-christ" tabindex="-1" role="dialog" aria-labelledby="tbn-play-st-aldates-raised-with-christ-Label" aria-hidden="true">
-         <div class="modal-dialog">
-           <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal">
-                 <span aria-hidden="true">&times;</span>
-                 <span class="sr-only">Close</span>
-               </button>
-               <h4 class="modal-title" id="tbn-play-st-aldates-raised-with-christ-Label">St Aldates - Raised with Christ </h4>
-             </div> <!-- /.modal-header -->
-             <div class="modal-body">
-             
-                <div class="video-container">
-                  <iframe width="1280" height="720" src="https://www.youtube.com/embed/ciFrOVR7mFw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              </div>
-             
-             </div> <!-- /.modal-body -->
-             <div class="modal-footer">
-                <p>
-                 <span>Share This</span>
-                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.tbnuk.org/tbn-play/st-aldates-raised-with-christ">
-                   <em class="fa fa-2x fa-facebook-square"></em>
-                 </a>
-                 <a href="http://twitter.com/home?status=Watch+this+TBN+Play+Music+Video+-+St+Aldates+-+Raised+with+Christ+%20https://www.tbnuk.org/tbn-play/st-aldates-raised-with-christ">
-                   <em class="fa fa-2x fa-twitter-square"></em>
-                 </a>
-                 <a href="tbn-play/st-aldates-raised-with-christ.html" rel="permalink">Permalink</a>
-               </p>
-             </div> <!-- /.modal-footer -->
-           </div> <!-- /.modal-content -->
-         </div> <!-- /.modal-dialog -->
-       </div> <!-- /.modal -->
- 
- <script>
- $(function(){
-     
-     var _2_src = $('#tbn-play-st-aldates-raised-with-christ iframe').attr('src');
-     $('#tbn-play-st-aldates-raised-with-christ iframe').removeAttr('src');
-       
-     $('a.tbn-play-st-aldates-raised-with-christ').click(function () {
-         $('#tbn-play-st-aldates-raised-with-christ').modal('show');
-         $('#tbn-play-st-aldates-raised-with-christ iframe').attr('src', _2_src);
-             
-        return false;
-     });
- 
-     $('#tbn-play-st-aldates-raised-with-christ').on('hidden.bs.modal', function (e) {
-         $('#tbn-play-st-aldates-raised-with-christ iframe').removeAttr('src');
-     });
-       
- });
- </script>
-       <div class="modal video-modal fade" id="tbn-play-william-wixley-fall-me-never" tabindex="-1" role="dialog" aria-labelledby="tbn-play-william-wixley-fall-me-never-Label" aria-hidden="true">
-         <div class="modal-dialog">
-           <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal">
-                 <span aria-hidden="true">&times;</span>
-                 <span class="sr-only">Close</span>
-               </button>
-               <h4 class="modal-title" id="tbn-play-william-wixley-fall-me-never-Label">William Wixley - Fall Me Never </h4>
-             </div> <!-- /.modal-header -->
-             <div class="modal-body">
-             
-                <div class="video-container">
-                  <iframe width="1280" height="720" src="https://www.youtube.com/embed/rD6uTsMty5Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              </div>
-             
-             </div> <!-- /.modal-body -->
-             <div class="modal-footer">
-                <p>
-                 <span>Share This</span>
-                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.tbnuk.org/tbn-play/william-wixley-fall-me-never">
-                   <em class="fa fa-2x fa-facebook-square"></em>
-                 </a>
-                 <a href="http://twitter.com/home?status=Watch+this+TBN+Play+Music+Video+-+William+Wixley+-+Fall+Me+Never+%20https://www.tbnuk.org/tbn-play/william-wixley-fall-me-never">
-                   <em class="fa fa-2x fa-twitter-square"></em>
-                 </a>
-                 <a href="tbn-play/william-wixley-fall-me-never.html" rel="permalink">Permalink</a>
-               </p>
-             </div> <!-- /.modal-footer -->
-           </div> <!-- /.modal-content -->
-         </div> <!-- /.modal-dialog -->
-       </div> <!-- /.modal -->
- 
- <script>
- $(function(){
-     
-     var _3_src = $('#tbn-play-william-wixley-fall-me-never iframe').attr('src');
-     $('#tbn-play-william-wixley-fall-me-never iframe').removeAttr('src');
-       
-     $('a.tbn-play-william-wixley-fall-me-never').click(function () {
-         $('#tbn-play-william-wixley-fall-me-never').modal('show');
-         $('#tbn-play-william-wixley-fall-me-never iframe').attr('src', _3_src);
-             
-        return false;
-     });
- 
-     $('#tbn-play-william-wixley-fall-me-never').on('hidden.bs.modal', function (e) {
-         $('#tbn-play-william-wixley-fall-me-never iframe').removeAttr('src');
-     });
-       
- });
- </script>
-       <div class="modal video-modal fade" id="tbn-play-tim-williams-the-earth-ft-watoto" tabindex="-1" role="dialog" aria-labelledby="tbn-play-tim-williams-the-earth-ft-watoto-Label" aria-hidden="true">
-         <div class="modal-dialog">
-           <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal">
-                 <span aria-hidden="true">&times;</span>
-                 <span class="sr-only">Close</span>
-               </button>
-               <h4 class="modal-title" id="tbn-play-tim-williams-the-earth-ft-watoto-Label">Tim Williams - The Earth ft Watoto</h4>
-             </div> <!-- /.modal-header -->
-             <div class="modal-body">
-             
-                <div class="video-container">
-                  <iframe width="1280" height="720" src="https://www.youtube.com/embed/XWm802kOORs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              </div>
-             
-             </div> <!-- /.modal-body -->
-             <div class="modal-footer">
-                <p>
-                 <span>Share This</span>
-                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.tbnuk.org/tbn-play/tim-williams-the-earth-ft-watoto">
-                   <em class="fa fa-2x fa-facebook-square"></em>
-                 </a>
-                 <a href="http://twitter.com/home?status=Watch+this+TBN+Play+Music+Video+-+Tim+Williams+-+The+Earth+ft+Watoto%20https://www.tbnuk.org/tbn-play/tim-williams-the-earth-ft-watoto">
-                   <em class="fa fa-2x fa-twitter-square"></em>
-                 </a>
-                 <a href="tbn-play/tim-williams-the-earth-ft-watoto.html" rel="permalink">Permalink</a>
-               </p>
-             </div> <!-- /.modal-footer -->
-           </div> <!-- /.modal-content -->
-         </div> <!-- /.modal-dialog -->
-       </div> <!-- /.modal -->
- 
- <script>
- $(function(){
-     
-     var _4_src = $('#tbn-play-tim-williams-the-earth-ft-watoto iframe').attr('src');
-     $('#tbn-play-tim-williams-the-earth-ft-watoto iframe').removeAttr('src');
-       
-     $('a.tbn-play-tim-williams-the-earth-ft-watoto').click(function () {
-         $('#tbn-play-tim-williams-the-earth-ft-watoto').modal('show');
-         $('#tbn-play-tim-williams-the-earth-ft-watoto iframe').attr('src', _4_src);
-             
-        return false;
-     });
- 
-     $('#tbn-play-tim-williams-the-earth-ft-watoto').on('hidden.bs.modal', function (e) {
-         $('#tbn-play-tim-williams-the-earth-ft-watoto iframe').removeAttr('src');
-     });
-       
- });
- </script>
+
+
     
  
  <hr>
@@ -386,14 +186,17 @@
                                  <div class="slider-wrap">
                                      <div class="slider variable">
                       
-                                    
-                                         <!-- <div>
-                                             <a href="">
-                                                 <img src="/front/image/ondemand-title-cover-14956979394a2e.jpg" alt="">
-                                                 <span>#43 with Matthews Ntlele - TBN Meets</span>
+                                      <% trendingVideos.forEach(function (trending,index){ %>
+                                         <div>
+                                             <a href="/vod/video/<%= trending.code %> ">
+                                                 <img src="/small_images/<%= trending.image %> " height="152px" alt="">
+                                                 <span><%= trending.title %> </span>
                                                  <em class="fa fa-play fa-2x"></em>
                                              </a>
-                                         </div> -->
+                                         </div>
+                                        <% }) %> 
+
+                                         
                                      </div> <!-- /.slider -->
                                      <div class="slider-prev"></div>
                                      <div class="slider-next"></div>

@@ -81,21 +81,14 @@ $(function() {
 		e.preventDefault();
 		var _this = $(this);
 		
-		var _oid = $(this).data('oid');
-		var _cid = $(this).data('cid');
-		var _tid = $(this).data('tid');
-		var _uid = $(this).data('uid');
+		var _vid = $(this).data('vid');
 		
 		var _likes = parseInt($(this).find('span').html());
 		if (!$(this).hasClass('active')) {
 			/* FAVORITE */
-			$.get(siteRoot+'ajax.php', {
-				menu: 'doUserAction', 
-				oid: _oid, 
-				cid: _cid, 
-				tid: _tid, 
-				uid: _uid, 
-				action: 'favorite' 
+			$.post('/vod/favourite', {
+				vid: _vid, 
+				action: 'do' 
 			}, function(data){
 				$(_this).addClass('active');
 				$(_this).find('span').html(_likes+1);
@@ -103,13 +96,9 @@ $(function() {
 			});
 		} else {
 			/* UN-FAVORITE */
-			$.get(siteRoot+'ajax.php', {
-				menu: 'undoUserAction', 
-				oid: _oid, 
-				cid: _cid, 
-				tid: _tid, 
-				uid: _uid, 
-				action: 'favorite' 
+			$.post('/vod/favourite', {
+				vid: _vid, 
+				action: 'undo' 
 			}, function(data){
 				$(_this).removeClass('active');
 				$(_this).find('span').html(_likes-1);
@@ -122,23 +111,17 @@ $(function() {
 		e.preventDefault();
 		var _this = $(this);
 		
-		var _oid = $(this).data('oid');
-		var _cid = $(this).data('cid');
-		var _tid = $(this).data('tid');
-		var _uid = $(this).data('uid');
+		
+		var _vid = $(this).data('vid');
 		
 		var _plx = $(this).data('on');
 		var _plz = $(this).data('off');
 		
 		if (!$(this).hasClass('active')) {
 			/* PLAYLIST ADD */
-			$.get(siteRoot+'ajax.php', {
-				menu: 'doUserAction', 
-				oid: _oid, 
-				cid: _cid, 
-				tid: _tid, 
-				uid: _uid, 
-				action: 'playlist' 
+			$.post('/vod/watch-later', {
+				vid: _vid, 
+				action: 'do' 
 			}, function(data){
 				$(_this).addClass('active');
 				$(_this).find('i').html('playlist_add_check');
@@ -146,13 +129,9 @@ $(function() {
 			});
 		} else {
 			/* PLAYLIST REMOVE */
-			$.get(siteRoot+'ajax.php', {
-				menu: 'undoUserAction', 
-				oid: _oid, 
-				cid: _cid, 
-				tid: _tid, 
-				uid: _uid, 
-				action: 'playlist' 
+			$.post('/vod/watch-later', {
+				vid: _vid, 
+				action: 'undo' 
 			}, function(data){
 				$(_this).removeClass('active');
 				$(_this).find('i').html('playlist_add');

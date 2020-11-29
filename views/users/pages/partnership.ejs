@@ -507,6 +507,8 @@
                 if(response.status==200){
                     displaymsg(response.message, "alert-success")
                     $('#patnership-form')[0].reset();
+                        const url = "https://renaissanceassembly.org/give";    
+                        $(location).attr('href',url);
                 }
             },
             error:function(jqXhr){

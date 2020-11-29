@@ -30,6 +30,8 @@ const PrayerRequest = require('../models/prayerRequest');
 const Enquiry = require('../models/enquiries');
 const Patnership = require('../models/patnership');
 const Favourite = require('../models/favourite');
+const Watch = require('../models/watch');
+const History = require('../models/history');
 const Member = require('../models/member');
 
 const sendJSONresponse = (res, status, content) => {
@@ -231,7 +233,15 @@ router.get('/view-admins', ensureAuthenticated, async(req, res, next) => {
 router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
   const user = await User.findById({_id: req.params.id})
   const favorites = await Favourite.find({ member: user._id}).populate('video')
-  res.render('admin/pages/view_single_user', { title: 'View Single User', user , favorites});
+  const history = await History.find({ member: user._id}).populate('video')
+  const watch = await Watch.find({ member: user._id}).populate('video')
+  console.log(favorites)
+  res.render('admin/pages/view_single_user', { title: 'View Single User', user , favorites, history, watch});
+});
+
+router.get('/view-single-admin/:id', ensureAuthenticated, async(req, res, next) => {
+  const adminUser = await User.findById({_id: req.params.id})
+  res.render('admin/pages/view_single_admin', { title: 'View Single Admin', adminUser });
 });
 
 router.get('/view-admin-testimonies', ensureAuthenticated, async (req, res, next) => {
@@ -612,6 +622,15 @@ router.delete('/delete_admin_testimony/:id', ensureAuthenticated, async (req, re
   }
 });
 
+router.delete('/delete_admin/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await User.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Admin was deleted successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
     {
@@ -692,6 +711,21 @@ router.post('/create_testimony', ensureAuthenticated, async(req, res) =>{
       const testimony = new AdminTestimony(req.body);
       const submittedData = await testimony.save();
     if(submittedData) return res.status(200).send({status: 200, message:"Testimony was created successfully"});
+
+   }catch(error){
+    console.log(error);
+    res.status(404).send({ msg: error.message });
+  }
+});
+
+router.post('/create_admin', ensureAuthenticated, async(req, res) =>{
+  try{
+    if(!req.body){
+      return res.status(404).send({ msg: "empty data set" })
+    }
+      const newAdmin = new User(req.body);
+      const adminData = await newAdmin.save();
+    if(adminData) return res.status(200).send({status: 200, message:"Admin was created successfully"});
 
    }catch(error){
     console.log(error);

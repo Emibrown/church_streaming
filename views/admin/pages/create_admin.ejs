@@ -1,0 +1,193 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+<style>
+    .green{
+        color:green;
+    }
+    .red{
+        color:red;
+    }
+</style>
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  Create New Admin
+               </div>
+           </div>
+           <div class="page-title-actions">
+             <div class="d-inline-block dropdown">
+                <a type="button" href="/admin/view-admins" class="btn-shadow 
+                 btn btn-primary">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                    </span>
+                    View all admins
+                </a>
+            </div>
+         </div> 
+         </div>
+         
+   </div>       
+   <!-- title -->
+    <!--body  -->
+   <div class="tabs-animation">
+       <!-- form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div style = "text-align:center" class="alertBox"></div>
+                        <span class= "error" style = "color:red"></span>
+                        <form id="create-admin">
+                            <div class = "form-group">
+                                <label for="firstname">Fullname:</label>
+                                <input value = "" type="text" id = "firstname" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="lastname">Lastname:</label>
+                                <input value = "" type="text" id = "lastname" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="middlename">Middlename:</label>
+                                <input value = "" type="text" id = "middlename" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="title">Title:</label>
+                                <input value = "" type="text" id = "title" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="email">Email:</label>
+                                <input value = "" type="email" id = "email" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="address">Address:</label>
+                                <input value = "" type="text" id = "address" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="dateOfBirth">Date of Birth:</label>
+                                <input value = "" type="text" id = "dateOfBirth" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="location">Location:</label>
+                                <input value = "" type="text" id = "location" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="stateOfOrigin">State of Origin:</label>
+                                <input value = "" type="text" id = "stateOfOrigin" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="LGA">Local Government Area:</label>
+                                <input value = "" type="text" id = "LGA" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="residentPastor">Resident Pastor:</label>
+                                <input value = "" type="text" id = "residentPastor" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="chapterLocation">Chapter Location:</label>
+                                <input value = "" type="text" id = "chapterLocation" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="organisationName">Organization Name:</label>
+                                <input value = "" type="text" id = "organisationName" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="level">Admin Level:</label>
+                                <select id="level" class = "form-control" required>
+                                    <option value="">Select admin level</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            <div class = "form-group">
+                                <label for="password">Password:</label>
+                                <input value = "" type="text" id = "password" class = "form-control" required>
+                            </div>
+                            <div class = "form-group">
+                                <label for="confirm_password">Confirm Password:</label>
+                                <input value = "" type="text" id = "confirm_password" class = "form-control" required>
+                            </div>
+                            <button class="mt-1 btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- form ends -->
+  </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+$(document).on('submit', '#create-admin', event => {
+    event.preventDefault();
+
+        const data = {
+            "firstname": $("#firstname").val(),
+            "lastname":  $("#lastname").val(),
+            "title": $("#title").val(),
+            "dateOfBirth": $("#dateOfBirth").val(),
+            "middlename": $("#middlename").val(),
+            "location": $("#location").val(),
+            "email": $("#email").val(),
+            "address": $("#address").val(),
+            "stateOfOrigin": $("#stateOfOrigin").val(),
+            "LGA": $("#LGA").val(),
+            "residentPastor": $("#residentPastor").val(),
+            "chapterLocation": $("#chapterLocation").val(),
+            "organisationName": $("#organisationName").val(),
+            "password": $("#password").val(),
+            "level": $("#level").val(),
+            "type": 1,
+
+        }
+        if($('#password').val() !== $('#confirm_password').val()){
+            $('.alertBox').empty();
+            $(".error").html("Please Ensure both passwords match");
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            })
+
+        }else{
+            $.ajax({
+            url: '/admin/create_admin',
+            type: 'post',
+            dataType: 'json',
+            data,
+            success: data => {
+                $(".alertBox").removeClass("red");
+                $(".alertBox").html(data.message).addClass('green');
+                $('#create-admin')[0].reset();
+                $(".error").empty();
+                window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+             })
+            },
+            error: data => {
+                $(".alertBox").removeClass("green");
+                $(".alertBox").html(data.responseJSON.msg).addClass('red');
+                window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+             })
+            },
+            });
+        }
+})
+   
+</script>
+<%- include('../../end'); -%>

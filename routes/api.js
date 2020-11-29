@@ -114,15 +114,7 @@ router.put('/prayer_request/:id', ensureAuthenticated, async (req, res, next) =>
     }
 });
 
-router.delete('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
-    // delete a prayer request
-    try {
-        await PrayerRequest.findOneAndDelete({_id:req.params.id});
-        sendJSONresponse(res, 200, {message: 'Prayer request deleted successfully'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
+
 
 //programmer routes
 
@@ -167,6 +159,15 @@ router.delete('/become_programmer/:id', ensureAuthenticated, async (req, res, ne
         sendJSONresponse(res, 400, {error});
     }
 });
+router.delete('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
+    // delete a prayer request
+    try {
+        await PrayerRequest.findOneAndDelete({_id:req.params.id});
+        sendJSONresponse(res, 200, {message: 'Prayer request deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
 
 //show proposal routes
 
@@ -189,6 +190,106 @@ router.get('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => 
         sendJSONresponse(res, 400, {error});
     }
 });
+router.get('/view-testimony/:id', ensureAuthenticated, async (req, res, next) => {
+    try {
+        const testimony = await Testimony.findOne({_id:req.params.id})
+        res.render('admin/pages/view_testimony', { title: 'View Testimony', testimony });
+    } catch (error) {
+        sendJSONresponse(res, 400, {error: error.message});
+    }
+});
+
+router.get('/view-prayer-request/:id', ensureAuthenticated, async (req, res, next) => {
+    try {
+        const prayerRequest = await PrayerRequest.findOne({_id:req.params.id})
+        res.render('admin/pages/view_prayer_request', { title: 'View Prayer Request', prayerRequest });
+    } catch (error) {
+        sendJSONresponse(res, 400, {error: error.message});
+    }
+});
+
+router.get('/view-enquiries/:id', ensureAuthenticated, async (req, res, next) => {
+    try {
+        const enquiry = await Enquiry.findOne({_id:req.params.id})
+        res.render('admin/pages/view_enquiry', { title: 'View Enquiry', enquiry });
+    } catch (error) {
+        sendJSONresponse(res, 400, {error: error.message});
+    }
+});
+
+router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
+    const showProposal = await ShowProposal.findById({_id: req.params.id})
+    console.log(showProposal);
+    res.render('admin/pages/edit_proposal', { title: 'Edit proposal', showProposal });
+  });
+
+  router.get('/edit-music-video/:id', ensureAuthenticated, async(req, res, next) => {
+    const musicVideo = await MusicVideo.findById({_id: req.params.id})
+    res.render('admin/pages/edit_music_video', { title: 'Edit Music Video', musicVideo });
+  });
+
+  router.get('/edit-advert/:id', ensureAuthenticated, async(req, res, next) => {
+    const advert = await Advert.findById({_id: req.params.id})
+    res.render('admin/pages/edit_advert', { title: 'Edit proposal', advert });
+  });
+
+  router.get('/edit-become-content-dev/:id', ensureAuthenticated, async(req, res, next) => {
+    const programmer = await Programmer.findById({_id: req.params.id})
+    res.render('admin/pages/edit_content_provider', { title: 'Edit Content Provider', programmer });
+  });
+
+  router.get('/edit-testimony/:id', ensureAuthenticated, async(req, res, next) => {
+    const testimony = await Testimony.findById({_id: req.params.id})
+    res.render('admin/pages/edit_testimony', { title: 'Edit Testimony', testimony });
+  });
+
+  router.get('/edit-prayer-request/:id', ensureAuthenticated, async(req, res, next) => {
+    const prayerRequest = await PrayerRequest.findById({_id: req.params.id})
+    res.render('admin/pages/edit_prayer_request', { title: 'Edit Prayer Request', prayerRequest });
+  });
+
+  router.get('/edit-enquiries/:id', ensureAuthenticated, async(req, res, next) => {
+    const enquiry = await Enquiry.findById({_id: req.params.id})
+    res.render('admin/pages/edit_enquiry', { title: 'Edit Enquiry', enquiry });
+  });
+
+  router.get('/edit-patnership/:id', ensureAuthenticated, async(req, res, next) => {
+    const patnership = await Patnership.findById({_id: req.params.id})
+    res.render('admin/pages/edit_patnership', { title: 'Edit Patnership', patnership });
+  });
+
+  router.get('/create-genre', ensureAuthenticated, async(req, res, next) => {
+    res.render('admin/pages/create_genre', { title: 'Create Genre' });
+  });
+
+  router.get('/edit-genres/:id', ensureAuthenticated, async(req, res, next) => {
+    const genre = await MusicGenre.findById({_id: req.params.id})
+    res.render('admin/pages/edit_genre', { title: 'Edit Genre', genre });
+  });
+  router.get('/create-testimony', ensureAuthenticated, async(req, res, next) => {
+    res.render('admin/pages/create_testimony', { title: 'Create Testimony' });
+  });
+
+  router.get('/create-admin', ensureAuthenticated, async(req, res, next) => {
+    res.render('admin/pages/create_admin', { title: 'Create Admin' });
+  });
+
+
+  
+  router.get('/single-testimony/:id', ensureAuthenticated, async (req, res, next) => {
+    try {
+        const testimony = await AdminTestimony.findOne({_id:req.params.id})
+        res.render('admin/pages/view_admin_testimony', { title: 'View Admin Testimony', testimony });
+    } catch (error) {
+        sendJSONresponse(res, 400, {error: error.message});
+    }
+});
+
+router.get('/edit-single-testimony/:id', ensureAuthenticated, async(req, res, next) => {
+    const testimony = await AdminTestimony.findById({_id: req.params.id})
+    res.render('admin/pages/edit_single_testimony', { title: 'Edit Single Testimony', testimony });
+  });
+
 
 router.put('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {
     // update a show proposal
@@ -471,6 +572,17 @@ router.get('/add_show', ensureAuthenticated, async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
 });
+
+// router.get('/add_schedule', ensureAuthenticated, async (req, res, next) => {
+//     // add schedule view
+//     try {
+//         const shows = await Show.find({});
+//         res.render('admin/pages/add_schedule', { title: 'Add Schedule', shows});
+//     } catch (error) {
+//         sendJSONresponse(res, 400, {error});
+//     }
+// });
+
 router.get('/edit_show/:id', ensureAuthenticated, async (req, res, next) => {
     // edit shows view
     try {
@@ -612,7 +724,7 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
   router.get('/schedules', ensureAuthenticated, async (req, res, next) => {
     // get all schedules
     try {
-        const schedules = await Schedule.find({}).populate('show').populate('video').sort({startTime:'asc'})
+        const schedules = await Schedule.find({}).populate('show').populate('video').sort({startTime:'desc'})
         res.render('admin/pages/schedules', { title: 'Schedules', schedules});
     } catch (error) {
         sendJSONresponse(res, 400, {error});

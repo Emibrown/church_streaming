@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const uniqueValidator = require('mongoose-unique-validator');
 mongoose.Promise = require('bluebird');
 
-const favouriteSchema = mongoose.Schema(
+const watchSchema = mongoose.Schema(
     {
         member : {
             type: mongoose.Schema.Types.ObjectId, 
@@ -21,6 +21,6 @@ const favouriteSchema = mongoose.Schema(
     }
 )
 
-const Favourite = mongoose.model('Favourite', favouriteSchema);
+const Watch = mongoose.model('Watch', watchSchema);
 
-module.exports = Favourite;
+module.exports = Watch;

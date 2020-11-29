@@ -26,7 +26,7 @@
                                 <th>first name</th>
                                 <th> phone no</th>
                                 <th>Date added</th>
-                                <th class = "text-center">Actions</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,12 +34,12 @@
                             <% patnership.forEach(function (patnership,index){ %>
                                 <tr>
                                     <td><%= sn %></th>
-                                    <td class="text-left"><%= patnership.title %></td>
+                                    <td class=""><%= patnership.title %></td>
                                     <td class=""><%= patnership.surName %></td>
                                     <td class=""><%= patnership.firstName %></td>
                                     <td class=""><%= patnership.phoneNumber %></td>
                                     <td class=""><%= moment(patnership.date).format('LL') %></td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <a href= "/admin/api/patnership/<%=patnership._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                         <a href= "/admin/api/edit-patnership/<%=patnership._id%>" type="button" id="PopoverCustomT-1"

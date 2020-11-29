@@ -4,11 +4,11 @@ const bcrypt = require('bcryptjs')
 const uniqueValidator = require('mongoose-unique-validator');
 mongoose.Promise = require('bluebird');
 
-const likeSchema = mongoose.Schema(
+const historySchema = mongoose.Schema(
     {
         member : {
             type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Member'
+            ref: 'User'
         },
         video : {
             type: mongoose.Schema.Types.ObjectId, 
@@ -21,6 +21,6 @@ const likeSchema = mongoose.Schema(
     }
 )
 
-const Like = mongoose.model('Like', likeSchema);
+const History = mongoose.model('History', historySchema);
 
-module.exports = Like;
+module.exports = History;
