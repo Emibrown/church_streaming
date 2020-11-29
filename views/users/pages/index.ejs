@@ -195,8 +195,7 @@
                                              </a>
                                          </div>
                                         <% }) %> 
-
-                                         
+                                    
                                      </div> <!-- /.slider -->
                                      <div class="slider-prev"></div>
                                      <div class="slider-next"></div>
@@ -215,7 +214,7 @@
                  dots: false,
                  infinite: true,
                  variableWidth: true,
-                 slidesToShow: 2,
+                 slidesToShow: parseInt('<%= trendingVideos.length-1 %>'),
                  slidesToScroll: 1
              });
              
