@@ -213,6 +213,9 @@ router.get('/history', ensureAuthenticated, async(req, res, next) => {
 
 router.get('/cat/:code', async(req, res, next) => {
   const cat = await Category.findOne({code:req.params.code})
+  if(!cat){
+    res.redirect("/vod");
+  }
   const programmes = await Programme.find({
     categories:cat._id
   })

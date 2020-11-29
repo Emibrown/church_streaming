@@ -168,6 +168,9 @@ router.get('/stop_streaming', ensureAuthenticated, async(req, res, next) => {
       if(youtubepid){
          process.kill(youtubepid)
       }
+      if(twitterpid){
+          process.kill(twitterpid)
+      }
       console.log('streaming stoped');
     } catch (error) {
         console.error(error);

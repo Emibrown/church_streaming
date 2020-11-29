@@ -94,24 +94,18 @@
                         </div> <!-- /.caption -->
                         <div class="social visible-xs">
                             
-                            <a href="https://www.facebook.com/TBNUKtv" class="facebook-square" data-toggle="tooltip" data-placement="top" title="Facebook" rel="me">
-                            	<em class="fa fa-fw fa-2x fa-facebook-square"></em>
-                            </a>
-                            <a href="https://twitter.com/TBNUKtv" class="twitter-square" data-toggle="tooltip" data-placement="top" title="Twitter" rel="me">
-                            	<em class="fa fa-fw fa-2x fa-twitter-square"></em>
-                            </a>
-                            <a href="https://plus.google.com/+TbnukOrgTv/" class="google-plus-square" data-toggle="tooltip" data-placement="top" title="Google+" rel="publisher">
-                            	<em class="fa fa-fw fa-2x fa-google-plus-square"></em>
-                            </a>
-                            <a href="https://vimeo.com/tbnuk" class="vimeo-square" data-toggle="tooltip" data-placement="top" title="Vimeo" rel="me">
-                            	<em class="fa fa-fw fa-2x fa-vimeo-square"></em>
-                            </a>
-                            <a href="https://instagram.com/tbnuk/" class="instagram" data-toggle="tooltip" data-placement="top" title="Instagram" rel="me">
-                            	<em class="fa fa-fw fa-2x fa-instagram"></em>
-                            </a>
-                            <a href="contact.html" class="envelope" data-toggle="tooltip" data-placement="top" title="Email">
-                            	<em class="fa fa-fw fa-2x fa-envelope-square"></em>
-                            </a>
+                          <a href="<%=settings.facebookHandle %>" class="facebook-square" data-toggle="tooltip" data-placement="left" title="Facebook" rel="me">
+                              <em class="fa fa-fw fa-2x fa-facebook-square"></em>
+                          </a>
+                          <a href="<%=settings.twitterHandle %>" class="twitter-square" data-toggle="tooltip" data-placement="left" title="Twitter" rel="me">
+                              <em class="fa fa-fw fa-2x fa-twitter-square"></em>
+                          </a>
+                          <a href="<%=settings.instagramHandle %>" class="instagram" data-toggle="tooltip" data-placement="left" title="Instagram" rel="me">
+                              <em class="fa fa-fw fa-2x fa-instagram"></em>
+                          </a>
+                          <a href="/contact" class="envelope" data-toggle="tooltip" data-placement="left" title="Email">
+                              <em class="fa fa-fw fa-2x fa-envelope-square"></em>
+                          </a>
                             
                         </div> <!-- /.social -->
                     
@@ -251,7 +245,8 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="/testimony">Share your testimonies</a></li>
-                  <li><a href="/watch-testimonies">Watch testimonies</a></li>
+                  <li><a href="/watch-testimonies">View testimonies</a></li>
+                  <li><a href="/vod/cat/testimonies">Watch testimonies</a></li>
                 </ul> <!-- /.dropdown-menu -->
               </li> <!-- /.dropdown -->
               <li class="navbar-text">|</li>

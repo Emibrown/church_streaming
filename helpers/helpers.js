@@ -43,6 +43,15 @@ const youtube = (fileName,stream_key) =>  [
 ]
 
 
+const twitter = (fileName,stream_key) =>  [
+    '-re',
+    '-f', 'lavfi',
+    '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
+    '-c:v', 'libx264', '-preset', 'ultrafast', '-r', '30', '-g', '60', '-b:v', '1500k',
+    '-c:a', 'aac', '-threads', '6', '-ar', '44100', '-b:a', '128k', '-bufsize', '512k', '-pix_fmt', 'yuv420p',
+    '-f', 'rtmp://va.pscp.tv:80/x/'+stream_key
+]
+
 
 const startStreaming = (live_stream,streamingKey) => {
     const ffmpeg_process = spawn(cmd, local(live_stream.video.video, streamingKey),{detached: true});
@@ -96,6 +105,24 @@ const startStreaming = (live_stream,streamingKey) => {
             console.log(`FB process exited with code ${code}`);
         });
     }
+
+    if(live_stream.twitter){
+        const ffmpeg_process_tw = spawn(cmd, twitter(live_stream.video.video,live_stream.twitter),{detached: true});
+        twitterpid = ffmpeg_process_tw.pid
+        
+        ffmpeg_process_tw.stdout.on('data', (data) => {
+            console.log(`stdout: ${data}`);
+        });
+        
+        ffmpeg_process_tw.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        ffmpeg_process_tw.on('close', (code) => {
+            console.log(`FB process exited with code ${code}`);
+        });
+    }
+
 };
 
 module.exports = {

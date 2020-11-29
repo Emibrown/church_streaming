@@ -33,6 +33,7 @@ require('./models/db');
 global.localpid = ''
 global.facebookpid = ''
 global.youtubepid = ''
+global.twitterpid = ''
 // view engine setup
 app.use(minifyHTML({
   override:      true,
