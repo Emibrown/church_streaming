@@ -736,7 +736,7 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
   router.get('/schedules', ensureAuthenticated, async (req, res, next) => {
     // get all schedules
     try {
-        const schedules = await Schedule.find({}).populate('show').populate('video').sort({startTime:'asc'})
+        const schedules = await Schedule.find({}).populate('show').populate('video').sort({startTime:'desc'})
         res.render('admin/pages/schedules', { title: 'Schedules', schedules});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
