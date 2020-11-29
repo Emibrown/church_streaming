@@ -55,8 +55,7 @@ const youtube = (fileName,stream_key) =>  [
 const twitter = (fileName,stream_key) =>  [
     '-re', '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
     ' -deinterlace', '-c:v', 'libx264', '-pix_fmt',
-    'yuv420p','-s','960x540', '-preset', 'superfast', '-vb',
-     '1200k', '-maxrate', '1200k', '-r', '30', '-g', '60',
+    'yuv420p','-s','960x540', '-preset', 'superfast', '-r', '30', '-g', '60',
      '-bufsize', '8000k', '-c:a', 'aac', '-b:a', '96k', '-ar', '44100', '-ac', '2', 
      '-f', 'flv', 'rtmp://va.pscp.tv:80/x/'+stream_key
 ]
