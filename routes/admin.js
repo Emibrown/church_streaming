@@ -806,10 +806,40 @@ router.put('/edit_video/:id', ensureAuthenticated, multers.upload.array('file',6
         if(req.files.length > 1){
           req.body.video = req.files[1].filename
           req.body.image = path.basename(req.files[0].filename, path.extname(req.files[0].filename))+'.webp'
+
+          fs.unlink(path.resolve('./public','small_images', video.image), function(err){
+            if (err && err.code == "ENOENT") {
+              console.log("small_images file doesnt exist");
+            } else if(err) {
+               console.log("error");
+            }else{
+                console.log("file removed");
+            }
+           });
+    
+           fs.unlink(path.resolve('./public','large_images', video.image), function(err){
+            if (err && err.code == "ENOENT") {
+              console.log("large_images file doesnt exist");
+            } else if(err) {
+               console.log("error");
+            }else{
+                console.log("file removed");
+            }
+           });
+    
+           fs.unlink(path.resolve('./public','uploads', video.video), function(err){
+            if (err && err.code == "ENOENT") {
+              console.log(" video file doesnt exist");
+            } else if(err) {
+               console.log("error");
+            }else{
+                console.log("file removed");
+            }
+           });
   
-          fs.unlinkSync(path.resolve('./public','small_images', video.image))
-          fs.unlinkSync(path.resolve('./public','large_images', video.image))
-          fs.unlinkSync(path.resolve('./public','uploads', video.video))
+          // fs.unlinkSync(path.resolve('./public','small_images', video.image))
+          // fs.unlinkSync(path.resolve('./public','large_images', video.image))
+          // fs.unlinkSync(path.resolve('./public','uploads', video.video))
   
           await sharp(req.files[0].path)
           .resize({ width: 384, height: 216 })
@@ -825,7 +855,16 @@ router.put('/edit_video/:id', ensureAuthenticated, multers.upload.array('file',6
         }
         else if(path.extname(req.files[0].path) === '.mp4'){
           req.body.video = req.files[0].filename
-          fs.unlinkSync(path.resolve('./public','uploads', video.video))
+          fs.unlink(path.resolve('./public','uploads', video.video), function(err){
+            if (err && err.code == "ENOENT") {
+              console.log(" video file doesnt exist");
+            } else if(err) {
+               console.log("error");
+            }else{
+                console.log("file removed");
+            }
+           });
+          // fs.unlinkSync(path.resolve('./public','uploads', video.video))
         }
         else{
           req.body.image = path.basename(req.files[0].filename, path.extname(req.files[0].filename)+'.webp')
@@ -862,9 +901,36 @@ router.delete('/pre_recorded/:id', ensureAuthenticated, async (req, res, next) =
   // delete a video
   try {
       const video = Video.findOne({_id:req.params.id})
-      fs.unlinkSync(path.resolve('./public','small_images', video.image))
-      fs.unlinkSync(path.resolve('./public','large_images', video.image))
-      fs.unlinkSync(path.resolve('./public','uploads', video.video))
+      fs.unlink(path.resolve('./public','small_images', video.image), function(err){
+        if (err && err.code == "ENOENT") {
+          console.log("small_images file doesnt exist");
+        } else if(err) {
+           console.log("error");
+        }else{
+            console.log("file removed");
+        }
+       });
+
+       fs.unlink(path.resolve('./public','large_images', video.image), function(err){
+        if (err && err.code == "ENOENT") {
+          console.log("large_images file doesnt exist");
+        } else if(err) {
+           console.log("error");
+        }else{
+            console.log("file removed");
+        }
+       });
+
+       fs.unlink(path.resolve('./public','uploads', video.video), function(err){
+        if (err && err.code == "ENOENT") {
+          console.log(" video file doesnt exist");
+        } else if(err) {
+           console.log("error");
+        }else{
+            console.log("file removed");
+        }
+       });
+
       await Video.deleteOne(video);
       sendJSONresponse(res, 200, {message: 'Video deleted successfully'});
   } catch (error) {
@@ -877,9 +943,40 @@ router.get('/delete_video/:id', ensureAuthenticated, async (req, res, next) => {
   // delete a video
   try {
       const video =  await Video.findOne({_id:req.params.id});
-      fs.unlinkSync(path.resolve('./public','small_images', video.image))
-      fs.unlinkSync(path.resolve('./public','large_images', video.image))
-      fs.unlinkSync(path.resolve('./public','uploads', video.video))
+      fs.unlink(path.resolve('./public','small_images', video.image), function(err){
+        if (err && err.code == "ENOENT") {
+          console.log("small_images file doesnt exist");
+        } else if(err) {
+           console.log("error");
+        }else{
+            console.log("file removed");
+        }
+       });
+
+       fs.unlink(path.resolve('./public','large_images', video.image), function(err){
+        if (err && err.code == "ENOENT") {
+          console.log("large_images file doesnt exist");
+        } else if(err) {
+           console.log("error");
+        }else{
+            console.log("file removed");
+        }
+       });
+
+       fs.unlink(path.resolve('./public','uploads', video.video), function(err){
+        if (err && err.code == "ENOENT") {
+          console.log(" video file doesnt exist");
+        } else if(err) {
+           console.log("error");
+        }else{
+            console.log("file removed");
+        }
+       });
+
+
+      // fs.unlinkSync(path.resolve('./public','small_images', video.image))
+      // fs.unlinkSync(path.resolve('./public','large_images', video.image))
+      // fs.unlinkSync(path.resolve('./public','uploads', video.video))
       await Video.deleteOne(video);
       res.redirect('/admin/videos');
   } catch (error) {
