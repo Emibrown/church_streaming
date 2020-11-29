@@ -24,6 +24,9 @@ var scheduleSchema = mongoose.Schema(
         youtube: {
             type: String,
         },
+        twitter: {
+            type: String,
+        },
         startTime: {
             type: Date, 
             required: true,
