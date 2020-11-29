@@ -58,6 +58,7 @@
   <script src="/front/js/vendor/bootstrap.min.js"></script>  
   <script src="/front/js/jquery-ui.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/front/js/vendor/salvattore.min.js"></script>
 
 </head>
 <body>
@@ -150,19 +151,13 @@
                     
     <div class="social-fixed">
         
-        <a href="https://www.facebook.com" class="facebook-square" data-toggle="tooltip" data-placement="left" title="Facebook" rel="me">
+        <a href="<%=settings.facebookHandle %>" class="facebook-square" data-toggle="tooltip" data-placement="left" title="Facebook" rel="me">
             <em class="fa fa-fw fa-2x fa-facebook-square"></em>
         </a>
-        <a href="https://twitter.com" class="twitter-square" data-toggle="tooltip" data-placement="left" title="Twitter" rel="me">
+        <a href="<%=settings.twitterHandle %>" class="twitter-square" data-toggle="tooltip" data-placement="left" title="Twitter" rel="me">
             <em class="fa fa-fw fa-2x fa-twitter-square"></em>
         </a>
-        <a href="https://plus.google.com" class="google-plus-square" data-toggle="tooltip" data-placement="left" title="Google+" rel="publisher">
-            <em class="fa fa-fw fa-2x fa-google-plus-square"></em>
-        </a>
-        <a href="https://vimeo.com" class="vimeo-square" data-toggle="tooltip" data-placement="left" title="Vimeo" rel="me">
-            <em class="fa fa-fw fa-2x fa-vimeo-square"></em>
-        </a>
-        <a href="https://instagram.com" class="instagram" data-toggle="tooltip" data-placement="left" title="Instagram" rel="me">
+        <a href="<%=settings.instagramHandle %>" class="instagram" data-toggle="tooltip" data-placement="left" title="Instagram" rel="me">
             <em class="fa fa-fw fa-2x fa-instagram"></em>
         </a>
         <a href="/contact" class="envelope" data-toggle="tooltip" data-placement="left" title="Email">
@@ -256,7 +251,7 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="/testimony">Share your testimonies</a></li>
-                  <li><a href="/">Watch testimonies</a></li>
+                  <li><a href="/watch-testimonies">Watch testimonies</a></li>
                 </ul> <!-- /.dropdown-menu -->
               </li> <!-- /.dropdown -->
               <li class="navbar-text">|</li>

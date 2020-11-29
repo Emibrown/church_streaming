@@ -10,6 +10,7 @@ const Schedule = require('../models/schedule');
 const Season = require('../models/season');
 const SendMessage = require('../models/sendMessage');
 const MusicGenre = require('../models/musicGenres');
+const AdminTestimony = require('../models/adminTestimony');
 const passport = require('passport');
 const multers = require('../middleware/multers')
 const sharp = require('sharp')
@@ -221,6 +222,10 @@ router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
+router.get('/create-testimony', ensureAuthenticated, async(req, res, next) => {
+  res.render('admin/pages/create_testimony', { title: 'Create Testimony' });
+});
+
 router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
   const user = await User.findById({_id: req.params.id})
   res.render('admin/pages/view_single_user', { title: 'View Single User', user });
@@ -306,6 +311,18 @@ router.put('/update_testimony/:id', ensureAuthenticated, async (req, res, next) 
 
   try {
       const testimony = await Testimony.findOne({_id:req.params.id})
+      await Object.assign(testimony, req.body);
+      await testimony.save()
+      res.send({status: 200, message: 'Testimony Updated Successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
+router.put('/update_admin_testimony/:id', ensureAuthenticated, async (req, res, next) => {
+
+  try {
+      const testimony = await AdminTestimony.findOne({_id:req.params.id})
       await Object.assign(testimony, req.body);
       await testimony.save()
       res.send({status: 200, message: 'Testimony Updated Successfully'});
@@ -573,6 +590,15 @@ router.delete('/delete_genre/:id', ensureAuthenticated, async (req, res, next) =
   }
 });
 
+router.delete('/delete_admin_testimony/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await AdminTestimony.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted Testimony'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
     {
@@ -638,6 +664,21 @@ router.post('/create_music_genre', ensureAuthenticated, async(req, res) =>{
       const newGenre = new MusicGenre(req.body);
       const submitted = await newGenre.save();
     if(submitted) return res.status(200).send({status: 200, message:"Genre was created successfully"});
+
+   }catch(error){
+    console.log(error);
+    res.status(404).send({ msg: error.message });
+  }
+});
+
+router.post('/create_testimony', ensureAuthenticated, async(req, res) =>{
+  try{
+    if(!req.body){
+      return res.status(404).send({ msg: "empty data set" })
+    }
+      const testimony = new AdminTestimony(req.body);
+      const submittedData = await testimony.save();
+    if(submittedData) return res.status(200).send({status: 200, message:"Testimony was created successfully"});
 
    }catch(error){
     console.log(error);

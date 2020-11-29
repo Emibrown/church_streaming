@@ -43,7 +43,7 @@
                         <tbody>
                             <% categories.forEach(function (item,index){ %>
                                 <tr>
-                                    <td class="text-left"><%= item.title %></td>
+                                    <td class=""><%= item.title %></td>
                                     <td class=""><%= moment(item.date).format('LL') %></td>
                                     <td class="">
                                         <a href= "/admin/edit_category/<%=item._id%>" type="button" id="PopoverCustomT-1"

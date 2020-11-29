@@ -26,7 +26,7 @@
                                 <th>ministry name</th>
                                 <th> phone no</th>
                                 <th>Date added</th>
-                                <th class = "text-center"> Actions</th>
+                                <th class = ""> Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
                                     <td><%= advert.ministryName %></td>
                                     <td><%= advert.phoneNumber %></td>
                                     <td><%= moment(advert.date).format('LL') %></td>
-                                    <td class = "text-center">
+                                    <td class = "">
                                         <a href= "/admin/api/advert/<%=advert._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                         <a href= "/admin/api/edit-advert/<%=advert._id%>" type="button" id="PopoverCustomT-1"

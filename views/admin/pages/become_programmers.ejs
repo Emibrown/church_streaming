@@ -27,7 +27,7 @@
                                 <th>Programme title</th>
                                 <th>Phone no</th>
                                 <th>Date added</th>
-                                <th class = "text-center">Actions</th>
+                                <th class = "">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,12 +35,12 @@
                             <% programmer.forEach(function (programmer,index){ %>
                                 <tr>
                                     <td><%= sn %></th>
-                                    <td class="text-left"><%= programmer.fullName %></td>
+                                    <td class=""><%= programmer.fullName %></td>
                                     <td class=""><%= programmer.ministryName %></td>
                                     <td class=""><%= programmer.programmeTitle %></td>
                                     <td class=""><%= programmer.phone %></td>
                                     <td class=""><%= moment(programmer.date).format('LL') %></td>
-                                    <td class="text-center">
+                                    <td class="">
                                         <a href= "/admin/api/become_programmer/<%=programmer._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-primary btn-sm">View</a>
                                         <a href= "/admin/api/edit-become-content-dev/<%=programmer._id%>" type="button" id="PopoverCustomT-1"

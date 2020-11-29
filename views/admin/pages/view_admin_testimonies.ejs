@@ -10,25 +10,22 @@
                    <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
                </div>
                <div>
-                 Testimonies 
+                  All Created Testimonies
                </div>
            </div> 
         </div>
    </div>        
-
+   
             <div class="main-card mb-3 card">
                 <div class="card-body">
                     <table style="width: 100%;" id="example2" class="table table-hover table-striped table-bordered">
                         <thead>
-                            <tr>
+                            <tr> 
                                 <th>S/N</th>
-                                <th>Full name</th>
-                                <th>Location</th>
-                                <th>Email</th>
-                                <th>Phone no</th>
-                                <th>Date added</th>
+                                <th>Name of member</th>
+                                <th>Title</th>
+                                <th>Date Created</th>
                                 <th>Actions</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -36,26 +33,25 @@
                             <% testimonies.forEach(function (testimonies,index){ %>
                                 <tr>
                                     <td><%= sn %></th>
-                                    <td><%= testimonies.fullName %></td>
-                                    <td><%= testimonies.location %></td>
-                                    <td><%= testimonies.email %></td>
-                                    <td><%= testimonies.phoneNumber %></td>
+                                    <td><%= testimonies.name %></td>
+                                    <td><%= testimonies.title %></td>
                                     <td><%= moment(testimonies.date).format('LL') %></td>
                                     <td>
-                                        <a href= "/admin/api/view-testimony/<%=testimonies._id%>" type="button" id="PopoverCustomT-1"
-                                            class="btn btn-primary btn-sm">View</a>
-                                        <a href= "/admin/api/edit-testimony/<%=testimonies._id%>" type="button" id="PopoverCustomT-1"
+                                        <a href= "/admin/api/single-testimony/<%=testimonies._id%>" type="button" id="PopoverCustomT-1"
+                                                class="btn btn-primary btn-sm">View</a>
+                                        <a href= "/admin/api/edit-single-testimony/<%=testimonies._id%>" type="button" id="PopoverCustomT-1"
                                             class="btn btn-warning btn-sm">Edit</a>
                                         <button id = "<%=testimonies._id%>"
                                             class="btn btn-danger btn-sm">Delete</button>
                                     </td>
                                 </tr>
                                 <% sn++ %>
-                                <% }) %> 
-                                <%  } %>                        
-                             </tbody>
+                            <%  }) %>   
+                            <%  } %>     
+                        </tbody>
                     </table>
-                </div>
+                    </div>
+    
   </div>
 </div>
 <!-- Page Content END -->
@@ -86,7 +82,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result) {
                 $.ajax({
-                    url: '/admin/delete_testimony/'+id,
+                    url: '/admin/delete_admin_testimony/'+id,
                     method: "DELETE",
                     dataType : "json",
                     "contentType": "application/json",

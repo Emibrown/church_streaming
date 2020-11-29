@@ -87,19 +87,42 @@
                                         </div>
                                     </div>
                                         
-                                    <div class="fsPlayer--controls">
-                                        <p><strong>You are currently not logged in</strong>. To benefit from our full VOD offering, please <a href="">login</a> or <a href="">signup</a> now.</p>
+                                    <% if (!currentUser){ %>
+                                        <div class="fsPlayer--controls">
+                                            <p><strong>You are currently not logged in</strong>. To benefit from our full VOD offering, please <a href="/login">login</a> or <a href="/register">signup</a> now.</p>
+                                            
+                                            <a href="" class="highlight-access">
+                                                <i class="material-icons">favorite_border</i>
+                                                <span><%= video.favourite %></span>
+                                            </a>
+                                            <a href="" class="highlight-access">
+                                                <i class="material-icons">playlist_add</i>
+                                                <span>Watch Later</span>
+                                            </a>
                                         
-                                        <a href="" class="highlight-access">
-                                            <i class="material-icons">favorite_border</i>
-                                            <span>1</span>
-                                        </a>
-                                        <a href="" class="highlight-access">
-                                            <i class="material-icons">playlist_add</i>
-                                            <span>Watch Later</span>
-                                        </a>
-                                      
-                                    </div>
+                                        </div>
+                                    <% }else{%> 
+                                        <div class="fsPlayer--controls">
+                                            <span class="ctrl-1 <%= video.isfavourite  %> "  data-vid="<%= video._id %>" data-uid="<%= currentUser._id %>">
+                                                <% if (video.isfavourite == "active"){ %>
+                                                    <i class="material-icons">favorite</i>
+                                                <% }else{%> 
+                                                    <i class="material-icons">favorite_border</i>
+                                                <% } %> 
+                                                <span><%= video.favourite %></span>
+                                            </span>
+                                            <span class="ctrl-2 <%= video.isWatch %> " data-on="Playlisted" data-off="Watch Later" data-vid="<%= video._id %>" data-uid="<%= currentUser._id %>">
+                                                <% if (video.isWatch == "active"){ %>
+                                                    <i class="material-icons">playlist_add_check</i>
+                                                    <span>Playlisted</span>
+                                                <% }else{%> 
+                                                    <i class="material-icons">playlist_add</i>
+                                                    <span>Watch Later</span>
+                                                <% } %> 
+                                                
+                                            </span>
+                                        </div>
+                                    <% } %> 
                                     
                                 </div>
                             </div>

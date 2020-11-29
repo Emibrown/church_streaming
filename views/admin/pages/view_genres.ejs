@@ -24,7 +24,7 @@
                                 <th>S/N</th>
                                 <th>Name of Genre</th>
                                 <th>Date Created</th>
-                                <th class = "text-center">Actions</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,7 +34,7 @@
                                     <td><%= sn %></th>
                                     <td><%= genres.name %></td>
                                     <td><%= moment(genres.date).format('LL') %></td>
-                                    <td class = "text-center">
+                                    <td>
                                         <a href= "/admin/api/edit-genres/<%=genres._id%>" type="button" id="PopoverCustomT-1"
                                                 class="btn btn-warning btn-sm">Edit</a>
                                         <button id = "<%=genres._id%>"

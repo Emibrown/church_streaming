@@ -21,6 +21,7 @@ const {customEmail} = require('../services/email');
 const moment = require('moment');
 const Feedback = require('../models/enquiries');
 const MusicGenre = require('../models/musicGenres');
+const AdminTestimony = require('../models/adminTestimony');
 const router = express.Router();
 
 
@@ -79,8 +80,62 @@ router.get('/', async (req, res, next) => {
     }
   )
   .populate('show')
-  .sort({startTime:-1}) 
+  .sort({startTime:1}) 
   .limit(2)
+
+  const latestVideos = await Video.find(
+    {
+      type: { $ne: '1' }
+     }
+  ).populate('programme')
+  .sort({startTime:1}) 
+  .limit(4)
+
+  
+
+  await Video.aggregate([
+    { $match: 
+      { 
+        type: { $ne: '1' }
+      } 
+    },
+  
+    {
+        $lookup:
+                    {
+                        from:"favourites",
+                        localField:"_id",
+                        foreignField:"video",
+                        as:"favouriteVideos"
+                    }
+    },
+    {
+        $project:{
+                _id:1,
+               views:1,
+               image:1,
+               title:1,
+               code:1,
+               addedOn:1,
+                favouriteCount:{$size:"$favouriteVideos"},
+            }
+    },
+    {
+        $sort : {favouriteCount : 1,views:1,addedOn:1}
+    },
+    {
+        $limit : 10
+    }
+    ])
+    .exec(function(err, trendingVideos) {
+      console.log(trendingVideos)
+      res.render('users/pages/index', { title: 'Home',schedules,highlight,latestVideos,trendingVideos });
+
+    });
+
+   
+
+ 
 
   // const streams = await Video.aggregate([
   //   { 
@@ -112,9 +167,7 @@ router.get('/', async (req, res, next) => {
   //       $limit : 3
   //   }
   //   ])
-  console.log(schedules)
-  console.log(highlight)
-  res.render('users/pages/index', { title: 'Home',schedules,highlight });
+
 });
 
 router.get('/categories', (req, res, next) => {
@@ -165,6 +218,10 @@ router.get('/prayer-request', (req, res, next) =>{
 });
 router.get('/testimony', (req, res, next) =>{
   res.render('users/pages/testimony', { title: 'Faith TV | Share Your Testimony' });
+});
+router.get('/watch-testimonies', async(req, res, next) =>{
+  const testimonies = await AdminTestimony.find({});
+  res.render('users/pages/watch_testimonies', { title: 'Faith TV | Watch Testimonies', testimonies });
 });
 router.get('/contact', (req, res, next) =>{
   res.render('users/pages/contact', { title: 'Faith TV | Contact' });
