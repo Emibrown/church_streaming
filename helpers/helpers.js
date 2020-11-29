@@ -56,7 +56,7 @@ const twitter = (fileName,stream_key) =>  [
     '-re',
     '-y',
     '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
-    '-c:a', 'copy', '-ac', '1','-ar',
+    '-c:a', 'copy', '-ac', '1','-ar', '-r', '30', '-g', '60',
     '44100', '-b:a','96k','-vcodec','libx264','-tune',
     'zerolatency','-f', 'flv', '-maxrate', '2000k', '-preset', 'veryfast',
     'rtmp://va.pscp.tv:80/x/'+stream_key
