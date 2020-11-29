@@ -2,20 +2,29 @@
 <%- include('../sidebar'); -%>
 
 <!-- Page Content  -->
-<div class="app-main__inner">
-   <div class="app-page-title">
-       <div class="page-title-wrapper">
-           <div class="page-title-heading">
-               <div class="page-title-icon">
-                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
-               </div>
-               <div>
-                  All Created Testimonies
-               </div>
-           </div> 
-        </div>
-   </div>        
-   
+        <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+                    </div>
+                    <div>
+                        All Created Testimonies
+                    </div>
+                </div> 
+                <div class="page-title-actions">
+                    <div class="d-inline-block dropdown">
+                    <a type="button" href="/admin/api/create-testimony" class="btn-shadow 
+                        btn btn-primary">
+                        <span class="btn-icon-wrapper pr-2 opacity-7">
+                        </span>
+                            Create Testimony
+                    </a>
+                 </div>
+                </div>
+            </div>
+        </div>        
             <div class="main-card mb-3 card">
                 <div class="card-body">
                     <table style="width: 100%;" id="example2" class="table table-hover table-striped table-bordered">
@@ -50,12 +59,10 @@
                             <%  } %>     
                         </tbody>
                     </table>
-                    </div>
-    
-  </div>
+                </div>
+        </div>
 </div>
 <!-- Page Content END -->
-
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
@@ -103,7 +110,6 @@ $(document).ready(function() {
                     'Testimony Deleted.',
                     'success'
                 )
-    
             }
         })
     });

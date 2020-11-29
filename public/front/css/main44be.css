@@ -4647,7 +4647,7 @@ select.form-control {
 }
 
 .content .twitter .tweet .bubble {
-  background: #d1d0d6;
+  background: #d4af37;
   border: 1px solid #cacaca;
   padding: 14px;
   position: relative;
@@ -4777,19 +4777,19 @@ select.form-control {
 .content .page .block .testimony .bubble {
   padding: 20px;
   color: #fff;
-  background: #d1d0d6;
-  background: -moz-linear-gradient(-45deg, #d1d0d6 0%, #d1d0d6 100%);
+  background: #d4af37;
+  background: -moz-linear-gradient(-45deg, #d4af37 0%, #d4af37 100%);
   background: -webkit-gradient(
     left top,
     right bottom,
     color-stop(0%, #d4af37),
     color-stop(100%, #d4af37)
   );
-  background: -webkit-linear-gradient(-45deg, #d1d0d6 0%, #d1d0d6 100%);
-  background: -o-linear-gradient(-45deg, #d1d0d6 0%, #d1d0d6 100%);
-  background: -ms-linear-gradient(-45deg, #d1d0d6 0%, #d1d0d6 100%);
-  background: linear-gradient(135deg, #d1d0d6 0%, #d1d0d6 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d1d0d6', endColorstr=' #d1d0d6', GradientType=1 );
+  background: -webkit-linear-gradient(-45deg, #d4af37 0%, #d4af37 100%);
+  background: -o-linear-gradient(-45deg, #d4af37 0%, #d4af37 100%);
+  background: -ms-linear-gradient(-45deg, #d4af37 0%, #d4af37 100%);
+  background: linear-gradient(135deg, #d4af37 0%, #d4af37 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4af37', endColorstr=' #d4af37', GradientType=1 );
 }
 .content .block .testimony .bubble .equal-height {
   height: 160px;

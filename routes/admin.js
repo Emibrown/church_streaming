@@ -172,9 +172,6 @@ router.get('/stop_streaming', ensureAuthenticated, async(req, res, next) => {
     sendJSONresponse(res, 200, {message: 'Streaming ended on all platforms'});
 });
 
-
-
-
 // settings/site details
 router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
@@ -222,13 +219,29 @@ router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
-router.get('/create-testimony', ensureAuthenticated, async(req, res, next) => {
-  res.render('admin/pages/create_testimony', { title: 'Create Testimony' });
+router.get('/view-admins', ensureAuthenticated, async(req, res, next) => {
+  const admins = await User.find({type:1})
+  res.render('admin/pages/view_admins', { title: 'View Admins', admins });
 });
 
 router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
   const user = await User.findById({_id: req.params.id})
   res.render('admin/pages/view_single_user', { title: 'View Single User', user });
+});
+
+router.get('/view-single-admin/:id', ensureAuthenticated, async(req, res, next) => {
+  const adminUser = await User.findById({_id: req.params.id})
+  res.render('admin/pages/view_single_admin', { title: 'View Single Admin', adminUser });
+});
+
+router.get('/view-admin-testimonies', ensureAuthenticated, async (req, res, next) => {
+  // Get  all proposals 
+  try {
+      const testimonies = await AdminTestimony.find({})
+      res.render('admin/pages/view_admin_testimonies', { title: 'All Testimonies', testimonies });
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
 });
 
 
@@ -599,6 +612,15 @@ router.delete('/delete_admin_testimony/:id', ensureAuthenticated, async (req, re
   }
 });
 
+router.delete('/delete_admin/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await User.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Admin was deleted successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
     {
@@ -679,6 +701,21 @@ router.post('/create_testimony', ensureAuthenticated, async(req, res) =>{
       const testimony = new AdminTestimony(req.body);
       const submittedData = await testimony.save();
     if(submittedData) return res.status(200).send({status: 200, message:"Testimony was created successfully"});
+
+   }catch(error){
+    console.log(error);
+    res.status(404).send({ msg: error.message });
+  }
+});
+
+router.post('/create_admin', ensureAuthenticated, async(req, res) =>{
+  try{
+    if(!req.body){
+      return res.status(404).send({ msg: "empty data set" })
+    }
+      const newAdmin = new User(req.body);
+      const adminData = await newAdmin.save();
+    if(adminData) return res.status(200).send({status: 200, message:"Admin was created successfully"});
 
    }catch(error){
     console.log(error);
