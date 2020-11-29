@@ -5,8 +5,6 @@ const Programmer = require('../models/programmer');
 const Proposal = require('../models/showProposal');
 const Testimony = require('../models/testimony');
 const MusicVideo = require('../models/musicVideo');
-const MusicGenre = require('../models/musicGenres');
-const AdminTestimony = require('../models/adminTestimony');
 const Patnership = require('../models/patnership');
 const Static = require('../models/static');
 const Settings = require('../models/settings');
@@ -14,7 +12,6 @@ const Video = require('../models/video');
 const Show = require('../models/show');
 const Schedule = require('../models/schedule');
 const Enquiry = require('../models/enquiries');
-const ShowProposal = require('../models/showProposal');
 const multers = require('../middleware/multers');
 const sharp = require('sharp');
 const path = require('path')
@@ -171,16 +168,6 @@ router.delete('/become_programmer/:id', ensureAuthenticated, async (req, res, ne
     }
 });
 
-router.get('/view-genres', ensureAuthenticated, async (req, res, next) => {
-    // Get  all proposals 
-    try {
-        const genres = await MusicGenre.find({})
-        res.render('admin/pages/view_genres', { title: 'All Genres', genres });
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
 //show proposal routes
 
 router.get('/show_proposals', ensureAuthenticated, async (req, res, next) => {
@@ -202,102 +189,6 @@ router.get('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => 
         sendJSONresponse(res, 400, {error});
     }
 });
-router.get('/view-testimony/:id', ensureAuthenticated, async (req, res, next) => {
-    try {
-        const testimony = await Testimony.findOne({_id:req.params.id})
-        res.render('admin/pages/view_testimony', { title: 'View Testimony', testimony });
-    } catch (error) {
-        sendJSONresponse(res, 400, {error: error.message});
-    }
-});
-
-router.get('/view-prayer-request/:id', ensureAuthenticated, async (req, res, next) => {
-    try {
-        const prayerRequest = await PrayerRequest.findOne({_id:req.params.id})
-        res.render('admin/pages/view_prayer_request', { title: 'View Prayer Request', prayerRequest });
-    } catch (error) {
-        sendJSONresponse(res, 400, {error: error.message});
-    }
-});
-
-router.get('/view-enquiries/:id', ensureAuthenticated, async (req, res, next) => {
-    try {
-        const enquiry = await Enquiry.findOne({_id:req.params.id})
-        res.render('admin/pages/view_enquiry', { title: 'View Enquiry', enquiry });
-    } catch (error) {
-        sendJSONresponse(res, 400, {error: error.message});
-    }
-});
-
-router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
-    const showProposal = await ShowProposal.findById({_id: req.params.id})
-    console.log(showProposal);
-    res.render('admin/pages/edit_proposal', { title: 'Edit proposal', showProposal });
-  });
-
-  router.get('/edit-music-video/:id', ensureAuthenticated, async(req, res, next) => {
-    const musicVideo = await MusicVideo.findById({_id: req.params.id})
-    res.render('admin/pages/edit_music_video', { title: 'Edit Music Video', musicVideo });
-  });
-
-  router.get('/edit-advert/:id', ensureAuthenticated, async(req, res, next) => {
-    const advert = await Advert.findById({_id: req.params.id})
-    res.render('admin/pages/edit_advert', { title: 'Edit proposal', advert });
-  });
-
-  router.get('/edit-become-content-dev/:id', ensureAuthenticated, async(req, res, next) => {
-    const programmer = await Programmer.findById({_id: req.params.id})
-    res.render('admin/pages/edit_content_provider', { title: 'Edit Content Provider', programmer });
-  });
-
-  router.get('/edit-testimony/:id', ensureAuthenticated, async(req, res, next) => {
-    const testimony = await Testimony.findById({_id: req.params.id})
-    res.render('admin/pages/edit_testimony', { title: 'Edit Testimony', testimony });
-  });
-
-  router.get('/edit-prayer-request/:id', ensureAuthenticated, async(req, res, next) => {
-    const prayerRequest = await PrayerRequest.findById({_id: req.params.id})
-    res.render('admin/pages/edit_prayer_request', { title: 'Edit Prayer Request', prayerRequest });
-  });
-
-  router.get('/edit-enquiries/:id', ensureAuthenticated, async(req, res, next) => {
-    const enquiry = await Enquiry.findById({_id: req.params.id})
-    res.render('admin/pages/edit_enquiry', { title: 'Edit Enquiry', enquiry });
-  });
-
-  router.get('/edit-patnership/:id', ensureAuthenticated, async(req, res, next) => {
-    const patnership = await Patnership.findById({_id: req.params.id})
-    res.render('admin/pages/edit_patnership', { title: 'Edit Patnership', patnership });
-  });
-
-  router.get('/create-genre', ensureAuthenticated, async(req, res, next) => {
-    res.render('admin/pages/create_genre', { title: 'Create Genre' });
-  });
-
-  router.get('/edit-genres/:id', ensureAuthenticated, async(req, res, next) => {
-    const genre = await MusicGenre.findById({_id: req.params.id})
-    res.render('admin/pages/edit_genre', { title: 'Edit Genre', genre });
-  });
-  router.get('/create-testimony', ensureAuthenticated, async(req, res, next) => {
-    res.render('admin/pages/create_testimony', { title: 'Create Testimony' });
-  });
-
-  
-
-  router.get('/single-testimony/:id', ensureAuthenticated, async (req, res, next) => {
-    try {
-        const testimony = await AdminTestimony.findOne({_id:req.params.id})
-        res.render('admin/pages/view_admin_testimony', { title: 'View Admin Testimony', testimony });
-    } catch (error) {
-        sendJSONresponse(res, 400, {error: error.message});
-    }
-});
-
-router.get('/edit-single-testimony/:id', ensureAuthenticated, async(req, res, next) => {
-    const testimony = await AdminTestimony.findById({_id: req.params.id})
-    res.render('admin/pages/edit_single_testimony', { title: 'Edit Single Testimony', testimony });
-  });
-
 
 router.put('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {
     // update a show proposal
@@ -580,17 +471,6 @@ router.get('/add_show', ensureAuthenticated, async (req, res, next) => {
         sendJSONresponse(res, 400, {error});
     }
 });
-
-router.get('/add_schedule', ensureAuthenticated, async (req, res, next) => {
-    // add schedule view
-    try {
-        const shows = await Show.find({});
-        res.render('admin/pages/add_schedule', { title: 'Add Schedule', shows});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
-
 router.get('/edit_show/:id', ensureAuthenticated, async (req, res, next) => {
     // edit shows view
     try {
@@ -607,7 +487,7 @@ router.post('/show', ensureAuthenticated, multers.upload.single('file'), async (
         if(!req.file){
             sendJSONresponse(res, 400, {"message": "Image required"});
         }
-        
+
         req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
         await sharp(req.file.path)
         .resize({ width: 400, height: 200 })
@@ -689,6 +569,7 @@ router.get('/add_schedule/:video', ensureAuthenticated, async (req, res, next) =
     try {
         const shows = await Show.find({})
         const video = await Video.findOne({_id:req.params.video})
+        const scheduled = await Schedule.findOne({})
         if(!video){
             res.redirect('/admin/api/schedules')
         }

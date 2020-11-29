@@ -29,6 +29,8 @@ const Testimony = require('../models/testimony');
 const PrayerRequest = require('../models/prayerRequest');
 const Enquiry = require('../models/enquiries');
 const Patnership = require('../models/patnership');
+const Favourite = require('../models/favourite');
+const Member = require('../models/member');
 
 const sendJSONresponse = (res, status, content) => {
   res.status(status);
@@ -215,7 +217,9 @@ router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
 
 // manage users/view users
 router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
-  const users = await User.find({type:0})
+  // const users = await User.find({type:0})
+  const users = await User.find({})
+  console.log(users)
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
@@ -226,7 +230,8 @@ router.get('/view-admins', ensureAuthenticated, async(req, res, next) => {
 
 router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
   const user = await User.findById({_id: req.params.id})
-  res.render('admin/pages/view_single_user', { title: 'View Single User', user });
+  const favorites = await Favourite.find({ member: user._id}).populate('video')
+  res.render('admin/pages/view_single_user', { title: 'View Single User', user , favorites});
 });
 
 router.get('/view-admin-testimonies', ensureAuthenticated, async (req, res, next) => {
