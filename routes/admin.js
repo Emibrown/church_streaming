@@ -229,6 +229,11 @@ router.get('/view-single/:id', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/view_single_user', { title: 'View Single User', user });
 });
 
+router.get('/view-single-admin/:id', ensureAuthenticated, async(req, res, next) => {
+  const adminUser = await User.findById({_id: req.params.id})
+  res.render('admin/pages/view_single_admin', { title: 'View Single Admin', adminUser });
+});
+
 router.get('/view-admin-testimonies', ensureAuthenticated, async (req, res, next) => {
   // Get  all proposals 
   try {
@@ -607,6 +612,15 @@ router.delete('/delete_admin_testimony/:id', ensureAuthenticated, async (req, re
   }
 });
 
+router.delete('/delete_admin/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await User.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Admin was deleted successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
     {
@@ -687,6 +701,21 @@ router.post('/create_testimony', ensureAuthenticated, async(req, res) =>{
       const testimony = new AdminTestimony(req.body);
       const submittedData = await testimony.save();
     if(submittedData) return res.status(200).send({status: 200, message:"Testimony was created successfully"});
+
+   }catch(error){
+    console.log(error);
+    res.status(404).send({ msg: error.message });
+  }
+});
+
+router.post('/create_admin', ensureAuthenticated, async(req, res) =>{
+  try{
+    if(!req.body){
+      return res.status(404).send({ msg: "empty data set" })
+    }
+      const newAdmin = new User(req.body);
+      const adminData = await newAdmin.save();
+    if(adminData) return res.status(200).send({status: 200, message:"Admin was created successfully"});
 
    }catch(error){
     console.log(error);

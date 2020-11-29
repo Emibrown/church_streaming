@@ -15,6 +15,10 @@ var userSchema = mongoose.Schema(
             type: String,
             default: "0"
         },
+        level: {
+            type: String,
+            default: "0"
+        },
         email: {
             type: String, 
             required: false, 

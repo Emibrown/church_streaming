@@ -117,15 +117,7 @@ router.put('/prayer_request/:id', ensureAuthenticated, async (req, res, next) =>
     }
 });
 
-router.delete('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
-    // delete a prayer request
-    try {
-        await PrayerRequest.findOneAndDelete({_id:req.params.id});
-        sendJSONresponse(res, 200, {message: 'Prayer request deleted successfully'});
-    } catch (error) {
-        sendJSONresponse(res, 400, {error});
-    }
-});
+
 
 //programmer routes
 
@@ -166,6 +158,15 @@ router.delete('/become_programmer/:id', ensureAuthenticated, async (req, res, ne
     try {
         await Programmer.findOneAndDelete({_id:req.params.id});
         sendJSONresponse(res, 200, {message: 'programmer deleted successfully'});
+    } catch (error) {
+        sendJSONresponse(res, 400, {error});
+    }
+});
+router.delete('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
+    // delete a prayer request
+    try {
+        await PrayerRequest.findOneAndDelete({_id:req.params.id});
+        sendJSONresponse(res, 200, {message: 'Prayer request deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -282,8 +283,12 @@ router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
     res.render('admin/pages/create_testimony', { title: 'Create Testimony' });
   });
 
-  
+  router.get('/create-admin', ensureAuthenticated, async(req, res, next) => {
+    res.render('admin/pages/create_admin', { title: 'Create Admin' });
+  });
 
+
+  
   router.get('/single-testimony/:id', ensureAuthenticated, async (req, res, next) => {
     try {
         const testimony = await AdminTestimony.findOne({_id:req.params.id})
