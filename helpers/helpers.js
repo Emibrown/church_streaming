@@ -43,32 +43,42 @@ const youtube = (fileName,stream_key) =>  [
 ]
 
 
+// const twitter = (fileName,stream_key) =>  [
+//     '-re',
+//     '-f', 'lavfi',
+//     '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
+//     '-c:v', 'libx264', '-preset', 'ultrafast', '-r', '30', '-g', '60', '-b:v', '1500k',
+//     '-c:a', 'aac', '-threads', '6', '-ar', '44100', '-b:a', '128k', '-bufsize', '512k', '-pix_fmt', 'yuv420p',
+//     '-f', 'rtmp://va.pscp.tv:80/x/'+stream_key
+// ]
+
 const twitter = (fileName,stream_key) =>  [
     '-re',
-    '-f', 'lavfi',
+    '-y',
     '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
-    '-c:v', 'libx264', '-preset', 'ultrafast', '-r', '30', '-g', '60', '-b:v', '1500k',
-    '-c:a', 'aac', '-threads', '6', '-ar', '44100', '-b:a', '128k', '-bufsize', '512k', '-pix_fmt', 'yuv420p',
-    '-f', 'rtmp://va.pscp.tv:80/x/'+stream_key
+    '-c:a', 'copy', '-ac', '1','-ar',
+    '44100', '-b:a','96k','-vcodec','libx264','-tune',
+    'zerolatency','-f', 'flv', '-maxrate', '2000k', '-preset', 'veryfast',
+    'rtmp://va.pscp.tv:80/x/'+stream_key
 ]
 
 
 const startStreaming = (live_stream,streamingKey) => {
-    const ffmpeg_process = spawn(cmd, local(live_stream.video.video, streamingKey),{detached: true});
-    localpid = ffmpeg_process.pid
+    // const ffmpeg_process = spawn(cmd, local(live_stream.video.video, streamingKey),{detached: true});
+    // localpid = ffmpeg_process.pid
 
-    ffmpeg_process.stdout.on('data', (data) => {
+    // ffmpeg_process.stdout.on('data', (data) => {
        
-        console.log(`stdout: ${data}`);
-    });
+    //     console.log(`stdout: ${data}`);
+    // });
     
-    ffmpeg_process.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-    }); 
+    // ffmpeg_process.stderr.on('data', (data) => {
+    //     console.error(`stderr: ${data}`);
+    // }); 
     
-    ffmpeg_process.on('close', (code) => {
-        console.log(`Local process exited with code ${code}`);
-    });
+    // ffmpeg_process.on('close', (code) => {
+    //     console.log(`Local process exited with code ${code}`);
+    // });
 
     if(live_stream.youtube){
         const ffmpeg_process_yt = spawn(cmd, youtube(live_stream.video.video,live_stream.youtube),{detached: true});
