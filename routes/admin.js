@@ -977,7 +977,7 @@ router.get('/delete_video/:id', ensureAuthenticated, async (req, res, next) => {
       // fs.unlinkSync(path.resolve('./public','small_images', video.image))
       // fs.unlinkSync(path.resolve('./public','large_images', video.image))
       // fs.unlinkSync(path.resolve('./public','uploads', video.video))
-      await Video.deleteOne(video);
+      await Video.deleteOne({_id:video._id});
       res.redirect('/admin/videos');
   } catch (error) {
       sendJSONresponse(res, 400, {error});
