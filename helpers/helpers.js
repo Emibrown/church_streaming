@@ -85,6 +85,7 @@ const startStreaming = (live_stream,streamingKey) => {
     }); 
     
     ffmpeg_process.on('close', (code) => {
+        localpid = ""
         console.log(`Local process exited with code ${code}`);
     });
 
@@ -102,6 +103,7 @@ const startStreaming = (live_stream,streamingKey) => {
         });
 
         ffmpeg_process_yt.on('close', (code) => {
+            facebookpid = ""
             console.log(`youtube process exited with code ${code}`);
         });
     }
@@ -120,6 +122,7 @@ const startStreaming = (live_stream,streamingKey) => {
         });
 
         ffmpeg_process_fb.on('close', (code) => {
+            youtubepid = ""
             console.log(`facebook process exited with code ${code}`);
         });
     }
@@ -137,6 +140,7 @@ const startStreaming = (live_stream,streamingKey) => {
         });
 
         ffmpeg_process_tw.on('close', (code) => {
+            twitterpid = ""
             console.log(`twitter process exited with code ${code}`);
         });
     }
@@ -144,18 +148,18 @@ const startStreaming = (live_stream,streamingKey) => {
 };
 
 const fbRtmp = (streamingKey) => {
-    const ffmpeg_process = spawn(cmd, facebookrtmps(streamingKey),{detached: true});
-    localpid = ffmpeg_process.pid
+    const ffmpeg_process_fbRtmp = spawn(cmd, facebookrtmps(streamingKey),{detached: true});
+    localpid = ffmpeg_process_fbRtmp.pid
 
-    ffmpeg_process.stdout.on('data', (data) => {
+    ffmpeg_process_fbRtmp.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
     });
     
-    ffmpeg_process.stderr.on('data', (data) => {
+    ffmpeg_process_fbRtmp.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
     }); 
     
-    ffmpeg_process.on('close', (code) => {
+    ffmpeg_process_fbRtmp.on('close', (code) => {
         console.log(`Local process exited with code ${code}`);
     });
 };

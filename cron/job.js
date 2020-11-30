@@ -11,6 +11,24 @@ const job = new CronJob('*/5 * * * * *', function () {
         if(live_stream){
             if(live_stream.video){
                 console.log(live_stream)
+                try {
+                    if(localpid){
+                        process.kill(localpid)
+                    }
+                    if(facebookpid){
+                    process.kill(facebookpid)
+                    }
+                    if(youtubepid){
+                    process.kill(youtubepid)
+                    }
+                    if(twitterpid){
+                        process.kill(twitterpid)
+                    }
+                    console.log('streaming stoped');
+                } catch (error) {
+                    console.error("Nothing to stop");
+                    // return error.code === 'EPERM';
+                }
                 helpers.startStreaming(live_stream,streamingKey)
             }
         }
