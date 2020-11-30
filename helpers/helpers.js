@@ -85,7 +85,6 @@ const startStreaming = (live_stream,streamingKey) => {
     }); 
     
     ffmpeg_process.on('close', (code) => {
-        localpid = ""
         console.log(`Local process exited with code ${code}`);
     });
 
@@ -103,7 +102,6 @@ const startStreaming = (live_stream,streamingKey) => {
         });
 
         ffmpeg_process_yt.on('close', (code) => {
-            facebookpid = ""
             console.log(`youtube process exited with code ${code}`);
         });
     }
@@ -122,7 +120,6 @@ const startStreaming = (live_stream,streamingKey) => {
         });
 
         ffmpeg_process_fb.on('close', (code) => {
-            youtubepid = ""
             console.log(`facebook process exited with code ${code}`);
         });
     }
@@ -140,7 +137,6 @@ const startStreaming = (live_stream,streamingKey) => {
         });
 
         ffmpeg_process_tw.on('close', (code) => {
-            twitterpid = ""
             console.log(`twitter process exited with code ${code}`);
         });
     }
