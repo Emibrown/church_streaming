@@ -34,6 +34,9 @@ const Watch = require('../models/watch');
 const History = require('../models/history');
 const Member = require('../models/member');
 
+const helpers = require('../helpers/helpers');
+
+
 const sendJSONresponse = (res, status, content) => {
   res.status(status);
   res.json(content);
@@ -125,9 +128,39 @@ router.use((req, res, next) => {
   next();
 });
 
+
+function getMessage() {
+	return( Promise.resolve("Streaming sent to facebook...") );
+}
+
+
 /* GET home page. */
 router.get('/',authenticated, (req, res, next) => {
   res.render('admin/pages/login', { title: 'Login' });
+});
+
+router.get('/social_media_streaming',ensureAuthenticated, (req, res, next) => {
+  res.render('admin/pages/social_media_streaming', { title: 'Social media streaming' });
+});
+
+
+
+// facebookstream
+
+router.post('/facebookstream',ensureAuthenticated, (req, res, next) => {
+  getMessage()
+			.then(
+				( message ) => {
+					// Close the client response.
+          sendJSONresponse(res, 200, message);
+				}
+			)
+			.then( ( ) => {
+        // Close the client response.
+        console.log(req.body);
+        helpers.fbRtmp(req.body.fb)
+
+      } )
 });
 
 router.post('/login', (req, res, next) => {

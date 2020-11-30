@@ -33,6 +33,15 @@ const facebook = (fileName,stream_key) =>  [
     'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
 ]
 
+
+const facebookrtmps = (stream_key) =>  [
+    '-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
+    '-c:a', 'copy', '-ac', '1','-ar',
+    '44100', '-b:a','96k','-vcodec','libx264','-tune',
+    'zerolatency','-f', 'flv', '-maxrate', '2000k', '-preset', 'veryfast',
+    'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
+]
+
 const youtube = (fileName,stream_key) =>  [
     '-re', '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
     '-c:v', 'libx264', '-preset', 
@@ -63,21 +72,21 @@ const twitter = (fileName,stream_key) =>  [
 
 
 const startStreaming = (live_stream,streamingKey) => {
-    // const ffmpeg_process = spawn(cmd, local(live_stream.video.video, streamingKey),{detached: true});
-    // localpid = ffmpeg_process.pid
+    const ffmpeg_process = spawn(cmd, local(live_stream.video.video, streamingKey),{detached: true});
+    localpid = ffmpeg_process.pid
 
-    // ffmpeg_process.stdout.on('data', (data) => {
+    ffmpeg_process.stdout.on('data', (data) => {
        
-    //     console.log(`stdout: ${data}`);
-    // });
+        console.log(`stdout: ${data}`);
+    });
     
-    // ffmpeg_process.stderr.on('data', (data) => {
-    //     console.error(`stderr: ${data}`);
-    // }); 
+    ffmpeg_process.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    }); 
     
-    // ffmpeg_process.on('close', (code) => {
-    //     console.log(`Local process exited with code ${code}`);
-    // });
+    ffmpeg_process.on('close', (code) => {
+        console.log(`Local process exited with code ${code}`);
+    });
 
     if(live_stream.youtube){
         const ffmpeg_process_yt = spawn(cmd, youtube(live_stream.video.video,live_stream.youtube),{detached: true});
@@ -93,7 +102,7 @@ const startStreaming = (live_stream,streamingKey) => {
         });
 
         ffmpeg_process_yt.on('close', (code) => {
-            console.log(`FB process exited with code ${code}`);
+            console.log(`youtube process exited with code ${code}`);
         });
     }
 
@@ -111,7 +120,7 @@ const startStreaming = (live_stream,streamingKey) => {
         });
 
         ffmpeg_process_fb.on('close', (code) => {
-            console.log(`FB process exited with code ${code}`);
+            console.log(`facebook process exited with code ${code}`);
         });
     }
 
@@ -128,13 +137,31 @@ const startStreaming = (live_stream,streamingKey) => {
         });
 
         ffmpeg_process_tw.on('close', (code) => {
-            console.log(`FB process exited with code ${code}`);
+            console.log(`twitter process exited with code ${code}`);
         });
     }
 
 };
 
+const fbRtmp = (streamingKey) => {
+    const ffmpeg_process = spawn(cmd, facebookrtmps(streamingKey),{detached: true});
+    localpid = ffmpeg_process.pid
+
+    ffmpeg_process.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+    });
+    
+    ffmpeg_process.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    }); 
+    
+    ffmpeg_process.on('close', (code) => {
+        console.log(`Local process exited with code ${code}`);
+    });
+};
+
 module.exports = {
-    startStreaming : startStreaming
+    startStreaming : startStreaming,
+    fbRtmp
 };
 
