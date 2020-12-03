@@ -34,12 +34,18 @@ const facebook = (fileName,stream_key) =>  [
 ]
 
 
+// const facebookrtmps = (stream_key) =>  [
+//     '-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
+//     '-c:a', 'copy', '-ac', '1','-ar',
+//     '44100', '-b:a','96k','-vcodec','libx264','-tune',
+//     'zerolatency','-f', 'flv', '-maxrate', '2000k', '-preset', 'veryfast',
+//     'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
+// ]
+
 const facebookrtmps = (stream_key) =>  [
     '-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
-    '-c:a', 'copy', '-ac', '1','-ar',
-    '44100', '-b:a','96k','-vcodec','libx264','-tune',
-    'zerolatency','-f', 'flv', '-maxrate', '2000k', '-preset', 'veryfast',
-    'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
+    '-c:a', 'aac', '-strict', '-2', '-c:v', 'h264', '-f', 'rtsp', '-rtsp_transport',
+    'tcp', 'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
 ]
 
 const youtube = (fileName,stream_key) =>  [
@@ -165,3 +171,23 @@ module.exports = {
     fbRtmp
 };
 
+
+
+// # This file is managed by man:systemd-resolved(8). Do not edit.
+// #
+// # This is a dynamic resolv.conf file for connecting local clients to the
+// # internal DNS stub resolver of systemd-resolved. This file lists all
+// # configured search domains.
+// #
+// # Run "systemd-resolve --status" to see details about the uplink DNS servers
+// # currently in use.
+// #
+// # Third party programs must not access this file directly, but only through the
+// # symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a different way,
+// # replace this symlink by a static file or a different symlink.
+// #
+// # See man:systemd-resolved.service(8) for details about the supported modes of
+// # operation for /etc/resolv.conf.
+
+// nameserver 127.0.0.53
+// options edns0
