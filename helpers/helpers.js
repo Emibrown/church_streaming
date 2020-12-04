@@ -43,9 +43,11 @@ const facebook = (fileName,stream_key) =>  [
 // ]
 
 const facebookrtmps = (stream_key) =>  [
-    '-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
-    '-c:a', 'aac', '-strict', '-2', '-c:v', 'h264', '-f', 'rtsp', '-rtsp_transport',
-    'tcp', 'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
+    '-re','-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
+    '-acodec', 'libmp3lame', '-ar', '44100', '-b:a', '128k', '-pix_fmt', 'yuv420p', 
+   '-profile:v', 'baseline', '-s', '426x240', '-bufsize', '6000k', '-vb', '400k', 
+   '-maxrate', '1500k', '-deinterlace', '-vcodec', 'libx264', '-preset', 
+    'veryfast', '-g', '30', '-r', '30', '-f', 'flv', 'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
 ]
 
 const youtube = (fileName,stream_key) =>  [
