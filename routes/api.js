@@ -669,7 +669,6 @@ router.get('/delete_show/:id', ensureAuthenticated, async (req, res, next) => {
         fs.unlinkSync(path.resolve('./public','small_images', show.image))
         fs.unlinkSync(path.resolve('./public','large_images', show.image))
         res.redirect('/admin/api/shows')
-        sendJSONresponse(res, 200, {message: 'show deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
@@ -758,7 +757,6 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
     try {
         await Schedule.findOneAndDelete({_id:req.params.id});
         res.redirect('/admin/api/schedules')
-        sendJSONresponse(res, 200, {message: 'schedule deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
