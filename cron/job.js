@@ -24,6 +24,12 @@ const job = new CronJob('*/5 * * * * *', function () {
                     if(twitterpid){
                         process.kill(twitterpid)
                     }
+                    if(facebookrtmpspid){
+                        process.kill(facebookrtmpspid)
+                    }
+                    if(ytrtmpspid){
+                        process.kill(ytrtmpspid)
+                    }
                     console.log('streaming stoped');
                 } catch (error) {
                     console.error("Nothing to stop");

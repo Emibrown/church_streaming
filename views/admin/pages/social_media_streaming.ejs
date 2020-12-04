@@ -51,7 +51,31 @@
                                 <input type="text" class="form-control" id="fb">
                             </div>
                             <div class="form-group">
-                                <button class="mt-1 btn btn-primary" id ="facebookStream">Stream to facebook</button>             
+                                <button class="mt-1 btn btn-primary" id ="facebookStream">Stream to facebook</button>    
+                                <button class="mt-1 btn btn-danger" id ="stopfb">Stop Streaming to facebook</button>             
+         
+                            </div>
+                        
+                      
+                    </div>
+                </div>
+
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div id = "message"></div>
+                      
+                
+                            <div class="">
+                                <label for="title">Youtube streaming key</label>
+                            </div>
+                            
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="yt">
+                            </div>
+                            <div class="form-group">
+                                <button class="mt-1 btn btn-primary" id ="ytStream">Stream to Youtube</button>    
+                                <button class="mt-1 btn btn-danger" id ="stopyt">Stop Streaming to Youtube</button>             
+         
                             </div>
                         
                       
@@ -79,6 +103,49 @@
         .then(function (response) {
             // handle success
             displaymsg("Stream sent to facebook");
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error.message)
+        })
+    });
+
+    $("#stopfb").click(function() {
+        axios.get('/admin/stop_facebookstream')
+            .then(function (response) {
+            // handle success
+            displaymsg(response.data.message);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error.message)
+        })
+    });
+
+
+    $("#ytStream").click(function() {
+        const data = {
+          "yt": jQuery("#yt").val(),
+        }        
+        axios.post('/admin/ytstream',data)
+        .then(function (response) {
+            // handle success
+            displaymsg("Stream sent to youtube");
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            displayerr(error.message)
+        })
+    });
+
+    $("#stopyt").click(function() {
+        axios.get('/admin/stop_ytstream')
+            .then(function (response) {
+            // handle success
+            displaymsg(response.data.message);
         })
         .catch(function (error) {
             // handle error

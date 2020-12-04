@@ -151,17 +151,49 @@ router.post('/facebookstream',ensureAuthenticated, (req, res, next) => {
   getMessage()
 			.then(
 				( message ) => {
-					// Close the client response.
+          // Close the client response.
+          try {
+            if(facebookrtmpspid){
+             process.kill(facebookrtmpspid)
+            }
+            console.log('facebookstream stoped');
+           } catch (error) {
+            console.error('error');
+           }
           sendJSONresponse(res, 200, message);
 				}
 			)
 			.then( ( ) => {
         // Close the client response.
-        console.log(req.body);
         helpers.fbRtmp(req.body.fb)
 
       } )
 });
+
+router.post('/ytstream',ensureAuthenticated, (req, res, next) => {
+  getMessage()
+			.then(
+				( message ) => {
+          // Close the client response.
+          try {
+            if(ytrtmpspid){
+             process.kill(ytrtmpspid)
+            }
+            console.log('ytstream stoped');
+           } catch (error) {
+            console.error('error');
+           }
+          sendJSONresponse(res, 200, "Youtube streaming ended");
+				}
+			)
+			.then( ( ) => {
+        // Close the client response.
+        helpers.ytRtmp(req.body.yt)
+
+      } )
+});
+
+
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('admin-local', function(err, user, info) {
@@ -204,12 +236,44 @@ router.get('/stop_streaming', ensureAuthenticated, async(req, res, next) => {
       if(twitterpid){
           process.kill(twitterpid)
       }
+      if(facebookrtmpspid){
+          process.kill(facebookrtmpspid)
+      }
+      if(ytrtmpspid){
+          process.kill(ytrtmpspid)
+      }
       console.log('streaming stoped');
     } catch (error) {
         console.error(error);
         // return error.code === 'EPERM';
     }
     sendJSONresponse(res, 200, {message: 'Streaming ended on all platforms'});
+});
+
+router.get('/stop_facebookstream', ensureAuthenticated, async(req, res, next) => {
+  try {
+    if(facebookrtmpspid){
+     process.kill(facebookrtmpspid)
+    }
+     console.log('facebookstream stoped');
+   } catch (error) {
+       console.error(error);
+       // return error.code === 'EPERM';
+   }
+   sendJSONresponse(res, 200, {message: 'Streaming ended'});
+});
+
+router.get('/stop_ytstream', ensureAuthenticated, async(req, res, next) => {
+  try {
+    if(ytrtmpspid){
+     process.kill(ytrtmpspid)
+    }
+     console.log('ytstream stoped');
+   } catch (error) {
+       console.error(error);
+       // return error.code === 'EPERM';
+   }
+   sendJSONresponse(res, 200, {message: 'Streaming ended'});
 });
 
 // settings/site details

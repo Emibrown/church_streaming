@@ -50,6 +50,17 @@ const facebookrtmps = (stream_key) =>  [
     'veryfast', '-g', '30', '-r', '30', '-f', 'flv', 'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
 ]
 
+const youtubertmps = (stream_key) =>  [
+    '-re','-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
+    '-acodec', 'libmp3lame', '-ar', '44100', '-b:a', '128k', '-pix_fmt', 'yuv420p', 
+   '-profile:v', 'baseline', '-s', '426x240', '-bufsize', '6000k', '-vb', '400k', 
+   '-maxrate', '1500k', '-deinterlace', '-vcodec', 'libx264', '-preset', 
+    'veryfast', '-g', '30', '-r', '30', '-f', 'flv', 'rtmp://a.rtmp.youtube.com/live2/'+stream_key
+]
+
+
+
+
 const youtube = (fileName,stream_key) =>  [
     '-re', '-i', 'http://127.0.0.1:3000/uploads/'+fileName,
     '-c:v', 'libx264', '-preset', 
@@ -153,7 +164,7 @@ const startStreaming = (live_stream,streamingKey) => {
 
 const fbRtmp = (streamingKey) => {
     const ffmpeg_process_fbRtmp = spawn(cmd, facebookrtmps(streamingKey),{detached: true});
-    localpid = ffmpeg_process_fbRtmp.pid
+    facebookrtmpspid = ffmpeg_process_fbRtmp.pid
 
     ffmpeg_process_fbRtmp.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
@@ -164,13 +175,31 @@ const fbRtmp = (streamingKey) => {
     }); 
     
     ffmpeg_process_fbRtmp.on('close', (code) => {
-        console.log(`Local process exited with code ${code}`);
+        console.log(`fb process exited with code ${code}`);
+    });
+};
+
+const ytRtmp = (streamingKey) => {
+    const ffmpeg_process_ytRtmp = spawn(cmd, youtubertmps(streamingKey),{detached: true});
+    ytrtmpspid = ffmpeg_process_ytRtmp.pid
+
+    ffmpeg_process_ytRtmp.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+    });
+    
+    ffmpeg_process_ytRtmp.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    }); 
+    
+    ffmpeg_process_ytRtmp.on('close', (code) => {
+        console.log(`yt process exited with code ${code}`);
     });
 };
 
 module.exports = {
     startStreaming : startStreaming,
-    fbRtmp
+    fbRtmp,
+    ytRtmp
 };
 
 

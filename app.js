@@ -34,6 +34,10 @@ global.localpid = ''
 global.facebookpid = ''
 global.youtubepid = ''
 global.twitterpid = ''
+
+global.facebookrtmpspid = ''
+global.ytrtmpspid = ''
+
 // view engine setup
 app.use(minifyHTML({
   override:      true,
