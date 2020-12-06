@@ -163,7 +163,7 @@ router.post('/facebookstream',ensureAuthenticated, (req, res, next) => {
           sendJSONresponse(res, 200, message);
 				}
 			)
-			.then( ( ) => {
+			.then( async( ) => {
         // Close the client response.
         const setting = await Settings.findOne({settingsId:"site_settings"})
         helpers.fbRtmp(req.body.fb,setting.publicStreamKey)
@@ -187,7 +187,7 @@ router.post('/ytstream',ensureAuthenticated, (req, res, next) => {
           sendJSONresponse(res, 200, "Youtube streaming ended");
 				}
 			)
-			.then( ( ) => {
+			.then( async ( ) => {
         const setting = await Settings.findOne({settingsId:"site_settings"})
         // Close the client response.
         helpers.ytRtmp(req.body.yt,setting.publicStreamKey)
