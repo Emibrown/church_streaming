@@ -752,11 +752,11 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
     }
   });
   
-  router.get('/delete_schedule/:id', ensureAuthenticated, async (req, res, next) => {
+  router.delete('/delete_schedule/:id', ensureAuthenticated, async (req, res, next) => {
     // delete a schedule
     try {
         await Schedule.findOneAndDelete({_id:req.params.id});
-        res.redirect('/admin/api/schedules')
+        sendJSONresponse(res, 200, {message: 'Schedule deleted successfully'});
     } catch (error) {
         sendJSONresponse(res, 400, {error});
     }
