@@ -42,8 +42,8 @@ const facebook = (fileName,stream_key) =>  [
 //     'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
 // ]
 
-const facebookrtmps = (stream_key) =>  [
-    '-re','-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
+const facebookrtmps = (stream_key,pk) =>  [
+    '-re','-i', 'https://live.faithtofaithtv.org/hls/'+pk+'.m3u8',
     '-acodec', 'libmp3lame', '-ar', '44100', '-b:a', '128k', '-pix_fmt', 'yuv420p', 
    '-profile:v', 'baseline', '-s', '426x240', '-bufsize', '6000k', '-vb', '400k', 
    '-maxrate', '1500k', '-deinterlace', '-vcodec', 'libx264', '-preset', 
@@ -51,7 +51,7 @@ const facebookrtmps = (stream_key) =>  [
 ]
 
 const youtubertmps = (stream_key) =>  [
-    '-re','-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
+    '-re','-i', 'https://live.faithtofaithtv.org/hls/'+pk+'.m3u8',
     '-acodec', 'libmp3lame', '-ar', '44100', '-b:a', '128k', '-pix_fmt', 'yuv420p', 
    '-profile:v', 'baseline', '-s', '426x240', '-bufsize', '6000k', '-vb', '400k', 
    '-maxrate', '1500k', '-deinterlace', '-vcodec', 'libx264', '-preset', 

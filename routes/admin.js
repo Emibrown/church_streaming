@@ -165,7 +165,8 @@ router.post('/facebookstream',ensureAuthenticated, (req, res, next) => {
 			)
 			.then( ( ) => {
         // Close the client response.
-        helpers.fbRtmp(req.body.fb)
+        const setting = await Settings.findOne({settingsId:"site_settings"})
+        helpers.fbRtmp(req.body.fb,setting.publicStreamKey)
 
       } )
 });
@@ -187,8 +188,9 @@ router.post('/ytstream',ensureAuthenticated, (req, res, next) => {
 				}
 			)
 			.then( ( ) => {
+        const setting = await Settings.findOne({settingsId:"site_settings"})
         // Close the client response.
-        helpers.ytRtmp(req.body.yt)
+        helpers.ytRtmp(req.body.yt,setting.publicStreamKey)
 
       } )
 });
