@@ -195,13 +195,14 @@ router.get('/about/:code', async(req, res, next) =>{
 //   res.render('users/pages/high', { title: 'Faith TV | Highlights' });
 // });
 
-router.get('/show-proposal',  (req, res, next) =>{
-  res.render('users/pages/show_proposal', { title: 'Faith TV | Submit Show Proposal' });
+router.get('/show-proposal',  async(req, res, next) =>{
+  const genres = await MusicGenre.find({});
+  res.render('users/pages/show_proposal', { title: 'Faith TV | Submit Show Proposal', genres });
 });
 
 router.get('/music-video', async(req, res, next) =>{
   const genres = await MusicGenre.find({});
-  res.render('users/pages/music_video', { title: 'Faith TV | Submit Music Video', genres });
+  res.render('users/pages/music_video', { title: 'Faith TV | Submit Music Video',  genres});
 });
 
 router.get('/become-programmer', (req, res, next) =>{
