@@ -11,6 +11,7 @@ const Settings = require('../models/settings');
 const Video = require('../models/video');
 const Show = require('../models/show');
 const Schedule = require('../models/schedule');
+const MusicGenre = require('../models/musicGenres');
 const Enquiry = require('../models/enquiries');
 const multers = require('../middleware/multers');
 const sharp = require('sharp');
@@ -260,6 +261,11 @@ router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
 
   router.get('/create-genre', ensureAuthenticated, async(req, res, next) => {
     res.render('admin/pages/create_genre', { title: 'Create Genre' });
+  });
+
+  router.get('/view-genres', ensureAuthenticated, async(req, res, next) => {
+    const genres = await MusicGenre.find({})
+    res.render('admin/pages/view_genres', { title: 'Edit Genre', genres });
   });
 
   router.get('/edit-genres/:id', ensureAuthenticated, async(req, res, next) => {
