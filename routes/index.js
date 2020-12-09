@@ -180,7 +180,11 @@ router.get('/about/:code', async(req, res, next) =>{
       code: req.params.code,
     }
   )
-  res.render('users/pages/about', { title: 'Faith TV | About', about });
+  if(about){
+    res.render('users/pages/about', { title: 'Faith TV | About', about });
+  }else{
+    res.redirect("/")
+  }
 });
 
 // router.get('/dayview', (req, res, next) =>{
