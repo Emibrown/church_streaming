@@ -10,6 +10,7 @@ const Static = require('../models/static');
 const Settings = require('../models/settings');
 const Video = require('../models/video');
 const Show = require('../models/show');
+const ShowProposal = require('../models/showProposal')
 const Schedule = require('../models/schedule');
 const MusicGenre = require('../models/musicGenres');
 const Enquiry = require('../models/enquiries');
