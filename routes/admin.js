@@ -736,7 +736,7 @@ router.get('/videos', ensureAuthenticated, async(req, res, next) => {
     {
       type: { $ne: '1' }
      }
-  ).populate('programme')
+  ).populate('programme').sort({addedOn:'desc'})
   res.render('admin/pages/videos', { title: 'Videos', videos });
 });
 
@@ -745,7 +745,7 @@ router.get('/streaming_videos', ensureAuthenticated, async(req, res, next) => {
     {
       type: '1'
      }
-  )
+  ).sort({addedOn:'desc'})
   res.render('admin/pages/streaming_videos', { title: 'Streaming videos', videos });
 });
 

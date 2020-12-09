@@ -153,8 +153,7 @@
                                                                      <img width="42" class="rounded-circle" src="/logo/logo-2.png" alt="">
                                                                  </div>
                                                                  <div class="widget-content-left">
-                                                                     <div class="widget-heading">Alina Mcloughlin</div>
-                                                                     <div class="widget-subheading opacity-8">A short profile description</div>
+                                                                     <div class="widget-heading"><%= currentUser.firstname %> <%= currentUser.lastname %> </div>
                                                                  </div>
                                                                  <div class="widget-content-right mr-2">
                                                                      <a href="/admin/logout" class="btn-pill btn-shadow btn-shine btn btn-focus">Logout</a>
@@ -168,7 +167,7 @@
                                                  <div class="scrollbar-container ps">
                                                      <ul class="nav flex-column">
                                                          <li class="nav-item">
-                                                             <a href="javascript:void(0);" class="nav-link">Profile
+                                                             <a href="/edit-profile" class="nav-link">Profile
                                                              </a>
                                                          </li>
                                                      </ul>
