@@ -731,6 +731,15 @@ router.delete('/delete_admin/:id', ensureAuthenticated, async (req, res, next) =
   }
 });
 
+router.delete('/delete_about/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await About.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted About'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
     {
