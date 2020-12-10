@@ -69,6 +69,30 @@ const ensureAuthenticated = (req, res, next) => {
   }
 };
 
+const checkLevelOneAccess = (req, res, next) => {
+  if(!req.user.level == 1){
+    res.redirect('/admin/dashboard');
+  }else{
+    next();
+  }
+}
+
+const checkLevelTwoAcess = (req, res, next) =>{
+    if(req.user.level == 1 || req.user.level == 2){
+      next();
+  }else{
+    res.redirect('/admin/dashboard');
+  }
+}
+
+const checkLevelThreeAcess = (req, res, next) =>{
+  if(req.user.level == 1 || req.user.level == 2 || req.user.level==3){
+    next();
+}else{
+  res.redirect('/admin/dashboard');
+}
+}
+
 User.find({}, (err, users) => {
   if(err){ return;}
   if(users.length == 0){
@@ -139,7 +163,7 @@ router.get('/',authenticated, (req, res, next) => {
   res.render('admin/pages/login', { title: 'Login' });
 });
 
-router.get('/social_media_streaming',ensureAuthenticated, (req, res, next) => {
+router.get('/social_media_streaming',ensureAuthenticated, checkLevelThreeAcess, (req, res, next) => {
   res.render('admin/pages/social_media_streaming', { title: 'Social media streaming' });
 });
 
@@ -279,7 +303,7 @@ router.get('/stop_ytstream', ensureAuthenticated, async(req, res, next) => {
 });
 
 // settings/site details
-router.get('/site-details', ensureAuthenticated, async(req, res, next) => {
+router.get('/site-details', ensureAuthenticated, checkLevelOneAccess, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
   res.render('admin/pages/site_details', { title: 'Admin | Site Details', settings });
 });
@@ -289,16 +313,16 @@ router.get('/send-message/:id', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/send_message', { title: 'Admin | Send Message', getUser });
 });
 
-router.get('/salvation-prayer', ensureAuthenticated, async(req, res, next) => {
+router.get('/salvation-prayer', ensureAuthenticated, checkLevelOneAccess, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
   res.render('admin/pages/salvation_prayer', { title: 'Salvation Prayer', settings });
 });
 
-router.get('/add_about', ensureAuthenticated, async(req, res, next) => {
+router.get('/add_about', ensureAuthenticated,  async(req, res, next) => {
   res.render('admin/pages/add_about', { title: 'Add About' }); 
 });
 
-router.get('/streaming', ensureAuthenticated, async(req, res, next) => {
+router.get('/streaming', ensureAuthenticated, checkLevelThreeAcess, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
   res.render('admin/pages/streaming', { title: 'Streaming settings', settings }); 
 });
@@ -314,19 +338,19 @@ router.get('/add_static', ensureAuthenticated, async(req, res, next) => {
 });
 
 // manage users/socialmedia
-router.get('/social-media', ensureAuthenticated, async(req, res, next) => {
+router.get('/social-media', ensureAuthenticated, checkLevelOneAccess, async(req, res, next) => {
   const settings = await Settings.findOne({settingsId:"site_settings"})
   res.render('admin/pages/social_media', { title: 'Social Media', settings });
 });
 
 // manage users/view users
-router.get('/view-users', ensureAuthenticated, async(req, res, next) => {
+router.get('/view-users', ensureAuthenticated, checkLevelTwoAcess, async(req, res, next) => {
   const users = await User.find({type:0})
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
-router.get('/view-admins', ensureAuthenticated, async(req, res, next) => {
-  const admins = await User.find({type:1})
+router.get('/view-admins', ensureAuthenticated, checkLevelTwoAcess, async(req, res, next) => {
+  const admins = await User.find({type: { $ne: 0 }})
   res.render('admin/pages/view_admins', { title: 'View Admins', admins });
 });
 
@@ -344,7 +368,7 @@ router.get('/view-single-admin/:id', ensureAuthenticated, async(req, res, next) 
   res.render('admin/pages/view_single_admin', { title: 'View Single Admin', adminUser });
 });
 
-router.get('/view-admin-testimonies', ensureAuthenticated, async (req, res, next) => {
+router.get('/view-admin-testimonies', ensureAuthenticated, checkLevelTwoAcess, async (req, res, next) => {
   // Get  all proposals 
   try {
       const testimonies = await AdminTestimony.find({})
@@ -585,7 +609,7 @@ router.put('/unblock/:id', ensureAuthenticated, async (req, res, next) => {
 
 
 //category handlers
-router.get('/categories', ensureAuthenticated, async(req, res, next) => {
+router.get('/categories', ensureAuthenticated, checkLevelThreeAcess, async(req, res, next) => {
   const categories = await Category.find({})
   res.render('admin/pages/categories', { title: 'Categories', categories });
 });
@@ -740,7 +764,7 @@ router.delete('/delete_about/:id', ensureAuthenticated, async (req, res, next) =
   }
 });
 
-router.get('/videos', ensureAuthenticated, async(req, res, next) => {
+router.get('/videos', ensureAuthenticated, checkLevelThreeAcess, async(req, res, next) => {
   const videos = await Video.find(
     {
       type: { $ne: '1' }
@@ -749,7 +773,7 @@ router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/videos', { title: 'Videos', videos });
 });
 
-router.get('/streaming_videos', ensureAuthenticated, async(req, res, next) => {
+router.get('/streaming_videos', ensureAuthenticated, checkLevelThreeAcess, async(req, res, next) => {
   const videos = await Video.find(
     {
       type: '1'
@@ -1303,7 +1327,7 @@ router.post('/send_message', ensureAuthenticated, async (req, res, next) => {
   }
 });
 
-router.get('/programmes', ensureAuthenticated, async (req, res, next) => {
+router.get('/programmes', ensureAuthenticated, checkLevelThreeAcess, async (req, res, next) => {
   // get all programmes
     const programmes = await Programme.find({}).populate('categories')
     res.render('admin/pages/programmes', { title: 'Programmes', programmes });
@@ -1426,7 +1450,7 @@ router.post('/add_season', ensureAuthenticated, async (req, res, next) => {
 });
 
 
-router.get('/seasons', ensureAuthenticated, async (req, res, next) => {
+router.get('/seasons', ensureAuthenticated, checkLevelThreeAcess, async (req, res, next) => {
   // get all seasons
   try {
       const seasons = await Season.find({}).populate('programme')

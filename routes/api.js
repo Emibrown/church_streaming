@@ -39,8 +39,23 @@ const authenticated = (req, res, next) => {
       next();
     }
   };
+
+  const checkLevelOneAccess = (req, res, next) => {
+    if(!req.user.level == 1){
+      res.redirect('/admin/dashboard');
+    }else{
+      next();
+    }
+}
+const checkLevelThreeAcess = (req, res, next) =>{
+    if(req.user.level == 1 || req.user.level == 2 || req.user.level==3){
+      next();
+  }else{
+    res.redirect('/admin/dashboard');
+  }
+  }
 //advert
-router.get('/adverts', ensureAuthenticated, async (req, res, next) => {
+router.get('/adverts', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // Get  all adverts 
     try {
         const advert = await Advert.find({}).sort({ date : 1 })
@@ -50,7 +65,7 @@ router.get('/adverts', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.get('/advert/:id', ensureAuthenticated, async (req, res, next) => {
+router.get('/advert/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // get a single advert
     try {
         const advert = await Advert.findOne({_id:req.params.id})
@@ -60,7 +75,7 @@ router.get('/advert/:id', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.put('/advert/:id', ensureAuthenticated, async (req, res, next) => {
+router.put('/advert/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // update an advert
     try {
         const advert = await Advert.findOne({_id:req.params.id})
@@ -72,7 +87,7 @@ router.put('/advert/:id', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.delete('/advert/:id', ensureAuthenticated, async (req, res, next) => {
+router.delete('/advert/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // delete an advert
     try {
         await Advert.findOneAndDelete({_id:req.params.id});
@@ -84,7 +99,7 @@ router.delete('/advert/:id', ensureAuthenticated, async (req, res, next) => {
 
 //prayerRequest routes
 
-router.get('/prayer_requests', ensureAuthenticated, async (req, res, next) => {
+router.get('/prayer_requests', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // Get  all prayer requests 
     try {
         const prayerRequest = await PrayerRequest.find({}).sort({ date : 1 })
@@ -94,7 +109,7 @@ router.get('/prayer_requests', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.get('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
+router.get('/prayer_request/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // get a single prayer request
     try {
         const prayerRequest = await PrayerRequest.find({}).sort({ date : 1 })
@@ -104,7 +119,7 @@ router.get('/prayer_request/:id', ensureAuthenticated, async (req, res, next) =>
     }
 });
 
-router.put('/prayer_request/:id', ensureAuthenticated, async (req, res, next) => {
+router.put('/prayer_request/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // update a prayer request
     try {
         const prayerRequest = await PrayerRequest.findOne({_id:req.params.id})
@@ -120,7 +135,7 @@ router.put('/prayer_request/:id', ensureAuthenticated, async (req, res, next) =>
 
 //programmer routes
 
-router.get('/become_programmers', ensureAuthenticated, async (req, res, next) => {
+router.get('/become_programmers', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // Get all programmer requests
     try {
         const programmer = await Programmer.find({}).sort({ lastName : 1 })
@@ -173,7 +188,7 @@ router.delete('/prayer_request/:id', ensureAuthenticated, async (req, res, next)
 
 //show proposal routes
 
-router.get('/show_proposals', ensureAuthenticated, async (req, res, next) => {
+router.get('/show_proposals', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // Get  all proposals 
     try {
         const proposal = await Proposal.find({}).sort({ date : 1 })
@@ -183,7 +198,7 @@ router.get('/show_proposals', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.get('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {
+router.get('/show_proposal/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // get a single proposal
     try {
         const proposal = await Proposal.findOne({_id:req.params.id})
@@ -264,7 +279,7 @@ router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
     res.render('admin/pages/create_genre', { title: 'Create Genre' });
   });
 
-  router.get('/view-genres', ensureAuthenticated, async(req, res, next) => {
+  router.get('/view-genres', ensureAuthenticated, checkLevelOneAccess, async(req, res, next) => {
     const genres = await MusicGenre.find({})
     res.render('admin/pages/view_genres', { title: 'Edit Genre', genres });
   });
@@ -321,7 +336,7 @@ router.delete('/show_proposal/:id', ensureAuthenticated, async (req, res, next) 
 });
 
 //testimonies routes
-router.get('/testimonies',  ensureAuthenticated, async (req, res, next) => {
+router.get('/testimonies',  ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // Get all testimonies 
   try {
         const testimonies = await Testimony.find({}).sort({ date : 1 })
@@ -331,7 +346,7 @@ router.get('/testimonies',  ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.get('/testimony/:id', ensureAuthenticated, async (req, res, next) => {
+router.get('/testimony/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // get a testimony
     try {
         const testimony = await Testimony.findOne({_id:req.params.id})
@@ -364,7 +379,7 @@ router.delete('/testimony/:id', ensureAuthenticated, async (req, res, next) => {
 });
 
 //music video routes
-router.get('/music_videos', ensureAuthenticated, async (req, res, next) => {
+router.get('/music_videos', ensureAuthenticated,checkLevelOneAccess,  async (req, res, next) => {
     // Get all music videos
     try {
         const musicVideo = await MusicVideo.find({}).sort({ date : 1 })
@@ -374,7 +389,7 @@ router.get('/music_videos', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.get('/music_video/:id', ensureAuthenticated, async (req, res, next) => {
+router.get('/music_video/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // get a single music video
     try {
         const musicVideo = await MusicVideo.findOne({_id:req.params.id})
@@ -408,7 +423,7 @@ router.delete('/music_video/:id', ensureAuthenticated, async (req, res, next) =>
 });
 
 //patnership routes
-router.get('/patnerships', ensureAuthenticated, async (req, res, next) => {
+router.get('/patnerships', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // Get patnerships
     try {
         const patnership = await Patnership.find({}).sort({ date : 1 })
@@ -418,7 +433,7 @@ router.get('/patnerships', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.get('/patnership/:id', ensureAuthenticated, async (req, res, next) => {
+router.get('/patnership/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // get a patnership
     try {
         const patnership = await Patnership.findOne({_id:req.params.id})
@@ -451,7 +466,7 @@ router.delete('/patnership/:id', ensureAuthenticated, async (req, res, next) => 
 });
 
 //static file routes
-router.get('/static_files', ensureAuthenticated, async (req, res, next) => {
+router.get('/static_files', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // Get  all static files
     try {
         const static = await Static.find({}).sort({ date : 1 })
@@ -576,7 +591,7 @@ router.delete('/settings/:id', async (req, res, next) => {
 });
 
 //show routes
-router.get('/shows', ensureAuthenticated, async (req, res, next) => {
+router.get('/shows', ensureAuthenticated, checkLevelThreeAcess, async (req, res, next) => {
     // Get  all shows
     try {
         const shows = await Show.find({}).sort({date:'desc'})
@@ -774,7 +789,7 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
     }
   });
   
-  router.get('/schedules', ensureAuthenticated, async (req, res, next) => {
+  router.get('/schedules', ensureAuthenticated, checkLevelThreeAcess, async (req, res, next) => {
     // get all schedules
     try {
         const schedules = await Schedule.find({}).populate('show').populate('video').sort({startTime:'desc'})
@@ -817,7 +832,7 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
   });
 
   //feedback routes
-  router.get('/enquiries', ensureAuthenticated, async (req, res, next) => {
+  router.get('/enquiries', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // get all feedbacks
     try {
         const enquiries = await Enquiry.find({})
@@ -827,7 +842,7 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
     }
   });
   
-  router.get('/enquiries/:id',ensureAuthenticated, async (req, res, next) => {
+  router.get('/enquiries/:id',ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // get a single feedback
     try {
         const enquiries = await Enquiry.findOne({_id: req.params.id})
@@ -837,7 +852,7 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
     }
   });
   
-  router.put('/enquiries/:id', ensureAuthenticated, async (req, res, next) => {
+  router.put('/enquiries/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // update a feedback
     try {
         const enquiries = await Enquiry.findOne({_id:req.params.id})
@@ -849,7 +864,7 @@ router.post('/add_schedule', ensureAuthenticated, async (req, res, next) => {
     }
   });
   
-  router.delete('/enquiries/:id', ensureAuthenticated, async (req, res, next) => {
+  router.delete('/enquiries/:id', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // delete a feedback
     try {
         await Enquiry.findOneAndDelete({_id:req.params.id});
