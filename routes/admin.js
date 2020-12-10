@@ -627,7 +627,7 @@ router.get('/delete_category/:id', ensureAuthenticated, async (req, res, next) =
   // delete a category
   try {
       await Category.findOneAndDelete({_id:req.params.id});
-      res.redirect('/admin/categories');
+      sendJSONresponse(res, 200, {message: "Category deleted"});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }
@@ -1097,7 +1097,7 @@ router.get('/delete_video/:id', ensureAuthenticated, async (req, res, next) => {
       // fs.unlinkSync(path.resolve('./public','large_images', video.image))
       // fs.unlinkSync(path.resolve('./public','uploads', video.video))
       await Video.deleteOne({_id:video._id});
-      res.redirect('/admin/videos');
+    sendJSONresponse(res, 200, {message: "Video deleted successfully"})
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }
@@ -1336,8 +1336,24 @@ router.put('/programme/:id', ensureAuthenticated, multers.upload.single('file'),
   try {
       const programme = await Programme.findOne({_id:req.params.id})
       if(req.file){
-        fs.unlinkSync(path.resolve('./public','small_images', programme.image))
-        fs.unlinkSync(path.resolve('./public','large_images', programme.image))
+        fs.unlink(path.resolve('./public', 'large_images', programme.image), function(err){
+          if (err && err.code == "ENOENT") {
+            console.log("file doesnt exist");
+          } else if(err) {
+             console.log("error");
+          }else{
+              console.log("file removed");
+          }
+        });
+        fs.unlink(path.resolve('./public', 'large_images', programme.image), function(err){
+          if (err && err.code == "ENOENT") {
+            console.log("file doesnt exist");
+          } else if(err) {
+             console.log("error");
+          }else{
+              console.log("file removed");
+          }
+        });
 
         req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
         await sharp(req.file.path)
@@ -1370,11 +1386,26 @@ router.get('/delete_programme/:id', ensureAuthenticated, async (req, res, next) 
       await Season.remove({programme:req.params.id});
     }
       const programme =  await Programme.findOne({_id:req.params.id});
-      fs.unlinkSync(path.resolve('./public','small_images', programme.image))
-      fs.unlinkSync(path.resolve('./public','large_images', programme.image))
+      fs.unlink(path.resolve('./public', 'small_images', programme.image), function(err){
+        if (err && err.code == "ENOENT") {
+          console.log("file doesn't exist");
+        } else if(err) {
+           console.log("error");
+        }else{
+            console.log("file removed");
+        }
+      });
+      fs.unlink(path.resolve('./public', 'large_images', programme.image), function(err){
+        if (err && err.code == "ENOENT") {
+          console.log("file doesn't exist");
+        } else if(err) {
+          console.log("error");
+        }else{
+            console.log("file removed");
+        }
+      });
       await Programme.deleteOne(programme);
-      
-      res.redirect('/admin/programmes');
+      sendJSONresponse(res, 200, {message : "programme deleted"})
   } catch (error) {
       console.log(error)
       sendJSONresponse(res, 400, {error});
@@ -1445,7 +1476,6 @@ router.get('/delete_season/:id', ensureAuthenticated, async (req, res, next) => 
   // delete a season
   try {
       await Season.findOneAndDelete({_id:req.params.id});
-      res.redirect('/admin/seasons');
       sendJSONresponse(res, 200, {message: 'season deleted successfully'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});

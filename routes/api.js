@@ -492,8 +492,15 @@ router.put('/static_files/:id', ensureAuthenticated, multers.static.single('file
     try {
         const static = await Static.findOne({_id:req.params.id})
         if(req.file){
-            console.log(path.resolve('./public','static_files', static.fileURL))
-            fs.unlinkSync(path.resolve('./public','static_files', static.fileURL))
+            fs.unlink(path.resolve('./public', 'static', static.fileURL), function(err){
+                if (err && err.code == "ENOENT") {
+                  console.log(" video file doesnt exist");
+                } else if(err) {
+                   console.log("error");
+                }else{
+                    console.log("file removed");
+                }
+            });
             req.body.fileURL = req.file.filename   
         }
         await Object.assign(static, req.body);
@@ -508,7 +515,15 @@ router.delete('/static_files/:id', ensureAuthenticated, async (req, res, next) =
     // delete a static file
     try {
         const static = await Static.findOne({_id:req.params.id});
-        fs.unlinkSync(path.resolve('./public','static', static.image))
+        fs.unlink(path.resolve('./public', 'static', static.fileURL), function(err){
+            if (err && err.code == "ENOENT") {
+              console.log(" video file doesnt exist");
+            } else if(err) {
+               console.log("error");
+            }else{
+                console.log("file removed");
+            }
+        });
         await Static.deleteOne(static);
         sendJSONresponse(res, 200, {message: 'file deleted successfully'});
     } catch (error) {
@@ -644,8 +659,24 @@ router.put('/show/:id', ensureAuthenticated, multers.upload.single('file'), asyn
     try {
         const show = await Show.findOne({_id:req.params.id})
         if(req.file){
-            fs.unlinkSync(path.resolve('./public','small_images', show.image))
-            fs.unlinkSync(path.resolve('./public','large_images', show.image))
+            fs.unlink(path.resolve('./public','small_images', show.image), function(err){
+                if (err && err.code == "ENOENT") {
+                  console.log(" video file doesnt exist");
+                } else if(err) {
+                   console.log("error");
+                }else{
+                    console.log("file removed");
+                }
+            });
+            fs.unlink(path.resolve('./public', 'large_images', show.image), function(err){
+                if (err && err.code == "ENOENT") {
+                  console.log(" video file doesnt exist");
+                } else if(err) {
+                   console.log("error");
+                }else{
+                    console.log("file removed");
+                }
+            });
     
             req.body.image = path.basename(req.file.filename, path.extname(req.file.filename))+'.webp'
             await sharp(req.file.path)
@@ -673,8 +704,24 @@ router.get('/delete_show/:id', ensureAuthenticated, async (req, res, next) => {
     try {
         const show = await Show.findOne({_id:req.params.id});
         await Show.deleteOne(show);
-        fs.unlinkSync(path.resolve('./public','small_images', show.image))
-        fs.unlinkSync(path.resolve('./public','large_images', show.image))
+        fs.unlink(path.resolve('./public', 'small_images', show.image), function(err){
+            if (err && err.code == "ENOENT") {
+              console.log(" video file doesnt exist");
+            } else if(err) {
+               console.log("error");
+            }else{
+                console.log("file removed");
+            }
+        });        
+        fs.unlink(path.resolve('./public', 'large_images', show.image), function(err){
+            if (err && err.code == "ENOENT") {
+              console.log(" video file doesnt exist");
+            } else if(err) {
+               console.log("error");
+            }else{
+                console.log("file removed");
+            }
+        });
         sendJSONresponse(res, 200, {message: "show deleted successfully"});
     } catch (error) {
         sendJSONresponse(res, 400, {error});

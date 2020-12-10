@@ -52,8 +52,7 @@
                                             class="btn btn-primary btn-sm">Edit</a>
                                     </td>
                                     <td class="">
-                                        <a href= "/admin/delete_season/<%=item._id%>" type="button" id="PopoverCustomT-1"
-                                            class="btn btn-danger btn-sm">Delete</a>
+                                        <button id = "<%=item._id%>" class="btn btn-danger btn-sm">Delete</button>
                                     </td>
                                 </tr>
                             <% }) %>      
@@ -70,4 +69,45 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script>
+    $(document).on('click', '.btn-danger', function(e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+        swal({
+            title: 'Are you sure?',
+            text: "This season will be DELETED!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed & Delete!'
+        }).then((result) => {
+            if (result) {
+                $.ajax({
+                    url: '/admin/delete_season/'+id,
+                    method: "GET",
+                    dataType : "json",
+                    "contentType": "application/json",
+                    success: function(data) {
+                        window.location.reload();
+                        if (data.status == 200) {
+                            $('#success_message').html(data.message);
+                        }
+                    },
+                    error: function(jqXhr) {
+                        if (jqXhr.status == 400) {
+                           
+                        }
+                    }
+                });
+                swal(
+                    'Deleted!',
+                    'Season Deleted.',
+                    'success'
+                )
+    
+            }
+        })
+    });
+</script>
 <%- include('../../end'); -%>
