@@ -24,7 +24,6 @@ const MusicGenre = require('../models/musicGenres');
 const AdminTestimony = require('../models/adminTestimony');
 const router = express.Router();
 
-
 router.use(async(req, res, next) => {
   res.locals.moment = moment;
   res.locals.currentUser = req.user;
@@ -180,7 +179,11 @@ router.get('/about/:code', async(req, res, next) =>{
       code: req.params.code,
     }
   )
-  res.render('users/pages/about', { title: 'Faith TV | About', about });
+  if(about){
+    res.render('users/pages/about', { title: 'Faith TV | About', about });
+  }else{
+    res.redirect("/")
+  }
 });
 
 // router.get('/dayview', (req, res, next) =>{
@@ -195,13 +198,14 @@ router.get('/about/:code', async(req, res, next) =>{
 //   res.render('users/pages/high', { title: 'Faith TV | Highlights' });
 // });
 
-router.get('/show-proposal',  (req, res, next) =>{
-  res.render('users/pages/show_proposal', { title: 'Faith TV | Submit Show Proposal' });
+router.get('/show-proposal',  async(req, res, next) =>{
+  const genres = await MusicGenre.find({});
+  res.render('users/pages/show_proposal', { title: 'Faith TV | Submit Show Proposal', genres });
 });
 
 router.get('/music-video', async(req, res, next) =>{
   const genres = await MusicGenre.find({});
-  res.render('users/pages/music_video', { title: 'Faith TV | Submit Music Video', genres });
+  res.render('users/pages/music_video', { title: 'Faith TV | Submit Music Video',  genres});
 });
 
 router.get('/become-programmer', (req, res, next) =>{

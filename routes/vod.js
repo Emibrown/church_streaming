@@ -145,7 +145,10 @@ router.get('/webcast', ensureAuthenticated, async(req, res, next) => {
 });
 
 router.get('/watch-later', ensureAuthenticated, async(req, res, next) => {
-  const videos = await Watch.find({member: req.user._id}).populate('video')
+  let videos = await Watch.find({member: req.user._id}).populate('video')
+  videos = videos.filter((video)=>{
+    return video.video != null
+  })
   res.render('vod/pages/videos', { title:"Watch later", videos });
 });
 
@@ -176,7 +179,10 @@ router.post('/watch-later', ensureAuthenticated, async(req, res, next) => {
 });
 
 router.get('/favourites', ensureAuthenticated, async(req, res, next) => {
-  const videos = await Favourite.find({member: req.user._id}).populate('video')
+  let videos = await Favourite.find({member: req.user._id}).populate('video')
+  videos = videos.filter((video)=>{
+    return video.video != null
+  })
   res.render('vod/pages/videos', { title:"Favourites", videos });
 });
 
@@ -207,7 +213,10 @@ router.post('/favourite', ensureAuthenticated, async(req, res, next) => {
 });
 
 router.get('/history', ensureAuthenticated, async(req, res, next) => {
-  const videos = await History.find({member: req.user._id}).populate('video')
+  let videos = await History.find({member: req.user._id}).populate('video')
+  videos = videos.filter((video)=>{
+    return video.video != null
+  })
   res.render('vod/pages/videos', { title:"History", videos });
 });
 

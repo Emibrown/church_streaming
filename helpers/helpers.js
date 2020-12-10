@@ -42,16 +42,16 @@ const facebook = (fileName,stream_key) =>  [
 //     'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
 // ]
 
-const facebookrtmps = (stream_key) =>  [
-    '-re','-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
+const facebookrtmps = (stream_key,pk) =>  [
+    '-re','-i', 'https://live.faithtofaithtv.org/hls/'+pk+'.m3u8',
     '-acodec', 'libmp3lame', '-ar', '44100', '-b:a', '128k', '-pix_fmt', 'yuv420p', 
    '-profile:v', 'baseline', '-s', '426x240', '-bufsize', '6000k', '-vb', '400k', 
    '-maxrate', '1500k', '-deinterlace', '-vcodec', 'libx264', '-preset', 
     'veryfast', '-g', '30', '-r', '30', '-f', 'flv', 'rtmps://live-api-s.facebook.com:443/rtmp/'+stream_key
 ]
 
-const youtubertmps = (stream_key) =>  [
-    '-re','-i', 'https://live.faithtofaithtv.org/hls/9QvShKjWC.m3u8',
+const youtubertmps = (stream_key,pk) =>  [
+    '-re','-i', 'https://live.faithtofaithtv.org/hls/'+pk+'.m3u8',
     '-acodec', 'libmp3lame', '-ar', '44100', '-b:a', '128k', '-pix_fmt', 'yuv420p', 
    '-profile:v', 'baseline', '-s', '426x240', '-bufsize', '6000k', '-vb', '400k', 
    '-maxrate', '1500k', '-deinterlace', '-vcodec', 'libx264', '-preset', 
@@ -162,8 +162,8 @@ const startStreaming = (live_stream,streamingKey) => {
 
 };
 
-const fbRtmp = (streamingKey) => {
-    const ffmpeg_process_fbRtmp = spawn(cmd, facebookrtmps(streamingKey),{detached: true});
+const fbRtmp = (streamingKey,pk) => {
+    const ffmpeg_process_fbRtmp = spawn(cmd, facebookrtmps(streamingKey,pk),{detached: true});
     facebookrtmpspid = ffmpeg_process_fbRtmp.pid
 
     ffmpeg_process_fbRtmp.stdout.on('data', (data) => {
@@ -179,8 +179,8 @@ const fbRtmp = (streamingKey) => {
     });
 };
 
-const ytRtmp = (streamingKey) => {
-    const ffmpeg_process_ytRtmp = spawn(cmd, youtubertmps(streamingKey),{detached: true});
+const ytRtmp = (streamingKey, pk) => {
+    const ffmpeg_process_ytRtmp = spawn(cmd, youtubertmps(streamingKey,pk),{detached: true});
     ytrtmpspid = ffmpeg_process_ytRtmp.pid
 
     ffmpeg_process_ytRtmp.stdout.on('data', (data) => {

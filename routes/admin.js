@@ -163,9 +163,10 @@ router.post('/facebookstream',ensureAuthenticated, (req, res, next) => {
           sendJSONresponse(res, 200, message);
 				}
 			)
-			.then( ( ) => {
+			.then( async( ) => {
         // Close the client response.
-        helpers.fbRtmp(req.body.fb)
+        const setting = await Settings.findOne({settingsId:"site_settings"})
+        helpers.fbRtmp(req.body.fb,setting.publicStreamKey)
 
       } )
 });
@@ -186,9 +187,10 @@ router.post('/ytstream',ensureAuthenticated, (req, res, next) => {
           sendJSONresponse(res, 200, "Youtube streaming ended");
 				}
 			)
-			.then( ( ) => {
+			.then( async ( ) => {
+        const setting = await Settings.findOne({settingsId:"site_settings"})
         // Close the client response.
-        helpers.ytRtmp(req.body.yt)
+        helpers.ytRtmp(req.body.yt,setting.publicStreamKey)
 
       } )
 });
@@ -729,12 +731,21 @@ router.delete('/delete_admin/:id', ensureAuthenticated, async (req, res, next) =
   }
 });
 
+router.delete('/delete_about/:id', ensureAuthenticated, async (req, res, next) => {
+  try {
+      await About.findOneAndDelete({_id: req.params.id})
+      res.status(200).send({status: 200, message: 'Successfully Deleted About'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
+
 router.get('/videos', ensureAuthenticated, async(req, res, next) => {
   const videos = await Video.find(
     {
       type: { $ne: '1' }
      }
-  ).populate('programme')
+  ).populate('programme').sort({addedOn:'desc'})
   res.render('admin/pages/videos', { title: 'Videos', videos });
 });
 
@@ -743,7 +754,7 @@ router.get('/streaming_videos', ensureAuthenticated, async(req, res, next) => {
     {
       type: '1'
      }
-  )
+  ).sort({addedOn:'desc'})
   res.render('admin/pages/streaming_videos', { title: 'Streaming videos', videos });
 });
 
