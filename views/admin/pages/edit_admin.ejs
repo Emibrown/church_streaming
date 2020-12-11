@@ -101,7 +101,7 @@
                             <div class = "form-group">
                                 <label for="level">Admin Level:</label>
                                 <select id="level" class = "form-control" required>
-                                    <option value="">Select admin level</option>
+                                    <option disabled selected value="<%= user.level %>"><%= user.level %></option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
