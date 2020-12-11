@@ -6,7 +6,6 @@ mongoose.Promise = require('bluebird');
 
 var userSchema = mongoose.Schema(
     {
-    
         firstname: {type: String, required: false},
         lastname: {type: String, required: false},
         middlename: {type: String, required: false},
@@ -72,7 +71,6 @@ var userSchema = mongoose.Schema(
         facebookToken: String,
 
     }
-
 
 )
 

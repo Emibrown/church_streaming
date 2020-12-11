@@ -43,6 +43,7 @@
                             <i class="metismenu-icon pe-7s-rocket"></i>Dashboards
                         </a>
                     </li>
+                <% if(currentUser.level==1){  %>
                   <li>
                     <a href="#">
                         <i class="metismenu-icon pe-7s-browser"></i>Forms
@@ -134,6 +135,8 @@
                          </li>
                       </ul>
                   </li>
+                <% } %>
+                <% if(currentUser.level ==1 || currentUser.level==2){ %>
                   <li>
                     <a href="#">
                         <i class="metismenu-icon pe-7s-browser"></i>Manage Users
@@ -157,6 +160,8 @@
                         </li>
                     </ul>
                 </li>
+            <% } %>
+                <%if(currentUser.level ==1 || currentUser.level==2 || currentUser.level==3) { %>
                 <li>
                     <a href="#">
                         <i class="metismenu-icon pe-7s-browser"></i>On Demand
@@ -219,6 +224,7 @@
                          
                     </ul>
                 </li>
+            <% } %>
               </ul>
           </div>
       </div>

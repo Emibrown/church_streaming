@@ -24,7 +24,6 @@ const MusicGenre = require('../models/musicGenres');
 const AdminTestimony = require('../models/adminTestimony');
 const router = express.Router();
 
-
 router.use(async(req, res, next) => {
   res.locals.moment = moment;
   res.locals.currentUser = req.user;

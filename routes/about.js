@@ -26,6 +26,14 @@ const sendJSONresponse = (res, status, content) => {
     }
   };
 
+  const checkLevelOneAccess = (req, res, next) => {
+    if(!req.user.level == 1){
+      res.redirect('/admin/dashboard');
+    }else{
+      next();
+    }
+  }
+
   router.use((req, res, next) => {
     res.locals.moment = moment;
     res.locals.currentUser = req.user;
@@ -34,7 +42,7 @@ const sendJSONresponse = (res, status, content) => {
 
 //about
 
-router.get('/', ensureAuthenticated, async (req, res, next) => {
+router.get('/', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // Get  all abouts
     try {
         const about = await About.find({}).sort({ addedOn : 1 })
