@@ -42,7 +42,7 @@ const authenticated = (req, res, next) => {
   };
 
   const checkLevelOneAccess = (req, res, next) => {
-    if(req.user.level != 1){
+    if(req.user.level==null){
       res.redirect('/admin/dashboard');
     }else{
       next();
