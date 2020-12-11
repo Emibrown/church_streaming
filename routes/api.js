@@ -42,14 +42,14 @@ const authenticated = (req, res, next) => {
   };
 
   const checkLevelOneAccess = (req, res, next) => {
-    if(req.user.level==null){
+    if(req.user.level !=1 && req.user.level !=0){
       res.redirect('/admin/dashboard');
     }else{
       next();
     }
-}
+  }
 const checkLevelThreeAcess = (req, res, next) =>{
-    if(req.user.level == 1 || req.user.level == 2 || req.user.level==3){
+    if(req.user.level == 1 || req.user.level == 2 || req.user.level==3 || req.user.level ==0){
       next();
   }else{
     res.redirect('/admin/dashboard');
