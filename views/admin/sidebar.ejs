@@ -148,11 +148,13 @@
                                 <i class="metismenu-icon"></i>Testimonies
                             </a>
                         </li>
+                        <% if(currentUser.level ==1){ %>
                         <li>
                             <a href="/admin/view-admins" >
                                 <i class="metismenu-icon"></i> View Admins
                             </a>
                         </li>
+                         <% } %>
                         <li>
                             <a href="/admin/view-users" >
                                 <i class="metismenu-icon"></i> View Users

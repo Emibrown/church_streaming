@@ -70,7 +70,7 @@ const ensureAuthenticated = (req, res, next) => {
 };
 
 const checkLevelOneAccess = (req, res, next) => {
-  if(!req.user.level == 1){
+  if(req.user.level != 1){
     res.redirect('/admin/dashboard');
   }else{
     next();
@@ -349,7 +349,7 @@ router.get('/view-users', ensureAuthenticated, checkLevelTwoAcess, async(req, re
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
-router.get('/view-admins', ensureAuthenticated, checkLevelTwoAcess, async(req, res, next) => {
+router.get('/view-admins', ensureAuthenticated, checkLevelOneAccess, async(req, res, next) => {
   const admins = await User.find({type: { $ne: 0 }})
   res.render('admin/pages/view_admins', { title: 'View Admins', admins });
 });
@@ -514,6 +514,17 @@ router.put('/update_patnership/:id', ensureAuthenticated, async (req, res, next)
   }
 });
 
+router.put('/update_admin/:id', ensureAuthenticated, async (req, res, next) => {
+
+  try {
+      const admin = await User.findOne({_id:req.params.id})
+      await Object.assign(admin, req.body);
+      await admin.save()
+      res.send({status: 200, message: 'Admin was updated successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error: error.message});
+  }
+});
 
 router.get('/public-key', ensureAuthenticated, async (req, res, next) => {
   try {
