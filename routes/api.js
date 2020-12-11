@@ -1,4 +1,5 @@
 const express = require('express');
+const User = require('../models/user');
 const Advert = require('../models/advert');
 const PrayerRequest = require('../models/prayerRequest');
 const Programmer = require('../models/programmer');
@@ -41,7 +42,7 @@ const authenticated = (req, res, next) => {
   };
 
   const checkLevelOneAccess = (req, res, next) => {
-    if(!req.user.level == 1){
+    if(req.user.level != 1){
       res.redirect('/admin/dashboard');
     }else{
       next();
@@ -296,8 +297,11 @@ router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
     res.render('admin/pages/create_admin', { title: 'Create Admin' });
   });
 
+  router.get('/edit-single-admin/:id', ensureAuthenticated, checkLevelOneAccess, async(req, res, next) => {
+    const user = await User.findById({_id: req.params.id})
+    res.render('admin/pages/edit_admin', { title: 'Edit Admin', user });
+  });
 
-  
   router.get('/single-testimony/:id', ensureAuthenticated, async (req, res, next) => {
     try {
         const testimony = await AdminTestimony.findOne({_id:req.params.id})
@@ -310,7 +314,7 @@ router.get('/edit-proposal/:id', ensureAuthenticated, async(req, res, next) => {
 router.get('/edit-single-testimony/:id', ensureAuthenticated, async(req, res, next) => {
     const testimony = await AdminTestimony.findById({_id: req.params.id})
     res.render('admin/pages/edit_single_testimony', { title: 'Edit Single Testimony', testimony });
-  });
+});
 
 
 router.put('/show_proposal/:id', ensureAuthenticated, async (req, res, next) => {

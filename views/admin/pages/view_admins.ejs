@@ -59,13 +59,15 @@
                         <% } else{ %>  
                             <span style = "background-color:green;color:white; padding:5px">Active</span> 
                         <% } %>
-
                     </td>
                     <td class = "">
                         <a class = "btn btn-primary btn-sm" href = "/admin/view-single-admin/<%=user._id %>" class="mb-2 mr-2 btn-hover-shine btn btn-shadow btn-success"> 
                             View record</a>
+                        <a class = "btn btn-warning btn-sm" href = "/admin/api/edit-single-admin/<%=user._id %>" class="mb-2 mr-2 btn-hover-shine btn btn-shadow btn-success"> 
+                            Edit record</a>
                         <button id = "<%=user._id%>"
-                            class="btn btn-danger btn-sm">Delete</button>
+                            class="btn btn-danger btn-sm">Delete
+                        </button>
                     </td>
                 </tr>
              <% sn++ %>
