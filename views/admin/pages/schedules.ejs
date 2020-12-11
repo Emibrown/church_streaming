@@ -44,7 +44,11 @@
                         <tbody>
                             <% schedules.forEach(function (item,index){ %>
                                 <tr>
+                                    <% if(item.show){%> 
                                     <td class=""><%= item.show.title %></td>
+                                    <% }else{%> 
+                                    <td class=""><a href="#">No Show</a></td>
+                                    <%} %> 
                                     <% if(item.video){%> 
                                     <td class=""><a href="/admin/video/<%= item.video._id  %>"><%= item.video.title %></a></td>
                                     <% }else{%> 
