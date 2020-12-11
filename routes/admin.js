@@ -1343,7 +1343,6 @@ router.get('/programmes', ensureAuthenticated, checkLevelThreeAcess, async (req,
   // get all programmes
     const programmes = await Programme.find({}).populate('categories')
     res.render('admin/pages/programmes', { title: 'Programmes', programmes });
-    console.log(programmes)
 });
 
 router.get('/programme/:id', ensureAuthenticated, async (req, res, next) => {
