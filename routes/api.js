@@ -20,6 +20,7 @@ const sharp = require('sharp');
 const path = require('path')
 const fs = require('fs')
 const router = express.Router();
+const {checkLevelThreeAcess, checkLevelOneAccess} = require('../helpers/restrictions');
 
 const sendJSONresponse = (res, status, content) => {
     res.status(status);
@@ -41,20 +42,6 @@ const authenticated = (req, res, next) => {
     }
   };
 
-  const checkLevelOneAccess = (req, res, next) => {
-    if(req.user.level !=1 && req.user.level !=0){
-      res.redirect('/admin/dashboard');
-    }else{
-      next();
-    }
-  }
-const checkLevelThreeAcess = (req, res, next) =>{
-    if(req.user.level == 1 || req.user.level == 2 || req.user.level==3 || req.user.level ==0){
-      next();
-  }else{
-    res.redirect('/admin/dashboard');
-  }
-  }
 //advert
 router.get('/adverts', ensureAuthenticated, checkLevelOneAccess, async (req, res, next) => {
     // Get  all adverts 

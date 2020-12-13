@@ -42,6 +42,10 @@ var settingsSchema = mongoose.Schema(
             type: String,
             required: false
         },
+        emailNotification:{
+            type: String,
+            required: false
+        },
         facebookHandle: {
             type: String,
             required: false

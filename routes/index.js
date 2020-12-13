@@ -17,7 +17,7 @@ const RequestPassword = require('../models/requestPassword');
 const Comment = require('../models/comments');
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
-const {customEmail} = require('../services/email');
+const {customEmail, adminMail} = require('../services/email');
 const moment = require('moment');
 const Feedback = require('../models/enquiries');
 const MusicGenre = require('../models/musicGenres');
@@ -352,7 +352,6 @@ router.get('/get_recent_comment/:id',  ensureAuthenticated, async (req, res, nex
 router.post('/create_advert', async (req, res, next) => {
   //  submit a programmer request
   try {
-      console.log(req.body);
       const {fullName :user_name, email:user_email} = req.body;
       const header = "";
       const message = "Request to submit advert has been delivered successfully";
@@ -360,9 +359,14 @@ router.post('/create_advert', async (req, res, next) => {
       const saveAdevert = await advert.save()
       if(saveAdevert){
         customEmail(user_name, user_email, header, message);
+        const {emailNotification:settingsMail} = await Settings.findOne({});
+        if(settingsMail){
+          const requestType = "Advert Request";
+          adminMail(settingsMail, user_name, requestType);
+        }
         res.send({status: 200, message: 'Advert was created successfully'});
       }
-      res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+      else res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
 
   } catch (error) {
     sendJSONresponse(res, 400, Object.keys(error.errors));
@@ -379,8 +383,15 @@ router.post('/prayer_request', async (req, res, next) => {
         const savePrayer = await prayerRequest.save();
         if(savePrayer){
            customEmail(fullName, email, header, message);
+           const {emailNotification:settingsMail} = await Settings.findOne({});
+           if(settingsMail){
+             const requestType = "Prayer Request";
+             adminMail(settingsMail, fullName, requestType);
+           }
            res.send({status: 200, message: 'Prayer Request Submitted'});
          }
+         else res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+
     } catch (error) {
       sendJSONresponse(res, 400, Object.keys(error.errors));
     }
@@ -398,8 +409,14 @@ router.post('/become_programmer', async (req, res, next) => {
         const saveProgrammer = await programmer.save()
         if(saveProgrammer){
           customEmail(fullName, email, header, message);
+          const {emailNotification:settingsMail} = await Settings.findOne({});
+          if(settingsMail){
+          const requestType = " Become a content developer";
+          adminMail(settingsMail, fullName, requestType);
+         }
           res.send({status: 200, message: 'programmer request submitted successfully'});
         }
+        else res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
     } catch (error) {
       sendJSONresponse(res, 400, Object.keys(error.errors));
     }
@@ -620,11 +637,19 @@ router.post('/show_proposal', ensureAuthenticated, async (req, res, next) => {
         const {supplierName, email} = req.body;
         const header = "show proposal";
         const message = "Request was processed successfully";
-        customEmail(supplierName, email, header, message);
         const proposal = new Proposal(req.body)
-        console.log(proposal)
-        await proposal.save()
-        res.send({status: 200, message: 'show proposal submitted'});
+        const saveProposal = await proposal.save()
+        if(saveProposal){
+          customEmail(supplierName, email, header, message);
+          const {emailNotification:settingsMail} = await Settings.findOne({});
+          if(settingsMail){
+          const requestType = " Show Proposal";
+          adminMail(settingsMail, supplierName, requestType);
+         }
+         res.send({status: 200, message: 'show proposal submitted'});
+        }
+        else res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+
     }catch(error) {
       sendJSONresponse(res, 400, Object.keys(error.errors));
     }
@@ -637,10 +662,19 @@ router.post('/testimony', ensureAuthenticated, async (req, res, next) => {
         const {fullName, email} = req.body;
         const header = "Testimony";
         const message = "Request was processed successfully";
-        customEmail(fullName, email, header, message);
         const testimony = new Testimony(req.body)
-        await testimony.save()
-        res.send({status: 200, message: 'Testimony submitted'});
+        const saveTestimony = await testimony.save()
+        if(saveTestimony){
+          customEmail(fullName, email, header, message);
+          const {emailNotification:settingsMail} = await Settings.findOne({});
+          if(settingsMail){
+          const requestType = " Testimony";
+          adminMail(settingsMail, fullName, requestType);
+         }
+         res.send({status: 200, message: 'Testimony submitted'});
+        }
+        else res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+       
     } catch (error) {
       sendJSONresponse(res, 400, Object.keys(error.errors));
     }
@@ -653,10 +687,19 @@ router.post('/music_video', ensureAuthenticated, async (req, res, next) => {
         const {fullName, email} = req.body;
         const header = "";
         const message = "Request to submit music video was sent successfully";
-        customEmail(fullName, email, header, message);
         const musicVideo = new MusicVideo(req.body);
-        await musicVideo.save();
-        res.send({status: 200, message: 'music video submitted'});
+       const saveMusic = await musicVideo.save();
+        if(saveMusic){
+          customEmail(fullName, email, header, message);
+          const {emailNotification:settingsMail} = await Settings.findOne({});
+          if(settingsMail){
+          const requestType = " Music Video Submission";
+          adminMail(settingsMail, fullName, requestType);
+         }
+         res.send({status: 200, message: 'music video submitted'});
+        }
+        else res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+
     } catch (error) {
       sendJSONresponse(res, 400, Object.keys(error.errors));
     }
@@ -669,10 +712,18 @@ router.post('/enquiries', ensureAuthenticated, async (req, res, next) => {
       const {fullName, email} = req.body;
       const header = "feeback / enquiry";
       const message = "Request was processed successfully";
-      customEmail(fullName, email, header, message);
       const enquiry = new Enquiry(req.body);
-      await enquiry.save();
-      res.send({status: 200, message: 'feedback submitted'});
+      const saveEnquiry = await enquiry.save();
+      if(saveEnquiry){
+        customEmail(fullName, email, header, message);
+        const {emailNotification:settingsMail} = await Settings.findOne({});
+        if(settingsMail){
+        const requestType = " Enquiries Submission";
+        adminMail(settingsMail, fullName, requestType);
+       }
+       res.send({status: 200, message: 'feedback submitted'});
+      }
+      else res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
   } catch (error) {
     sendJSONresponse(res, 400, Object.keys(error.errors));
   }
@@ -692,6 +743,11 @@ router.post('/patnership', async(req, res, next) => {
       const header = "";
       const message = "Your partnership Request was processed successfully";
       customEmail(firstName, email, header, message);
+      const {emailNotification:settingsMail} = await Settings.findOne({});
+        if(settingsMail){
+        const requestType = " Partnership Submission";
+        adminMail(settingsMail, firstName, requestType);
+       }
      return res.status(200).send({status: 200, message: 'patnership form submitted'});
     }
   } catch (error) {
