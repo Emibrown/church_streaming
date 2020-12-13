@@ -50,7 +50,7 @@
                            <td class= ""><%= item.duration %></td>
                            <td class= "">
                               <div class="col-12 form-group ">
-                                 <a  href="/admin/delete_streaming_video/<%= item._id %> " class="btn btn-danger">Delete link</a>
+                                <button  id="<%= item._id %>" class="btn btn-danger">Delete link</button>
                                  <a  href= "/admin/api/add_schedule/<%=item._id%>" class="btn btn-success">Schedule</a>
                               </div>
                            </td>                 
@@ -71,4 +71,45 @@
 
 <%- include('../footer'); -%>
 <%- include('../js'); -%>
+<script>
+     $(document).on('click', '.btn-danger', function(e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+        swal({
+            title: 'Are you sure?',
+            text: "This Record will be DELETED!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed & Delete!'
+        }).then((result) => {
+            if (result) {
+                $.ajax({
+                    url: '/admin/delete_streaming_video/'+id,
+                    method: "DELETE",
+                    dataType : "json",
+                    "contentType": "application/json",
+                    success: function(data) {      
+                        if (data.status == 200) {
+                            $('#success_message').html(data.message);
+                        }
+                        window.location.reload();
+                    },
+                    error: function(jqXhr) {
+                        if (jqXhr.status == 400) {
+                           
+                        }
+                    }
+                });
+                swal(
+                    'Deleted!',
+                    'Record Deleted.',
+                    'success'
+                )
+    
+            }
+        })
+    });
+</script>
 <%- include('../../end'); -%>

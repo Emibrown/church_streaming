@@ -1139,12 +1139,12 @@ router.get('/delete_video/:id', ensureAuthenticated, async (req, res, next) => {
   }
 });
 
-router.get('/delete_streaming_video/:id', ensureAuthenticated, async (req, res, next) => {
+router.delete('/delete_streaming_video/:id', ensureAuthenticated, async (req, res, next) => {
   // delete a video
   try {
       const video =  await Video.findOne({_id:req.params.id});
       await Video.deleteOne(video);
-      res.redirect('/admin/streaming_videos');
+      sendJSONresponse(res, 200, {message: 'Record deleted successfully'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }

@@ -96,6 +96,9 @@ router.get('/video/:video', async (req, res, next) => {
   if(!video){
     res.redirect("/vod");
   }
+  if(!video.programme){
+    res.redirect("/vod");
+  }
   res.redirect("/vod/watch/"+video.programme.code+"/"+req.params.video);
 });
 

@@ -142,14 +142,26 @@
            <div class="col-xs-12 col-sm-6 col-md-3">
              <div class="item video">
                <div class="cover">
+                 <% if(video.programme){%> 
                  <a href="/vod/watch/<%= video.programme.code %>/<%= video.code %> ">
                    <img src="/large_images/<%= video.image %> " class="img-responsive" alt="Lucy Grimble - Still I Will Praise ft Bianca Rose ">
                    <span class="overlay play"></span>
                  </a>
+                <% }else{%> 
+                  <a href="/">
+                    <img src="/large_images/<%= video.image %> " class="img-responsive" alt="Lucy Grimble - Still I Will Praise ft Bianca Rose ">
+                    <span class="overlay play"></span>
+                  </a>
+                <% } %> 
                </div> 
                <div class="info">
                  <div class="equal-height">
-                   <h3><a href=""><%= video.programme.title %> </a></h3>
+                   
+                   <% if(video.programme){%> 
+                    <h3><a href=""><%= video.programme.title %> </a></h3>
+                   <% }else{%> 
+                    <h3><a href=""></a></h3>
+                   <% } %> 
                    <h4><%= video.title %>  </h4>
                    <p><%= video.description %>.</p>
                  </div> 
