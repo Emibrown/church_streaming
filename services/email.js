@@ -63,10 +63,35 @@ const customEmail = (name,email,header,message) =>{
     })
 }
 
+const adminMail = (adminEmail, fullName, requestType)=>{
+    return new Promise(async (resolve, reject) => {
+        ejs.renderFile(__dirname + "/template/admin.ejs", { fullName, requestType }, function (err, data) {
+            if (err) {
+                console.log(err);
+                reject(err)
+            } else {
+                var message = {
+                    from: 'officialfaithtv@gmail.com',
+                    to: adminEmail,
+                    subject: 'FaithtoFaith TV',
+                    html: data
+                };
+                transporter.sendMail(message, function (err, info) {
+                    if (err) {
+                     console.log(err)
+                    } else {
+                     console.log(info);
+                    }
+            });
+            }
+        });
+    })
+}
 
 const emailService = {
     welcomeEmail,
-    customEmail
+    customEmail,
+    adminMail
 }
 
 module.exports = emailService

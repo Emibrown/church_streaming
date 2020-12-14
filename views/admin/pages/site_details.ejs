@@ -51,6 +51,10 @@
                                 <input name="email" id="email" placeholder="Church email address"value="<%= settings.email %>" type="email" class="form-control">
                             </div>
                             <div class="position-relative form-group">
+                                <label for="emailNotification" class="">Email for Notifications(faithtv.org, info@faithtv.com, faithtv@gmail.com)</label>
+                                <input name="emailNotification" id="emailNotification" placeholder="comma separated emails"value="<%= settings.emailNotification %>" type="" class="form-control">
+                            </div>
+                            <div class="position-relative form-group">
                                 <label for="contact_no" class="">Contact number</label>
                                 <input name="contact_no" id="contact_no" placeholder="Church contact number" value="<%= settings.contactNumber %>" type="text" class="form-control">
                             </div>
@@ -97,6 +101,7 @@
             "siteName": $("#sitename").val(),
             "siteDis": $("#site_desc").val(),
             "email":  $("#email").val(),
+            "emailNotification" : $("#emailNotification").val(),
             "HQaddress": $("#hq_address").val(),
             "contactNumber": $("#contact_no").val(),
             "prayerNumber": $("#prayer_no").val(),
