@@ -237,6 +237,28 @@
  
  
        <div class="sharethis-inline-share-buttons"></div>
+
+       <!-- Modal -->
+<div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="logo" style="text-align: center;">
+          <a href="/"><img src="/logo/logo-2.png" width="100" alt="Faith to Faith"></a>
+        </div> <!-- /.logo -->
+      </div>
+      <div class="modal-footer">
+        <a href="/register" class="btn btn-primary">Register as a member now</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
      
      </div> <!-- /.container -->
    </div> <!-- /.content -->
@@ -245,6 +267,7 @@
 <%- include('../js'); -%>
 <script src="https://unpkg.com/video.js/dist/video.js"></script>
 <script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
+
 <script>
   var link = "https://live.faithtofaithtv.org/hls/<%= settings.publicStreamKey %>.m3u8"
   var video = videojs('my_video_1', {
@@ -275,6 +298,14 @@
          // }
       });
    });
+
+   setTimeout(function(){
+      $('#exampleModalLong').modal('show')
+      $.ajax({
+          url: '/view',
+          method: "GET",
+      });
+    }, 10000);
 
 </script>
 <%- include('../../end'); -%>

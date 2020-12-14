@@ -15,6 +15,8 @@ const About = require('../models/about');
 const Settings = require('../models/settings');
 const RequestPassword = require('../models/requestPassword');
 const Comment = require('../models/comments');
+const Visit = require('../models/visit');
+
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
 const {customEmail} = require('../services/email');
@@ -65,6 +67,7 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
+  
   const schedules = await Schedule.find(
     { 
       startTime: {$gte: new Date(new Date().setHours(00, 00, 00))},
@@ -128,6 +131,7 @@ router.get('/', async (req, res, next) => {
     ])
     .exec(function(err, trendingVideos) {
       console.log(trendingVideos)
+      res.cookie('user', 'Guess', {maxAge: 10800})
       res.render('users/pages/index', { title: 'Home',schedules,highlight,latestVideos,trendingVideos });
 
     });
@@ -197,6 +201,44 @@ router.get('/about/:code', async(req, res, next) =>{
 // router.get('/highlights', (req, res, next) =>{
 //   res.render('users/pages/high', { title: 'Faith TV | Highlights' });
 // });
+
+router.get('/view',  async(req, res, next) =>{
+  
+  let cookie = req.headers.cookie
+  cookie = cookie.split('=')[1]
+  console.log(cookie)
+  console.log(req.user)
+  let visit = null
+  if(req.user){
+    visit = await Visit.findOne({
+      $or:[{sessionId: cookie},{member: req.user._id}],
+      date: {$gte: new Date(new Date().setHours(00, 00, 00))},
+    })
+  }else{
+    visit = await Visit.findOne({
+      sessionId: cookie,
+      date: {$gte: new Date(new Date().setHours(00, 00, 00))},
+    })
+  }
+  if(visit){
+    await Object.assign(visit, {
+      member: req.user?req.user._id:null,
+      user: !req.user?"Guess":null,
+      sessionId: cookie,
+      data: new Date()
+    });
+  }else{
+    visit = new Visit({
+      member: req.user?req.user._id:null,
+      user: !req.user?"Guess":null,
+      sessionId: cookie,
+      data: new Date()
+    });
+  }
+  await visit.save()
+  console.log(visit)
+  sendJSONresponse(res, 200, {});
+});
 
 router.get('/show-proposal',  async(req, res, next) =>{
   const genres = await MusicGenre.find({});
