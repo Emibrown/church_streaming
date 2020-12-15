@@ -655,7 +655,7 @@ router.put('/update_profile', ensureAuthenticated, async(req, res) =>{
 });
 
 
-router.post('/post_comment', ensureAuthenticated, async(req, res) =>{
+router.post('/post_comment', async(req, res) =>{
   try{
     if(!req.body)
      return res.status(404).send({ msg: "empty data set" })
@@ -675,7 +675,7 @@ router.post('/post_comment', ensureAuthenticated, async(req, res) =>{
 
 
 //show proposal routes
-router.post('/show_proposal', ensureAuthenticated, async (req, res, next) => {
+router.post('/show_proposal', async (req, res, next) => {
     // create a proposal
     try{
         const {supplierName, email} = req.body;
@@ -700,7 +700,7 @@ router.post('/show_proposal', ensureAuthenticated, async (req, res, next) => {
 });
 
 //testimonies routes
-router.post('/testimony', ensureAuthenticated, async (req, res, next) => {
+router.post('/testimony', async (req, res, next) => {
     // create a testimony
     try {
         const {fullName, email} = req.body;
@@ -725,7 +725,7 @@ router.post('/testimony', ensureAuthenticated, async (req, res, next) => {
 });
 
 //music video routes
-router.post('/music_video', ensureAuthenticated, async (req, res, next) => {
+router.post('/music_video', async (req, res, next) => {
     // submit music video
     try {
         const {fullName, email} = req.body;
@@ -750,7 +750,7 @@ router.post('/music_video', ensureAuthenticated, async (req, res, next) => {
 });
 
 //feedback routes
-router.post('/enquiries', ensureAuthenticated, async (req, res, next) => {
+router.post('/enquiries', async (req, res, next) => {
   // submit feedback
   try {
       const {fullName, email} = req.body;
