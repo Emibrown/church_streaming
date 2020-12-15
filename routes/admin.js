@@ -3,6 +3,7 @@ const Advert = require('../models/advert');
 const User = require('../models/user');
 const Category = require('../models/category');
 const Video = require('../models/video');
+const Visit = require('../models/visit');
 const Settings = require('../models/settings');
 const About = require('../models/about');
 const Programme = require('../models/programme');
@@ -102,6 +103,24 @@ User.find({}, (err, users) => {
       });
   }
 })
+
+const getMonthDateRange = (year, month) => {
+  var moment = require('moment');
+
+  // month in moment is 0 based, so 9 is actually october, subtract 1 to compensate
+  // array is 'year', 'month', 'day', etc
+  var startDate = moment([year, month - 1]);
+
+  // Clone the value before .endOf()
+  var endDate = moment(startDate).endOf('month');
+
+  // just for demonstration:
+  console.log(startDate.toDate());
+  console.log(endDate.toDate());
+
+  // make sure to call toDate() for plain JavaScript date type
+  return { start: startDate, end: endDate };
+}
 
 
 Settings.find({}, (err, settings) => {
@@ -222,7 +241,16 @@ router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
   const members = await User.find({});
   const programmes = await Programme.find({});
   const videos = await Video.find({});
-  res.render('admin/pages/index', { title: 'Dashboard', members, programmes, videos });
+  const start = moment().startOf('day'); // set to 12:00 am today
+  const end = moment().endOf('day'); // set to 23:59 pm today
+  const startw = moment().startOf('week'); // set to 12:00 am today
+  const endw = moment().endOf('week'); // set to 23:59 pm today
+  const startm = moment().startOf('month'); // set to 12:00 am today
+  const endm = moment().endOf('month'); // set to 23:59 pm today
+  const visit = await Visit.find({date: {$gte: start, $lt: end}});
+  const visitw = await Visit.find({date: {$gte: startw, $lt: endw}});
+  const visitm = await Visit.find({date: {$gte: startm, $lt: endm}});
+  res.render('admin/pages/index', { title: 'Dashboard', members, programmes, videos, visit,visitw,visitm });
 });
 
 router.get('/stop_streaming', ensureAuthenticated, async(req, res, next) => {

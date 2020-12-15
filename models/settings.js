@@ -46,6 +46,10 @@ var settingsSchema = mongoose.Schema(
             type: String,
             required: false
         },
+        guessMessage:{
+            type: String,
+            required: false
+        },
         facebookHandle: {
             type: String,
             required: false

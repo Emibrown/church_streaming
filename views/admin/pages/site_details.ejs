@@ -51,8 +51,8 @@
                                 <input name="email" id="email" placeholder="Church email address"value="<%= settings.email %>" type="email" class="form-control">
                             </div>
                             <div class="position-relative form-group">
-                                <label for="emailNotification" class="">Email for Notifications(faithtv.org, info@faithtv.com, faithtv@gmail.com)</label>
-                                <input name="emailNotification" id="emailNotification" placeholder="comma separated emails"value="<%= settings.emailNotification %>" type="" class="form-control">
+                                <label for="emailNotification" class="">Notifications Emails (Separated with comma)</label>
+                                <input name="emailNotification" id="emailNotification" placeholder="Comma separated emails"value="<%= settings.emailNotification %>" type="" class="form-control">
                             </div>
                             <div class="position-relative form-group">
                                 <label for="contact_no" class="">Contact number</label>
@@ -66,6 +66,12 @@
                                 <label for="faith_st">Faith statement</label>
                                 <textarea id="faith_st" name="faith_st" rows="5" class="form-control" placeholder="Faith statement"><%- settings.faithStatement %></textarea>                  
                             </div>
+
+                            <div class="form-group">
+                                <label for="faith_st">Guess Popup message</label>
+                                <textarea id="guessMessage" name="guessMessage" rows="5" class="form-control" placeholder="Guess Popup message"><%- settings.guessMessage %></textarea>                  
+                            </div>
+                            
                             <!-- <div class="form-group">
                                 <label for="salv_prayer">Salvation prayer</label>
                                 <textarea id="salv_prayer" name="salv_prayer" rows="5" class="form-control" placeholder="Salvation prayer"><%= settings.salvationPrayer %></textarea>                  
@@ -91,6 +97,7 @@
     $(function () {
         $("#faith_st").ckeditor();
         $("#appreciation").ckeditor();
+        $("#guessMessage").ckeditor();
 
     });
 </script>
@@ -106,6 +113,7 @@
             "contactNumber": $("#contact_no").val(),
             "prayerNumber": $("#prayer_no").val(),
             "faithStatement": $("#faith_st").val(),
+            "guessMessage": $("#guessMessage").val(),
             "tag": $('#tag').val(),
             "appreciationMessage": $('#appreciation').val(),
             // "salvationPrayer": $("#salv_prayer").val(),

@@ -209,10 +209,12 @@ router.get('/view',  async(req, res, next) =>{
   console.log(cookie)
   console.log(req.user)
   let visit = null
+  const start = moment().startOf('day'); // set to 12:00 am today
+  const end = moment().endOf('day'); // set to 23:59 pm today
   if(req.user){
     visit = await Visit.findOne({
       $or:[{sessionId: cookie},{member: req.user._id}],
-      date: {$gte: new Date(new Date().setHours(00, 00, 00))},
+      date: {$gte: start, $lt: end}
     })
   }else{
     visit = await Visit.findOne({

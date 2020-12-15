@@ -237,9 +237,9 @@
  
  
        <div class="sharethis-inline-share-buttons"></div>
-
-       <!-- Modal -->
-<div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+       <% if(!currentUser){ %>
+                 <!-- Modal -->
+<div class="modal fadeIn" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -251,6 +251,7 @@
         <div class="logo" style="text-align: center;">
           <a href="/"><img src="/logo/logo-2.png" width="100" alt="Faith to Faith"></a>
         </div> <!-- /.logo -->
+        <%- settings.guessMessage %>
       </div>
       <div class="modal-footer">
         <a href="/register" class="btn btn-primary">Register as a member now</a>
@@ -259,6 +260,8 @@
     </div>
   </div>
 </div>
+      <% }%>
+
      
      </div> <!-- /.container -->
    </div> <!-- /.content -->
@@ -299,13 +302,28 @@
       });
    });
 
-   setTimeout(function(){
+  
+</script>
+<% if(!currentUser){ %>
+  <script>
+    setTimeout(function(){
       $('#exampleModalLong').modal('show')
       $.ajax({
           url: '/view',
           method: "GET",
       });
     }, 10000);
+  </script>
+<% }else{%>
+  <script>
+    setTimeout(function(){
+      $.ajax({
+          url: '/view',
+          method: "GET",
+      });
+    }, 10000);
+  </script>
+<% }%>
 
-</script>
+
 <%- include('../../end'); -%>
