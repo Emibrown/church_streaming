@@ -36,7 +36,7 @@ router.use(async(req, res, next) => {
 
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-      res.redirect('/profile');
+      res.redirect('/edit-profile');
   }else {
      next();
   }
@@ -206,8 +206,6 @@ router.get('/view',  async(req, res, next) =>{
   
   let cookie = req.headers.cookie
   cookie = cookie.split('=')[1]
-  console.log(cookie)
-  console.log(req.user)
   let visit = null
   const start = moment().startOf('day'); // set to 12:00 am today
   const end = moment().endOf('day'); // set to 23:59 pm today
@@ -238,7 +236,6 @@ router.get('/view',  async(req, res, next) =>{
     });
   }
   await visit.save()
-  console.log(visit)
   sendJSONresponse(res, 200, {});
 });
 

@@ -39,6 +39,8 @@ const videoSchema = mongoose.Schema(
     }
 )
 
+videoSchema.index({title: 'text'});
+
 videoSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
 videoSchema.pre('save', async function (next){

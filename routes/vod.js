@@ -181,6 +181,14 @@ router.post('/watch-later', ensureAuthenticated, async(req, res, next) => {
   }
 });
 
+router.post('/search', async(req, res, next) => {
+  try{
+   res.redirect('/vod')
+  }catch(e){
+    
+  }
+});
+
 router.get('/favourites', ensureAuthenticated, async(req, res, next) => {
   let videos = await Favourite.find({member: req.user._id}).populate('video')
   videos = videos.filter((video)=>{

@@ -50,6 +50,10 @@ var settingsSchema = mongoose.Schema(
             type: String,
             required: false
         },
+        termsAndCondition:{
+            type: String,
+            required: false
+        },
         facebookHandle: {
             type: String,
             required: false

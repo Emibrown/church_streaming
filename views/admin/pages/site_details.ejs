@@ -71,6 +71,13 @@
                                 <label for="faith_st">Guess Popup message</label>
                                 <textarea id="guessMessage" name="guessMessage" rows="5" class="form-control" placeholder="Guess Popup message"><%- settings.guessMessage %></textarea>                  
                             </div>
+
+                            <div class="form-group">
+                                <label for="faith_st">Terms And Condition</label>
+                                <textarea id="termsAndCondition" name="termsAndCondition" rows="5" class="form-control" placeholder="Terms And Condition"><%- settings.termsAndCondition %></textarea>                  
+                            </div>
+                            
+
                             
                             <!-- <div class="form-group">
                                 <label for="salv_prayer">Salvation prayer</label>
@@ -98,7 +105,9 @@
         $("#faith_st").ckeditor();
         $("#appreciation").ckeditor();
         $("#guessMessage").ckeditor();
+        $("#termsAndCondition").ckeditor();
 
+        
     });
 </script>
 <script>
@@ -114,6 +123,7 @@
             "prayerNumber": $("#prayer_no").val(),
             "faithStatement": $("#faith_st").val(),
             "guessMessage": $("#guessMessage").val(),
+            "termsAndCondition": $("#termsAndCondition").val(),
             "tag": $('#tag').val(),
             "appreciationMessage": $('#appreciation').val(),
             // "salvationPrayer": $("#salv_prayer").val(),
