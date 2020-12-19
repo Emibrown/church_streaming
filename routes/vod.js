@@ -59,6 +59,7 @@ router.use(async(req, res, next) => {
   res.locals.moment = moment;
   res.locals.currentUser = req.user;
   res.locals.settings = await Settings.findOne({settingsId:"site_settings"})
+  res.locals.baseUrl = req.baseUrl
   next();
 });
 

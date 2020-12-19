@@ -44,7 +44,7 @@
                         <% cat.programme.forEach(function (pro,i){ %>
                         <div>
                             <a href="/vod/watch/<%= pro.code %> ">
-                                <img src="/small_images/<%= pro.image %> " alt="">
+                                <img src="<%= baseUrl  %>/small_images/<%= pro.image %> " alt="">
                                 <span class="playlist-content--title">
                                     <%= pro.title %>                                      
                                 </span>
