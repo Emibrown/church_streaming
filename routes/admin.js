@@ -33,7 +33,7 @@ const Patnership = require('../models/patnership');
 const Favourite = require('../models/favourite');
 const Watch = require('../models/watch');
 const History = require('../models/history');
-const Member = require('../models/member');
+const Member = require('../models/membership');
 
 const helpers = require('../helpers/helpers');
 const {checkLevelThreeAcess, checkLevelOneAccess, checkLevelTwoAcess} = require('../helpers/restrictions');
@@ -354,6 +354,19 @@ router.get('/view-users', ensureAuthenticated, checkLevelTwoAcess, async(req, re
   res.render('admin/pages/view_users', { title: 'View Users', users });
 });
 
+router.get('/view-members', ensureAuthenticated, checkLevelTwoAcess, async(req, res, next) => {
+  const users = await User.find({isMember:true})
+  res.render('admin/pages/view_members', { title: 'View Members', users });
+});
+
+
+
+router.get('/membership-request', ensureAuthenticated, checkLevelTwoAcess, async(req, res, next) => {
+  const MemberRequest = await Member.find({}).populate("member")
+  res.render('admin/pages/membership-request', { title: 'Membership Request', MemberRequest });
+});
+
+
 router.get('/view-admins', ensureAuthenticated, checkLevelOneAccess, async(req, res, next) => {
   const admins = await User.find({type: { $ne: 0 }})
   res.render('admin/pages/view_admins', { title: 'View Admins', admins });
@@ -605,6 +618,23 @@ router.put('/block/:id', ensureAuthenticated, async (req, res, next) => {
       sendJSONresponse(res, 400, {error});
   }
 });
+router.put('/member/:id', ensureAuthenticated, async (req, res, next) => {
+  // block user
+  try {
+      await User.updateOne(
+        { _id: req.params.id },
+        { $set:
+           {
+            isMember: true,
+           }
+        }
+     )
+     await Member.remove({member: req.params.id})
+      res.status(200).send({status: 200, message: 'User has been added'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
 router.put('/unblock/:id', ensureAuthenticated, async (req, res, next) => {
   // unblock user
   try {
@@ -617,6 +647,24 @@ router.put('/unblock/:id', ensureAuthenticated, async (req, res, next) => {
         }
      )
       res.status(200).send({status: 200,message: 'User has been unblocked successfully'});
+  } catch (error) {
+      sendJSONresponse(res, 400, {error});
+  }
+});
+
+router.put('/unmember/:id', ensureAuthenticated, async (req, res, next) => {
+  // unblock user
+  try {
+      await User.updateOne(
+        { _id: req.params.id },
+        { $set:
+           {
+            isMember: false,
+           }
+        }
+     )
+     await Member.remove({member: req.params.id})
+      res.status(200).send({status: 200,message: 'User has been removed'});
   } catch (error) {
       sendJSONresponse(res, 400, {error});
   }

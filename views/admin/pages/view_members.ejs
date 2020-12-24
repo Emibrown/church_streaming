@@ -1,0 +1,84 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  All Members
+               </div>
+           </div>
+         </div>
+   </div>       
+   <!-- title -->
+    <!--body  -->
+    <div class="main-card mb-3 card">
+        <div class="card-body ">
+            <table style="width: 100%;" id="example2" class="table  table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>First Name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% if(users.length > 0) { let sn=1; %>
+                        <% users.forEach(user => { %>               
+                 <tr>
+                    <td><%= sn %></th>
+                    <td><%= user.firstname %> </td>
+                    <td><%= user.lastname %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.address %></td>
+                    <td><%= user.location %></td>
+                    <td>
+                        <% if (user.isBlocked){  %>
+                         <span style = "background-color:red;color:white;padding:5px;">Inactive</span> 
+                        <% } else{ %>  
+                            <span style = "background-color:green;color:white; padding:5px">Active</span> 
+                        <% } %>
+
+                    </td>
+                    <td>
+                        <a href = "/admin/view-single/<%=user._id %>" class="mb-2 mr-2 btn-hover-shine btn btn-shadow btn-success"> View record</a>
+                    </td>
+                </tr>
+             <% sn++ %>
+            <% }) %>
+            <% }else{ %>
+                No Record available
+            <% } %>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+      $(document).ready(function() {
+    $('#example2').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+    } );
+} );
+</script>
+<%- include('../../end'); -%>

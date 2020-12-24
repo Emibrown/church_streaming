@@ -1,0 +1,104 @@
+<%- include('../header'); -%>
+<div class="content">
+    <div class="container">
+      <div class="block">
+          <div class="contact-page" id="prayerForm">
+              <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-8">
+                <div class="block">
+                    <div class="live-audience clearfix">
+                        <h2 class="block-title"><span>MEMBERSHIP</span> REQUESTS
+                        </h2>
+                    
+                      <p>&nbsp;</p>
+
+                      <% if(!membership) {%> 
+
+                          <form id="message-form">
+                          <div class="form-group">
+                            <label for="message">* Request Message</label>
+                            <textarea id="message" name="message" rows="5" class="form-control" placeholder="Enter request message here  (Required)" required></textarea>                  
+                        </div>
+                          <br>
+                          <hr>
+                        <div style="text-align: right; margin-top: 10px;">
+                          <button class="g-recaptcha btn btn-primary"><em class="fa fa-send"></em> Send Request</button>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                      </form>
+                    <% }else{%> 
+                      <p>Your Membership request is till pending Check back later</p>
+                    <% } %> 
+                   </div>
+                    <style>
+                      #prayerForm hr {
+                          height: 1px;
+                          background: #E1E1E1;
+                          margin: 20px 0;
+                      }
+                      .chkBox {
+                          display: block;
+                          font-weight: normal;
+                          margin-bottom: 0;
+                          padding: 5px;
+                          background: #F1F1F1;
+                          border-radius: 4px;
+                          border: 1px solid #E1E1E1;
+                          cursor: pointer;
+                      }
+                      .chkBox.has-error {
+                          background: #da4453;
+                          border: #da4453;
+                          color: #FFF;
+                      }
+                      .chkBox > input {
+                          float: left;
+                          margin-right: 10px;
+                      }
+                      .chkBox > small {
+                          display: block;
+                          padding: 7px 0 0 23px;
+                      }
+              
+              </style>
+                </div> 
+              </div>
+              <!-- faith statement -->
+              <%- include('../faith'); -%>
+            </div> <!-- /.row -->
+          </div> <!-- /.contact -->
+        </div> <!-- /.block -->
+      <hr>
+      <div class="sharethis-inline-share-buttons"></div>
+    </div> <!-- /.block -->
+    </div>
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+
+<script>
+        $(document).on('submit', '#message-form', function(event) {
+            event.preventDefault();
+              const data = {
+                    "message": $("#message").val(),
+                }
+     
+      jQuery.ajax({
+          url: '/membership_request',
+          method: "POST",
+          dataType : "json",
+          data: JSON.stringify(data),
+          "contentType": "application/json",
+          success: function(response) { 
+            window.location.reload();
+              if(response.status==200){
+                displaymsg(response.message, "alert-success")
+                $('#prayer-form')[0].reset();
+              }
+          }
+      });
+  });
+</script>
+
+<%- include('../../end'); -%>

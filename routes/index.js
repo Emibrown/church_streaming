@@ -16,6 +16,9 @@ const Settings = require('../models/settings');
 const RequestPassword = require('../models/requestPassword');
 const Comment = require('../models/comments');
 const Visit = require('../models/visit');
+const Membership = require('../models/membership');
+
+
 
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
@@ -282,6 +285,18 @@ router.get('/members-only', ensureAuthenticated, async(req, res, next) =>{
   res.render('users/pages/members_only', { title: 'Faith TV | Members Only'});
 });
 
+router.get('/membership-request', ensureAuthenticated, async(req, res, next) => {
+  if(req.user.isMember){
+    return res.redirect("/vod/webcast");
+  }
+  const membership = await Membership.findOne(
+    { 
+      member: req.user._id,
+    }
+  )
+  res.render('users/pages/membership_req', { title: 'Membership Request', membership });
+});
+
 router.get('/register', authenticated, (req, res, next) =>{
   res.render('users/pages/register', { title: 'Faith TV | Register' });
 });
@@ -437,6 +452,29 @@ router.post('/prayer_request', async (req, res, next) => {
       sendJSONresponse(res, 400, Object.keys(error.errors));
     }
 });
+
+router.post('/membership_request', ensureAuthenticated, async (req, res, next) => {
+  try {
+      req.body.member = req.user._id
+      const membership = new Membership(req.body)
+      const saveMembership = await membership.save();
+      if(saveMembership){
+         const {emailNotification:settingsMail} = await Settings.findOne({});
+         if(settingsMail){
+           const requestType = "Membership Request";
+           adminMail(settingsMail, fullName, requestType);
+         }
+         res.send({status: 200, message: 'Membership Request Submitted'});
+       }
+       else res.send({status:400, message: 'Failed to process. Please ensure all fields are filled correctly'});
+
+  } catch (error) {
+    console.log(error)
+    sendJSONresponse(res, 400, Object.keys(error));
+  }
+});
+
+
 
 //programmer routes
 router.post('/become_programmer', async (req, res, next) => {

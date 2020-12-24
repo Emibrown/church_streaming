@@ -1,0 +1,150 @@
+<%- include('../header'); -%>
+<%- include('../sidebar'); -%>
+
+<!-- Page Content  -->
+<div class="app-main__inner">
+    <!-- title  -->
+   <div class="app-page-title">
+       <div class="page-title-wrapper">
+           <div class="page-title-heading">
+               <div class="page-title-icon">
+                   <i class="pe-7s-car icon-gradient bg-mean-fruit"></i>
+               </div>
+               <div>
+                  All Membership Request
+               </div>
+           </div>
+         </div>
+   </div>       
+   <!-- title -->
+    <!--body  -->
+    <div class="main-card mb-3 card">
+        <div class="card-body ">
+            <table style="width: 100%;" id="example2" class="table  table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>User</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% if(MemberRequest.length > 0) { let sn=1; %>
+                        <% MemberRequest.forEach(user => { %>               
+                 <tr>
+                    <td><%= sn %></th>
+                    <td><a href = "/admin/view-single/<%=user.member._id %>"><%= user.member.firstname %> <%= user.member.lastname %> </a></td>
+                    <td><%= user.message %></td>
+                    <td><%= moment(user.addedOn).format('LL') %></td>
+                    <td>
+                        <button id = "<%= user.member._id %>" class="mb-2 mr-2 member btn-hover-shine btn btn-shadow btn-success"> Accept</button>
+                        <button id = "<%= user.member._id %>" class="mb-2 mr-2 unmember btn-hover-shine btn btn-shadow btn-danger"> Reject</button>
+                    </td>
+                </tr>
+             <% sn++ %>
+            <% }) %>
+            <% }else{ %>
+                No Record available
+            <% } %>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+  <!-- body ends -->
+</div>
+<!-- Page Content END -->
+
+
+<%- include('../footer'); -%>
+<%- include('../js'); -%>
+<script>
+      $(document).ready(function() {
+    $('#example2').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+    } );
+} );
+
+$(document).on('click', '.member', function(e) {
+    e.preventDefault();
+    const id = $(this).attr('id');
+    swal({
+        title: 'Are you sure?',
+        text: "This will be accepted!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, proceed & Block!'
+    }).then((result) => {
+        if (result) {
+            $.ajax({
+                url: '/admin/member/'+id,
+                method: "PUT",
+                dataType : "json",
+                "contentType": "application/json",
+                success: function(data) {
+                    window.location.reload();
+                    if (data.status == 200) {
+                        $('#success_message').html(data.message);
+                    }
+                },
+                error: function(jqXhr) {
+                    if (jqXhr.status == 400) {
+                       
+                    }
+                }
+            });
+            swal(
+                'Request accepted.',
+                'success'
+            )
+
+        }
+    })
+});
+
+
+$(document).on('click', '.unmember', function(e) {
+    e.preventDefault();
+    const id = $(this).attr('id');
+    swal({
+        title: 'Are you sure?',
+        text: "This request will be rejected!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+        if (result) {
+            $.ajax({
+                url: '/admin/unmember/'+id,
+                method: "PUT",
+                dataType : "json",
+                "contentType": "application/json",
+                success: function(data) {
+                    window.location.reload();
+                    if (data.status == 200) {
+                        $('#success_message').html(data.message);
+                    }
+                },
+                error: function(jqXhr) {
+                    if (jqXhr.status == 400) {
+                    }
+                }
+            });
+            swal(
+                'Request rejected',
+                'success'
+            )
+
+        }
+    })
+});
+</script>
+<%- include('../../end'); -%>

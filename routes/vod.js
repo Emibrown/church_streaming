@@ -145,6 +145,9 @@ router.get('/watch/:pro/:video', async(req, res, next) => {
 });
 
 router.get('/webcast', ensureAuthenticated, async(req, res, next) => {
+  if(!req.user.isMember){
+    return res.redirect("/membership-request");
+  }
   res.render('vod/pages/webcast', { title: 'On-demand Watch' });
 });
 
