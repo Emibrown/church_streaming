@@ -286,7 +286,7 @@ router.get('/members-only', ensureAuthenticated, async(req, res, next) =>{
 });
 
 router.get('/membership-request', ensureAuthenticated, async(req, res, next) => {
-  if(req.user.isMember){
+  if(req.user.isMember || req.user.type == 1){
     return res.redirect("/vod/webcast");
   }
   const membership = await Membership.findOne(
