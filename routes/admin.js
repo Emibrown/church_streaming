@@ -251,6 +251,24 @@ router.get('/dashboard', ensureAuthenticated, async(req, res, next) => {
   res.render('admin/pages/index', { title: 'Dashboard', members, programmes, videos, visit,visitw,visitm });
 });
 
+router.post('/dashboard', ensureAuthenticated, async(req, res, next) =>{
+  const month = req.body.month
+  const year = req.body.year
+  const monthName = moment(month).format('MMMM') 
+  const date = new Date(year, month-1)
+  const startms = moment(date).startOf('month')
+  const endms = moment(date).endOf('month')
+  const visitc = await Visit.count({date: {$gte: startms, $lt: endms}})
+  const visitCustom = {
+    monthName: monthName,
+    year : year,
+    visitc : visitc
+  }
+console.log(visitCustom)
+  sendJSONresponse(res, 200, visitCustom)
+
+});
+
 router.get('/stop_streaming', ensureAuthenticated, async(req, res, next) => {
    try {
      if(localpid){
