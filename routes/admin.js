@@ -49,13 +49,13 @@ fse.ensureDir(uploadPath); // Make sure that he upload path exits
 
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-        if(req.user.type == 1){
-          res.redirect('/admin/dashboard');
-        }else{
-          next();
-        }
+    if(req.user.type == 1){
+      res.redirect('/admin/dashboard');
+    }else{
+      next();
+    }
   }else {
-     next();
+    next();
   }
 };
 
@@ -70,37 +70,35 @@ const ensureAuthenticated = (req, res, next) => {
   }
 };
 
-
 User.find({}, (err, users) => {
   if(err){ return;}
   if(users.length == 0){
-      var newUser = new User({
-        firstname: "Admin",
-        lastname: "Admin",
-        middlename: "Admin",
-        title:'Mr',
-        email: "admin@gmail.com",
-        password: "11223344E",
-        address:"Port Harcourt",
-        location: "Port",
-        stateOfOrigin: 'Ph',
-        LGA: "ph",
-        residentPastor: "Pastor John",
-        chapterLocation: "Rumuibekwe",
-        organisationName: "Coders",
-        type: 1,
-        isBlocked: false,
-        dateOfBirth: "1967-02-19",
-
-      });
-      newUser.save((err, user) => {
-        if (err) { 
-          console.log(err);
-          return; 
-        }else{
-            console.log(user);
-        }
-      });
+    var newUser = new User({
+      firstname: "Admin",
+      lastname: "Admin",
+      middlename: "Admin",
+      title:'Mr',
+      email: "admin@gmail.com",
+      password: "11223344E",
+      address:"Port Harcourt",
+      location: "Port",
+      stateOfOrigin: 'Ph',
+      LGA: "ph",
+      residentPastor: "Pastor John",
+      chapterLocation: "Rumuibekwe",
+      organisationName: "Coders",
+      type: 1,
+      isBlocked: false,
+      dateOfBirth: "1967-02-19",
+    });
+    newUser.save((err, user) => {
+      if (err) { 
+        console.log(err);
+        return; 
+      }else{
+          console.log(user);
+      }
+    });
   }
 })
 
@@ -126,19 +124,19 @@ const getMonthDateRange = (year, month) => {
 Settings.find({}, (err, settings) => {
   if(err){ return;}
   if(settings.length == 0){
-      var newSettings = new Settings({
-        settingsId: "site_settings",
-        publicStreamKey: shortid.generate(),
-        memberStreamKey: shortid.generate()
-      });
-      newSettings.save((err, settings) => {
-        if (err) { 
-          console.log(err);
-          return; 
-        }else{
-            console.log(settings);
-        }
-      });
+    var newSettings = new Settings({
+      settingsId: "site_settings",
+      publicStreamKey: shortid.generate(),
+      memberStreamKey: shortid.generate()
+    });
+    newSettings.save((err, settings) => {
+      if (err) { 
+        console.log(err);
+        return; 
+      }else{
+          console.log(settings);
+      }
+    });
   }
 })
 
