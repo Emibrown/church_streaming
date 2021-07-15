@@ -98,7 +98,7 @@
                 <form id = "form" class="row" onsubmit= "return false;">
                     <div class="form-group col-md-6">
                         <label for="year">Select year:</label>
-                        <select name = 'year' id = 'year' class="custom-select form-control">
+                        <select name = 'year' id ='year' class="custom-select form-control">
                             <!-- <option value = 2020>2020</option>
                             <option value = 2021>2021</option> -->
                         </select>   
@@ -154,7 +154,6 @@
     var month = moment().format('M')
     let year = moment().format('YYYY');
     document.getElementById('month').value = month
-    document.getElementById('year').value = year 
     document.getElementById('monthName').innerHTML = ' '+ monthName + ', ' + year
    
     //loop select options from 2020 to current year
@@ -162,6 +161,9 @@
         console.log(i)
         document.getElementById('year').innerHTML += `<option value = ${i}>${i}</option>`
     }
+
+    document.getElementById('year').value = year 
+
 
     $('#goButton').click(function(){  
         var data = $('#form').serialize()
